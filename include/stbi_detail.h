@@ -1,6 +1,6 @@
 #pragma once
-#ifndef BE_UTIL_STBI_DETAIL_H_
-#define BE_UTIL_STBI_DETAIL_H_
+#ifndef BE_TEXI_STBI_DETAIL_H_
+#define BE_TEXI_STBI_DETAIL_H_
 
 #pragma warning(push)
 //#pragma warning(disable: 4456) // local hides local

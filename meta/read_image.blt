@@ -14,7 +14,7 @@ with each formats using # {`
 
 ///////////////////////////////////////////////////////////////////////////////
 inline gli::texture read_`$.prefix`texture(const Path& path) {
-   return read_`$.prefix`texture(get_file_contents_buf(path));
+   return read_`$.prefix`texture(util::get_file_contents_buf(path));
 }
 `if include_image_overloads {`
 ///////////////////////////////////////////////////////////////////////////////
@@ -32,7 +32,7 @@ with each formats using # {`
 
 ///////////////////////////////////////////////////////////////////////////////
 inline gli::image read_`$.prefix`image(const Path& path) {
-   return read_`$.prefix`image(get_file_contents_buf(path));
+   return read_`$.prefix`image(util::get_file_contents_buf(path));
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -46,6 +46,6 @@ with each formats using # {
 
 ///////////////////////////////////////////////////////////////////////////////
 inline bool read_`$.prefix`image(const Path& path, gli::image& dest) {
-   return read_`$.prefix`image(get_file_contents_buf(path), dest);
+   return read_`$.prefix`image(util::get_file_contents_buf(path), dest);
 }
 `}

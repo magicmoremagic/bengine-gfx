@@ -2,7 +2,7 @@
 #include "write_image.hpp"
 
 namespace be {
-namespace util {
+namespace texi {
 
-} // be::util
+} // be::texi
 } // be

@@ -8,7 +8,7 @@
 #include <glm/vec2.hpp>
 
 namespace be {
-namespace util {
+namespace texi {
 namespace {
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -113,7 +113,7 @@ bool write_stbi_to_image(void* data, glm::ivec2 dim, int channels, int bpc, gli:
    return false;
 }
 
-} // be::util::()
+} // be::texi::()
 
 ///////////////////////////////////////////////////////////////////////////////
 gli::texture read_dds_texture(const Buf<const UC>& buf) {
@@ -361,5 +361,5 @@ gli::image read_tga_image(const Buf<const UC>& buf) {
 
 /* ################ END OF GENERATED CODE ################ */
 
-} // be::util
+} // be::texi
 } // be

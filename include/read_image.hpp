@@ -1,14 +1,14 @@
 #pragma once
-#ifndef BE_UTIL_IMAGE_READ_HPP_
-#define BE_UTIL_IMAGE_READ_HPP_
+#ifndef BE_TEXI_IMAGE_READ_HPP_
+#define BE_TEXI_IMAGE_READ_HPP_
 
-#include "files.hpp"
 #include <be/core/buf.hpp>
+#include <be/util/files.hpp>
 #include <gli/texture.hpp>
 #include <gli/image.hpp>
 
 namespace be {
-namespace util {  // TODO module 'texi' - texture & image processing
+namespace texi {
 
 /*!! 
 texture_formats = { 'dds', 'kmg', 'ktx' }
@@ -28,15 +28,15 @@ gli::texture read_ktx_texture(const Buf<const UC>& buf);
 
 ///////////////////////////////////////////////////////////////////////////////
 inline gli::texture read_dds_texture(const Path& path) {
-   return read_dds_texture(get_file_contents_buf(path));
+   return read_dds_texture(util::get_file_contents_buf(path));
 }
 ///////////////////////////////////////////////////////////////////////////////
 inline gli::texture read_kmg_texture(const Path& path) {
-   return read_kmg_texture(get_file_contents_buf(path));
+   return read_kmg_texture(util::get_file_contents_buf(path));
 }
 ///////////////////////////////////////////////////////////////////////////////
 inline gli::texture read_ktx_texture(const Path& path) {
-   return read_ktx_texture(get_file_contents_buf(path));
+   return read_ktx_texture(util::get_file_contents_buf(path));
 }
 
 /* ################ END OF GENERATED CODE ################ */
@@ -56,39 +56,39 @@ gli::texture read_tga_texture(const Buf<const UC>& buf);
 
 ///////////////////////////////////////////////////////////////////////////////
 inline gli::texture read_png_texture(const Path& path) {
-   return read_png_texture(get_file_contents_buf(path));
+   return read_png_texture(util::get_file_contents_buf(path));
 }
 ///////////////////////////////////////////////////////////////////////////////
 inline gli::texture read_jpeg_texture(const Path& path) {
-   return read_jpeg_texture(get_file_contents_buf(path));
+   return read_jpeg_texture(util::get_file_contents_buf(path));
 }
 ///////////////////////////////////////////////////////////////////////////////
 inline gli::texture read_hdr_texture(const Path& path) {
-   return read_hdr_texture(get_file_contents_buf(path));
+   return read_hdr_texture(util::get_file_contents_buf(path));
 }
 ///////////////////////////////////////////////////////////////////////////////
 inline gli::texture read_pic_texture(const Path& path) {
-   return read_pic_texture(get_file_contents_buf(path));
+   return read_pic_texture(util::get_file_contents_buf(path));
 }
 ///////////////////////////////////////////////////////////////////////////////
 inline gli::texture read_pnm_texture(const Path& path) {
-   return read_pnm_texture(get_file_contents_buf(path));
+   return read_pnm_texture(util::get_file_contents_buf(path));
 }
 ///////////////////////////////////////////////////////////////////////////////
 inline gli::texture read_bmp_texture(const Path& path) {
-   return read_bmp_texture(get_file_contents_buf(path));
+   return read_bmp_texture(util::get_file_contents_buf(path));
 }
 ///////////////////////////////////////////////////////////////////////////////
 inline gli::texture read_gif_texture(const Path& path) {
-   return read_gif_texture(get_file_contents_buf(path));
+   return read_gif_texture(util::get_file_contents_buf(path));
 }
 ///////////////////////////////////////////////////////////////////////////////
 inline gli::texture read_psd_texture(const Path& path) {
-   return read_psd_texture(get_file_contents_buf(path));
+   return read_psd_texture(util::get_file_contents_buf(path));
 }
 ///////////////////////////////////////////////////////////////////////////////
 inline gli::texture read_tga_texture(const Path& path) {
-   return read_tga_texture(get_file_contents_buf(path));
+   return read_tga_texture(util::get_file_contents_buf(path));
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -104,47 +104,47 @@ bool read_tga_image(const Buf<const UC>& buf, gli::image& dest);
 
 ///////////////////////////////////////////////////////////////////////////////
 inline bool read_png_image(const Path& path, gli::image& dest) {
-   return read_png_image(get_file_contents_buf(path), dest);
+   return read_png_image(util::get_file_contents_buf(path), dest);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 inline bool read_jpeg_image(const Path& path, gli::image& dest) {
-   return read_jpeg_image(get_file_contents_buf(path), dest);
+   return read_jpeg_image(util::get_file_contents_buf(path), dest);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 inline bool read_hdr_image(const Path& path, gli::image& dest) {
-   return read_hdr_image(get_file_contents_buf(path), dest);
+   return read_hdr_image(util::get_file_contents_buf(path), dest);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 inline bool read_pic_image(const Path& path, gli::image& dest) {
-   return read_pic_image(get_file_contents_buf(path), dest);
+   return read_pic_image(util::get_file_contents_buf(path), dest);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 inline bool read_pnm_image(const Path& path, gli::image& dest) {
-   return read_pnm_image(get_file_contents_buf(path), dest);
+   return read_pnm_image(util::get_file_contents_buf(path), dest);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 inline bool read_bmp_image(const Path& path, gli::image& dest) {
-   return read_bmp_image(get_file_contents_buf(path), dest);
+   return read_bmp_image(util::get_file_contents_buf(path), dest);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 inline bool read_gif_image(const Path& path, gli::image& dest) {
-   return read_gif_image(get_file_contents_buf(path), dest);
+   return read_gif_image(util::get_file_contents_buf(path), dest);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 inline bool read_psd_image(const Path& path, gli::image& dest) {
-   return read_psd_image(get_file_contents_buf(path), dest);
+   return read_psd_image(util::get_file_contents_buf(path), dest);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 inline bool read_tga_image(const Path& path, gli::image& dest) {
-   return read_tga_image(get_file_contents_buf(path), dest);
+   return read_tga_image(util::get_file_contents_buf(path), dest);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -160,47 +160,47 @@ gli::image read_tga_image(const Buf<const UC>& buf);
 
 ///////////////////////////////////////////////////////////////////////////////
 inline gli::image read_png_image(const Path& path) {
-   return read_png_image(get_file_contents_buf(path));
+   return read_png_image(util::get_file_contents_buf(path));
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 inline gli::image read_jpeg_image(const Path& path) {
-   return read_jpeg_image(get_file_contents_buf(path));
+   return read_jpeg_image(util::get_file_contents_buf(path));
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 inline gli::image read_hdr_image(const Path& path) {
-   return read_hdr_image(get_file_contents_buf(path));
+   return read_hdr_image(util::get_file_contents_buf(path));
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 inline gli::image read_pic_image(const Path& path) {
-   return read_pic_image(get_file_contents_buf(path));
+   return read_pic_image(util::get_file_contents_buf(path));
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 inline gli::image read_pnm_image(const Path& path) {
-   return read_pnm_image(get_file_contents_buf(path));
+   return read_pnm_image(util::get_file_contents_buf(path));
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 inline gli::image read_bmp_image(const Path& path) {
-   return read_bmp_image(get_file_contents_buf(path));
+   return read_bmp_image(util::get_file_contents_buf(path));
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 inline gli::image read_gif_image(const Path& path) {
-   return read_gif_image(get_file_contents_buf(path));
+   return read_gif_image(util::get_file_contents_buf(path));
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 inline gli::image read_psd_image(const Path& path) {
-   return read_psd_image(get_file_contents_buf(path));
+   return read_psd_image(util::get_file_contents_buf(path));
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 inline gli::image read_tga_image(const Path& path) {
-   return read_tga_image(get_file_contents_buf(path));
+   return read_tga_image(util::get_file_contents_buf(path));
 }
 
 /* ################ END OF GENERATED CODE ################ */
@@ -288,7 +288,7 @@ inline gli::texture read_texture(const Buf<const UC>& buf) {
 
 ///////////////////////////////////////////////////////////////////////////////
 inline gli::texture read_texture(const Path& path) {
-   return read_texture(get_file_contents_buf(path));
+   return read_texture(util::get_file_contents_buf(path));
 }
 
 /* ################ END OF GENERATED CODE ################ */
@@ -356,7 +356,7 @@ inline gli::texture read_simple_texture(const Buf<const UC>& buf) {
 
 ///////////////////////////////////////////////////////////////////////////////
 inline gli::texture read_simple_texture(const Path& path) {
-   return read_simple_texture(get_file_contents_buf(path));
+   return read_simple_texture(util::get_file_contents_buf(path));
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -420,7 +420,7 @@ inline gli::image read_simple_image(const Buf<const UC>& buf) {
 
 ///////////////////////////////////////////////////////////////////////////////
 inline gli::image read_simple_image(const Path& path) {
-   return read_simple_image(get_file_contents_buf(path));
+   return read_simple_image(util::get_file_contents_buf(path));
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -440,12 +440,12 @@ inline bool read_simple_image(const Buf<const UC>& buf, gli::image& dest) {
 
 ///////////////////////////////////////////////////////////////////////////////
 inline bool read_simple_image(const Path& path, gli::image& dest) {
-   return read_simple_image(get_file_contents_buf(path), dest);
+   return read_simple_image(util::get_file_contents_buf(path), dest);
 }
 
 /* ################ END OF GENERATED CODE ################ */
 
-} // be::util
+} // be::texi
 } // be
 
 #endif

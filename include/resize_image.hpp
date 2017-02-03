@@ -1,11 +1,11 @@
 #pragma once
-#ifndef BE_UTIL_RESIZE_IMAGE_HPP_
-#define BE_UTIL_RESIZE_IMAGE_HPP_
+#ifndef BE_TEXI_RESIZE_IMAGE_HPP_
+#define BE_TEXI_RESIZE_IMAGE_HPP_
 
 namespace be {
-namespace util {
+namespace texi {
 
-} // be::util
+} // be::texi
 } // be
 
 #endif

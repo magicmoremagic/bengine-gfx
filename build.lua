@@ -11,5 +11,6 @@ module 'texi' {
       },
       define 'BE_TEXI_IMPL',
       link_project 'core',
+      link_project 'util'
    }
 }

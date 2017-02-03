@@ -1,0 +1,36 @@
+
+///////////////////////////////////////////////////////////////////////////////
+` with each formats using # {
+   `gli::texture read_`$`_texture(const Buf<const UC>& buf);` nl
+} nl with each formats using # {
+`///////////////////////////////////////////////////////////////////////////////
+inline gli::texture read_`$`_texture(const Path& path) {
+   return read_`$`_texture(get_file_contents_buf(path));
+}
+`}
+if include_image_overloads {
+   nl
+   `///////////////////////////////////////////////////////////////////////////////`
+   nl
+   with each formats using # {
+      `bool read_`$`_image(const Buf<const UC>& buf, gli::image& dest);` nl
+   }
+   with each formats using # { `
+///////////////////////////////////////////////////////////////////////////////
+inline bool read_`$`_image(const Path& path, gli::image& dest) {
+   return read_`$`_image(get_file_contents_buf(path), dest);
+}
+`  }
+   nl
+   `///////////////////////////////////////////////////////////////////////////////`
+   nl
+   with each formats using # {
+      `gli::image read_`$`_image(const Buf<const UC>& buf);` nl
+   }
+   with each formats using # { `
+///////////////////////////////////////////////////////////////////////////////
+inline gli::image read_`$`_image(const Path& path) {
+   return read_`$`_image(get_file_contents_buf(path));
+}
+`  }
+}

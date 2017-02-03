@@ -1,0 +1,27 @@
+` with each $ using # { `
+///////////////////////////////////////////////////////////////////////////////
+gli::texture read_`$`_texture(const Buf<const UC>& buf) {
+   glm::ivec2 dim;
+   int channels, bpc;
+   void* data = be_stbi_load_`$`_from_memory(buf.get(), (int)buf.size(), &dim.x, &dim.y, &channels, &bpc);
+   return make_texture_from_stbi(data, dim, channels, bpc);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+bool read_`$`_image(const Buf<const UC>& buf, gli::image& dest) {
+   glm::ivec2 dim;
+   int channels, bpc;
+   void* data = be_stbi_load_`$`_from_memory(buf.get(), (int)buf.size(), &dim.x, &dim.y, &channels, &bpc);
+   return write_stbi_to_image(data, dim, channels, bpc, dest);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+gli::image read_`$`_image(const Buf<const UC>& buf) {
+   glm::ivec2 dim;
+   int channels, bpc;
+   void* data = be_stbi_load_`$`_from_memory(buf.get(), (int)buf.size(), &dim.x, &dim.y, &channels, &bpc);
+   return make_image_from_stbi(data, dim, channels, bpc);
+}
+
+`
+}

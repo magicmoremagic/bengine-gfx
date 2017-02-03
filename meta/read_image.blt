@@ -1,0 +1,51 @@
+
+///////////////////////////////////////////////////////////////////////////////
+inline gli::texture read_`$.prefix`texture(const Buf<const UC>& buf) {`
+with each formats using # {`
+   {
+      gli::texture tex = read_`$`_texture(buf);
+      if (!tex.empty()) {
+         return tex;
+      }
+   }`
+}`
+   return gli::texture();
+}
+
+///////////////////////////////////////////////////////////////////////////////
+inline gli::texture read_`$.prefix`texture(const Path& path) {
+   return read_`$.prefix`texture(get_file_contents_buf(path));
+}
+`if include_image_overloads {`
+///////////////////////////////////////////////////////////////////////////////
+inline gli::image read_`$.prefix`image(const Buf<const UC>& buf) {`
+with each formats using # {`
+   {
+      gli::image img = read_`$`_image(buf);
+      if (!img.empty()) {
+         return img;
+      }
+   }`
+}`
+   return gli::image();
+}
+
+///////////////////////////////////////////////////////////////////////////////
+inline gli::image read_`$.prefix`image(const Path& path) {
+   return read_`$.prefix`image(get_file_contents_buf(path));
+}
+
+///////////////////////////////////////////////////////////////////////////////
+inline bool read_`$.prefix`image(const Buf<const UC>& buf, gli::image& dest) {
+   return `
+with each formats using # {
+   nl `      read_`$`_image(buf, dest) ||`
+}`
+      false;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+inline bool read_`$.prefix`image(const Path& path, gli::image& dest) {
+   return read_`$.prefix`image(get_file_contents_buf(path), dest);
+}
+`}

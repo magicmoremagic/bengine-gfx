@@ -13,5 +13,9 @@ module 'texi' {
       define 'BE_TEXI_IMPL',
       link_project 'core',
       link_project 'util'
+   },
+   app '-test' {
+      icon 'icon/bengine-test-perf.ico',
+      link_project { 'testing', 'texi' }
    }
 }

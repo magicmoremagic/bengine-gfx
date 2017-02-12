@@ -35,9 +35,6 @@
     <ClInclude Include="include\write_image.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="fwd_types.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\stbi_util_detail.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -48,6 +45,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\variable_size_median_kernel.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\fwd_types.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

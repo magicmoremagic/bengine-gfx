@@ -54,8 +54,8 @@
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="fwd_types.hpp" />
     <ClInclude Include="include\fixed_size_median_kernel.hpp" />
+    <ClInclude Include="include\fwd_types.hpp" />
     <ClInclude Include="include\pch.hpp" />
     <ClInclude Include="include\read_image.hpp" />
     <ClInclude Include="include\resize_image.hpp" />

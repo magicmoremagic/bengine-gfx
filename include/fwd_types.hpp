@@ -3,11 +3,10 @@
 #define BE_TEXI_FWD_TYPES_HPP_
 
 #include <glm/fwd.hpp>
-#include <glm/gtc/vec1.hpp>
 
 namespace gli {
 
-typedef glm::ivec1 extent1d;
+typedef glm::vec<1, int, glm::highp> extent1d;
 typedef glm::ivec2 extent2d;
 typedef glm::ivec3 extent3d;
 typedef glm::ivec4 extent4d;

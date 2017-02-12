@@ -54,20 +54,28 @@
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="fwd_types.hpp" />
+    <ClInclude Include="include\fixed_size_median_kernel.hpp" />
     <ClInclude Include="include\pch.hpp" />
     <ClInclude Include="include\read_image.hpp" />
     <ClInclude Include="include\resize_image.hpp" />
+    <ClInclude Include="include\stbi_util_detail.hpp" />
+    <ClInclude Include="include\texi_autolink.hpp" />
+    <ClInclude Include="include\variable_size_median_kernel.hpp" />
     <ClInclude Include="include\write_image.hpp" />
     <ClInclude Include="include\stbir_detail.h" />
     <ClInclude Include="include\stbiw_detail.h" />
     <ClInclude Include="include\stbi_detail.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\fixed_size_median_kernel.cpp" />
     <ClCompile Include="src\pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="src\read_image.cpp" />
     <ClCompile Include="src\resize_image.cpp" />
+    <ClCompile Include="src\stbi_util_detail.cpp" />
+    <ClCompile Include="src\variable_size_median_kernel.cpp" />
     <ClCompile Include="src\write_image.cpp" />
     <ClCompile Include="src\stbir_detail.c">
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
@@ -83,6 +91,7 @@
     <None Include="meta\read_image.blt" />
     <None Include="meta\read_x_image.blt" />
     <None Include="meta\read_stbi_image_impl.blt" />
+    <None Include="meta\write_x_image.blt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

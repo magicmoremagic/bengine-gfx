@@ -1,6 +1,7 @@
 #include "pch.hpp"
 #include "read_image.hpp"
 #include "stbi_detail.h"
+#include "stbi_util_detail.hpp"
 #include <gli/convert.hpp>
 #include <gli/load_dds.hpp>
 #include <gli/load_kmg.hpp>
@@ -11,58 +12,16 @@ namespace be {
 namespace texi {
 namespace {
 
-///////////////////////////////////////////////////////////////////////////////
-gli::format get_stbi_format_8(int channels) {
-   switch (channels) {
-      case 1:  return gli::FORMAT_R8_UNORM_PACK8;
-      case 2:  return gli::FORMAT_RG8_UNORM_PACK8;
-      case 3:  return gli::FORMAT_RGB8_UNORM_PACK8;
-      case 4:  return gli::FORMAT_RGBA8_UNORM_PACK8;
-      default: return gli::FORMAT_UNDEFINED;
-   }
-}
-
-///////////////////////////////////////////////////////////////////////////////
-gli::format get_stbi_format_16(int channels) {
-   switch (channels) {
-      case 1:  return gli::FORMAT_R16_UNORM_PACK16;
-      case 2:  return gli::FORMAT_RG16_UNORM_PACK16;
-      case 3:  return gli::FORMAT_RGB16_UNORM_PACK16;
-      case 4:  return gli::FORMAT_RGBA16_UNORM_PACK16;
-      default: return gli::FORMAT_UNDEFINED;
-   }
-}
-
-///////////////////////////////////////////////////////////////////////////////
-gli::format get_stbi_format_32(int channels) {
-   switch (channels) {
-      case 1:  return gli::FORMAT_R32_SFLOAT_PACK32;
-      case 2:  return gli::FORMAT_RG32_SFLOAT_PACK32;
-      case 3:  return gli::FORMAT_RGB32_SFLOAT_PACK32;
-      case 4:  return gli::FORMAT_RGBA32_SFLOAT_PACK32;
-      default: return gli::format::FORMAT_UNDEFINED;
-   }
-}
-
-///////////////////////////////////////////////////////////////////////////////
-gli::format get_stbi_format(int channels, int bpc) {
-   gli::format format = gli::FORMAT_UNDEFINED;
-   if (bpc == 8) {
-      format = get_stbi_format_8(channels);
-   } else if (bpc == 16) {
-      format = get_stbi_format_16(channels);
-   } else if (bpc == 32) {
-      format = get_stbi_format_32(channels);
-   }
-   return format;
+void stbi_deleter(void* ptr, std::size_t size) {
+   stbi_image_free(ptr);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 gli::texture make_texture_from_stbi(void* data, glm::ivec2 dim, int channels, int bpc) {
    if (!data) return gli::texture();
-   Buf<const char> buf(static_cast<const char*>(data), dim.x * dim.y * channels, stbi_image_free);
+   Buf<const char> buf(static_cast<const char*>(data), dim.x * dim.y * channels, stbi_deleter);
 
-   gli::format format = get_stbi_format(channels, bpc);
+   gli::format format = detail::get_stbi_format(channels, bpc);
    if (format == gli::FORMAT_UNDEFINED) return gli::texture();
 
    gli::texture tex(gli::target::TARGET_2D, format, gli::texture::extent_type(dim, 1), 1, 1, 1);
@@ -74,9 +33,9 @@ gli::texture make_texture_from_stbi(void* data, glm::ivec2 dim, int channels, in
 ///////////////////////////////////////////////////////////////////////////////
 gli::image make_image_from_stbi(void* data, glm::ivec2 dim, int channels, int bpc) {
    if (!data) return gli::image();
-   Buf<const char> buf(static_cast<const char*>(data), dim.x * dim.y * channels, stbi_image_free);
+   Buf<const char> buf(static_cast<const char*>(data), dim.x * dim.y * channels, stbi_deleter);
 
-   gli::format format = get_stbi_format(channels, bpc);
+   gli::format format = detail::get_stbi_format(channels, bpc);
    if (format == gli::FORMAT_UNDEFINED) return gli::image();
 
    gli::image img(format, gli::extent3d(dim, 1));
@@ -88,11 +47,11 @@ gli::image make_image_from_stbi(void* data, glm::ivec2 dim, int channels, int bp
 ///////////////////////////////////////////////////////////////////////////////
 bool write_stbi_to_image(void* data, glm::ivec2 dim, int channels, int bpc, gli::image& dest) {
    if (!data) return false;
-   Buf<const char> buf(static_cast<const char*>(data), dim.x * dim.y * channels, stbi_image_free);
+   Buf<const char> buf(static_cast<const char*>(data), dim.x * dim.y * channels, stbi_deleter);
 
    if (dest.empty()) return false;
 
-   gli::format format = get_stbi_format(channels, bpc);
+   gli::format format = detail::get_stbi_format(channels, bpc);
    if (format == gli::FORMAT_UNDEFINED) return false;
 
    if (dest.format() == format) {

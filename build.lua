@@ -1,6 +1,7 @@
 module 'texi' {
    lib {
       limp { file = 'include/read_image.hpp', inputs = { 'meta/read_x_image.blt', 'meta/read_image.blt' } },
+      limp { file = 'include/write_image.hpp', inputs = 'meta/write_x_image.blt' },
       limp { file = 'src/read_image.cpp', inputs = 'meta/read_stbi_image_impl.blt' },
       src {
          'src/*.cpp',

@@ -1,0 +1,36 @@
+
+///////////////////////////////////////////////////////////////////////////////
+` with each formats using # {
+   `Buf<UC> write_`$`_texture(const gli::texture& tex);` nl
+} nl with each formats using # {
+`///////////////////////////////////////////////////////////////////////////////
+inline bool write_`$`_texture(const gli::texture& tex, const Path& path) {
+   Buf<const UC> buf = write_`$`_texture(tex);
+   if (buf) {
+      util::put_file_contents(path, buf);
+      return true;
+   } else {
+      return false;
+   }
+}
+`}
+if include_image_overloads {
+   nl
+   `///////////////////////////////////////////////////////////////////////////////`
+   nl
+   with each formats using # {
+      `Buf<UC> write_`$`_image(const gli::image& img);` nl
+   }
+   with each formats using # { `
+///////////////////////////////////////////////////////////////////////////////
+inline bool write_`$`_image(const gli::image& img, const Path& path) {
+   Buf<const UC> buf = write_`$`_image(img);
+   if (buf) {
+      util::put_file_contents(path, buf);
+      return true;
+   } else {
+      return false;
+   }
+}
+`  }
+}

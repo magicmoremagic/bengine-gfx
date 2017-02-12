@@ -2,6 +2,7 @@
 #ifndef BE_TEXI_IMAGE_READ_HPP_
 #define BE_TEXI_IMAGE_READ_HPP_
 
+#include "texi_autolink.hpp"
 #include <be/core/buf.hpp>
 #include <be/util/files.hpp>
 #include <gli/texture.hpp>
@@ -11,14 +12,19 @@ namespace be {
 namespace texi {
 
 /*!! 
-texture_formats = { 'dds', 'kmg', 'ktx' }
+local texture_formats = { 'dds', 'kmg', 'ktx' }
 
-image_formats = { 'png', 'jpeg',
+local image_formats = { 'png', 'jpeg',
    'hdr', 'pic', 'pnm', 'bmp', 'gif', 'psd',
    'tga' -- Keep me last; no easily verifiable file signature
 }
 
-write_template('read_x_image', { formats = texture_formats }) !! 22 */
+local all_formats = table.pack(table.unpack(texture_formats))
+table.move(image_formats, 1, #image_formats, #all_formats + 1, all_formats)
+write_template('read_x_image', { formats = texture_formats })
+write_template('read_x_image', { formats = image_formats, include_image_overloads = true })
+write_template('read_image', { formats = all_formats })
+write_template('read_image', { formats = image_formats, prefix = 'simple_', include_image_overloads = true }) !! 412 */
 /* ######## !! GENERATED CODE -- DO NOT MODIFY !! ######## */
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -38,10 +44,6 @@ inline gli::texture read_kmg_texture(const Path& path) {
 inline gli::texture read_ktx_texture(const Path& path) {
    return read_ktx_texture(util::get_file_contents_buf(path));
 }
-
-/* ################ END OF GENERATED CODE ################ */
-/*!! write_template('read_x_image', { formats = image_formats, include_image_overloads = true }) !! 164 */
-/* ######## !! GENERATED CODE -- DO NOT MODIFY !! ######## */
 
 ///////////////////////////////////////////////////////////////////////////////
 gli::texture read_png_texture(const Buf<const UC>& buf);
@@ -203,12 +205,6 @@ inline gli::image read_tga_image(const Path& path) {
    return read_tga_image(util::get_file_contents_buf(path));
 }
 
-/* ################ END OF GENERATED CODE ################ */
-/*!! local formats = table.pack(table.unpack(texture_formats))
-table.move(image_formats, 1, #image_formats, #formats + 1, formats)
-write_template('read_image', { formats = formats }) !! 86 */
-/* ######## !! GENERATED CODE -- DO NOT MODIFY !! ######## */
-
 ///////////////////////////////////////////////////////////////////////////////
 inline gli::texture read_texture(const Buf<const UC>& buf) {
    {
@@ -290,10 +286,6 @@ inline gli::texture read_texture(const Buf<const UC>& buf) {
 inline gli::texture read_texture(const Path& path) {
    return read_texture(util::get_file_contents_buf(path));
 }
-
-/* ################ END OF GENERATED CODE ################ */
-/*!! write_template('read_image', { formats = image_formats, prefix = 'simple_', include_image_overloads = true }) !! 152 */
-/* ######## !! GENERATED CODE -- DO NOT MODIFY !! ######## */
 
 ///////////////////////////////////////////////////////////////////////////////
 inline gli::texture read_simple_texture(const Buf<const UC>& buf) {

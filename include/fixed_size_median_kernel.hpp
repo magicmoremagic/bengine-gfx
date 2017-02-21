@@ -40,4 +40,6 @@ private:
 } // be::texi
 } // be
 
+#include "fixed_size_median_kernel.inl"
+
 #endif

@@ -1,5 +1,7 @@
-#include "pch.hpp"
+#if !defined(BE_TEXI_VARIABLE_SIZE_MEDIAN_KERNEL_HPP_) && !defined(DOXYGEN)
 #include "variable_size_median_kernel.hpp"
+#elif !defined(BE_TEXI_VARIABLE_SIZE_MEDIAN_KERNEL_INL_)
+#define BE_TEXI_VARIABLE_SIZE_MEDIAN_KERNEL_INL_
 
 namespace be {
 namespace texi {
@@ -70,3 +72,5 @@ typename VariableSizeMedianKernel<T, N>::value_type VariableSizeMedianKernel<T, 
 
 } // be::texi
 } // be
+
+#endif

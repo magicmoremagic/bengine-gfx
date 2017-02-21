@@ -1,5 +1,7 @@
-#include "pch.hpp"
+#if !defined(BE_TEXI_FIXED_SIZE_MEDIAN_KERNEL_HPP_) && !defined(DOXYGEN)
 #include "fixed_size_median_kernel.hpp"
+#elif !defined(BE_TEXI_FIXED_SIZE_MEDIAN_KERNEL_INL_)
+#define BE_TEXI_FIXED_SIZE_MEDIAN_KERNEL_INL_
 
 namespace be {
 namespace texi {
@@ -64,3 +66,5 @@ typename FixedSizeMedianKernel<T, N>::value_type FixedSizeMedianKernel<T, N>::to
 
 } // be::texi
 } // be
+
+#endif

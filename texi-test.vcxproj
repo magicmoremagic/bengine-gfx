@@ -43,9 +43,10 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
-  <PropertyGroup/>
+  <PropertyGroup />
   <ItemGroup>
     <ClCompile Include="test\test_main.cpp" />
     <ClCompile Include="test\test_read_write_image.cpp" />
+    <ClCompile Include="test\test_uniform_resample.cpp" />
   </ItemGroup>
 </Project>

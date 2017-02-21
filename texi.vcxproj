@@ -54,13 +54,21 @@
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="include\step_filter.hpp" />
+    <ClInclude Include="include\cubic_filter.hpp" />
+    <ClInclude Include="include\filter_traits.hpp" />
     <ClInclude Include="include\fixed_size_median_kernel.hpp" />
     <ClInclude Include="include\fwd_types.hpp" />
+    <ClInclude Include="include\gaussian_filter.hpp" />
+    <ClInclude Include="include\ignore_wrap.hpp" />
+    <ClInclude Include="include\memoized_filter.hpp" />
     <ClInclude Include="include\pch.hpp" />
     <ClInclude Include="include\read_image.hpp" />
     <ClInclude Include="include\resize_image.hpp" />
     <ClInclude Include="include\stbi_util_detail.hpp" />
     <ClInclude Include="include\texi_autolink.hpp" />
+    <ClInclude Include="include\linear_filter.hpp" />
+    <ClInclude Include="include\uniform_resample.hpp" />
     <ClInclude Include="include\variable_size_median_kernel.hpp" />
     <ClInclude Include="include\write_image.hpp" />
     <ClInclude Include="include\stbir_detail.h" />
@@ -68,14 +76,12 @@
     <ClInclude Include="include\stbi_detail.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\fixed_size_median_kernel.cpp" />
     <ClCompile Include="src\pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="src\read_image.cpp" />
     <ClCompile Include="src\resize_image.cpp" />
     <ClCompile Include="src\stbi_util_detail.cpp" />
-    <ClCompile Include="src\variable_size_median_kernel.cpp" />
     <ClCompile Include="src\write_image.cpp" />
     <ClCompile Include="src\stbir_detail.c">
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
@@ -88,6 +94,9 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <None Include="include\fixed_size_median_kernel.inl" />
+    <None Include="include\uniform_resample.inl" />
+    <None Include="include\variable_size_median_kernel.inl" />
     <None Include="meta\read_image.blt" />
     <None Include="meta\read_x_image.blt" />
     <None Include="meta\read_stbi_image_impl.blt" />

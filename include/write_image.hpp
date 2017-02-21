@@ -3,10 +3,9 @@
 #define BE_TEXI_WRITE_IMAGE_HPP_
 
 #include "texi_autolink.hpp"
+#include "fwd_types.hpp"
 #include <be/core/buf.hpp>
 #include <be/util/files.hpp>
-#include <gli/texture.hpp>
-#include <gli/image.hpp>
 
 namespace be {
 namespace texi {

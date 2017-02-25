@@ -29,9 +29,6 @@
     <ClInclude Include="include\stbi_detail.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\stbir_detail.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\read_image.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -80,12 +77,12 @@
     <ClInclude Include="include\step_filter.hpp">
       <Filter>Header Files\filters</Filter>
     </ClInclude>
+    <ClInclude Include="include\apply.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\pch.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\stbir_detail.c">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\stbi_detail.c">
@@ -127,6 +124,9 @@
       <Filter>Header Files</Filter>
     </None>
     <None Include="include\uniform_resample.inl">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="include\apply.inl">
       <Filter>Header Files</Filter>
     </None>
   </ItemGroup>

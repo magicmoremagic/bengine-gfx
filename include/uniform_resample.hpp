@@ -1,6 +1,6 @@
 #pragma once
-#ifndef BE_TEXI_UNIFORM_RESAMPLE_HPP_
-#define BE_TEXI_UNIFORM_RESAMPLE_HPP_
+#ifndef BE_GFX_UNIFORM_RESAMPLE_HPP_
+#define BE_GFX_UNIFORM_RESAMPLE_HPP_
 
 #include "fwd_types.hpp"
 #include "cubic_filter.hpp"
@@ -11,7 +11,7 @@
 #include <map>
 
 namespace be {
-namespace texi {
+namespace gfx {
 
 template <typename T, typename F = MitchellNetravaliFilter, typename W = IgnoreWrap>
 void uniform_resample_3d(image out, image in, F32 scale, quat rotation = quat(1.f, vec3()), vec3 offset = vec3(), F32 support_scale = 1.f, F filter = F(), W wrap = W());
@@ -22,7 +22,7 @@ void uniform_resample_2d(image out, image in, F32 scale, F32 rotation = 0, vec2 
 template <typename T, typename F = MitchellNetravaliFilter, typename W = IgnoreWrap>
 void uniform_resample_1d(image out, image in, F32 scale, F32 offset = 0, F32 support_scale = 1.f, F filter = F(), W wrap = W());
 
-} // be::texi
+} // be::gfx
 } // be
 
 #include "uniform_resample.inl"

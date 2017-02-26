@@ -2,7 +2,7 @@
 #include "stbi_util_detail.hpp"
 
 namespace be {
-namespace texi {
+namespace gfx {
 namespace detail {
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -148,6 +148,6 @@ int get_stbi_format_32_channels(gli::format format) {
    }
 }
 
-} // be::texi::detail
-} // be::texi
+} // be::gfx::detail
+} // be::gfx
 } // be

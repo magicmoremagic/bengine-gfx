@@ -2,9 +2,9 @@
 #include "resize_image.hpp"
 
 namespace be {
-namespace texi {
+namespace gfx {
 
 ///////////////////////////////////////////////////////////////////////////////
 
-} // be::texi
+} // be::gfx
 } // be

@@ -1,11 +1,11 @@
 #pragma once
-#ifndef BE_TEXI_LINEAR_FILTER_HPP_
-#define BE_TEXI_LINEAR_FILTER_HPP_
+#ifndef BE_GFX_LINEAR_FILTER_HPP_
+#define BE_GFX_LINEAR_FILTER_HPP_
 
 #include "filter_traits.hpp"
 
 namespace be {
-namespace texi {
+namespace gfx {
 namespace detail {
 
 template <int S, int D, typename T>
@@ -13,7 +13,7 @@ struct TriangularFilterSupport {
    static constexpr T s = T(S) / T(D);
 };
 
-} // be::texi::detail
+} // be::gfx::detail
 
 template <int S = 1, int D = 1>
 struct TriangularFilter {
@@ -38,7 +38,7 @@ struct FilterSupportRange<TriangularFilter<S, D>> {
 
 using LinearFilter = TriangularFilter<>;
 
-} // be::texi
+} // be::gfx
 } // be
 
 #endif

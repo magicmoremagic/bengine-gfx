@@ -1,13 +1,13 @@
 #pragma once
-#ifndef BE_TEXI_RESIZE_IMAGE_HPP_
-#define BE_TEXI_RESIZE_IMAGE_HPP_
+#ifndef BE_GFX_RESIZE_IMAGE_HPP_
+#define BE_GFX_RESIZE_IMAGE_HPP_
 
-#include "texi_autolink.hpp"
+#include "gfx_autolink.hpp"
 #include "fwd_types.hpp"
 #include <gli/sampler.hpp>
 
 namespace be {
-namespace texi {
+namespace gfx {
 
 //void resize_image(const gli::image& source, gli::image& dest, gli::wrap wrap_horizontal, gli::wrap wrap_vertical, gli
 //
@@ -33,7 +33,7 @@ namespace texi {
 //                                 float s0, float t0, float s1, float t1);
 
 
-} // be::texi
+} // be::gfx
 } // be
 
 #endif

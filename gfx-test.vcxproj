@@ -11,8 +11,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectName>texi-test</ProjectName>
-    <RootNamespace>texi</RootNamespace>
+    <ProjectName>gfx-test</ProjectName>
+    <RootNamespace>gfx</RootNamespace>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
     <ProjectGuid>{D8FEF884-A157-4C9F-9C5B-4EEE9B296C94}</ProjectGuid>
   </PropertyGroup>

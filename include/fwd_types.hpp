@@ -1,6 +1,6 @@
 #pragma once
-#ifndef BE_TEXI_FWD_TYPES_HPP_
-#define BE_TEXI_FWD_TYPES_HPP_
+#ifndef BE_GFX_FWD_TYPES_HPP_
+#define BE_GFX_FWD_TYPES_HPP_
 
 #include <glm/fwd.hpp>
 
@@ -40,7 +40,7 @@ class sampler_cube_array;
 } // gli
 
 namespace be {
-namespace texi {
+namespace gfx {
 
 using gli::extent1d;
 using gli::extent2d;
@@ -66,7 +66,7 @@ using gli::sampler3d;
 using gli::sampler_cube;
 using gli::sampler_cube_array;
 
-} // be::texi
+} // be::gfx
 } // be
 
 #endif

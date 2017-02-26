@@ -9,7 +9,7 @@
 #include <be/core/time.hpp>
 #include <random>
 
-#define BE_CATCH_TAGS "[texi][texi:read_image][texi:write_image]"
+#define BE_CATCH_TAGS "[gfx][gfx:read_image][gfx:write_image]"
 
 using namespace be;
 
@@ -61,64 +61,64 @@ void require_equivalent(gli::texture& a, gli::texture& b) {
    }
 }
 
-TEST_CASE("texi dds read/write", BE_CATCH_TAGS) {
+TEST_CASE("gfx dds read/write", BE_CATCH_TAGS) {
    gli::texture tex = create_test_image(gli::FORMAT_RGBA8_UNORM_PACK8, {11, 12});
    Buf<const UC> buf;
    gli::texture tex2;
 
-   REQUIRE_NOTHROW(buf = texi::write_dds_texture(tex));
-   REQUIRE_NOTHROW(tex2 = texi::read_dds_texture(buf));
+   REQUIRE_NOTHROW(buf = gfx::write_dds_texture(tex));
+   REQUIRE_NOTHROW(tex2 = gfx::read_dds_texture(buf));
    require_equivalent(tex, tex2);
 }
 
 
-TEST_CASE("texi ktx read/write", BE_CATCH_TAGS) {
+TEST_CASE("gfx ktx read/write", BE_CATCH_TAGS) {
    gli::texture tex = create_test_image(gli::FORMAT_RGBA8_UNORM_PACK8, {11, 12});
    Buf<const UC> buf;
    gli::texture tex2;
 
-   REQUIRE_NOTHROW(buf = texi::write_ktx_texture(tex));
-   REQUIRE_NOTHROW(tex2 = texi::read_ktx_texture(buf));
+   REQUIRE_NOTHROW(buf = gfx::write_ktx_texture(tex));
+   REQUIRE_NOTHROW(tex2 = gfx::read_ktx_texture(buf));
    require_equivalent(tex, tex2);
 }
 
-TEST_CASE("texi kmg read/write", BE_CATCH_TAGS) {
+TEST_CASE("gfx kmg read/write", BE_CATCH_TAGS) {
    gli::texture tex = create_test_image(gli::FORMAT_RGBA8_UNORM_PACK8, {11, 12});
    Buf<const UC> buf;
    gli::texture tex2;
 
-   REQUIRE_NOTHROW(buf = texi::write_kmg_texture(tex));
-   REQUIRE_NOTHROW(tex2 = texi::read_kmg_texture(buf));
+   REQUIRE_NOTHROW(buf = gfx::write_kmg_texture(tex));
+   REQUIRE_NOTHROW(tex2 = gfx::read_kmg_texture(buf));
    require_equivalent(tex, tex2);
 }
 
-TEST_CASE("texi png read/write", BE_CATCH_TAGS) {
+TEST_CASE("gfx png read/write", BE_CATCH_TAGS) {
    gli::texture tex = create_test_image(gli::FORMAT_RGBA8_UNORM_PACK8, {11, 12});
    Buf<const UC> buf;
    gli::texture tex2;
 
-   REQUIRE_NOTHROW(buf = texi::write_png_texture(tex));
-   REQUIRE_NOTHROW(tex2 = texi::read_png_texture(buf));
+   REQUIRE_NOTHROW(buf = gfx::write_png_texture(tex));
+   REQUIRE_NOTHROW(tex2 = gfx::read_png_texture(buf));
    require_equivalent(tex, tex2);
 }
 
-TEST_CASE("texi bmp read/write", BE_CATCH_TAGS) {
+TEST_CASE("gfx bmp read/write", BE_CATCH_TAGS) {
    gli::texture tex = create_test_image(gli::FORMAT_RGB8_UNORM_PACK8, {11, 12});
    Buf<const UC> buf;
    gli::texture tex2;
 
-   REQUIRE_NOTHROW(buf = texi::write_bmp_texture(tex));
-   REQUIRE_NOTHROW(tex2 = texi::read_bmp_texture(buf));
+   REQUIRE_NOTHROW(buf = gfx::write_bmp_texture(tex));
+   REQUIRE_NOTHROW(tex2 = gfx::read_bmp_texture(buf));
    require_equivalent(tex, tex2);
 }
 
-TEST_CASE("texi tga read/write", BE_CATCH_TAGS) {
+TEST_CASE("gfx tga read/write", BE_CATCH_TAGS) {
    gli::texture tex = create_test_image(gli::FORMAT_RGBA8_UNORM_PACK8, {11, 12});
    Buf<const UC> buf;
    gli::texture tex2;
 
-   REQUIRE_NOTHROW(buf = texi::write_tga_texture(tex));
-   REQUIRE_NOTHROW(tex2 = texi::read_tga_texture(buf));
+   REQUIRE_NOTHROW(buf = gfx::write_tga_texture(tex));
+   REQUIRE_NOTHROW(tex2 = gfx::read_tga_texture(buf));
    require_equivalent(tex, tex2);
 }
 

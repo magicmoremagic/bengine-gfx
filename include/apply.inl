@@ -1,7 +1,7 @@
-#if !defined(BE_TEXI_APPLY_HPP_) && !defined(DOXYGEN)
+#if !defined(BE_GFX_APPLY_HPP_) && !defined(DOXYGEN)
 #include "apply.hpp"
-#elif !defined(BE_TEXI_APPLY_INL_)
-#define BE_TEXI_APPLY_INL_
+#elif !defined(BE_GFX_APPLY_INL_)
+#define BE_GFX_APPLY_INL_
 
 namespace gli {
 namespace detail {

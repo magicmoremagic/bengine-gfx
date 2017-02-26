@@ -1,11 +1,11 @@
 #pragma once
-#ifndef BE_TEXI_CUBIC_FILTER_HPP_
-#define BE_TEXI_CUBIC_FILTER_HPP_
+#ifndef BE_GFX_CUBIC_FILTER_HPP_
+#define BE_GFX_CUBIC_FILTER_HPP_
 
 #include "filter_traits.hpp"
 
 namespace be {
-namespace texi {
+namespace gfx {
 namespace detail {
 
 template <int B, int C, int D, typename T>
@@ -23,7 +23,7 @@ struct MitchellNetravaliBC {
    static constexpr T w = T(8 * b + 24 * c) / T(6);
 };
 
-} // be::texi::detail
+} // be::gfx::detail
 
 template <int B, int C, int D = 1>
 struct MitchellNetravaliCubicFilter {
@@ -112,7 +112,7 @@ DynamicMitchellNetravaliCubicFilter<T> make_keys_filter(T alpha) {
    return DynamicMitchellNetravaliCubicFilter<T>(T(1) - T(2) * alpha, alpha);
 }
 
-} // be::texi
+} // be::gfx
 } // be
 
 #endif

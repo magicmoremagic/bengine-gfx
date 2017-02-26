@@ -1,11 +1,11 @@
 #pragma once
-#ifndef BE_TEXI_GAUSSIAN_FILTER_HPP_
-#define BE_TEXI_GAUSSIAN_FILTER_HPP_
+#ifndef BE_GFX_GAUSSIAN_FILTER_HPP_
+#define BE_GFX_GAUSSIAN_FILTER_HPP_
 
 #include "memoized_filter.hpp"
 
 namespace be {
-namespace texi {
+namespace gfx {
 namespace detail {
 
 template <int S, int D, int M, typename T>
@@ -16,7 +16,7 @@ struct GaussianFilterConstants {
    static constexpr T support = T(sigma * M);
 };
 
-} // be::texi::detail
+} // be::gfx::detail
 
 template <int S = 1, int D = 2, int M = 4>
 struct GaussianFilter {
@@ -37,7 +37,7 @@ struct FilterSupportRange<GaussianFilter<S, D, M>> {
 template <typename T, int S = 1, int D = 2, int M = 4>
 using MemoizedGaussianFilter = MemoizedFilter<T, GaussianFilter<S,D,M>>;
 
-} // be::texi
+} // be::gfx
 } // be
 
 #endif

@@ -1,4 +1,4 @@
-module 'texi' {
+module 'gfx' {
    lib {
       limp { file = 'include/read_image.hpp', inputs = { 'meta/read_x_image.blt', 'meta/read_image.blt' } },
       limp { file = 'include/write_image.hpp', inputs = 'meta/write_x_image.blt' },
@@ -10,12 +10,12 @@ module 'texi' {
       src {
          'src/*.c',
       },
-      define 'BE_TEXI_IMPL',
+      define 'BE_GFX_IMPL',
       link_project 'core',
       link_project 'util'
    },
    app '-test' {
       icon 'icon/bengine-test-perf.ico',
-      link_project { 'testing', 'texi' }
+      link_project { 'testing', 'gfx' }
    }
 }

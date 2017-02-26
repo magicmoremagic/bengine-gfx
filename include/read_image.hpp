@@ -1,15 +1,15 @@
 #pragma once
-#ifndef BE_TEXI_IMAGE_READ_HPP_
-#define BE_TEXI_IMAGE_READ_HPP_
+#ifndef BE_GFX_IMAGE_READ_HPP_
+#define BE_GFX_IMAGE_READ_HPP_
 
-#include "texi_autolink.hpp"
+#include "gfx_autolink.hpp"
 #include <be/core/buf.hpp>
 #include <be/util/files.hpp>
 #include <gli/texture.hpp>
 #include <gli/image.hpp>
 
 namespace be {
-namespace texi {
+namespace gfx {
 
 /*!! 
 local texture_formats = { 'dds', 'kmg', 'ktx' }
@@ -437,7 +437,7 @@ inline bool read_simple_image(const Path& path, gli::image& dest) {
 
 /* ################ END OF GENERATED CODE ################ */
 
-} // be::texi
+} // be::gfx
 } // be
 
 #endif

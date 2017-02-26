@@ -1,12 +1,12 @@
 #pragma once
-#ifndef BE_TEXI_MEMOIZED_FILTER_HPP_
-#define BE_TEXI_MEMOIZED_FILTER_HPP_
+#ifndef BE_GFX_MEMOIZED_FILTER_HPP_
+#define BE_GFX_MEMOIZED_FILTER_HPP_
 
 #include "filter_traits.hpp"
 #include <map>
 
 namespace be {
-namespace texi {
+namespace gfx {
 
 template <typename T, typename F>
 struct MemoizedFilter {
@@ -31,7 +31,7 @@ private:
 template <typename T, typename F>
 struct FilterSupportRange<MemoizedFilter<T, F>> : public FilterSupportRange<F> { };
 
-} // be::texi
+} // be::gfx
 } // be
 
 #endif

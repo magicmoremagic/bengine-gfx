@@ -1,14 +1,14 @@
 #pragma once
-#ifndef BE_TEXI_WRITE_IMAGE_HPP_
-#define BE_TEXI_WRITE_IMAGE_HPP_
+#ifndef BE_GFX_WRITE_IMAGE_HPP_
+#define BE_GFX_WRITE_IMAGE_HPP_
 
-#include "texi_autolink.hpp"
+#include "gfx_autolink.hpp"
 #include "fwd_types.hpp"
 #include <be/core/buf.hpp>
 #include <be/util/files.hpp>
 
 namespace be {
-namespace texi {
+namespace gfx {
 
 /*!! 
 local texture_formats = { 'dds', 'kmg', 'ktx' }
@@ -153,7 +153,7 @@ inline bool write_hdr_image(const gli::image& img, const Path& path) {
 
 /* ################ END OF GENERATED CODE ################ */
 
-} // be::texi
+} // be::gfx
 } // be
 
 #endif

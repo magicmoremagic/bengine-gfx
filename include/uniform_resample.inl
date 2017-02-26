@@ -1,10 +1,10 @@
-#if !defined(BE_TEXI_UNIFORM_RESAMPLE_HPP_) && !defined(DOXYGEN)
+#if !defined(BE_GFX_UNIFORM_RESAMPLE_HPP_) && !defined(DOXYGEN)
 #include "uniform_resample.hpp"
-#elif !defined(BE_TEXI_UNIFORM_RESAMPLE_INL_)
-#define BE_TEXI_UNIFORM_RESAMPLE_INL_
+#elif !defined(BE_GFX_UNIFORM_RESAMPLE_INL_)
+#define BE_GFX_UNIFORM_RESAMPLE_INL_
 
 namespace be {
-namespace texi {
+namespace gfx {
 
 ///////////////////////////////////////////////////////////////////////////////
 template <typename T, typename F, typename W>
@@ -167,7 +167,7 @@ void uniform_resample_1d(image out, image in, F32 scale, F32 offset, F32 support
    }
 }
 
-} // be::texi
+} // be::gfx
 } // be
 
 #endif

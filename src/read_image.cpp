@@ -9,7 +9,7 @@
 #include <glm/vec2.hpp>
 
 namespace be {
-namespace texi {
+namespace gfx {
 namespace {
 
 void stbi_deleter(void* ptr, std::size_t size) {
@@ -72,7 +72,7 @@ bool write_stbi_to_image(void* data, glm::ivec2 dim, int channels, int bpc, gli:
    return false;
 }
 
-} // be::texi::()
+} // be::gfx::()
 
 ///////////////////////////////////////////////////////////////////////////////
 gli::texture read_dds_texture(const Buf<const UC>& buf) {
@@ -320,5 +320,5 @@ gli::image read_tga_image(const Buf<const UC>& buf) {
 
 /* ################ END OF GENERATED CODE ################ */
 
-} // be::texi
+} // be::gfx
 } // be

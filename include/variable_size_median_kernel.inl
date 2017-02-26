@@ -1,10 +1,10 @@
-#if !defined(BE_TEXI_VARIABLE_SIZE_MEDIAN_KERNEL_HPP_) && !defined(DOXYGEN)
+#if !defined(BE_GFX_VARIABLE_SIZE_MEDIAN_KERNEL_HPP_) && !defined(DOXYGEN)
 #include "variable_size_median_kernel.hpp"
-#elif !defined(BE_TEXI_VARIABLE_SIZE_MEDIAN_KERNEL_INL_)
-#define BE_TEXI_VARIABLE_SIZE_MEDIAN_KERNEL_INL_
+#elif !defined(BE_GFX_VARIABLE_SIZE_MEDIAN_KERNEL_INL_)
+#define BE_GFX_VARIABLE_SIZE_MEDIAN_KERNEL_INL_
 
 namespace be {
-namespace texi {
+namespace gfx {
 
 ///////////////////////////////////////////////////////////////////////////////
 template <typename T, std::size_t N>
@@ -70,7 +70,7 @@ typename VariableSizeMedianKernel<T, N>::value_type VariableSizeMedianKernel<T, 
    return sample;
 }
 
-} // be::texi
+} // be::gfx
 } // be
 
 #endif

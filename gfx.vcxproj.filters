@@ -41,7 +41,7 @@
     <ClInclude Include="include\stbi_util_detail.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\texi_autolink.hpp">
+    <ClInclude Include="include\gfx_autolink.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\fixed_size_median_kernel.hpp">

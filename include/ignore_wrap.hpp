@@ -1,6 +1,6 @@
 #pragma once
-#ifndef BE_TEXI_IGNORE_WRAP_HPP_
-#define BE_TEXI_IGNORE_WRAP_HPP_
+#ifndef BE_GFX_IGNORE_WRAP_HPP_
+#define BE_GFX_IGNORE_WRAP_HPP_
 
 #include "filter_traits.hpp"
 #include "fwd_types.hpp"
@@ -8,7 +8,7 @@
 #include <gli/image.hpp>
 
 namespace be {
-namespace texi {
+namespace gfx {
 
 struct IgnoreWrap {
    image::extent_type operator()(const image& image, image::extent_type tc, F32& weight) {
@@ -33,7 +33,7 @@ struct IgnoreWrap {
    }
 };
 
-} // be::texi
+} // be::gfx
 } // be
 
 #endif

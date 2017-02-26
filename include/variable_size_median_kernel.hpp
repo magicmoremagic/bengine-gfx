@@ -1,13 +1,13 @@
 #pragma once
-#ifndef BE_TEXI_VARIABLE_SIZE_MEDIAN_KERNEL_HPP_
-#define BE_TEXI_VARIABLE_SIZE_MEDIAN_KERNEL_HPP_
+#ifndef BE_GFX_VARIABLE_SIZE_MEDIAN_KERNEL_HPP_
+#define BE_GFX_VARIABLE_SIZE_MEDIAN_KERNEL_HPP_
 
-#include "texi_autolink.hpp"
+#include "gfx_autolink.hpp"
 #include <be/core/t_covering_unsigned.hpp>
 #include <array>
 
 namespace be {
-namespace texi {
+namespace gfx {
 
 ///////////////////////////////////////////////////////////////////////////////
 template <typename T, std::size_t N>
@@ -37,7 +37,7 @@ private:
    count_type before_median_ = 0;
 };
 
-} // be::texi
+} // be::gfx
 } // be
 
 #include "variable_size_median_kernel.inl"

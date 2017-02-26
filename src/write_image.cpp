@@ -8,7 +8,7 @@
 #include <gli/convert.hpp>
 
 namespace be {
-namespace texi {
+namespace gfx {
 namespace {
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -25,7 +25,7 @@ void write_to_buf(void* vptr, void *data, int size) {
    buf = concat_buf(buf, tmp_buf(static_cast<UC*>(data), (std::size_t)size));
 }
 
-} // be::texi::()
+} // be::gfx::()
 
 ///////////////////////////////////////////////////////////////////////////////
 Buf<UC> write_dds_texture(const gli::texture& tex) {
@@ -194,5 +194,5 @@ Buf<UC> write_hdr_image(const gli::image& img) {
    }
 }
 
-} // be::texi
+} // be::gfx
 } // be

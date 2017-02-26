@@ -1,6 +1,6 @@
 #pragma once
-#ifndef BE_TEXI_APPLY_HPP_
-#define BE_TEXI_APPLY_HPP_
+#ifndef BE_GFX_APPLY_HPP_
+#define BE_GFX_APPLY_HPP_
 
 #include <gli/texture1d.hpp>
 #include <gli/texture1d_array.hpp>

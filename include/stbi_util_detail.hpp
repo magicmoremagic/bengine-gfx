@@ -1,11 +1,11 @@
 #pragma once
-#ifndef BE_TEXI_STBI_UTIL_DETAIL_HPP_
-#define BE_TEXI_STBI_UTIL_DETAIL_HPP_
+#ifndef BE_GFX_STBI_UTIL_DETAIL_HPP_
+#define BE_GFX_STBI_UTIL_DETAIL_HPP_
 
 #include <gli/format.hpp>
 
 namespace be {
-namespace texi {
+namespace gfx {
 namespace detail {
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -20,8 +20,8 @@ int get_stbi_format_8_channels(gli::format format);
 int get_stbi_format_16_channels(gli::format format);
 int get_stbi_format_32_channels(gli::format format);
 
-} // be::texi::detail
-} // be::texi
+} // be::gfx::detail
+} // be::gfx
 } // be
 
 #endif

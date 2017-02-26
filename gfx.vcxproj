@@ -11,8 +11,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectName>texi</ProjectName>
-    <RootNamespace>texi</RootNamespace>
+    <ProjectName>gfx</ProjectName>
+    <RootNamespace>gfx</RootNamespace>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
     <ProjectGuid>{BED84038-3FE4-4D45-9CAB-C26608FDD822}</ProjectGuid>
   </PropertyGroup>
@@ -43,13 +43,13 @@
   <PropertyGroup />
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'">
     <ClCompile>
-      <PreprocessorDefinitions>BE_TEXI_IMPL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>BE_GFX_IMPL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>Use</PrecompiledHeader>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'">
     <ClCompile>
-      <PreprocessorDefinitions>BE_TEXI_IMPL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>BE_GFX_IMPL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>Use</PrecompiledHeader>
     </ClCompile>
   </ItemDefinitionGroup>
@@ -67,7 +67,7 @@
     <ClInclude Include="include\read_image.hpp" />
     <ClInclude Include="include\resize_image.hpp" />
     <ClInclude Include="include\stbi_util_detail.hpp" />
-    <ClInclude Include="include\texi_autolink.hpp" />
+    <ClInclude Include="include\gfx_autolink.hpp" />
     <ClInclude Include="include\linear_filter.hpp" />
     <ClInclude Include="include\uniform_resample.hpp" />
     <ClInclude Include="include\variable_size_median_kernel.hpp" />

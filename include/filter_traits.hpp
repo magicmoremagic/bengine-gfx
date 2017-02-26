@@ -1,9 +1,9 @@
 #pragma once
-#ifndef BE_TEXI_FILTER_TRAITS_HPP_
-#define BE_TEXI_FILTER_TRAITS_HPP_
+#ifndef BE_GFX_FILTER_TRAITS_HPP_
+#define BE_GFX_FILTER_TRAITS_HPP_
 
 namespace be {
-namespace texi {
+namespace gfx {
 
 template <typename F>
 struct FilterSupportRange {
@@ -13,7 +13,7 @@ struct FilterSupportRange {
    }
 };
 
-} // be::texi
+} // be::gfx
 } // be
 
 #endif

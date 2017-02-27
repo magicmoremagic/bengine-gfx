@@ -1,5 +1,10 @@
 module 'gfx' {
    lib {
+      limp { file = 'include/colorspace.hpp', inputs = { 'meta/colorspace.lua', 'limp/common/enum_decl.blt' } },
+      limp { file = 'src/colorspace.cpp', inputs = { 'meta/colorspace.lua', 'limp/common/enum_name.blt' } },
+      limp { file = 'include/swizzle.hpp', inputs = { 'meta/colorspace.lua', 'limp/common/enum_decl.blt' } },
+      limp { file = 'src/swizzle.cpp', inputs = { 'meta/colorspace.lua', 'limp/common/enum_name.blt' } },
+
       limp { file = 'include/read_image.hpp', inputs = { 'meta/read_x_image.blt', 'meta/read_image.blt' } },
       limp { file = 'include/write_image.hpp', inputs = 'meta/write_x_image.blt' },
       limp { file = 'src/read_image.cpp', inputs = 'meta/read_stbi_image_impl.blt' },

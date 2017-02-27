@@ -18,6 +18,12 @@
     <Filter Include="Header Files\wraps">
       <UniqueIdentifier>{d35088d5-0db2-400f-9331-1bdec30d1be0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\textures">
+      <UniqueIdentifier>{0a777fe2-9844-4c92-95b9-3a593767deb4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\textures">
+      <UniqueIdentifier>{48ee0916-d10f-45a3-ae79-58476da27d63}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\pch.hpp">
@@ -80,6 +86,30 @@
     <ClInclude Include="include\apply.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\texture_storage.hpp">
+      <Filter>Header Files\textures</Filter>
+    </ClInclude>
+    <ClInclude Include="include\texture_view.hpp">
+      <Filter>Header Files\textures</Filter>
+    </ClInclude>
+    <ClInclude Include="include\texture.hpp">
+      <Filter>Header Files\textures</Filter>
+    </ClInclude>
+    <ClInclude Include="include\image_format.hpp">
+      <Filter>Header Files\textures</Filter>
+    </ClInclude>
+    <ClInclude Include="include\image_view.hpp">
+      <Filter>Header Files\textures</Filter>
+    </ClInclude>
+    <ClInclude Include="include\image.hpp">
+      <Filter>Header Files\textures</Filter>
+    </ClInclude>
+    <ClInclude Include="include\colorspace.hpp">
+      <Filter>Header Files\textures</Filter>
+    </ClInclude>
+    <ClInclude Include="include\swizzle.hpp">
+      <Filter>Header Files\textures</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\pch.cpp">
@@ -102,6 +132,18 @@
     </ClCompile>
     <ClCompile Include="src\stbi_util_detail.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\texture_storage.cpp">
+      <Filter>Source Files\textures</Filter>
+    </ClCompile>
+    <ClCompile Include="src\colorspace.cpp">
+      <Filter>Source Files\textures</Filter>
+    </ClCompile>
+    <ClCompile Include="src\swizzle.cpp">
+      <Filter>Source Files\textures</Filter>
+    </ClCompile>
+    <ClCompile Include="src\image_format.cpp">
+      <Filter>Source Files\textures</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -128,6 +170,12 @@
     </None>
     <None Include="include\apply.inl">
       <Filter>Header Files</Filter>
+    </None>
+    <None Include="meta\colorspace.lua">
+      <Filter>Meta-Source Files</Filter>
+    </None>
+    <None Include="meta\swizzle.lua">
+      <Filter>Meta-Source Files</Filter>
     </None>
   </ItemGroup>
 </Project>

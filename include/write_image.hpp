@@ -16,7 +16,7 @@ local image_formats = { 'png', 'bmp', 'tga', 'hdr' }
 
 write_template('write_x_image', { formats = texture_formats })
 write_template('write_x_image', { formats = image_formats, include_image_overloads = true }) !! 137 */
-/* ######## !! GENERATED CODE -- DO NOT MODIFY !! ######## */
+/* ################# !! GENERATED CODE -- DO NOT MODIFY !! ################# */
 
 ///////////////////////////////////////////////////////////////////////////////
 Buf<UC> write_dds_texture(const gli::texture& tex);
@@ -151,7 +151,7 @@ inline bool write_hdr_image(const gli::image& img, const Path& path) {
    }
 }
 
-/* ################ END OF GENERATED CODE ################ */
+/* ######################### END OF GENERATED CODE ######################### */
 
 } // be::gfx
 } // be

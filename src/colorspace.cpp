@@ -4,7 +4,7 @@
 namespace be::gfx {
 
 /*!! include 'colorspace' !! 170 */
-/* ######## !! GENERATED CODE -- DO NOT MODIFY !! ######## */
+/* ################# !! GENERATED CODE -- DO NOT MODIFY !! ################# */
 
 ///////////////////////////////////////////////////////////////////////////////
 bool is_linear(Colorspace constant) {
@@ -172,6 +172,6 @@ const char* colorspace_variant_name(ColorspaceVariant constant) {
    }
 }
 
-/* ################ END OF GENERATED CODE ################ */
+/* ######################### END OF GENERATED CODE ######################### */
 
 } // be::gfx

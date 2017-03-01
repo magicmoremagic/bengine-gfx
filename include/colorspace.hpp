@@ -7,7 +7,7 @@
 namespace be::gfx {
 
 /*!! include 'colorspace' !! 54 */
-/* ######## !! GENERATED CODE -- DO NOT MODIFY !! ######## */
+/* ################# !! GENERATED CODE -- DO NOT MODIFY !! ################# */
 
 ///////////////////////////////////////////////////////////////////////////////
 enum class ColorspaceFamily : U8 {
@@ -59,7 +59,7 @@ bool is_valid(ColorspaceVariant constant);
 const char* colorspace_name(Colorspace constant);
 const char* colorspace_family_name(ColorspaceFamily constant);
 const char* colorspace_variant_name(ColorspaceVariant constant);
-/* ################ END OF GENERATED CODE ################ */
+/* ######################### END OF GENERATED CODE ######################### */
 
 } // be::gfx
 

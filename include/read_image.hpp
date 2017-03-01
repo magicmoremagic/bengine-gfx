@@ -25,7 +25,7 @@ write_template('read_x_image', { formats = texture_formats })
 write_template('read_x_image', { formats = image_formats, include_image_overloads = true })
 write_template('read_image', { formats = all_formats })
 write_template('read_image', { formats = image_formats, prefix = 'simple_', include_image_overloads = true }) !! 412 */
-/* ######## !! GENERATED CODE -- DO NOT MODIFY !! ######## */
+/* ################# !! GENERATED CODE -- DO NOT MODIFY !! ################# */
 
 ///////////////////////////////////////////////////////////////////////////////
 gli::texture read_dds_texture(const Buf<const UC>& buf);
@@ -435,7 +435,7 @@ inline bool read_simple_image(const Path& path, gli::image& dest) {
    return read_simple_image(util::get_file_contents_buf(path), dest);
 }
 
-/* ################ END OF GENERATED CODE ################ */
+/* ######################### END OF GENERATED CODE ######################### */
 
 } // be::gfx
 } // be

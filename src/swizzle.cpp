@@ -4,7 +4,7 @@
 namespace be::gfx {
 
 /*!! include 'swizzle' !! 33 */
-/* ######## !! GENERATED CODE -- DO NOT MODIFY !! ######## */
+/* ################# !! GENERATED CODE -- DO NOT MODIFY !! ################# */
 
 ///////////////////////////////////////////////////////////////////////////////
 bool is_valid(Swizzle constant) {
@@ -35,6 +35,6 @@ const char* swizzle_name(Swizzle constant) {
    }
 }
 
-/* ################ END OF GENERATED CODE ################ */
+/* ######################### END OF GENERATED CODE ######################### */
 
 } // be::gfx

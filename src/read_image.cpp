@@ -91,7 +91,7 @@ gli::texture read_ktx_texture(const Buf<const UC>& buf) {
 
 /*!! formats = { 'png', 'jpeg', 'hdr', 'pic', 'pnm', 'bmp', 'gif', 'psd', 'tga' }
 write_template('read_stbi_image_impl', formats) !! 229 */
-/* ######## !! GENERATED CODE -- DO NOT MODIFY !! ######## */
+/* ################# !! GENERATED CODE -- DO NOT MODIFY !! ################# */
 
 ///////////////////////////////////////////////////////////////////////////////
 gli::texture read_png_texture(const Buf<const UC>& buf) {
@@ -318,7 +318,7 @@ gli::image read_tga_image(const Buf<const UC>& buf) {
 }
 
 
-/* ################ END OF GENERATED CODE ################ */
+/* ######################### END OF GENERATED CODE ######################### */
 
 } // be::gfx
 } // be

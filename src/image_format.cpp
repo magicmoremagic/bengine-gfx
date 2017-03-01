@@ -27,10 +27,10 @@ ImageFormat::ImageFormat(block_size_type block_size,
    assert(block_dim.y > 0);
    assert(block_dim.z > 0);
    assert(components > 0);
-   assert(is_valid(swizzle.r));
-   assert(is_valid(swizzle.g));
-   assert(is_valid(swizzle.b));
-   assert(is_valid(swizzle.a));
+   assert(is_valid(static_cast<Swizzle>(swizzle.r)));
+   assert(is_valid(static_cast<Swizzle>(swizzle.g)));
+   assert(is_valid(static_cast<Swizzle>(swizzle.b)));
+   assert(is_valid(static_cast<Swizzle>(swizzle.a)));
    assert(is_valid(colorspace));
 }
 

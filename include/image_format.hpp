@@ -18,7 +18,7 @@ public:
    using block_size_type = U8;
    using block_dim_type = glm::vec<3, block_size_type>;
    using bpc_vec_type = glm::vec<4, U8>;
-   using swizzle_vec_type = glm::vec<4, Swizzle>;
+   using swizzle_vec_type = glm::vec<4, U8>;
    
    static constexpr std::size_t max_block_size = std::size_t(block_size_type(-1)) + 1u;
    static constexpr std::size_t max_block_dim = std::size_t(block_size_type(-1)) + 1u;
@@ -32,7 +32,9 @@ public:
    block_dim_type block_dim() const;
    U8 components() const;
    bpc_vec_type bits() const;
+   U8 bits(std::size_t component);
    swizzle_vec_type swizzle() const;
+   Swizzle swizzle(std::size_t component);
    Colorspace colorspace() const;
 
 private:

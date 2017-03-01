@@ -13,7 +13,6 @@ namespace be::gfx {
 
 ///////////////////////////////////////////////////////////////////////////////
 class ImageFormat final {
-
 public:
    using block_size_type = U8;
    using block_dim_type = glm::vec<3, block_size_type>;
@@ -32,9 +31,9 @@ public:
    block_dim_type block_dim() const;
    U8 components() const;
    bpc_vec_type bits() const;
-   U8 bits(std::size_t component);
+   U8 bits(glm::length_t component) const;
    swizzle_vec_type swizzle() const;
-   Swizzle swizzle(std::size_t component);
+   Swizzle swizzle(glm::length_t component) const;
    Colorspace colorspace() const;
 
 private:

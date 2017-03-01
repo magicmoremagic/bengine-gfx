@@ -63,11 +63,11 @@ public:
 private:
    void init_(std::size_t levels, ivec3 dim);
 
-   layer_index_type layers_;
-   face_index_type faces_;
+   const layer_index_type layers_;
+   const face_index_type faces_;
    level_index_type levels_;
-   block_size_type block_size_;
-   block_dim_type block_dim_;
+   const block_size_type block_size_;
+   const block_dim_type block_dim_;
    std::array<ivec3, max_levels> dim_;
    std::array<ivec3, max_levels> dim_blocks_;
    std::size_t face_span_;

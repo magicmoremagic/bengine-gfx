@@ -8,7 +8,7 @@
 namespace be::gfx {
 
 struct Image final {
-   TextureStorage data;
+   std::unique_ptr<TextureStorage> data;
    ImageView view;
 };
 

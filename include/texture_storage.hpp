@@ -56,6 +56,7 @@ public:
    block_size_type block_size() const; ///< The displacement in bytes between a block and the next one in the x direction.  Equivalent to block_size().
    std::size_t line_span(std::size_t level) const; ///< The displacement in bytes between a block and the next one in the y direction.
    std::size_t plane_span(std::size_t level) const; ///< The displacement in bytes between a block and the next one in the z direction.
+   std::size_t level_offset(std::size_t level) const;
    std::size_t face_span() const; ///< The displacement in bytes between the first block of one face and the first block of the next face.
    std::size_t layer_span() const; ///< The displacement in bytes between the first block of the first face of one layer and the first block of the first face of the next layer.
 
@@ -77,6 +78,7 @@ private:
    std::size_t layer_span_;
    std::array<std::size_t, max_levels> line_span_;
    std::array<std::size_t, max_levels> plane_span_;
+   std::array<std::size_t, max_levels> level_offset_;
    std::size_t size_;
    Buf<UC> data_;
 };

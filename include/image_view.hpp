@@ -17,6 +17,8 @@ public:
    using block_dim_type = typename ImageFormat::block_dim_type;
 
    ImageView();
+   ImageView(const ImageFormat& format, TextureStorage& storage, std::size_t layer, std::size_t face, std::size_t level);
+   ImageView(const ImageFormat& format, ImageView& other);
 
    ImageView(ImageView& other) = default; // prevent copying const ImageViews
    ImageView& operator=(ImageView& other) = default; // prevent copying const ImageViews

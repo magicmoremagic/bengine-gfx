@@ -11,6 +11,37 @@ ImageView::ImageView()
      level_(0) { }
 
 ///////////////////////////////////////////////////////////////////////////////
+ImageView::ImageView(const ImageFormat& format, TextureStorage& storage, std::size_t layer, std::size_t face, std::size_t level)
+   : format_(format),
+     storage_(&storage),
+     layer_(static_cast<layer_index_type>(layer)),
+     face_(static_cast<face_index_type>(face)),
+     level_(static_cast<level_index_type>(level)),
+     data_(storage.data()
+           + layer * storage.layer_span()
+           + face * storage.face_span()
+           + storage.level_offset(level),
+           storage.plane_span(level) * std::size_t(storage.dim_blocks(level).z)) {
+   assert(layer >= 0 && layer < storage.layers());
+   assert(face >= 0 && face < storage.faces());
+   assert(level >= 0 && level < storage.levels());
+   assert(format.block_dim() == storage.block_dim());
+   assert(format.block_size() <= storage.block_size());
+}
+
+///////////////////////////////////////////////////////////////////////////////
+ImageView::ImageView(const ImageFormat& format, ImageView& other)
+   : format_(format),
+     storage_(other.storage_),
+     layer_(other.layer_),
+     face_(other.face_),
+     level_(other.level_),
+     data_(other.data_.get(), other.data_.size()) {
+   assert(format.block_dim() == storage_->block_dim());
+   assert(format.block_size() <= storage_->block_size());
+}
+
+///////////////////////////////////////////////////////////////////////////////
 TextureStorage& ImageView::storage() {
    return *storage_;
 }

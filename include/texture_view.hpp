@@ -39,7 +39,7 @@ public:
    const ivec3& dim_blocks(std::size_t level) const; ///< The dimensions of the block array covering a single face image at the specified mipmapping level.
 
 private:
-   TextureStorage* storage;
+   TextureStorage* storage_;
 };
 
 } // be::gfx

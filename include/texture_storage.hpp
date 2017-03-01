@@ -10,7 +10,7 @@ namespace be::gfx {
 ///////////////////////////////////////////////////////////////////////////////
 class TextureStorage final {
 public:
-   static const TextureStorage nil;
+   static TextureStorage nil;
 
    using layer_index_type = U16;
    using face_index_type = U8;
@@ -47,6 +47,9 @@ public:
    UC* data(); ///< A pointer to the beginning of the texture data.
    const UC* data() const; ///< A pointer to the beginning of the (const) texture data.
    
+   explicit operator Buf<UC>(); ///< Constructs a non-owning Buf holding this texture storage's data.
+   explicit operator Buf<const UC>() const; ///< Constructs a non-owning Buf holding this texture storage's const data.
+
    std::size_t layers() const; ///< The number of texture array layers.  0 for an empty TextureStorage, and at least 1 for any other case.
    std::size_t faces() const; ///< The number of faces.  0 for an empty TextureStorage, at least 1 for cubemap textures, and exactly 1 in any other case.
    std::size_t levels() const; ///< The number of mipmapping levels.  0 for an empty TextureStorage, and at least 1 for any other case.  This may be less than the value specified in the constructor if the dimensions are too small.

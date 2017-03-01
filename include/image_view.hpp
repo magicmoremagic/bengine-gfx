@@ -3,20 +3,28 @@
 #define BE_GFX_IMAGE_VIEW_HPP_
 
 #include "image_format.hpp"
+#include "texture_storage.hpp"
 
 namespace be::gfx {
 
-class TextureStorage;
-
+///////////////////////////////////////////////////////////////////////////////
 class ImageView final {
 public:
-
+   using layer_index_type = typename TextureStorage::layer_index_type;
+   using face_index_type = typename TextureStorage::face_index_type;
+   using level_index_type = typename TextureStorage::level_index_type;
+   using block_size_type = typename ImageFormat::block_size_type;
+   using block_dim_type = typename ImageFormat::block_dim_type;
 
    ImageView();
 
+   ImageView(ImageView& other) = default; // prevent copying const ImageViews
+   ImageView& operator=(ImageView& other) = default; // prevent copying const ImageViews
 
    TextureStorage& storage();
    const TextureStorage& storage() const;
+
+   const ImageFormat& format() const;
 
    explicit operator bool() const; ///< Returns true if 0 < storage().size()
    bool empty() const; ///< Returns true if 0 == storage().size()
@@ -25,16 +33,28 @@ public:
    UC* data(); ///< A pointer to the beginning of the image data.
    const UC* data() const; ///< A pointer to the beginning of the (const) image data.
 
-   std::size_t block_size() const; ///< The displacement in bytes between a block and the next one in the x direction.  Equivalent to block_size().
+   explicit operator Buf<UC>(); ///< Constructs a non-owning Buf holding this image's data.
+   explicit operator Buf<const UC>() const; ///< Constructs a non-owning Buf holding this image's const data.
+
+   std::size_t layer() const; ///< The layer index of the portion of the texture this view represents.
+   std::size_t face() const; ///< The face index of the portion of the texture this view represents.
+   std::size_t level() const; ///< The mipmapping level of the portion of the texture this view represents.
+
+   block_size_type block_size() const; ///< The displacement in bytes between a block and the next one in the x direction.  Equivalent to block_size().
    std::size_t line_span() const; ///< The displacement in bytes between a block and the next one in the y direction.
    std::size_t plane_span() const; ///< The displacement in bytes between a block and the next one in the z direction.
 
-   const ivec3& block_dim() const; ///< The dimensions of a single block, in pixels.
-   const ivec3& dim() const; ///< The dimensions of a single face image at the specified mipmapping level.
-   const ivec3& dim_blocks() const; ///< The dimensions of the block array covering a single face image at the specified mipmapping level.
+   block_dim_type block_dim() const; ///< The dimensions of a single block, in pixels.
+   const ivec3& dim() const; ///< The dimensions of a the image, in pixels
+   const ivec3& dim_blocks() const; ///< The dimensions of the block array covering the image.
 
 private:
-   TextureStorage* storage;
+   ImageFormat format_;
+   TextureStorage* storage_;
+   layer_index_type layer_;
+   face_index_type face_;
+   level_index_type level_;
+   Buf<UC> data_;
 };
 
 } // be::gfx

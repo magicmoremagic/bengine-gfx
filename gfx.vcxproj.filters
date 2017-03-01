@@ -145,6 +145,12 @@
     <ClCompile Include="src\image_format.cpp">
       <Filter>Source Files\textures</Filter>
     </ClCompile>
+    <ClCompile Include="src\image_view.cpp">
+      <Filter>Source Files\textures</Filter>
+    </ClCompile>
+    <ClCompile Include="src\texture_view.cpp">
+      <Filter>Source Files\textures</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="meta\read_image.blt">

@@ -45,6 +45,7 @@
   </ImportGroup>
   <PropertyGroup />
   <ItemGroup>
+    <ClCompile Include="test\test_image_view.cpp" />
     <ClCompile Include="test\test_main.cpp" />
     <ClCompile Include="test\test_read_write_image.cpp" />
     <ClCompile Include="test\test_uniform_resample.cpp" />

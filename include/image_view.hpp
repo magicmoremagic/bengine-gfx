@@ -6,8 +6,10 @@
 #include "texture_storage.hpp"
 
 namespace be::gfx {
+namespace detail {
 
 ///////////////////////////////////////////////////////////////////////////////
+template <typename TextureStorage, typename UC>
 class ImageView final {
 public:
    using layer_index_type = typename TextureStorage::layer_index_type;
@@ -20,8 +22,7 @@ public:
    ImageView(const ImageFormat& format, TextureStorage& storage, std::size_t layer, std::size_t face, std::size_t level);
    ImageView(const ImageFormat& format, ImageView& other);
 
-   ImageView(ImageView& other) = default; // prevent copying const ImageViews
-   ImageView& operator=(ImageView& other) = default; // prevent copying const ImageViews
+   operator ImageView<const TextureStorage, const UC>() const;
 
    TextureStorage& storage();
    const TextureStorage& storage() const;
@@ -51,13 +52,19 @@ public:
    const ivec3& dim_blocks() const; ///< The dimensions of the block array covering the image.
 
 private:
-   ImageFormat format_;
    TextureStorage* storage_;
+   ImageFormat format_;
    layer_index_type layer_;
    face_index_type face_;
    level_index_type level_;
-   Buf<UC> data_;
+   UC* data_;
+   std::size_t size_;
 };
+
+} // be::gfx::detail
+
+using ImageView = detail::ImageView<TextureStorage, UC>;
+using ConstImageView = detail::ImageView<const TextureStorage, const UC>;
 
 } // be::gfx
 

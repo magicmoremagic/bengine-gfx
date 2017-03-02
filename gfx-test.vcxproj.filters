@@ -13,5 +13,8 @@
     <ClCompile Include="test\test_uniform_resample.cpp">
       <Filter>Tests</Filter>
     </ClCompile>
+    <ClCompile Include="test\test_image_view.cpp">
+      <Filter>Tests</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

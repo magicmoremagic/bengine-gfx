@@ -2,45 +2,82 @@
 #ifndef BE_GFX_TEXTURE_VIEW_HPP_
 #define BE_GFX_TEXTURE_VIEW_HPP_
 
-#include "image_format.hpp"
+#include "image_view.hpp"
+#include "texture_class.hpp"
 
 namespace be::gfx {
+namespace detail {
 
-class TextureStorage;
-
+template <typename TextureStorage, typename ImageView>
 class TextureView final {
 public:
-   
+   using layer_index_type = typename TextureStorage::layer_index_type;
+   using face_index_type = typename TextureStorage::face_index_type;
+   using level_index_type = typename TextureStorage::level_index_type;
+   using block_size_type = typename ImageFormat::block_size_type;
+   using block_dim_type = typename ImageFormat::block_dim_type;
 
    TextureView();
+   TextureView(const ImageFormat& format, TextureClass tex_class, TextureStorage& storage,
+               std::size_t base_layer = 0, std::size_t layers = TextureStorage::max_layers,
+               std::size_t base_face = 0, std::size_t faces = TextureStorage::max_faces,
+               std::size_t base_level = 0, std::size_t levels = TextureStorage::max_levels);
+   TextureView(const ImageFormat& format, TextureClass tex_class, TextureView& other);
    
+   operator TextureView<const TextureStorage, ConstImageView>() const;
 
    TextureStorage& storage();
    const TextureStorage& storage() const;
 
+   TextureClass texture_class() const;
+
+   const ImageFormat& format() const;
+
    explicit operator bool() const; ///< Returns true if 0 < storage().size()
    bool empty() const; ///< Returns true if 0 == storage().size()
 
-   std::size_t size() const; ///< The total size of the storage required for the texture, in bytes
-   UC* data(); ///< A pointer to the beginning of the texture data.
-   const UC* data() const; ///< A pointer to the beginning of the (const) texture data.
+   ImageView image(std::size_t layer = 0, std::size_t face = 0, std::size_t level = 0);
+   ConstImageView image(std::size_t layer = 0, std::size_t face = 0, std::size_t level = 0) const;
 
-   std::size_t layers() const; ///< The number of texture array layers.  0 for an empty TextureStorage, and at least 1 for any other case.
-   std::size_t faces() const; ///< The number of faces.  0 for an empty TextureStorage, at least 1 for cubemap textures, and exactly 1 in any other case.
-   std::size_t levels() const; ///< The number of mipmapping levels.  0 for an empty TextureStorage, and at least 1 for any other case.  This may be less than the value specified in the constructor if the dimensions are too small.
-   std::size_t block_size() const; ///< The displacement in bytes between a block and the next one in the x direction.  Equivalent to block_size().
-   std::size_t line_span(std::size_t level) const; ///< The displacement in bytes between a block and the next one in the y direction.
-   std::size_t plane_span(std::size_t level) const; ///< The displacement in bytes between a block and the next one in the z direction.
-   std::size_t face_span() const; ///< The displacement in bytes between the first block of one face and the first block of the next face.
-   std::size_t layer_span() const; ///< The displacement in bytes between the first block of the first face of one layer and the first block of the first face of the next layer.
+   std::size_t layers() const;
+   std::size_t base_layer() const;
+   std::size_t max_layer() const;
 
-   const ivec3& block_dim() const; ///< The dimensions of a single block, in pixels.
-   const ivec3& dim(std::size_t level) const; ///< The dimensions of a single face image at the specified mipmapping level.
-   const ivec3& dim_blocks(std::size_t level) const; ///< The dimensions of the block array covering a single face image at the specified mipmapping level.
+   std::size_t faces() const; 
+   std::size_t base_face() const;
+   std::size_t max_face() const;
+
+   std::size_t levels() const;
+   std::size_t base_level() const;
+   std::size_t max_level() const;
+
+   block_size_type block_size() const;
+   std::size_t line_span(std::size_t level) const;
+   std::size_t plane_span(std::size_t level) const;
+   std::size_t level_offset(std::size_t level) const;
+   std::size_t face_span() const;
+   std::size_t layer_span() const;
+
+   block_dim_type block_dim() const;
+   const ivec3& dim(std::size_t level) const;
+   const ivec3& dim_blocks(std::size_t level) const;
 
 private:
    TextureStorage* storage_;
+   ImageFormat format_;
+   TextureClass tex_class_;
+   layer_index_type base_layer_;
+   layer_index_type layers_;
+   face_index_type base_face_;
+   face_index_type faces_;
+   level_index_type base_level_;
+   level_index_type levels_;
 };
+
+} // be::gfx::detail
+
+using TextureView = detail::TextureView<TextureStorage, ImageView>;
+using ConstTextureView = detail::TextureView<const TextureStorage, ConstImageView>;
 
 } // be::gfx
 

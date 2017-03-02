@@ -75,6 +75,7 @@
     <ClInclude Include="include\linear_filter.hpp" />
     <ClInclude Include="include\swizzle.hpp" />
     <ClInclude Include="include\texture.hpp" />
+    <ClInclude Include="include\texture_class.hpp" />
     <ClInclude Include="include\texture_storage.hpp" />
     <ClInclude Include="include\texture_view.hpp" />
     <ClInclude Include="include\uniform_resample.hpp" />
@@ -94,6 +95,7 @@
     <ClCompile Include="src\resize_image.cpp" />
     <ClCompile Include="src\stbi_util_detail.cpp" />
     <ClCompile Include="src\swizzle.cpp" />
+    <ClCompile Include="src\texture_class.cpp" />
     <ClCompile Include="src\texture_storage.cpp" />
     <ClCompile Include="src\texture_view.cpp" />
     <ClCompile Include="src\write_image.cpp" />
@@ -114,6 +116,7 @@
     <None Include="meta\read_x_image.blt" />
     <None Include="meta\read_stbi_image_impl.blt" />
     <None Include="meta\swizzle.lua" />
+    <None Include="meta\texture_class.lua" />
     <None Include="meta\write_x_image.blt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

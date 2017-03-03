@@ -122,6 +122,18 @@
     <ClInclude Include="include\make_image.hpp">
       <Filter>Header Files\textures</Filter>
     </ClInclude>
+    <ClInclude Include="include\image_format_hash.hpp">
+      <Filter>Header Files\textures</Filter>
+    </ClInclude>
+    <ClInclude Include="include\texture_storage_hash.hpp">
+      <Filter>Header Files\textures</Filter>
+    </ClInclude>
+    <ClInclude Include="include\texture_view_hash.hpp">
+      <Filter>Header Files\textures</Filter>
+    </ClInclude>
+    <ClInclude Include="include\image_view_hash.hpp">
+      <Filter>Header Files\textures</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\pch.cpp">

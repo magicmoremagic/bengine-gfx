@@ -74,6 +74,24 @@ private:
    level_index_type levels_;
 };
 
+template <typename TextureStorageA, typename ImageViewA, typename TextureStorageB, typename ImageViewB>
+bool operator==(const TextureView<TextureStorageA, ImageViewA>& a, const TextureView<TextureStorageB, ImageViewB>& b) {
+   return &a.storage() == &b.storage() &&
+      a.format() == b.format() &&
+      a.texture_class() == b.texture_class() &&
+      a.base_layer() == b.base_layer() &&
+      a.layers() == b.layers() &&
+      a.base_face() == b.base_face() &&
+      a.faces() == b.faces() &&
+      a.base_level() == b.base_level() &&
+      a.levels() == b.levels();
+}
+
+template <typename TextureStorageA, typename ImageViewA, typename TextureStorageB, typename ImageViewB>
+bool operator!=(const TextureView<TextureStorageA, ImageViewA>& a, const TextureView<TextureStorageB, ImageViewB>& b) {
+   return !(a == b);
+}
+
 } // be::gfx::detail
 
 using TextureView = detail::TextureView<TextureStorage, ImageView>;

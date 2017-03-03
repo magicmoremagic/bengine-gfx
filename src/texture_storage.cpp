@@ -1,8 +1,9 @@
 #include "pch.hpp"
 #include "texture_storage.hpp"
-#include <cassert>
+#include <be/core/alg.hpp>
 #include <glm/vector_relational.hpp>
 #include <glm/gtc/round.hpp>
+#include <cassert>
 
 namespace be::gfx {
 
@@ -157,6 +158,29 @@ const ivec3& TextureStorage::dim_blocks(std::size_t level) const {
 }
 
 ///////////////////////////////////////////////////////////////////////////////
+bool TextureStorage::operator==(const TextureStorage& other) const {
+   if (size_ != other.size_) return false;
+   if (layer_span_ != other.layer_span_) return false;
+   if (face_span_ != other.face_span_) return false;
+   if (layers_ != other.layers_) return false;
+   if (levels_ != other.levels_) return false;
+   if (faces_ != other.faces_) return false;
+   if (block_size_ != other.block_size_) return false;
+   if (block_dim_ != other.block_dim_) return false;
+   if (dim_ != other.dim_) return false;
+   if (dim_blocks_ != other.dim_blocks_) return false;
+   if (line_span_ != other.line_span_) return false;
+   if (plane_span_ != other.plane_span_) return false;
+   if (level_offset_ != other.level_offset_) return false;
+   return 0 == memcmp(data_.get(), other.data_.get(), size_);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+bool TextureStorage::operator!=(const TextureStorage& other) const {
+   return !(*this == other);
+}
+
+///////////////////////////////////////////////////////////////////////////////
 void TextureStorage::init_(std::size_t levels, ivec3 dim) {
    assert(layers_ <= max_layers);
    assert(faces_ <= max_faces);
@@ -216,6 +240,26 @@ void TextureStorage::init_(std::size_t levels, ivec3 dim) {
    face_span_ = face_span;
    layer_span_ = face_span * faces_;
    size_ = layer_span_ * layers_;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+std::size_t TextureStorage::hash_() const {
+   using be::std_hash;
+   std::size_t h = std_hash(layers_);
+   h = std_hash(h, faces_);
+   h = std_hash(h, levels_);
+   h = std_hash(h, block_size_);
+   h = std_hash(h, block_dim_);
+   h = std_hash(h, dim_);
+   h = std_hash(h, dim_blocks_);
+   h = std_hash(h, face_span_);
+   h = std_hash(h, layer_span_);
+   h = std_hash(h, line_span_);
+   h = std_hash(h, plane_span_);
+   h = std_hash(h, level_offset_);
+   h = std_hash(h, size_);
+   h = std_hash_raw(h, data_.get(), data_.size());
+   return h;
 }
 
 ///////////////////////////////////////////////////////////////////////////////

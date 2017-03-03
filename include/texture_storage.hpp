@@ -64,8 +64,13 @@ public:
    const ivec3& dim(std::size_t level) const; ///< The dimensions of a single face image at the specified mipmapping level.
    const ivec3& dim_blocks(std::size_t level) const; ///< The dimensions of the block array covering a single face image at the specified mipmapping level.
 
+   bool operator==(const TextureStorage& other) const;
+   bool operator!=(const TextureStorage& other) const;
+
 private:
    void init_(std::size_t levels, ivec3 dim);
+   std::size_t hash_() const;
+   friend std::size_t std_hash(const TextureStorage& s) { return s.hash_(); };
 
    const layer_index_type layers_;
    const face_index_type faces_;

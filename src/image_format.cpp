@@ -79,4 +79,19 @@ Colorspace ImageFormat::colorspace() const {
    return colorspace_;
 }
 
+///////////////////////////////////////////////////////////////////////////////
+bool ImageFormat::operator==(const ImageFormat& other) const {
+   return block_size_ == other.block_size_ &&
+      block_dim_ == other.block_dim_ &&
+      components_ == other.components_ &&
+      bits_ == other.bits_ &&
+      swizzle_ == other.swizzle_ &&
+      colorspace_ == other.colorspace_;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+bool ImageFormat::operator!=(const ImageFormat& other) const {
+   return !(*this == other);
+}
+
 } // be::gfx

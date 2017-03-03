@@ -36,6 +36,9 @@ public:
    Swizzle swizzle(glm::length_t component) const;
    Colorspace colorspace() const;
 
+   bool operator==(const ImageFormat& other) const;
+   bool operator!=(const ImageFormat& other) const;
+
 private:
    block_size_type block_size_;
    block_dim_type block_dim_;

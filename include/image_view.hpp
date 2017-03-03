@@ -61,6 +61,24 @@ private:
    std::size_t size_;
 };
 
+///////////////////////////////////////////////////////////////////////////////
+template <typename TextureStorageA, typename UCA, typename TextureStorageB, typename UCB>
+bool operator==(const ImageView<TextureStorageA, UCA>& a, const ImageView<TextureStorageB, UCB>& b) {
+   return &a.storage() == &b.storage() &&
+      a.format() == b.format() &&
+      a.layer() == b.layer() &&
+      a.face() == b.face() &&
+      a.level() == b.level() &&
+      a.data() == b.data() &&
+      a.size() == b.size();
+}
+
+///////////////////////////////////////////////////////////////////////////////
+template <typename TextureStorageA, typename UCA, typename TextureStorageB, typename UCB>
+bool operator!=(const ImageView<TextureStorageA, UCA>& a, const ImageView<TextureStorageB, UCB>& b) {
+   return !(a == b);
+}
+
 } // be::gfx::detail
 
 using ImageView = detail::ImageView<TextureStorage, UC>;

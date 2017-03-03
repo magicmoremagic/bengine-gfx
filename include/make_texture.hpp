@@ -24,7 +24,7 @@ std::size_t calculate_required_volumetric_texture_size(const ImageFormat& format
 std::size_t calculate_required_directional_texture_size(const ImageFormat& format, ivec2 dim, std::size_t levels = TextureStorage::max_levels);
 std::size_t calculate_required_directional_array_texture_size(const ImageFormat& format, ivec2 dim, std::size_t layers, std::size_t levels = TextureStorage::max_levels);
 
-std::size_t calculate_required_texture_size(TextureClass tex_class, const ImageFormat& format, ivec3 dim, std::size_t layer = 1u, std::size_t levels = TextureStorage::max_levels);
+std::size_t calculate_required_texture_size(TextureClass tex_class, const ImageFormat& format, ivec3 dim, std::size_t layers = 1u, std::size_t levels = TextureStorage::max_levels);
 
 } // be::gfx
 

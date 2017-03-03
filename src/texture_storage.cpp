@@ -218,4 +218,44 @@ void TextureStorage::init_(std::size_t levels, ivec3 dim) {
    size_ = layer_span_ * layers_;
 }
 
+///////////////////////////////////////////////////////////////////////////////
+std::size_t calculate_required_texture_storage(std::size_t layers,
+                                               std::size_t faces,
+                                               std::size_t levels,
+                                               ivec3 base_dim,
+                                               TextureStorage::block_dim_type block_dim,
+                                               TextureStorage::block_size_type block_size) {
+   if (layers == 0 || layers > TextureStorage::max_layers ||
+       faces == 0 || faces > TextureStorage::max_faces ||
+       block_size == 0 || block_size > TextureStorage::max_block_size) {
+      return 0;
+   }
+
+   if (glm::any(glm::equal(block_dim, TextureStorage::block_dim_type())) ||
+       glm::any(glm::greaterThan(ivec3(block_dim), ivec3(TextureStorage::max_block_dim)))) {
+      return 0;
+   }
+
+   if (glm::any(glm::lessThanEqual(base_dim, ivec3())) ||
+       glm::any(glm::greaterThan(base_dim, ivec3(TextureStorage::max_dim)))) {
+      return 0;
+   }
+
+   std::size_t face_span = 0;
+   
+   ivec3 block_dim_ivec3 = ivec3(block_dim);
+   for (std::size_t level = 0; level < levels; ++level) {
+      ivec3 dim_blocks = glm::ceilMultiple(base_dim, block_dim_ivec3) / block_dim_ivec3;
+      face_span += std::size_t(dim_blocks.x) * std::size_t(dim_blocks.y) * std::size_t(dim_blocks.z) * block_size;
+
+      if (base_dim == ivec3(1)) {
+         break;
+      }
+
+      base_dim = glm::max(base_dim >> 1, ivec3(1));
+   }
+
+   return face_span * faces * layers;
+}
+
 } // be::gfx

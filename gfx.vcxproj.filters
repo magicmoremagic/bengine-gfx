@@ -113,6 +113,15 @@
     <ClInclude Include="include\texture_class.hpp">
       <Filter>Header Files\textures</Filter>
     </ClInclude>
+    <ClInclude Include="include\mipmapping.hpp">
+      <Filter>Header Files\textures</Filter>
+    </ClInclude>
+    <ClInclude Include="include\make_texture.hpp">
+      <Filter>Header Files\textures</Filter>
+    </ClInclude>
+    <ClInclude Include="include\make_image.hpp">
+      <Filter>Header Files\textures</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\pch.cpp">
@@ -155,6 +164,15 @@
       <Filter>Source Files\textures</Filter>
     </ClCompile>
     <ClCompile Include="src\texture_class.cpp">
+      <Filter>Source Files\textures</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mipmapping.cpp">
+      <Filter>Source Files\textures</Filter>
+    </ClCompile>
+    <ClCompile Include="src\make_image.cpp">
+      <Filter>Source Files\textures</Filter>
+    </ClCompile>
+    <ClCompile Include="src\make_texture.cpp">
       <Filter>Source Files\textures</Filter>
     </ClCompile>
   </ItemGroup>

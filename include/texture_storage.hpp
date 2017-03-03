@@ -83,6 +83,8 @@ private:
    Buf<UC> data_;
 };
 
+std::size_t calculate_required_texture_storage(std::size_t layers, std::size_t faces, std::size_t levels, ivec3 base_dim, TextureStorage::block_dim_type block_dim, TextureStorage::block_size_type block_size);
+
 } // be::gfx
 
 #endif

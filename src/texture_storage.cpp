@@ -12,17 +12,16 @@ TextureStorage TextureStorage::nil = TextureStorage();
 
 ///////////////////////////////////////////////////////////////////////////////
 TextureStorage::TextureStorage()
-   : size_(0),
-     layers_(0),
+   : layers_(0),
      faces_(0),
      levels_(0),
      block_size_(0),
-     dim_({}),
-     dim_blocks_({}),
      face_span_(0),
      layer_span_(0),
-     line_span_({}),
-     plane_span_({}),
+     size_(0),
+     dim_({}),
+     dim_blocks_({}),
+     line_plane_span_({}),
      level_offset_({}) { }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -115,13 +114,13 @@ TextureStorage::block_size_type TextureStorage::block_size() const {
 ///////////////////////////////////////////////////////////////////////////////
 std::size_t TextureStorage::line_span(std::size_t level) const {
    assert(level >= 0 && level < max_levels);
-   return line_span_[level];
+   return line_plane_span_[level].x;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 std::size_t TextureStorage::plane_span(std::size_t level) const {
    assert(level >= 0 && level < max_levels);
-   return plane_span_[level];
+   return line_plane_span_[level].y;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -169,8 +168,7 @@ bool TextureStorage::operator==(const TextureStorage& other) const {
    if (block_dim_ != other.block_dim_) return false;
    if (dim_ != other.dim_) return false;
    if (dim_blocks_ != other.dim_blocks_) return false;
-   if (line_span_ != other.line_span_) return false;
-   if (plane_span_ != other.plane_span_) return false;
+   if (line_plane_span_ != other.line_plane_span_) return false;
    if (level_offset_ != other.level_offset_) return false;
    return 0 == memcmp(data_.get(), other.data_.get(), size_);
 }
@@ -210,10 +208,9 @@ void TextureStorage::init_(std::size_t levels, ivec3 dim) {
          dim_[level] = dim;
          ivec3 dim_blocks = glm::ceilMultiple(dim, block_dim_ivec3) / block_dim_ivec3;
          dim_blocks_[level] = dim_blocks;
-         std::size_t line_span = std::size_t(dim_blocks.x) * block_size_;
-         line_span_[level] = line_span;
-         std::size_t plane_span = std::size_t(dim_blocks.y) * line_span;
-         plane_span_[level] = plane_span;
+         U32 line_span = U32(dim_blocks.x) * block_size_;
+         U32 plane_span = U32(dim_blocks.y) * line_span;
+         line_plane_span_[level] = uvec2(line_span, plane_span);
          face_span += std::size_t(dim_blocks.z) * plane_span;
 
          if (dim == ivec3(1)) {
@@ -231,8 +228,7 @@ void TextureStorage::init_(std::size_t levels, ivec3 dim) {
       level_offset_[level] = face_span;
       dim_[level] = ivec3();
       dim_blocks_[level] = ivec3();
-      line_span_[level] = 0;
-      plane_span_[level] = 0;
+      line_plane_span_[level] = uvec2();
       ++level;
    }
 
@@ -254,8 +250,7 @@ std::size_t TextureStorage::hash_() const {
    h = std_hash(h, dim_blocks_);
    h = std_hash(h, face_span_);
    h = std_hash(h, layer_span_);
-   h = std_hash(h, line_span_);
-   h = std_hash(h, plane_span_);
+   h = std_hash(h, line_plane_span_);
    h = std_hash(h, level_offset_);
    h = std_hash(h, size_);
    h = std_hash_raw(h, data_.get(), data_.size());

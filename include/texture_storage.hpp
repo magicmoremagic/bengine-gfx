@@ -4,6 +4,7 @@
 
 #include "image_format.hpp"
 #include <be/core/buf.hpp>
+#include <glm/vec2.hpp>
 
 namespace be::gfx {
 
@@ -20,7 +21,7 @@ public:
 
    static constexpr std::size_t max_layers = std::size_t(layer_index_type(-1)) + 1u;
    static constexpr std::size_t max_faces = std::size_t(face_index_type(-1)) + 1u;
-   static constexpr std::size_t max_levels = 18;
+   static constexpr std::size_t max_levels = 16;
    static constexpr std::size_t max_dim = 1 << (max_levels - 1);
    static constexpr std::size_t max_block_size = ImageFormat::max_block_size;
    static constexpr std::size_t max_block_dim = ImageFormat::max_block_dim;
@@ -77,15 +78,14 @@ private:
    level_index_type levels_;
    const block_size_type block_size_;
    const block_dim_type block_dim_;
-   std::array<ivec3, max_levels> dim_;
-   std::array<ivec3, max_levels> dim_blocks_;
    std::size_t face_span_;
    std::size_t layer_span_;
-   std::array<std::size_t, max_levels> line_span_;
-   std::array<std::size_t, max_levels> plane_span_;
-   std::array<std::size_t, max_levels> level_offset_;
    std::size_t size_;
    Buf<UC> data_;
+   std::array<ivec3, max_levels> dim_;
+   std::array<ivec3, max_levels> dim_blocks_;
+   std::array<uvec2, max_levels> line_plane_span_;
+   std::array<std::size_t, max_levels> level_offset_;
 };
 
 std::size_t calculate_required_texture_storage(std::size_t layers, std::size_t faces, std::size_t levels, ivec3 base_dim, TextureStorage::block_dim_type block_dim, TextureStorage::block_size_type block_size);

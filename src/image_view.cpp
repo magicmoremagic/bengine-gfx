@@ -9,7 +9,9 @@ ImageView<TextureStorage, UC>::ImageView()
    : storage_(&TextureStorage::nil),
      layer_(0),
      face_(0),
-     level_(0) { }
+     level_(0),
+     data_(nullptr),
+     size_(0) { }
 
 ///////////////////////////////////////////////////////////////////////////////
 template <typename TextureStorage, typename UC>
@@ -23,7 +25,10 @@ ImageView<TextureStorage, UC>::ImageView(const ImageFormat& format, TextureStora
            + layer * storage.layer_span()
            + face * storage.face_span()
            + storage.level_offset(level)),
-     size_(storage.plane_span(level) * std::size_t(storage.dim_blocks(level).z)) {
+     size_(storage.plane_span(level) * std::size_t(storage.dim_blocks(level).z)),
+     dim_(storage.dim(level)),
+     dim_blocks_(storage.dim_blocks(level)),
+     line_plane_span_(storage.line_span(level), storage.plane_span(level)) {
    assert(layer >= 0 && layer < storage.layers());
    assert(face >= 0 && face < storage.faces());
    assert(level >= 0 && level < storage.levels());
@@ -40,7 +45,10 @@ ImageView<TextureStorage, UC>::ImageView(const ImageFormat& format, ImageView& o
      face_(other.face_),
      level_(other.level_),
      data_(other.data_),
-     size_(other.size_) {
+     size_(other.size_),
+     dim_(other.dim_),
+     dim_blocks_(other.dim_blocks_),
+     line_plane_span_(other.line_plane_span_) {
    assert(format.block_dim() == storage_->block_dim());
    assert(format.block_size() <= storage_->block_size());
 }
@@ -137,13 +145,13 @@ typename ImageView<TextureStorage, UC>::block_size_type ImageView<TextureStorage
 ///////////////////////////////////////////////////////////////////////////////
 template <typename TextureStorage, typename UC>
 std::size_t ImageView<TextureStorage, UC>::line_span() const {
-   return storage_->line_span(level_);
+   return line_plane_span_.x;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 template <typename TextureStorage, typename UC>
 std::size_t ImageView<TextureStorage, UC>::plane_span() const {
-   return storage_->plane_span(level_);
+   return line_plane_span_.y;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -155,13 +163,13 @@ typename ImageView<TextureStorage, UC>::block_dim_type ImageView<TextureStorage,
 ///////////////////////////////////////////////////////////////////////////////
 template <typename TextureStorage, typename UC>
 const ivec3& ImageView<TextureStorage, UC>::dim() const {
-   return storage_->dim(level_);
+   return dim_;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 template <typename TextureStorage, typename UC>
 const ivec3& ImageView<TextureStorage, UC>::dim_blocks() const {
-   return storage_->dim_blocks(level_);
+   return dim_blocks_;
 }
 
 template class ImageView<TextureStorage, UC>;

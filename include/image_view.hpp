@@ -59,6 +59,9 @@ private:
    level_index_type level_;
    UC* data_;
    std::size_t size_;
+   ivec3 dim_;
+   ivec3 dim_blocks_;
+   uvec2 line_plane_span_;
 };
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -70,7 +73,11 @@ bool operator==(const ImageView<TextureStorageA, UCA>& a, const ImageView<Textur
       a.face() == b.face() &&
       a.level() == b.level() &&
       a.data() == b.data() &&
-      a.size() == b.size();
+      a.size() == b.size() &&
+      a.dim() == b.dim() &&
+      a.dim_blocks() == b.dim_blocks() &&
+      a.line_span() == b.line_span() &&
+      a.plane_span() == b.plane_span();
 }
 
 ///////////////////////////////////////////////////////////////////////////////

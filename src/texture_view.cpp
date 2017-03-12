@@ -212,13 +212,13 @@ typename TextureView<TextureStorage, ImageView>::block_dim_type TextureView<Text
 
 ///////////////////////////////////////////////////////////////////////////////
 template <typename TextureStorage, typename ImageView>
-const ivec3& TextureView<TextureStorage, ImageView>::dim(std::size_t level) const {
+ivec3 TextureView<TextureStorage, ImageView>::dim(std::size_t level) const {
    return storage_->dim(base_level_ + level);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 template <typename TextureStorage, typename ImageView>
-const ivec3& TextureView<TextureStorage, ImageView>::dim_blocks(std::size_t level) const {
+ivec3 TextureView<TextureStorage, ImageView>::dim_blocks(std::size_t level) const {
    return storage_->dim_blocks(base_level_ + level);
 }
 

@@ -6,7 +6,7 @@
 
 namespace be::gfx {
 
-/*!! include 'colorspace' !! 54 */
+/*!! include 'colorspace' !! 56 */
 /* ################# !! GENERATED CODE -- DO NOT MODIFY !! ################# */
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -29,7 +29,9 @@ enum class ColorspaceVariant : U8 {
 
 ///////////////////////////////////////////////////////////////////////////////
 enum class Colorspace : U8 {
-   none = 0,
+   unknown = 0,
+   linear_other,
+   linear_depth_stencil,
    bt709_linear_rgb,
    bt709_linear_hsl,
    bt709_linear_hsv,
@@ -50,15 +52,15 @@ enum class Colorspace : U8 {
    cie_lab
 };
 
-bool is_linear(Colorspace constant);
-ColorspaceFamily colorspace_family(Colorspace constant);
-ColorspaceVariant colorspace_variant(Colorspace constant);
 bool is_valid(Colorspace constant);
 bool is_valid(ColorspaceFamily constant);
 bool is_valid(ColorspaceVariant constant);
 const char* colorspace_name(Colorspace constant);
 const char* colorspace_family_name(ColorspaceFamily constant);
 const char* colorspace_variant_name(ColorspaceVariant constant);
+bool is_linear(Colorspace constant);
+ColorspaceFamily colorspace_family(Colorspace constant);
+ColorspaceVariant colorspace_variant(Colorspace constant);
 /* ######################### END OF GENERATED CODE ######################### */
 
 } // be::gfx

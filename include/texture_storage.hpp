@@ -13,6 +13,8 @@ class TextureStorage final {
 public:
    static TextureStorage nil;
 
+   using alignment_type = U8;
+
    using layer_index_type = U16;
    using face_index_type = U8;
    using level_index_type = U8;
@@ -32,14 +34,24 @@ public:
                   std::size_t levels,
                   ivec3 base_dim,
                   block_dim_type block_dim,
-                  block_size_type block_size);
+                  block_size_type block_size,
+                  alignment_type line_alignment = 8u,
+                  alignment_type plane_alignment = 0u,
+                  alignment_type level_alignment = 0u,
+                  alignment_type face_alignment = 0u,
+                  alignment_type layer_alignment = 0u);
    TextureStorage(std::size_t layers,
                   std::size_t faces,
                   std::size_t levels,
                   ivec3 base_dim,
                   block_dim_type block_dim,
                   block_size_type block_size,
-                  Buf<UC> data);
+                  Buf<UC> data,
+                  alignment_type line_alignment = 8u,
+                  alignment_type plane_alignment = 0u,
+                  alignment_type level_alignment = 0u,
+                  alignment_type face_alignment = 0u,
+                  alignment_type layer_alignment = 0u);
 
    explicit operator bool() const; ///< Returns true if 0 < size()
    bool empty() const; ///< Returns true if 0 == size()
@@ -62,8 +74,14 @@ public:
    std::size_t layer_span() const; ///< The displacement in bytes between the first block of the first face of one layer and the first block of the first face of the next layer.
 
    block_dim_type block_dim() const; ///< The dimensions of a single block, in pixels.
-   const ivec3& dim(std::size_t level) const; ///< The dimensions of a single face image at the specified mipmapping level.
-   const ivec3& dim_blocks(std::size_t level) const; ///< The dimensions of the block array covering a single face image at the specified mipmapping level.
+   ivec3 dim(std::size_t level) const; ///< The dimensions of a single face image at the specified mipmapping level.
+   ivec3 dim_blocks(std::size_t level) const; ///< The dimensions of the block array covering a single face image at the specified mipmapping level.
+
+   alignment_type line_alignment() const;
+   alignment_type plane_alignment() const;
+   alignment_type level_alignment() const;
+   alignment_type face_alignment() const;
+   alignment_type layer_alignment() const;
 
    bool operator==(const TextureStorage& other) const;
    bool operator!=(const TextureStorage& other) const;
@@ -86,9 +104,24 @@ private:
    std::array<ivec3, max_levels> dim_blocks_;
    std::array<uvec2, max_levels> line_plane_span_;
    std::array<std::size_t, max_levels> level_offset_;
+   alignment_type line_alignment_;
+   alignment_type plane_alignment_;
+   alignment_type level_alignment_;
+   alignment_type face_alignment_;
+   alignment_type layer_alignment_;
 };
 
-std::size_t calculate_required_texture_storage(std::size_t layers, std::size_t faces, std::size_t levels, ivec3 base_dim, TextureStorage::block_dim_type block_dim, TextureStorage::block_size_type block_size);
+std::size_t calculate_required_texture_storage(std::size_t layers,
+                                               std::size_t faces,
+                                               std::size_t levels,
+                                               ivec3 base_dim,
+                                               TextureStorage::block_dim_type block_dim,
+                                               TextureStorage::block_size_type block_size,
+                                               TextureStorage::alignment_type line_alignment = 8u,
+                                               TextureStorage::alignment_type plane_alignment = 0u,
+                                               TextureStorage::alignment_type level_alignment = 0u,
+                                               TextureStorage::alignment_type face_alignment = 0u,
+                                               TextureStorage::alignment_type layer_alignment = 0u);
 
 } // be::gfx
 

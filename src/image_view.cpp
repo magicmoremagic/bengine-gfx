@@ -162,13 +162,13 @@ typename ImageView<TextureStorage, UC>::block_dim_type ImageView<TextureStorage,
 
 ///////////////////////////////////////////////////////////////////////////////
 template <typename TextureStorage, typename UC>
-const ivec3& ImageView<TextureStorage, UC>::dim() const {
+ivec3 ImageView<TextureStorage, UC>::dim() const {
    return dim_;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 template <typename TextureStorage, typename UC>
-const ivec3& ImageView<TextureStorage, UC>::dim_blocks() const {
+ivec3 ImageView<TextureStorage, UC>::dim_blocks() const {
    return dim_blocks_;
 }
 

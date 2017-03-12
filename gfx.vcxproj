@@ -55,10 +55,15 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="include\apply.hpp" />
+    <ClInclude Include="include\image_block_packing.hpp" />
     <ClInclude Include="include\colorspace.hpp" />
     <ClInclude Include="include\image.hpp" />
+    <ClInclude Include="include\image_component_type.hpp" />
     <ClInclude Include="include\image_format.hpp" />
+    <ClInclude Include="include\image_formats.hpp" />
     <ClInclude Include="include\image_format_hash.hpp" />
+    <ClInclude Include="include\image_pixel_access.hpp" />
+    <ClInclude Include="include\image_pixel_access_norm.hpp" />
     <ClInclude Include="include\image_view.hpp" />
     <ClInclude Include="include\image_view_hash.hpp" />
     <ClInclude Include="include\make_image.hpp" />
@@ -80,6 +85,7 @@
     <ClInclude Include="include\linear_filter.hpp" />
     <ClInclude Include="include\swizzle.hpp" />
     <ClInclude Include="include\texture.hpp" />
+    <ClInclude Include="include\image_block_access.hpp" />
     <ClInclude Include="include\texture_class.hpp" />
     <ClInclude Include="include\texture_storage.hpp" />
     <ClInclude Include="include\texture_storage_hash.hpp" />
@@ -87,12 +93,15 @@
     <ClInclude Include="include\texture_view_hash.hpp" />
     <ClInclude Include="include\uniform_resample.hpp" />
     <ClInclude Include="include\variable_size_median_kernel.hpp" />
+    <ClInclude Include="include\visit_image.hpp" />
+    <ClInclude Include="include\visit_texture.hpp" />
     <ClInclude Include="include\write_image.hpp" />
     <ClInclude Include="include\stbiw_detail.h" />
     <ClInclude Include="include\stbi_detail.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\colorspace.cpp" />
+    <ClCompile Include="src\image_component_type.cpp" />
     <ClCompile Include="src\image_format.cpp" />
     <ClCompile Include="src\image_view.cpp" />
     <ClCompile Include="src\make_image.cpp" />
@@ -105,6 +114,7 @@
     <ClCompile Include="src\resize_image.cpp" />
     <ClCompile Include="src\stbi_util_detail.cpp" />
     <ClCompile Include="src\swizzle.cpp" />
+    <ClCompile Include="src\image_block_packing.cpp" />
     <ClCompile Include="src\texture_class.cpp" />
     <ClCompile Include="src\texture_storage.cpp" />
     <ClCompile Include="src\texture_view.cpp" />
@@ -122,11 +132,17 @@
     <None Include="include\uniform_resample.inl" />
     <None Include="include\variable_size_median_kernel.inl" />
     <None Include="meta\colorspace.lua" />
+    <None Include="meta\colorspace.tsv" />
+    <None Include="meta\image_component_type.lua" />
     <None Include="meta\read_image.blt" />
     <None Include="meta\read_x_image.blt" />
     <None Include="meta\read_stbi_image_impl.blt" />
     <None Include="meta\swizzle.lua" />
+    <None Include="meta\image_block_packing.lua" />
+    <None Include="meta\image_block_packing.tsv" />
+    <None Include="meta\image_block_packing_info.blt" />
     <None Include="meta\texture_class.lua" />
+    <None Include="meta\texture_class.tsv" />
     <None Include="meta\write_x_image.blt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

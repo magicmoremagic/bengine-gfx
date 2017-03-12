@@ -59,8 +59,8 @@ public:
    std::size_t layer_span() const;
 
    block_dim_type block_dim() const;
-   const ivec3& dim(std::size_t level) const;
-   const ivec3& dim_blocks(std::size_t level) const;
+   ivec3 dim(std::size_t level) const;
+   ivec3 dim_blocks(std::size_t level) const;
 
 private:
    TextureStorage* storage_;

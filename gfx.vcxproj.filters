@@ -134,6 +134,30 @@
     <ClInclude Include="include\image_view_hash.hpp">
       <Filter>Header Files\textures</Filter>
     </ClInclude>
+    <ClInclude Include="include\image_formats.hpp">
+      <Filter>Header Files\textures</Filter>
+    </ClInclude>
+    <ClInclude Include="include\image_block_access.hpp">
+      <Filter>Header Files\textures</Filter>
+    </ClInclude>
+    <ClInclude Include="include\image_pixel_access.hpp">
+      <Filter>Header Files\textures</Filter>
+    </ClInclude>
+    <ClInclude Include="include\image_pixel_access_norm.hpp">
+      <Filter>Header Files\textures</Filter>
+    </ClInclude>
+    <ClInclude Include="include\visit_texture.hpp">
+      <Filter>Header Files\textures</Filter>
+    </ClInclude>
+    <ClInclude Include="include\visit_image.hpp">
+      <Filter>Header Files\textures</Filter>
+    </ClInclude>
+    <ClInclude Include="include\image_block_packing.hpp">
+      <Filter>Header Files\textures</Filter>
+    </ClInclude>
+    <ClInclude Include="include\image_component_type.hpp">
+      <Filter>Header Files\textures</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\pch.cpp">
@@ -187,6 +211,12 @@
     <ClCompile Include="src\make_texture.cpp">
       <Filter>Source Files\textures</Filter>
     </ClCompile>
+    <ClCompile Include="src\image_block_packing.cpp">
+      <Filter>Source Files\textures</Filter>
+    </ClCompile>
+    <ClCompile Include="src\image_component_type.cpp">
+      <Filter>Source Files\textures</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="meta\read_image.blt">
@@ -220,6 +250,24 @@
       <Filter>Meta-Source Files</Filter>
     </None>
     <None Include="meta\texture_class.lua">
+      <Filter>Meta-Source Files</Filter>
+    </None>
+    <None Include="meta\image_block_packing.lua">
+      <Filter>Meta-Source Files</Filter>
+    </None>
+    <None Include="meta\image_block_packing.tsv">
+      <Filter>Meta-Source Files</Filter>
+    </None>
+    <None Include="meta\image_block_packing_info.blt">
+      <Filter>Meta-Source Files</Filter>
+    </None>
+    <None Include="meta\image_component_type.lua">
+      <Filter>Meta-Source Files</Filter>
+    </None>
+    <None Include="meta\colorspace.tsv">
+      <Filter>Meta-Source Files</Filter>
+    </None>
+    <None Include="meta\texture_class.tsv">
       <Filter>Meta-Source Files</Filter>
     </None>
   </ItemGroup>

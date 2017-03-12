@@ -48,8 +48,8 @@ public:
    std::size_t plane_span() const; ///< The displacement in bytes between a block and the next one in the z direction.
 
    block_dim_type block_dim() const; ///< The dimensions of a single block, in pixels.
-   const ivec3& dim() const; ///< The dimensions of a the image, in pixels
-   const ivec3& dim_blocks() const; ///< The dimensions of the block array covering the image.
+   ivec3 dim() const; ///< The dimensions of a the image, in pixels
+   ivec3 dim_blocks() const; ///< The dimensions of the block array covering the image.
 
 private:
    TextureStorage* storage_;

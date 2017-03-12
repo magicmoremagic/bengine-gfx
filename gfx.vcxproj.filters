@@ -270,5 +270,8 @@
     <None Include="meta\texture_class.tsv">
       <Filter>Meta-Source Files</Filter>
     </None>
+    <None Include="include\image_block_access.inl">
+      <Filter>Header Files\textures</Filter>
+    </None>
   </ItemGroup>
 </Project>

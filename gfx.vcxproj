@@ -129,6 +129,7 @@
   <ItemGroup>
     <None Include="include\apply.inl" />
     <None Include="include\fixed_size_median_kernel.inl" />
+    <None Include="include\image_block_access.inl" />
     <None Include="include\uniform_resample.inl" />
     <None Include="include\variable_size_median_kernel.inl" />
     <None Include="meta\colorspace.lua" />

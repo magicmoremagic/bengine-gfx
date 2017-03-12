@@ -13,8 +13,8 @@ T get_block(const ImageView& image, I32 block_coord) {
    assert(sizeof(T) <= image.block_size());
    assert(block_coord >= 0);
    assert(block_coord < (I32)image.block_dim().x);
-   const UC* ptr = image.data()
-      + block_coord * image.block_size();
+   const UC* ptr = image.data() +
+      block_coord * image.block_size();
    std::memcpy(&block, ptr, sizeof(T));
    return block;
 }
@@ -29,9 +29,9 @@ T get_block(const ImageView& image, ivec2 block_coord) {
    assert(block_coord.y >= 0);
    assert(block_coord.x < (I32)image.block_dim().x);
    assert(block_coord.y < (I32)image.block_dim().y);
-   const UC* ptr = image.data()
-      + block_coord.y * image.line_span();
-      + block_coord.x * image.block_size();
+   const UC* ptr = image.data() +
+      block_coord.y * image.line_span() +
+      block_coord.x * image.block_size();
    std::memcpy(&block, ptr, sizeof(T));
    return block;
 }
@@ -48,10 +48,10 @@ T get_block(const ImageView& image, ivec3 block_coord) {
    assert(block_coord.x < (I32)image.block_dim().x);
    assert(block_coord.y < (I32)image.block_dim().y);
    assert(block_coord.z < (I32)image.block_dim().z);
-   const UC* ptr = image.data()
-      + block_coord.z * image.plane_span();
-      + block_coord.y * image.line_span();
-      + block_coord.x * image.block_size();
+   const UC* ptr = image.data() +
+      block_coord.z * image.plane_span() +
+      block_coord.y * image.line_span() +
+      block_coord.x * image.block_size();
    std::memcpy(&block, ptr, sizeof(T));
    return block;
 }
@@ -63,8 +63,8 @@ void put_block(ImageView& image, I32 block_coord, const T& block) {
    assert(sizeof(T) <= image.block_size());
    assert(block_coord >= 0);
    assert(block_coord < (I32)image.block_dim().x);
-   UC* ptr = image.data()
-      + block_coord * image.block_size();
+   UC* ptr = image.data() +
+      block_coord * image.block_size();
    std::memcpy(ptr, &block, sizeof(T));
 }
 
@@ -77,9 +77,9 @@ void put_block(ImageView& image, ivec2 block_coord, const T& block) {
    assert(block_coord.y >= 0);
    assert(block_coord.x < (I32)image.block_dim().x);
    assert(block_coord.y < (I32)image.block_dim().y);
-   UC* ptr = image.data()
-      + block_coord.y * image.line_span();
-      + block_coord.x * image.block_size();
+   UC* ptr = image.data() +
+      block_coord.y * image.line_span() +
+      block_coord.x * image.block_size();
    std::memcpy(ptr, &block, sizeof(T));
 }
 
@@ -94,10 +94,10 @@ void put_block(ImageView& image, ivec3 block_coord, const T& block) {
    assert(block_coord.x < (I32)image.block_dim().x);
    assert(block_coord.y < (I32)image.block_dim().y);
    assert(block_coord.z < (I32)image.block_dim().z);
-   UC* ptr = image.data()
-      + block_coord.z * image.plane_span();
-      + block_coord.y * image.line_span();
-      + block_coord.x * image.block_size();
+   UC* ptr = image.data() +
+      block_coord.z * image.plane_span() +
+      block_coord.y * image.line_span() +
+      block_coord.x * image.block_size();
    std::memcpy(ptr, &block, sizeof(T));
 }
 

@@ -16,5 +16,14 @@
     <ClCompile Include="test\test_image_view.cpp">
       <Filter>Tests</Filter>
     </ClCompile>
+    <ClCompile Include="test\test_image_format.cpp">
+      <Filter>Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="test\test_texture_view.cpp">
+      <Filter>Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="test\test_texture_storage.cpp">
+      <Filter>Tests</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

@@ -5,6 +5,7 @@
 #include "make_image.hpp"
 #include "image_block_access.hpp"
 #include "image_pixel_access.hpp"
+#include "visit_image.hpp"
 #include <be/core/be.hpp>
 #include <catch/catch.hpp>
 #include <unordered_set>
@@ -85,22 +86,20 @@ TEST_CASE("ImageView pixel access (simple)", BE_CATCH_TAGS) {
       SECTION("func") {
          auto get = gfx::get_pixel_lineal_func<RGBA>(img.view);
          auto put = gfx::put_pixel_lineal_func<RGBA>(img.view);
-         int tc;
-         for (tc = 0; tc < dim; ++tc) {
-            put(img.view, tc, RGBA(tc, tc * 2, tc * 4, 13u));
-         }
-         for (tc = 0; tc < dim; ++tc) {
-            REQUIRE(get(img.view, tc) == RGBA(tc, tc * 2, tc * 4, 13u));
-         }
+         gfx::visit_image_pixels_lineal(img.view, [put](gfx::ImageView& view, I32 pc) {
+            put(view, pc, RGBA(pc, pc * 2, pc * 4, 13u));
+         });
+         gfx::visit_image_pixels_lineal(img.view, [get](gfx::ImageView& view, I32 pc) {
+            REQUIRE(get(view, pc) == RGBA(pc, pc * 2, pc * 4, 13u));
+         });
       }
       SECTION("helper") {
-         int tc;
-         for (tc = 0; tc < dim; ++tc) {
-            gfx::put_pixel(img.view, tc, RGBA(tc, tc * 2, tc * 4, 13u));
-         }
-         for (tc = 0; tc < dim; ++tc) {
-            REQUIRE(gfx::get_pixel<RGBA>(img.view, tc) == RGBA(tc, tc * 2, tc * 4, 13u));
-         }
+         gfx::visit_image_pixels_lineal(img.view, [](gfx::ImageView& view, I32 pc) {
+            gfx::put_pixel(view, pc, RGBA(pc, pc * 2, pc * 4, 13u));
+         });
+         gfx::visit_image_pixels_lineal(img.view, [](gfx::ImageView& view, I32 pc) {
+            REQUIRE(gfx::get_pixel<RGBA>(view, pc) == RGBA(pc, pc * 2, pc * 4, 13u));
+         });
       }
    }
 
@@ -108,30 +107,20 @@ TEST_CASE("ImageView pixel access (simple)", BE_CATCH_TAGS) {
       SECTION("func") {
          auto get = gfx::get_pixel_planar_func<RGBA>(img.view);
          auto put = gfx::put_pixel_planar_func<RGBA>(img.view);
-         ivec2 tc;
-         for (tc.y = 0; tc.y < dim; ++tc.y) {
-            for (tc.x = 0; tc.x < dim; ++tc.x) {
-               put(img.view, tc, RGBA(tc.x * 64, tc.y * 64, 0, 13u));
-            }
-         }
-         for (tc.y = 0; tc.y < dim; ++tc.y) {
-            for (tc.x = 0; tc.x < dim; ++tc.x) {
-               REQUIRE(get(img.view, tc) == RGBA(tc.x * 64, tc.y * 64, 0, 13u));
-            }
-         }
+         gfx::visit_image_pixels_planar(img.view, [put](gfx::ImageView& view, ivec2 pc) {
+            put(view, pc, RGBA(pc.x * 64, pc.y * 64, 0, 13u));
+         });
+         gfx::visit_image_pixels_planar(img.view, [get](gfx::ImageView& view, ivec2 pc) {
+            REQUIRE(get(view, pc) == RGBA(pc.x * 64, pc.y * 64, 0, 13u));
+         });
       }
       SECTION("helper") {
-         ivec2 tc;
-         for (tc.y = 0; tc.y < dim; ++tc.y) {
-            for (tc.x = 0; tc.x < dim; ++tc.x) {
-               gfx::put_pixel(img.view, tc, RGBA(tc.x * 64, tc.y * 64, 0, 13u));
-            }
-         }
-         for (tc.y = 0; tc.y < dim; ++tc.y) {
-            for (tc.x = 0; tc.x < dim; ++tc.x) {
-               REQUIRE(gfx::get_pixel<RGBA>(img.view, tc) == RGBA(tc.x * 64, tc.y * 64, 0, 13u));
-            }
-         }
+         gfx::visit_image_pixels_planar(img.view, [](gfx::ImageView& view, ivec2 pc) {
+            gfx::put_pixel(view, pc, RGBA(pc.x * 64, pc.y * 64, 0, 13u));
+         });
+         gfx::visit_image_pixels_planar(img.view, [](gfx::ImageView& view, ivec2 pc) {
+            REQUIRE(gfx::get_pixel<RGBA>(view, pc) == RGBA(pc.x * 64, pc.y * 64, 0, 13u));
+         });
       }
    }
 
@@ -139,38 +128,20 @@ TEST_CASE("ImageView pixel access (simple)", BE_CATCH_TAGS) {
       SECTION("func") {
          auto get = gfx::get_pixel_volumetric_func<RGBA>(img.view);
          auto put = gfx::put_pixel_volumetric_func<RGBA>(img.view);
-         ivec3 tc;
-         for (tc.z = 0; tc.z < dim; ++tc.z) {
-            for (tc.y = 0; tc.y < dim; ++tc.y) {
-               for (tc.x = 0; tc.x < dim; ++tc.x) {
-                  put(img.view, tc, RGBA(glm::u8vec3(tc * 64), 13u));
-               }
-            }
-         }
-         for (tc.z = 0; tc.z < dim; ++tc.z) {
-            for (tc.y = 0; tc.y < dim; ++tc.y) {
-               for (tc.x = 0; tc.x < dim; ++tc.x) {
-                  REQUIRE(get(img.view, tc) == RGBA(glm::u8vec3(tc * 64), 13u));
-               }
-            }
-         }
+         gfx::visit_image_pixels_volumetric(img.view, [put](gfx::ImageView& view, ivec3 pc) {
+            put(view, pc, RGBA(glm::u8vec3(pc * 64), 13u));
+         });
+         gfx::visit_image_pixels_volumetric(img.view, [get](gfx::ImageView& view, ivec3 pc) {
+            REQUIRE(get(view, pc) == RGBA(glm::u8vec3(pc * 64), 13u));
+         });
       }
       SECTION("helper") {
-         ivec3 tc;
-         for (tc.z = 0; tc.z < dim; ++tc.z) {
-            for (tc.y = 0; tc.y < dim; ++tc.y) {
-               for (tc.x = 0; tc.x < dim; ++tc.x) {
-                  gfx::put_pixel(img.view, tc, RGBA(glm::u8vec3(tc * 64), 13u));
-               }
-            }
-         }
-         for (tc.z = 0; tc.z < dim; ++tc.z) {
-            for (tc.y = 0; tc.y < dim; ++tc.y) {
-               for (tc.x = 0; tc.x < dim; ++tc.x) {
-                  REQUIRE(gfx::get_pixel<RGBA>(img.view, tc) == RGBA(glm::u8vec3(tc * 64), 13u));
-               }
-            }
-         }
+         gfx::visit_image_pixels_volumetric(img.view, [](gfx::ImageView& view, ivec3 pc) {
+            gfx::put_pixel(view, pc, RGBA(glm::u8vec3(pc * 64), 13u));
+         });
+         gfx::visit_image_pixels_volumetric(img.view, [](gfx::ImageView& view, ivec3 pc) {
+            REQUIRE(gfx::get_pixel<RGBA>(view, pc) == RGBA(glm::u8vec3(pc * 64), 13u));
+         });
       }
    }
 }

@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #ifndef BE_GFX_IMAGE_VIEW_HPP_
 #define BE_GFX_IMAGE_VIEW_HPP_
 
@@ -12,6 +12,7 @@ namespace detail {
 template <typename TextureStorage, typename UC>
 class ImageView final {
 public:
+   using texture_storage_type = TextureStorage;
    using layer_index_type = typename TextureStorage::layer_index_type;
    using face_index_type = typename TextureStorage::face_index_type;
    using level_index_type = typename TextureStorage::level_index_type;

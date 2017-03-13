@@ -279,5 +279,8 @@
     <None Include="include\visit_image.inl">
       <Filter>Header Files\textures</Filter>
     </None>
+    <None Include="include\visit_texture.inl">
+      <Filter>Header Files\textures</Filter>
+    </None>
   </ItemGroup>
 </Project>

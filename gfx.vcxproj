@@ -134,6 +134,7 @@
     <None Include="include\uniform_resample.inl" />
     <None Include="include\variable_size_median_kernel.inl" />
     <None Include="include\visit_image.inl" />
+    <None Include="include\visit_texture.inl" />
     <None Include="meta\colorspace.lua" />
     <None Include="meta\colorspace.tsv" />
     <None Include="meta\image_component_type.lua" />

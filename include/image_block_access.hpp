@@ -18,6 +18,8 @@ T get_block(const ImageView& image, ivec2 block_coord);
 template <typename T, typename ImageView>
 T get_block(const ImageView& image, ivec3 block_coord);
 
+///////////////////////////////////////////////////////////////////////////////
+
 template <typename T, typename ImageView>
 void put_block(ImageView& image, I32 block_coord, const T& block);
 

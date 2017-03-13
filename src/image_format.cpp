@@ -1,4 +1,4 @@
-#include "pch.hpp"
+﻿#include "pch.hpp"
 #include "image_format.hpp"
 
 namespace be::gfx {
@@ -44,6 +44,7 @@ ImageFormat::ImageFormat(block_size_type block_size,
    assert(is_valid(static_cast<Swizzle>(swizzle.a)));
    assert(is_valid(colorspace));
    assert(!premultiplied || components == 4);
+   assert(block_size >= block_dim.x * block_dim.y * block_dim.z * image_block_pixel_size(packing));
 }
 
 ///////////////////////////////////////////////////////////////////////////////

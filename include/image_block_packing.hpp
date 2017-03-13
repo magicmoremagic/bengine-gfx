@@ -6,7 +6,7 @@
 
 namespace be::gfx {
 
-/*!! include 'image_block_packing' !! 509 */
+/*!! include 'image_block_packing' !! 510 */
 /* ################# !! GENERATED CODE -- DO NOT MODIFY !! ################# */
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -66,6 +66,7 @@ const char* image_block_packing_name(ImageBlockPacking constant);
 bool is_compressed(ImageBlockPacking constant);
 bool is_packed(ImageBlockPacking constant);
 U8 component_count(ImageBlockPacking constant);
+U16 image_block_pixel_size(ImageBlockPacking constant);
 U8 image_block_word_size(ImageBlockPacking constant);
 U8 image_block_word_count(ImageBlockPacking constant);
 U8 image_block_word_offset_0(ImageBlockPacking constant);

@@ -273,5 +273,8 @@
     <None Include="include\image_block_access.inl">
       <Filter>Header Files\textures</Filter>
     </None>
+    <None Include="include\image_pixel_access.inl">
+      <Filter>Header Files\textures</Filter>
+    </None>
   </ItemGroup>
 </Project>

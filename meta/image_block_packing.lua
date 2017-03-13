@@ -24,6 +24,7 @@ local packing_is_packed_map     = { name = 'is_packed',     enum = packing, pred
 local packing_components_map = { name = 'component_count',        enum = packing, type = 'U8', mapper = 'n_comp',    default = 3 }
 local packing_word_size      = { name = 'image_block_word_size',  enum = packing, type = 'U8', mapper = 'word_size', default = 4 }
 local packing_n_words        = { name = 'image_block_word_count', enum = packing, type = 'U8', mapper = 'n_words',   default = 1 }
+local packing_pixel_size     = { name = 'image_block_pixel_size', enum = packing, type = 'U16', mapper = function (constant) return constant.n_words * constant.word_size end, default = 4 }
 
 local packing_word_offset_0 = { name = 'image_block_word_offset_0', enum = packing, type = 'U8', mapper = 'w0', default = 0 }
 local packing_word_offset_1 = { name = 'image_block_word_offset_1', enum = packing, type = 'U8', mapper = 'w1', default = 0 }
@@ -47,6 +48,7 @@ if file_ext == '.hpp' then
    write_template('common/enum_bool_mapping_decl', packing_is_compressed_map)
    write_template('common/enum_bool_mapping_decl', packing_is_packed_map)
    write_template('common/enum_scalar_mapping_decl', packing_components_map)
+   write_template('common/enum_scalar_mapping_decl', packing_pixel_size)
    write_template('common/enum_scalar_mapping_decl', packing_word_size)
    write_template('common/enum_scalar_mapping_decl', packing_n_words)
    write_template('common/enum_scalar_mapping_decl', packing_word_offset_0)
@@ -68,6 +70,7 @@ else
    write_template('common/enum_bool_mapping', packing_is_compressed_map)
    write_template('common/enum_bool_mapping', packing_is_packed_map)
    write_template('common/enum_scalar_mapping', packing_components_map)
+   write_template('common/enum_scalar_mapping', packing_pixel_size)
    write_template('common/enum_scalar_mapping', packing_word_size)
    write_template('common/enum_scalar_mapping', packing_n_words)
    write_template('common/enum_scalar_mapping', packing_word_offset_0)

@@ -1,10 +1,12 @@
-#pragma once
+﻿#pragma once
 #ifndef BE_GFX_COLORSPACE_HPP_
 #define BE_GFX_COLORSPACE_HPP_
 
 #include <be/core/be.hpp>
 
 namespace be::gfx {
+
+// TODO logLUV, RGBM http://graphicrants.blogspot.fr/2009/04/rgbm-color-encoding.html
 
 /*!! include 'colorspace' !! 56 */
 /* ################# !! GENERATED CODE -- DO NOT MODIFY !! ################# */

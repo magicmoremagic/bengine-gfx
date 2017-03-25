@@ -131,6 +131,7 @@
     <None Include="include\fixed_size_median_kernel.inl" />
     <None Include="include\image_block_access.inl" />
     <None Include="include\image_pixel_access.inl" />
+    <None Include="include\image_pixel_access_norm.inl" />
     <None Include="include\uniform_resample.inl" />
     <None Include="include\variable_size_median_kernel.inl" />
     <None Include="include\visit_image.inl" />

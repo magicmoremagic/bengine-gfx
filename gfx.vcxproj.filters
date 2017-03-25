@@ -282,5 +282,8 @@
     <None Include="include\visit_texture.inl">
       <Filter>Header Files\textures</Filter>
     </None>
+    <None Include="include\image_pixel_access_norm.inl">
+      <Filter>Header Files\textures</Filter>
+    </None>
   </ItemGroup>
 </Project>

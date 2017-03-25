@@ -13,11 +13,22 @@ ImageFormat::ImageFormat()
 
 ///////////////////////////////////////////////////////////////////////////////
 ImageFormat::ImageFormat(block_size_type block_size,
+                         block_size_type block_dim,
+                         ImageBlockPacking packing,
+                         U8 components,
+                         component_types_type component_types,
+                         swizzles_type swizzles,
+                         Colorspace colorspace,
+                         bool premultiplied)
+   : ImageFormat(block_size, block_dim_type(block_dim), packing, components, component_types, swizzles, colorspace, premultiplied) { }
+
+///////////////////////////////////////////////////////////////////////////////
+ImageFormat::ImageFormat(block_size_type block_size,
                          block_dim_type block_dim,
                          ImageBlockPacking packing,
                          U8 components,
-                         ctype_vec_type component_types,
-                         swizzle_vec_type swizzle,
+                         component_types_type component_types,
+                         swizzles_type swizzles,
                          Colorspace colorspace,
                          bool premultiplied)
    : block_size_(block_size),
@@ -25,7 +36,7 @@ ImageFormat::ImageFormat(block_size_type block_size,
      packing_(packing),
      components_(components),
      component_types_(component_types),
-     swizzle_(swizzle),
+     swizzle_(swizzles),
      colorspace_(colorspace),
      premultiplied_(premultiplied) {
    assert(block_size > 0);
@@ -38,10 +49,10 @@ ImageFormat::ImageFormat(block_size_type block_size,
    assert(is_valid(static_cast<ImageComponentType>(component_types.g)));
    assert(is_valid(static_cast<ImageComponentType>(component_types.b)));
    assert(is_valid(static_cast<ImageComponentType>(component_types.a)));
-   assert(is_valid(static_cast<Swizzle>(swizzle.r)));
-   assert(is_valid(static_cast<Swizzle>(swizzle.g)));
-   assert(is_valid(static_cast<Swizzle>(swizzle.b)));
-   assert(is_valid(static_cast<Swizzle>(swizzle.a)));
+   assert(is_valid(static_cast<Swizzle>(swizzles.r)));
+   assert(is_valid(static_cast<Swizzle>(swizzles.g)));
+   assert(is_valid(static_cast<Swizzle>(swizzles.b)));
+   assert(is_valid(static_cast<Swizzle>(swizzles.a)));
    assert(is_valid(colorspace));
    assert(!premultiplied || components == 4);
    assert(block_size >= block_dim.x * block_dim.y * block_dim.z * image_block_pixel_size(packing));
@@ -62,6 +73,15 @@ ImageFormat& ImageFormat::block_size(block_size_type size) {
 ///////////////////////////////////////////////////////////////////////////////
 ImageFormat::block_size_type ImageFormat::block_size() const {
    return block_size_;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+ImageFormat& ImageFormat::block_dim(block_size_type block_dim) {
+   assert(block_dim > 0);
+   block_dim_.x = block_dim;
+   block_dim_.y = block_dim;
+   block_dim_.z = block_dim;
+   return *this;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -103,7 +123,7 @@ ImageBlockPacking ImageFormat::packing() const {
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-ImageFormat& ImageFormat::component_types(ctype_vec_type types) {
+ImageFormat& ImageFormat::component_types(component_types_type types) {
    assert(is_valid(static_cast<ImageComponentType>(types.r)));
    assert(is_valid(static_cast<ImageComponentType>(types.g)));
    assert(is_valid(static_cast<ImageComponentType>(types.b)));
@@ -113,14 +133,14 @@ ImageFormat& ImageFormat::component_types(ctype_vec_type types) {
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-ImageFormat::ctype_vec_type ImageFormat::component_types() const {
+ImageFormat::component_types_type ImageFormat::component_types() const {
    return component_types_;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 ImageFormat& ImageFormat::component_type(glm::length_t component, ImageComponentType type) {
    assert(is_valid(static_cast<ImageComponentType>(type)));
-   component_types_[component] = static_cast<ctype_vec_type::value_type>(type);
+   component_types_[component] = static_cast<component_types_type::value_type>(type);
    return *this;
 }
 
@@ -130,7 +150,7 @@ ImageComponentType ImageFormat::component_type(glm::length_t component) const {
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-ImageFormat& ImageFormat::swizzle(swizzle_vec_type swizzle) {
+ImageFormat& ImageFormat::swizzles(swizzles_type swizzle) {
    assert(is_valid(static_cast<Swizzle>(swizzle.r)));
    assert(is_valid(static_cast<Swizzle>(swizzle.g)));
    assert(is_valid(static_cast<Swizzle>(swizzle.b)));
@@ -140,14 +160,14 @@ ImageFormat& ImageFormat::swizzle(swizzle_vec_type swizzle) {
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-ImageFormat::swizzle_vec_type ImageFormat::swizzle() const {
+ImageFormat::swizzles_type ImageFormat::swizzles() const {
    return swizzle_;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 ImageFormat& ImageFormat::swizzle(glm::length_t component, Swizzle swizzle) {
    assert(is_valid(static_cast<Swizzle>(swizzle)));
-   swizzle_[component] = static_cast<ctype_vec_type::value_type>(swizzle);
+   swizzle_[component] = static_cast<component_types_type::value_type>(swizzle);
    return *this;
 }
 
@@ -195,6 +215,136 @@ bool ImageFormat::operator==(const ImageFormat& other) const {
 ///////////////////////////////////////////////////////////////////////////////
 bool ImageFormat::operator!=(const ImageFormat& other) const {
    return !(*this == other);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+ImageFormat::component_types_type component_types(ImageComponentType type, glm::length_t n_components) {
+   using V = ImageFormat::component_types_type;
+   using T = V::value_type;
+   V vec(static_cast<T>(ImageComponentType::none));
+   for (glm::length_t i = 0; i < n_components; ++i) {
+      vec[i] = static_cast<T>(type);
+   }
+   return vec;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+ImageFormat::component_types_type component_types(ImageComponentType type0, ImageComponentType type1) {
+   using V = ImageFormat::component_types_type;
+   using T = V::value_type;
+   return V(static_cast<T>(type0),
+            static_cast<T>(type1),
+            static_cast<T>(ImageComponentType::none),
+            static_cast<T>(ImageComponentType::none));
+}
+
+///////////////////////////////////////////////////////////////////////////////
+ImageFormat::component_types_type component_types(ImageComponentType type0, ImageComponentType type1, ImageComponentType type2) {
+   using V = ImageFormat::component_types_type;
+   using T = V::value_type;
+   return V(static_cast<T>(type0),
+            static_cast<T>(type1),
+            static_cast<T>(type2),
+            static_cast<T>(ImageComponentType::none));
+}
+
+///////////////////////////////////////////////////////////////////////////////
+ImageFormat::component_types_type component_types(ImageComponentType type0, ImageComponentType type1, ImageComponentType type2, ImageComponentType type3) {
+   using V = ImageFormat::component_types_type;
+   using T = V::value_type;
+   return V(static_cast<T>(type0),
+            static_cast<T>(type1),
+            static_cast<T>(type2),
+            static_cast<T>(type3));
+}
+
+///////////////////////////////////////////////////////////////////////////////
+ImageFormat::component_types_type component_types(std::initializer_list<ImageComponentType> types) {
+   assert(types.size() <= 4);
+   using V = ImageFormat::component_types_type;
+   using T = V::value_type;
+   V vec(static_cast<T>(ImageComponentType::none));
+   glm::length_t i = 0;
+   for (ImageComponentType type : types) {
+      vec[i++] = static_cast<T>(type);
+   }
+   return vec;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+ImageFormat::swizzles_type swizzles(Swizzle s0, Swizzle s1, Swizzle s2, Swizzle s3) {
+   using V = ImageFormat::swizzles_type;
+   using T = V::value_type;
+   return V(static_cast<T>(s0),
+            static_cast<T>(s1),
+            static_cast<T>(s2),
+            static_cast<T>(s3));
+}
+
+///////////////////////////////////////////////////////////////////////////////
+ImageFormat::swizzles_type swizzles(std::initializer_list<Swizzle> swizzles) {
+   assert(swizzles.size() <= 4);
+   using V = ImageFormat::swizzles_type;
+   using T = V::value_type;
+   V vec(static_cast<T>(Swizzle::zero),
+         static_cast<T>(Swizzle::zero),
+         static_cast<T>(Swizzle::zero),
+         static_cast<T>(Swizzle::one));
+   glm::length_t i = 0;
+   for (Swizzle s : swizzles) {
+      vec[i++] = static_cast<T>(s);
+   }
+   return vec;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+ImageFormat::swizzles_type swizzles_r() {
+   return swizzles(Swizzle::red);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+ImageFormat::swizzles_type swizzles_zzzr() {
+   return swizzles(Swizzle::zero, Swizzle::zero, Swizzle::zero, Swizzle::red);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+ImageFormat::swizzles_type swizzles_rrr() {
+   return swizzles(Swizzle::red, Swizzle::red, Swizzle::red);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+ImageFormat::swizzles_type swizzles_rg() {
+   return swizzles(Swizzle::red, Swizzle::green);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+ImageFormat::swizzles_type swizzles_rzzg() {
+   return swizzles(Swizzle::red, Swizzle::zero, Swizzle::zero, Swizzle::green);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+ImageFormat::swizzles_type swizzles_rrrg() {
+   return swizzles(Swizzle::red, Swizzle::red, Swizzle::red, Swizzle::green);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+ImageFormat::swizzles_type swizzles_rgb() {
+   return swizzles(Swizzle::red, Swizzle::green, Swizzle::blue);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+ImageFormat::swizzles_type swizzles_bgr() {
+   return swizzles(Swizzle::blue, Swizzle::green, Swizzle::red);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+ImageFormat::swizzles_type swizzles_rgba() {
+   return swizzles(Swizzle::red, Swizzle::green, Swizzle::blue, Swizzle::alpha);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+ImageFormat::swizzles_type swizzles_bgra() {
+   return swizzles(Swizzle::red, Swizzle::green, Swizzle::blue, Swizzle::alpha);
 }
 
 } // be::gfx

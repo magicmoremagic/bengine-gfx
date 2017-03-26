@@ -3,13 +3,15 @@
 template <`name`>
 struct `name`Info {
    static constexpr Colorspace base = Colorspace::unknown;
+   static constexpr Colorspace linear = Colorspace::linear_other;
 };
 `
 enum_name = name
 with each constants using # {
-   if base ~= 'unknown' {`
+   if base ~= 'unknown' or linear ~= 'linear_other' {`
 template <> struct `enum_name`Info<`enum_name`::`name`> {
-   static constexpr Colorspace base = Colorspace::`base`;`
+   static constexpr Colorspace base = Colorspace::`base`;
+   static constexpr Colorspace linear = Colorspace::`linear`;`
       if kr or kg or kb {`
    static constexpr F32 kr = `kr or '1.f / 3.'`f;
    static constexpr F32 kb = `kb or '1.f / 3.'`f;

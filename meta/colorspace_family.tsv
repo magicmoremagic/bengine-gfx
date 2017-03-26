@@ -1,6 +1,6 @@
-name	base	kr	kg	kb
-none	linear_other
-bt709_linear	bt709_linear_rgb	0.2126	0.7152	0.0722
-bt709	bt709_rgb	0.2126	0.7152	0.0722
-srgb	srgb	0.2126	0.7152	0.0722
-cie	cie_xyz
+name	base	linear	kr	kg	kb
+none	linear_other	linear_other
+bt709_linear	bt709_linear_rgb	bt709_linear_rgb	0.2126	0.7152	0.0722
+bt709	bt709_rgb	bt709_linear_rgb	0.2126	0.7152	0.0722
+srgb	srgb	bt709_linear_rgb	0.2126	0.7152	0.0722
+cie	cie_xyz	cie_xyz

@@ -3,7 +3,7 @@
 
 namespace be::gfx {
 
-/*!! include 'colorspace' !! 183 */
+/*!! include 'colorspace' !! 195 */
 /* ################# !! GENERATED CODE -- DO NOT MODIFY !! ################# */
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -127,6 +127,18 @@ Colorspace base_colorspace(ColorspaceFamily constant) noexcept {
       case ColorspaceFamily::cie:          return Colorspace::cie_xyz;
       default:
          return Colorspace::unknown;
+   }
+}
+
+///////////////////////////////////////////////////////////////////////////////
+Colorspace linear_colorspace(ColorspaceFamily constant) noexcept {
+   switch (constant) {
+      case ColorspaceFamily::bt709_linear: return Colorspace::bt709_linear_rgb;
+      case ColorspaceFamily::bt709:        return Colorspace::bt709_linear_rgb;
+      case ColorspaceFamily::srgb:         return Colorspace::bt709_linear_rgb;
+      case ColorspaceFamily::cie:          return Colorspace::cie_xyz;
+      default:
+         return Colorspace::linear_other;
    }
 }
 

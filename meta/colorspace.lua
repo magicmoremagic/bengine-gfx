@@ -21,6 +21,7 @@ colorspace = make_enum_class('Colorspace', 'U8', data)
 
 if not no_write then
    local family_base_map = { name = 'base_colorspace', input_enum = colorspace_family, output_enum = colorspace, mapper = 'base', default = 'unknown' }
+   local family_linear_map = { name = 'linear_colorspace', input_enum = colorspace_family, output_enum = colorspace, mapper = 'linear', default = 'linear_other' }
 
    local colorspace_is_linear_map = { name = 'is_linear', enum = colorspace, predicate = 'linear' }
    local colorspace_family_map  = { name = 'colorspace_family',  input_enum = colorspace, output_enum = colorspace_family,  mapper = 'family',  default = 'none' }
@@ -37,6 +38,7 @@ if not no_write then
       write_template('common/enum_name_decl', colorspace_family)
       write_template('common/enum_name_decl', colorspace_variant)
       write_template('common/enum_enum_mapping_decl', family_base_map)
+      write_template('common/enum_enum_mapping_decl', family_linear_map)
       write_template('common/enum_bool_mapping_decl', colorspace_is_linear_map)
       write_template('common/enum_enum_mapping_decl', colorspace_family_map)
       write_template('common/enum_enum_mapping_decl', colorspace_variant_map)
@@ -50,6 +52,7 @@ if not no_write then
       write_template('common/enum_name', colorspace_family)
       write_template('common/enum_name', colorspace_variant)
       write_template('common/enum_enum_mapping', family_base_map)
+      write_template('common/enum_enum_mapping', family_linear_map)
       write_template('common/enum_bool_mapping', colorspace_is_linear_map)
       write_template('common/enum_enum_mapping', colorspace_family_map)
       write_template('common/enum_enum_mapping', colorspace_variant_map)

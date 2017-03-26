@@ -40,7 +40,6 @@ struct convert_colorspace {
 struct convert_colorspace_nop {
    static vec4 convert(vec4 pixel_norm) {
       return pixel_norm;
-
    }
 };
 

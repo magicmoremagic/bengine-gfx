@@ -72,6 +72,8 @@
     <ClInclude Include="include\make_image.hpp" />
     <ClInclude Include="include\make_texture.hpp" />
     <ClInclude Include="include\mipmapping.hpp" />
+    <ClInclude Include="include\premultiply_alpha.hpp" />
+    <ClInclude Include="include\premultiply_alpha_static.hpp" />
     <ClInclude Include="include\step_filter.hpp" />
     <ClInclude Include="include\cubic_filter.hpp" />
     <ClInclude Include="include\filter_traits.hpp" />
@@ -114,6 +116,7 @@
     <ClCompile Include="src\pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="src\premultiply_alpha.cpp" />
     <ClCompile Include="src\read_image.cpp" />
     <ClCompile Include="src\resize_image.cpp" />
     <ClCompile Include="src\stbi_util_detail.cpp" />

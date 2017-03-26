@@ -9,7 +9,7 @@ namespace be::gfx {
 // TODO RGBE
 // TODO logLUV, RGBM http://graphicrants.blogspot.fr/2009/04/rgbm-color-encoding.html
 
-/*!! include 'colorspace' !! 188 */
+/*!! include 'colorspace' !! 195 */
 /* ################# !! GENERATED CODE -- DO NOT MODIFY !! ################# */
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -61,6 +61,7 @@ const char* colorspace_name(Colorspace constant) noexcept;
 const char* colorspace_family_name(ColorspaceFamily constant) noexcept;
 const char* colorspace_variant_name(ColorspaceVariant constant) noexcept;
 Colorspace base_colorspace(ColorspaceFamily constant) noexcept;
+Colorspace linear_colorspace(ColorspaceFamily constant) noexcept;
 bool is_linear(Colorspace constant) noexcept;
 ColorspaceFamily colorspace_family(Colorspace constant) noexcept;
 ColorspaceVariant colorspace_variant(Colorspace constant) noexcept;
@@ -165,14 +166,17 @@ template <> struct ColorspaceInfo<Colorspace::cie_xyy> {
 template <ColorspaceFamily>
 struct ColorspaceFamilyInfo {
    static constexpr Colorspace base = Colorspace::unknown;
+   static constexpr Colorspace linear = Colorspace::linear_other;
 };
 
 template <> struct ColorspaceFamilyInfo<ColorspaceFamily::none> {
    static constexpr Colorspace base = Colorspace::linear_other;
+   static constexpr Colorspace linear = Colorspace::linear_other;
 };
 
 template <> struct ColorspaceFamilyInfo<ColorspaceFamily::bt709_linear> {
    static constexpr Colorspace base = Colorspace::bt709_linear_rgb;
+   static constexpr Colorspace linear = Colorspace::bt709_linear_rgb;
    static constexpr F32 kr = 0.2126f;
    static constexpr F32 kb = 0.0722f;
    static constexpr F32 kg = 0.7152f;
@@ -180,6 +184,7 @@ template <> struct ColorspaceFamilyInfo<ColorspaceFamily::bt709_linear> {
 
 template <> struct ColorspaceFamilyInfo<ColorspaceFamily::bt709> {
    static constexpr Colorspace base = Colorspace::bt709_rgb;
+   static constexpr Colorspace linear = Colorspace::bt709_linear_rgb;
    static constexpr F32 kr = 0.2126f;
    static constexpr F32 kb = 0.0722f;
    static constexpr F32 kg = 0.7152f;
@@ -187,6 +192,7 @@ template <> struct ColorspaceFamilyInfo<ColorspaceFamily::bt709> {
 
 template <> struct ColorspaceFamilyInfo<ColorspaceFamily::srgb> {
    static constexpr Colorspace base = Colorspace::srgb;
+   static constexpr Colorspace linear = Colorspace::bt709_linear_rgb;
    static constexpr F32 kr = 0.2126f;
    static constexpr F32 kb = 0.0722f;
    static constexpr F32 kg = 0.7152f;
@@ -194,6 +200,7 @@ template <> struct ColorspaceFamilyInfo<ColorspaceFamily::srgb> {
 
 template <> struct ColorspaceFamilyInfo<ColorspaceFamily::cie> {
    static constexpr Colorspace base = Colorspace::cie_xyz;
+   static constexpr Colorspace linear = Colorspace::cie_xyz;
 };
 
 /* ######################### END OF GENERATED CODE ######################### */

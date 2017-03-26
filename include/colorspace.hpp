@@ -9,7 +9,7 @@ namespace be::gfx {
 // TODO RGBE
 // TODO logLUV, RGBM http://graphicrants.blogspot.fr/2009/04/rgbm-color-encoding.html
 
-/*!! include 'colorspace' !! 197 */
+/*!! include 'colorspace' !! 188 */
 /* ################# !! GENERATED CODE -- DO NOT MODIFY !! ################# */
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -165,16 +165,10 @@ template <> struct ColorspaceInfo<Colorspace::cie_xyy> {
 template <ColorspaceFamily>
 struct ColorspaceFamilyInfo {
    static constexpr Colorspace base = Colorspace::unknown;
-   static constexpr F32 kr = 1.f / 3.f;
-   static constexpr F32 kb = 1.f / 3.f;
-   static constexpr F32 kg = -kr - kb + 1.f;
 };
 
 template <> struct ColorspaceFamilyInfo<ColorspaceFamily::none> {
    static constexpr Colorspace base = Colorspace::linear_other;
-   static constexpr F32 kr = 1.f / 3.f;
-   static constexpr F32 kb = 1.f / 3.f;
-   static constexpr F32 kg = -kr -kb + 1.f;
 };
 
 template <> struct ColorspaceFamilyInfo<ColorspaceFamily::bt709_linear> {
@@ -200,9 +194,6 @@ template <> struct ColorspaceFamilyInfo<ColorspaceFamily::srgb> {
 
 template <> struct ColorspaceFamilyInfo<ColorspaceFamily::cie> {
    static constexpr Colorspace base = Colorspace::cie_xyz;
-   static constexpr F32 kr = 1.f / 3.f;
-   static constexpr F32 kb = 1.f / 3.f;
-   static constexpr F32 kg = -kr -kb + 1.f;
 };
 
 /* ######################### END OF GENERATED CODE ######################### */

@@ -7,7 +7,7 @@ namespace be::gfx {
 /* ################# !! GENERATED CODE -- DO NOT MODIFY !! ################# */
 
 ///////////////////////////////////////////////////////////////////////////////
-bool is_valid(ImageComponentType constant) {
+bool is_valid(ImageComponentType constant) noexcept {
    switch (constant) {
       case ImageComponentType::none:
       case ImageComponentType::unorm:
@@ -24,7 +24,7 @@ bool is_valid(ImageComponentType constant) {
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-const char* image_component_type_name(ImageComponentType constant) {
+const char* image_component_type_name(ImageComponentType constant) noexcept {
    switch (constant) {
       case ImageComponentType::none:   return "none";
       case ImageComponentType::unorm:  return "unorm";

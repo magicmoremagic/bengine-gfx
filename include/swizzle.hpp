@@ -19,8 +19,8 @@ enum class Swizzle : U8 {
    alpha
 };
 
-bool is_valid(Swizzle constant);
-const char* swizzle_name(Swizzle constant);
+bool is_valid(Swizzle constant) noexcept;
+const char* swizzle_name(Swizzle constant) noexcept;
 /* ######################### END OF GENERATED CODE ######################### */
 
 } // be::gfx

@@ -21,8 +21,8 @@ enum class ImageComponentType : U8 {
    expo
 };
 
-bool is_valid(ImageComponentType constant);
-const char* image_component_type_name(ImageComponentType constant);
+bool is_valid(ImageComponentType constant) noexcept;
+const char* image_component_type_name(ImageComponentType constant) noexcept;
 /* ######################### END OF GENERATED CODE ######################### */
 
 } // be::gfx

@@ -7,7 +7,7 @@ namespace be::gfx {
 /* ################# !! GENERATED CODE -- DO NOT MODIFY !! ################# */
 
 ///////////////////////////////////////////////////////////////////////////////
-bool is_valid(Swizzle constant) {
+bool is_valid(Swizzle constant) noexcept {
    switch (constant) {
       case Swizzle::zero:
       case Swizzle::one:
@@ -22,7 +22,7 @@ bool is_valid(Swizzle constant) {
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-const char* swizzle_name(Swizzle constant) {
+const char* swizzle_name(Swizzle constant) noexcept {
    switch (constant) {
       case Swizzle::zero:  return "zero";
       case Swizzle::one:   return "one";

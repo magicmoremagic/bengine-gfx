@@ -1,0 +1,22 @@
+
+
+template <`name`>
+struct `name`Info {
+   static constexpr Colorspace base = Colorspace::unknown;
+   static constexpr F32 kr = 1.f / 3.f;
+   static constexpr F32 kb = 1.f / 3.f;
+   static constexpr F32 kg = -kr - kb + 1.f;
+};
+`
+enum_name = name
+with each constants using # {
+   if base ~= 'unknown' {`
+template <> struct `enum_name`Info<`enum_name`::`name`> {
+   static constexpr Colorspace base = Colorspace::`base`;
+   static constexpr F32 kr = `kr or '1.f / 3.'`f;
+   static constexpr F32 kb = `kb or '1.f / 3.'`f;
+   static constexpr F32 kg = `kg or '-kr -kb + 1.'`f;
+};
+`
+   }
+}

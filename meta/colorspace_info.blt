@@ -1,0 +1,18 @@
+
+
+template <`name`>
+struct `name`Info {
+   static constexpr ColorspaceFamily family = ColorspaceFamily::none;
+   static constexpr ColorspaceVariant variant = ColorspaceVariant::none;
+};
+`
+enum_name = name
+with each constants using # {
+   if family ~= 'none' or variant ~= 'none' {`
+template <> struct `enum_name`Info<`enum_name`::`name`> {
+   static constexpr ColorspaceFamily family = ColorspaceFamily::`family`;
+   static constexpr ColorspaceVariant variant = ColorspaceVariant::`variant`;
+};
+`
+   }
+}

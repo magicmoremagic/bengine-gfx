@@ -12,79 +12,55 @@
     <Filter Include="Meta-Source Files">
       <UniqueIdentifier>{810e6e8f-7a80-4074-ad5b-e4a2f615dcb1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\filters">
-      <UniqueIdentifier>{caa6db15-381c-47fc-a33d-4482facfb440}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\wraps">
-      <UniqueIdentifier>{d35088d5-0db2-400f-9331-1bdec30d1be0}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\textures">
       <UniqueIdentifier>{0a777fe2-9844-4c92-95b9-3a593767deb4}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\textures">
       <UniqueIdentifier>{48ee0916-d10f-45a3-ae79-58476da27d63}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\old">
+      <UniqueIdentifier>{ef5bee63-1540-42bb-822c-12cfb582a47d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\old\filters">
+      <UniqueIdentifier>{caa6db15-381c-47fc-a33d-4482facfb440}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\old\wraps">
+      <UniqueIdentifier>{d35088d5-0db2-400f-9331-1bdec30d1be0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\old">
+      <UniqueIdentifier>{3a31d7a6-f65f-4202-8517-0ce474f07f72}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Meta-Source Files\old">
+      <UniqueIdentifier>{6b05565d-fe52-4bd6-8691-75cba9ff9f2c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\pch.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\stbiw_detail.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\stbi_detail.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\read_image.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\resize_image.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\write_image.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\stbi_util_detail.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\gfx_autolink.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\fixed_size_median_kernel.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\variable_size_median_kernel.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\fwd_types.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\cubic_filter.hpp">
-      <Filter>Header Files\filters</Filter>
+      <Filter>Header Files\old\filters</Filter>
     </ClInclude>
     <ClInclude Include="include\filter_traits.hpp">
-      <Filter>Header Files\filters</Filter>
+      <Filter>Header Files\old\filters</Filter>
     </ClInclude>
     <ClInclude Include="include\gaussian_filter.hpp">
-      <Filter>Header Files\filters</Filter>
+      <Filter>Header Files\old\filters</Filter>
     </ClInclude>
     <ClInclude Include="include\memoized_filter.hpp">
-      <Filter>Header Files\filters</Filter>
+      <Filter>Header Files\old\filters</Filter>
     </ClInclude>
     <ClInclude Include="include\linear_filter.hpp">
-      <Filter>Header Files\filters</Filter>
+      <Filter>Header Files\old\filters</Filter>
     </ClInclude>
     <ClInclude Include="include\ignore_wrap.hpp">
-      <Filter>Header Files\wraps</Filter>
-    </ClInclude>
-    <ClInclude Include="include\uniform_resample.hpp">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\old\wraps</Filter>
     </ClInclude>
     <ClInclude Include="include\step_filter.hpp">
-      <Filter>Header Files\filters</Filter>
-    </ClInclude>
-    <ClInclude Include="include\apply.hpp">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\old\filters</Filter>
     </ClInclude>
     <ClInclude Include="include\texture_storage.hpp">
       <Filter>Header Files\textures</Filter>
@@ -158,27 +134,51 @@
     <ClInclude Include="include\image_component_type.hpp">
       <Filter>Header Files\textures</Filter>
     </ClInclude>
+    <ClInclude Include="include\fwd_types.hpp">
+      <Filter>Header Files\old</Filter>
+    </ClInclude>
+    <ClInclude Include="include\apply.hpp">
+      <Filter>Header Files\old</Filter>
+    </ClInclude>
+    <ClInclude Include="include\fixed_size_median_kernel.hpp">
+      <Filter>Header Files\old</Filter>
+    </ClInclude>
+    <ClInclude Include="include\write_image.hpp">
+      <Filter>Header Files\old</Filter>
+    </ClInclude>
+    <ClInclude Include="include\read_image.hpp">
+      <Filter>Header Files\old</Filter>
+    </ClInclude>
+    <ClInclude Include="include\resize_image.hpp">
+      <Filter>Header Files\old</Filter>
+    </ClInclude>
+    <ClInclude Include="include\stbi_detail.h">
+      <Filter>Header Files\old</Filter>
+    </ClInclude>
+    <ClInclude Include="include\stbi_util_detail.hpp">
+      <Filter>Header Files\old</Filter>
+    </ClInclude>
+    <ClInclude Include="include\stbiw_detail.h">
+      <Filter>Header Files\old</Filter>
+    </ClInclude>
+    <ClInclude Include="include\uniform_resample.hpp">
+      <Filter>Header Files\old</Filter>
+    </ClInclude>
+    <ClInclude Include="include\variable_size_median_kernel.hpp">
+      <Filter>Header Files\old</Filter>
+    </ClInclude>
+    <ClInclude Include="include\convert_colorspace.hpp">
+      <Filter>Header Files\textures</Filter>
+    </ClInclude>
+    <ClInclude Include="include\image_pixel_norm.hpp">
+      <Filter>Header Files\textures</Filter>
+    </ClInclude>
+    <ClInclude Include="include\convert_colorspace_static.hpp">
+      <Filter>Header Files\textures</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\pch.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\stbi_detail.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\stbiw_detail.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\read_image.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\resize_image.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\write_image.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\stbi_util_detail.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\texture_storage.cpp">
@@ -217,32 +217,29 @@
     <ClCompile Include="src\image_component_type.cpp">
       <Filter>Source Files\textures</Filter>
     </ClCompile>
+    <ClCompile Include="src\write_image.cpp">
+      <Filter>Source Files\old</Filter>
+    </ClCompile>
+    <ClCompile Include="src\read_image.cpp">
+      <Filter>Source Files\old</Filter>
+    </ClCompile>
+    <ClCompile Include="src\resize_image.cpp">
+      <Filter>Source Files\old</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stbi_detail.c">
+      <Filter>Source Files\old</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stbi_util_detail.cpp">
+      <Filter>Source Files\old</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stbiw_detail.c">
+      <Filter>Source Files\old</Filter>
+    </ClCompile>
+    <ClCompile Include="src\convert_colorspace.cpp">
+      <Filter>Source Files\textures</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="meta\read_image.blt">
-      <Filter>Meta-Source Files</Filter>
-    </None>
-    <None Include="meta\read_x_image.blt">
-      <Filter>Meta-Source Files</Filter>
-    </None>
-    <None Include="meta\read_stbi_image_impl.blt">
-      <Filter>Meta-Source Files</Filter>
-    </None>
-    <None Include="meta\write_x_image.blt">
-      <Filter>Meta-Source Files</Filter>
-    </None>
-    <None Include="include\fixed_size_median_kernel.inl">
-      <Filter>Header Files</Filter>
-    </None>
-    <None Include="include\variable_size_median_kernel.inl">
-      <Filter>Header Files</Filter>
-    </None>
-    <None Include="include\uniform_resample.inl">
-      <Filter>Header Files</Filter>
-    </None>
-    <None Include="include\apply.inl">
-      <Filter>Header Files</Filter>
-    </None>
     <None Include="meta\colorspace.lua">
       <Filter>Meta-Source Files</Filter>
     </None>
@@ -283,6 +280,33 @@
       <Filter>Header Files\textures</Filter>
     </None>
     <None Include="include\image_pixel_access_norm.inl">
+      <Filter>Header Files\textures</Filter>
+    </None>
+    <None Include="include\apply.inl">
+      <Filter>Header Files\old</Filter>
+    </None>
+    <None Include="include\fixed_size_median_kernel.inl">
+      <Filter>Header Files\old</Filter>
+    </None>
+    <None Include="include\uniform_resample.inl">
+      <Filter>Header Files\old</Filter>
+    </None>
+    <None Include="include\variable_size_median_kernel.inl">
+      <Filter>Header Files\old</Filter>
+    </None>
+    <None Include="meta\write_x_image.blt">
+      <Filter>Meta-Source Files\old</Filter>
+    </None>
+    <None Include="meta\read_x_image.blt">
+      <Filter>Meta-Source Files\old</Filter>
+    </None>
+    <None Include="meta\read_image.blt">
+      <Filter>Meta-Source Files\old</Filter>
+    </None>
+    <None Include="meta\read_stbi_image_impl.blt">
+      <Filter>Meta-Source Files\old</Filter>
+    </None>
+    <None Include="include\convert_colorspace_static.inl">
       <Filter>Header Files\textures</Filter>
     </None>
   </ItemGroup>

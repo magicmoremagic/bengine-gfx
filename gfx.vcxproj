@@ -55,6 +55,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="include\apply.hpp" />
+    <ClInclude Include="include\convert_colorspace.hpp" />
+    <ClInclude Include="include\convert_colorspace_static.hpp" />
     <ClInclude Include="include\image_block_packing.hpp" />
     <ClInclude Include="include\colorspace.hpp" />
     <ClInclude Include="include\image.hpp" />
@@ -64,6 +66,7 @@
     <ClInclude Include="include\image_format_hash.hpp" />
     <ClInclude Include="include\image_pixel_access.hpp" />
     <ClInclude Include="include\image_pixel_access_norm.hpp" />
+    <ClInclude Include="include\image_pixel_norm.hpp" />
     <ClInclude Include="include\image_view.hpp" />
     <ClInclude Include="include\image_view_hash.hpp" />
     <ClInclude Include="include\make_image.hpp" />
@@ -101,6 +104,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\colorspace.cpp" />
+    <ClCompile Include="src\convert_colorspace.cpp" />
     <ClCompile Include="src\image_component_type.cpp" />
     <ClCompile Include="src\image_format.cpp" />
     <ClCompile Include="src\image_view.cpp" />
@@ -128,6 +132,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="include\apply.inl" />
+    <None Include="include\convert_colorspace_static.inl" />
     <None Include="include\fixed_size_median_kernel.inl" />
     <None Include="include\image_block_access.inl" />
     <None Include="include\image_pixel_access.inl" />

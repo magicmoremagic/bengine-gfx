@@ -417,7 +417,6 @@ TEST_CASE("ImageView normalized pixel access rgba8888unorm", BE_CATCH_TAGS) {
    }
 }
 
-
 TEST_CASE("ImageView normalized pixel access bgr888uint", BE_CATCH_TAGS) {
    gfx::ImageFormat format(U8(3), 1, gfx::ImageBlockPacking::s_8_8_8, 3, gfx::component_types(gfx::ImageComponentType::uint, 3),
                            gfx::swizzles_bgr(), gfx::Colorspace::srgb, false);
@@ -462,6 +461,32 @@ TEST_CASE("ImageView normalized pixel access bgr888uint", BE_CATCH_TAGS) {
          for (tc.y = 0; tc.y < dim; ++tc.y) {
             for (tc.x = 0; tc.x < dim; ++tc.x) {
                REQUIRE(gfx::get_pixel_norm(img.view, tc) == vec4(tc.x, tc.y, tc.z, 1.f));
+            }
+         }
+      }
+   }
+}
+
+TEST_CASE("ImageView normalized pixel access bgra5551unorm", BE_CATCH_TAGS) {
+   gfx::ImageFormat format(U8(2), 1, gfx::ImageBlockPacking::p_5_5_5_1, 4, gfx::component_types(gfx::ImageComponentType::unorm, 4),
+                           gfx::swizzles_bgra(), gfx::Colorspace::srgb, false);
+
+   const int dim = 4;
+   gfx::Image img = gfx::make_image(format, ivec3(dim));
+
+   SECTION("volumetric") {
+      ivec3 tc;
+      for (tc.z = 0; tc.z < dim; ++tc.z) {
+         for (tc.y = 0; tc.y < dim; ++tc.y) {
+            for (tc.x = 0; tc.x < dim; ++tc.x) {
+               gfx::put_pixel_norm(img.view, tc, vec4(tc.x / 31.f, tc.y / 31.f, tc.z / 31.f, tc.x + tc.y + tc.z == 2 ? 1.f : 0.f));
+            }
+         }
+      }
+      for (tc.z = 0; tc.z < dim; ++tc.z) {
+         for (tc.y = 0; tc.y < dim; ++tc.y) {
+            for (tc.x = 0; tc.x < dim; ++tc.x) {
+               REQUIRE(glm::length(gfx::get_pixel_norm(img.view, tc) - vec4(tc.x / 31.f, tc.y / 31.f, tc.z / 31.f, tc.x + tc.y + tc.z == 2 ? 1.f : 0.f)) < 1/31.f);
             }
          }
       }

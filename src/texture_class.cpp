@@ -7,7 +7,7 @@ namespace be::gfx {
 /* ################# !! GENERATED CODE -- DO NOT MODIFY !! ################# */
 
 ///////////////////////////////////////////////////////////////////////////////
-bool is_valid(TextureClass constant) {
+bool is_valid(TextureClass constant) noexcept {
    switch (constant) {
       case TextureClass::lineal:
       case TextureClass::lineal_array:
@@ -23,7 +23,7 @@ bool is_valid(TextureClass constant) {
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-const char* texture_class_name(TextureClass constant) {
+const char* texture_class_name(TextureClass constant) noexcept {
    switch (constant) {
       case TextureClass::lineal:            return "lineal";
       case TextureClass::lineal_array:      return "lineal_array";
@@ -38,7 +38,7 @@ const char* texture_class_name(TextureClass constant) {
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-bool is_array(TextureClass constant) {
+bool is_array(TextureClass constant) noexcept {
    switch (constant) {
       case TextureClass::lineal_array:      return true;
       case TextureClass::planar_array:      return true;
@@ -49,7 +49,7 @@ bool is_array(TextureClass constant) {
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-U8 dimensionality(TextureClass constant) {
+U8 dimensionality(TextureClass constant) noexcept {
    switch (constant) {
       case TextureClass::lineal:            return U8(1);
       case TextureClass::lineal_array:      return U8(1);
@@ -60,7 +60,7 @@ U8 dimensionality(TextureClass constant) {
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-U8 degree(TextureClass constant) {
+U8 degree(TextureClass constant) noexcept {
    switch (constant) {
       case TextureClass::lineal:            return U8(1);
       case TextureClass::planar_array:      return U8(3);
@@ -72,7 +72,7 @@ U8 degree(TextureClass constant) {
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-U8 faces(TextureClass constant) {
+U8 faces(TextureClass constant) noexcept {
    switch (constant) {
       case TextureClass::directional:       return U8(6);
       case TextureClass::directional_array: return U8(6);

@@ -20,12 +20,12 @@ enum class TextureClass : U8 {
    directional_array
 };
 
-bool is_valid(TextureClass constant);
-const char* texture_class_name(TextureClass constant);
-bool is_array(TextureClass constant);
-U8 dimensionality(TextureClass constant);
-U8 degree(TextureClass constant);
-U8 faces(TextureClass constant);
+bool is_valid(TextureClass constant) noexcept;
+const char* texture_class_name(TextureClass constant) noexcept;
+bool is_array(TextureClass constant) noexcept;
+U8 dimensionality(TextureClass constant) noexcept;
+U8 degree(TextureClass constant) noexcept;
+U8 faces(TextureClass constant) noexcept;
 /* ######################### END OF GENERATED CODE ######################### */
 
 } // be::gfx

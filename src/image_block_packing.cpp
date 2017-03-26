@@ -7,7 +7,7 @@ namespace be::gfx {
 /* ################# !! GENERATED CODE -- DO NOT MODIFY !! ################# */
 
 ///////////////////////////////////////////////////////////////////////////////
-bool is_valid(ImageBlockPacking constant) {
+bool is_valid(ImageBlockPacking constant) noexcept {
    switch (constant) {
       case ImageBlockPacking::s_8:
       case ImageBlockPacking::s_8_8:
@@ -64,7 +64,7 @@ bool is_valid(ImageBlockPacking constant) {
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-const char* image_block_packing_name(ImageBlockPacking constant) {
+const char* image_block_packing_name(ImageBlockPacking constant) noexcept {
    switch (constant) {
       case ImageBlockPacking::s_8:           return "s_8";
       case ImageBlockPacking::s_8_8:         return "s_8_8";
@@ -120,7 +120,7 @@ const char* image_block_packing_name(ImageBlockPacking constant) {
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-bool is_compressed(ImageBlockPacking constant) {
+bool is_compressed(ImageBlockPacking constant) noexcept {
    switch (constant) {
       case ImageBlockPacking::c_astc:        return true;
       case ImageBlockPacking::c_atc:         return true;
@@ -141,7 +141,7 @@ bool is_compressed(ImageBlockPacking constant) {
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-bool is_packed(ImageBlockPacking constant) {
+bool is_packed(ImageBlockPacking constant) noexcept {
    switch (constant) {
       case ImageBlockPacking::p_4_4:         return true;
       case ImageBlockPacking::p_3_3_2:       return true;
@@ -168,7 +168,7 @@ bool is_packed(ImageBlockPacking constant) {
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-U8 component_count(ImageBlockPacking constant) {
+U8 component_count(ImageBlockPacking constant) noexcept {
    switch (constant) {
       case ImageBlockPacking::s_8:           return U8(1);
       case ImageBlockPacking::s_8_8:         return U8(2);
@@ -212,7 +212,7 @@ U8 component_count(ImageBlockPacking constant) {
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-U16 image_block_pixel_size(ImageBlockPacking constant) {
+U16 image_block_pixel_size(ImageBlockPacking constant) noexcept {
    switch (constant) {
       case ImageBlockPacking::s_8:           return U16(1);
       case ImageBlockPacking::s_8_8:         return U16(2);
@@ -255,7 +255,7 @@ U16 image_block_pixel_size(ImageBlockPacking constant) {
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-U8 image_block_word_size(ImageBlockPacking constant) {
+U8 image_block_word_size(ImageBlockPacking constant) noexcept {
    switch (constant) {
       case ImageBlockPacking::s_8:           return U8(1);
       case ImageBlockPacking::s_8_8:         return U8(1);
@@ -296,7 +296,7 @@ U8 image_block_word_size(ImageBlockPacking constant) {
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-U8 image_block_word_count(ImageBlockPacking constant) {
+U8 image_block_word_count(ImageBlockPacking constant) noexcept {
    switch (constant) {
       case ImageBlockPacking::s_8_8:         return U8(2);
       case ImageBlockPacking::s_8_8_8:       return U8(3);
@@ -330,7 +330,7 @@ U8 image_block_word_count(ImageBlockPacking constant) {
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-U8 image_block_word_offset_0(ImageBlockPacking constant) {
+U8 image_block_word_offset_0(ImageBlockPacking constant) noexcept {
    switch (constant) {
       default:
          return U8(0);
@@ -338,7 +338,7 @@ U8 image_block_word_offset_0(ImageBlockPacking constant) {
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-U8 image_block_word_offset_1(ImageBlockPacking constant) {
+U8 image_block_word_offset_1(ImageBlockPacking constant) noexcept {
    switch (constant) {
       case ImageBlockPacking::s_8_8:         return U8(1);
       case ImageBlockPacking::s_8_8_8:       return U8(1);
@@ -359,7 +359,7 @@ U8 image_block_word_offset_1(ImageBlockPacking constant) {
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-U8 image_block_word_offset_2(ImageBlockPacking constant) {
+U8 image_block_word_offset_2(ImageBlockPacking constant) noexcept {
    switch (constant) {
       case ImageBlockPacking::s_8_8_8:       return U8(2);
       case ImageBlockPacking::s_8_8_8_8:     return U8(2);
@@ -376,7 +376,7 @@ U8 image_block_word_offset_2(ImageBlockPacking constant) {
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-U8 image_block_word_offset_3(ImageBlockPacking constant) {
+U8 image_block_word_offset_3(ImageBlockPacking constant) noexcept {
    switch (constant) {
       case ImageBlockPacking::s_8_8_8_8:     return U8(3);
       case ImageBlockPacking::s_16_16_16_16: return U8(3);
@@ -388,7 +388,7 @@ U8 image_block_word_offset_3(ImageBlockPacking constant) {
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-U8 image_block_bit_offset_0(ImageBlockPacking constant) {
+U8 image_block_bit_offset_0(ImageBlockPacking constant) noexcept {
    switch (constant) {
       case ImageBlockPacking::p_4_4:         return U8(4);
       case ImageBlockPacking::p_3_3_2:       return U8(5);
@@ -415,7 +415,7 @@ U8 image_block_bit_offset_0(ImageBlockPacking constant) {
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-U8 image_block_bit_offset_1(ImageBlockPacking constant) {
+U8 image_block_bit_offset_1(ImageBlockPacking constant) noexcept {
    switch (constant) {
       case ImageBlockPacking::p_3_3_2:       return U8(2);
       case ImageBlockPacking::p_2_3_3:       return U8(3);
@@ -439,7 +439,7 @@ U8 image_block_bit_offset_1(ImageBlockPacking constant) {
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-U8 image_block_bit_offset_2(ImageBlockPacking constant) {
+U8 image_block_bit_offset_2(ImageBlockPacking constant) noexcept {
    switch (constant) {
       case ImageBlockPacking::p_4_4_4_4:     return U8(4);
       case ImageBlockPacking::p_1_5_5_5:     return U8(5);
@@ -455,7 +455,7 @@ U8 image_block_bit_offset_2(ImageBlockPacking constant) {
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-U8 image_block_bit_offset_3(ImageBlockPacking constant) {
+U8 image_block_bit_offset_3(ImageBlockPacking constant) noexcept {
    switch (constant) {
       default:
          return U8(0);
@@ -463,7 +463,7 @@ U8 image_block_bit_offset_3(ImageBlockPacking constant) {
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-U8 image_block_bit_width_0(ImageBlockPacking constant) {
+U8 image_block_bit_width_0(ImageBlockPacking constant) noexcept {
    switch (constant) {
       case ImageBlockPacking::s_8:           return U8(8);
       case ImageBlockPacking::s_8_8:         return U8(8);
@@ -506,7 +506,7 @@ U8 image_block_bit_width_0(ImageBlockPacking constant) {
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-U8 image_block_bit_width_1(ImageBlockPacking constant) {
+U8 image_block_bit_width_1(ImageBlockPacking constant) noexcept {
    switch (constant) {
       case ImageBlockPacking::s_8_8:         return U8(8);
       case ImageBlockPacking::s_8_8_8:       return U8(8);
@@ -545,7 +545,7 @@ U8 image_block_bit_width_1(ImageBlockPacking constant) {
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-U8 image_block_bit_width_2(ImageBlockPacking constant) {
+U8 image_block_bit_width_2(ImageBlockPacking constant) noexcept {
    switch (constant) {
       case ImageBlockPacking::s_8_8_8:       return U8(8);
       case ImageBlockPacking::s_8_8_8_8:     return U8(8);
@@ -577,7 +577,7 @@ U8 image_block_bit_width_2(ImageBlockPacking constant) {
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-U8 image_block_bit_width_3(ImageBlockPacking constant) {
+U8 image_block_bit_width_3(ImageBlockPacking constant) noexcept {
    switch (constant) {
       case ImageBlockPacking::s_8_8_8_8:     return U8(8);
       case ImageBlockPacking::s_16_16_16_16: return U8(16);

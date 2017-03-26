@@ -61,26 +61,26 @@ enum class ImageBlockPacking : U8 {
    c_s3tc5
 };
 
-bool is_valid(ImageBlockPacking constant);
-const char* image_block_packing_name(ImageBlockPacking constant);
-bool is_compressed(ImageBlockPacking constant);
-bool is_packed(ImageBlockPacking constant);
-U8 component_count(ImageBlockPacking constant);
-U16 image_block_pixel_size(ImageBlockPacking constant);
-U8 image_block_word_size(ImageBlockPacking constant);
-U8 image_block_word_count(ImageBlockPacking constant);
-U8 image_block_word_offset_0(ImageBlockPacking constant);
-U8 image_block_word_offset_1(ImageBlockPacking constant);
-U8 image_block_word_offset_2(ImageBlockPacking constant);
-U8 image_block_word_offset_3(ImageBlockPacking constant);
-U8 image_block_bit_offset_0(ImageBlockPacking constant);
-U8 image_block_bit_offset_1(ImageBlockPacking constant);
-U8 image_block_bit_offset_2(ImageBlockPacking constant);
-U8 image_block_bit_offset_3(ImageBlockPacking constant);
-U8 image_block_bit_width_0(ImageBlockPacking constant);
-U8 image_block_bit_width_1(ImageBlockPacking constant);
-U8 image_block_bit_width_2(ImageBlockPacking constant);
-U8 image_block_bit_width_3(ImageBlockPacking constant);
+bool is_valid(ImageBlockPacking constant) noexcept;
+const char* image_block_packing_name(ImageBlockPacking constant) noexcept;
+bool is_compressed(ImageBlockPacking constant) noexcept;
+bool is_packed(ImageBlockPacking constant) noexcept;
+U8 component_count(ImageBlockPacking constant) noexcept;
+U16 image_block_pixel_size(ImageBlockPacking constant) noexcept;
+U8 image_block_word_size(ImageBlockPacking constant) noexcept;
+U8 image_block_word_count(ImageBlockPacking constant) noexcept;
+U8 image_block_word_offset_0(ImageBlockPacking constant) noexcept;
+U8 image_block_word_offset_1(ImageBlockPacking constant) noexcept;
+U8 image_block_word_offset_2(ImageBlockPacking constant) noexcept;
+U8 image_block_word_offset_3(ImageBlockPacking constant) noexcept;
+U8 image_block_bit_offset_0(ImageBlockPacking constant) noexcept;
+U8 image_block_bit_offset_1(ImageBlockPacking constant) noexcept;
+U8 image_block_bit_offset_2(ImageBlockPacking constant) noexcept;
+U8 image_block_bit_offset_3(ImageBlockPacking constant) noexcept;
+U8 image_block_bit_width_0(ImageBlockPacking constant) noexcept;
+U8 image_block_bit_width_1(ImageBlockPacking constant) noexcept;
+U8 image_block_bit_width_2(ImageBlockPacking constant) noexcept;
+U8 image_block_bit_width_3(ImageBlockPacking constant) noexcept;
 
 template <ImageBlockPacking>
 struct ImageBlockPackingInfo {

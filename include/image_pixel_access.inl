@@ -7,13 +7,13 @@ namespace be::gfx {
 namespace detail {
 
 ///////////////////////////////////////////////////////////////////////////////
-template <typename T, typename ImageView, U8 Dimension, bool IsSimple>
+template <typename T, typename ImageView, typename Coord, bool IsSimple, glm::length_t Dimension = t::vector_components<Coord>::value>
 struct image_pixel_access_uncompressed { };
 
 ///////////////////////////////////////////////////////////////////////////////
-template <typename T, typename ImageView>
-struct image_pixel_access_uncompressed<T, ImageView, 1, true> {
-   static T get(const ImageView& image, I32 pixel_coord) {
+template <typename T, typename ImageView, typename Coord>
+struct image_pixel_access_uncompressed<T, ImageView, Coord, true, 1> {
+   static T get(const ImageView& image, Coord pixel_coord) {
       T pixel;
       assert(pixel_coord >= 0);
       assert(pixel_coord < image.dim_blocks().x);
@@ -22,7 +22,7 @@ struct image_pixel_access_uncompressed<T, ImageView, 1, true> {
       std::memcpy(&pixel, ptr, sizeof(T));
       return pixel;
    }
-   static void put(ImageView& image, I32 pixel_coord, T pixel) {
+   static void put(ImageView& image, Coord pixel_coord, T pixel) {
       assert(pixel_coord >= 0);
       assert(pixel_coord < image.dim_blocks().x);
       UC* ptr = image.data() +
@@ -32,9 +32,9 @@ struct image_pixel_access_uncompressed<T, ImageView, 1, true> {
 };
 
 ///////////////////////////////////////////////////////////////////////////////
-template <typename T, typename ImageView>
-struct image_pixel_access_uncompressed<T, ImageView, 2, true> {
-   static T get(const ImageView& image, ivec2 pixel_coord) {
+template <typename T, typename ImageView, typename Coord>
+struct image_pixel_access_uncompressed<T, ImageView, Coord, true, 2> {
+   static T get(const ImageView& image, Coord pixel_coord) {
       T pixel;
       assert(pixel_coord.x >= 0);
       assert(pixel_coord.y >= 0);
@@ -46,7 +46,7 @@ struct image_pixel_access_uncompressed<T, ImageView, 2, true> {
       std::memcpy(&pixel, ptr, sizeof(T));
       return pixel;
    }
-   static void put(ImageView& image, ivec2 pixel_coord, T pixel) {
+   static void put(ImageView& image, Coord pixel_coord, T pixel) {
       assert(pixel_coord.x >= 0);
       assert(pixel_coord.y >= 0);
       assert(pixel_coord.x < image.dim_blocks().x);
@@ -59,9 +59,9 @@ struct image_pixel_access_uncompressed<T, ImageView, 2, true> {
 };
 
 ///////////////////////////////////////////////////////////////////////////////
-template <typename T, typename ImageView>
-struct image_pixel_access_uncompressed<T, ImageView, 3, true> {
-   static T get(const ImageView& image, ivec3 pixel_coord) {
+template <typename T, typename ImageView, typename Coord>
+struct image_pixel_access_uncompressed<T, ImageView, Coord, true, 3> {
+   static T get(const ImageView& image, Coord pixel_coord) {
       T pixel;
       assert(pixel_coord.x >= 0);
       assert(pixel_coord.y >= 0);
@@ -76,7 +76,7 @@ struct image_pixel_access_uncompressed<T, ImageView, 3, true> {
       std::memcpy(&pixel, ptr, sizeof(T));
       return pixel;
    }
-   static void put(ImageView& image, ivec3 pixel_coord, T pixel) {
+   static void put(ImageView& image, Coord pixel_coord, T pixel) {
       assert(pixel_coord.x >= 0);
       assert(pixel_coord.y >= 0);
       assert(pixel_coord.z >= 0);
@@ -92,11 +92,11 @@ struct image_pixel_access_uncompressed<T, ImageView, 3, true> {
 };
 
 ///////////////////////////////////////////////////////////////////////////////
-template <typename T, typename ImageView>
-struct image_pixel_access_uncompressed<T, ImageView, 1, false> {
-   static T get(const ImageView& image, I32 pixel_coord) {
+template <typename T, typename ImageView, typename Coord>
+struct image_pixel_access_uncompressed<T, ImageView, Coord, false, 1> {
+   static T get(const ImageView& image, Coord pixel_coord) {
       T pixel;
-      I32 block_coord = pixel_coord / image.block_dim().x;
+      Coord block_coord = pixel_coord / image.block_dim().x;
       pixel_coord -= block_coord * image.block_dim().x;
       assert(block_coord >= 0);
       assert(block_coord < image.dim_blocks().x);
@@ -107,8 +107,8 @@ struct image_pixel_access_uncompressed<T, ImageView, 1, false> {
       std::memcpy(&pixel, ptr, sizeof(T));
       return pixel;
    }
-   static void put(ImageView& image, I32 pixel_coord, T pixel) {
-      I32 block_coord = pixel_coord / image.block_dim().x;
+   static void put(ImageView& image, Coord pixel_coord, T pixel) {
+      Coord block_coord = pixel_coord / image.block_dim().x;
       pixel_coord -= block_coord * image.block_dim().x;
       assert(block_coord >= 0);
       assert(block_coord < image.dim_blocks().x);
@@ -121,12 +121,12 @@ struct image_pixel_access_uncompressed<T, ImageView, 1, false> {
 };
 
 ///////////////////////////////////////////////////////////////////////////////
-template <typename T, typename ImageView>
-struct image_pixel_access_uncompressed<T, ImageView, 2, false> {
-   static T get(const ImageView& image, ivec2 pixel_coord) {
+template <typename T, typename ImageView, typename Coord>
+struct image_pixel_access_uncompressed<T, ImageView, Coord, false, 2> {
+   static T get(const ImageView& image, Coord pixel_coord) {
       T pixel;
-      ivec2 block_dim = image.block_dim();
-      ivec2 block_coord = pixel_coord / block_dim;
+      Coord block_dim = image.block_dim();
+      Coord block_coord = pixel_coord / block_dim;
       pixel_coord -= block_coord * block_dim;
       assert(block_coord.x >= 0);
       assert(block_coord.y >= 0);
@@ -142,9 +142,9 @@ struct image_pixel_access_uncompressed<T, ImageView, 2, false> {
       std::memcpy(&pixel, ptr, sizeof(T));
       return pixel;
    }
-   static void put(ImageView& image, ivec2 pixel_coord, T pixel) {
-      ivec2 block_dim = image.block_dim();
-      ivec2 block_coord = pixel_coord / block_dim;
+   static void put(ImageView& image, Coord pixel_coord, T pixel) {
+      Coord block_dim = image.block_dim();
+      Coord block_coord = pixel_coord / block_dim;
       pixel_coord -= block_coord * block_dim;
       assert(block_coord.x >= 0);
       assert(block_coord.y >= 0);
@@ -162,12 +162,12 @@ struct image_pixel_access_uncompressed<T, ImageView, 2, false> {
 };
 
 ///////////////////////////////////////////////////////////////////////////////
-template <typename T, typename ImageView>
-struct image_pixel_access_uncompressed<T, ImageView, 3, false> {
-   static T get(const ImageView& image, ivec3 pixel_coord) {
+template <typename T, typename ImageView, typename Coord>
+struct image_pixel_access_uncompressed<T, ImageView, Coord, false, 3> {
+   static T get(const ImageView& image, Coord pixel_coord) {
       T pixel;
-      ivec3 block_dim = image.block_dim();
-      ivec3 block_coord = pixel_coord / block_dim;
+      Coord block_dim = image.block_dim();
+      Coord block_coord = pixel_coord / block_dim;
       pixel_coord -= block_coord * block_dim;
       assert(block_coord.x >= 0);
       assert(block_coord.y >= 0);
@@ -187,9 +187,9 @@ struct image_pixel_access_uncompressed<T, ImageView, 3, false> {
       std::memcpy(&pixel, ptr, sizeof(T));
       return pixel;
    }
-   static void put(ImageView& image, ivec3 pixel_coord, T pixel) {
-      ivec3 block_dim = image.block_dim();
-      ivec3 block_coord = pixel_coord / block_dim;
+   static void put(ImageView& image, Coord pixel_coord, T pixel) {
+      Coord block_dim = image.block_dim();
+      Coord block_coord = pixel_coord / block_dim;
       pixel_coord -= block_coord * block_dim;
       assert(block_coord.x >= 0);
       assert(block_coord.y >= 0);
@@ -212,12 +212,10 @@ struct image_pixel_access_uncompressed<T, ImageView, 3, false> {
 
 } // be::gfx::detail
 
-/*!! register_template_string([[
-
 ///////////////////////////////////////////////////////////////////////////////
-template <typename T, typename ImageView>
-GetImagePixel`dim_text`Func<T, ImageView> get_pixel_`string.lower(dim_text)`_func(const ImageView& image) {
-   using dim_type = glm::vec<`i`, ImageFormat::block_size_type>;
+template <typename T, typename ImageView, typename Coord>
+GetImagePixelFunc<T, ImageView, Coord> get_pixel_func(const ImageView& image) {
+   using dim_type = glm::vec<t::vector_components<Coord>::value, ImageFormat::block_size_type>;
    assert(image);
    if (is_compressed(image.format().packing())) {
       switch (image.format().packing()) {
@@ -243,231 +241,74 @@ GetImagePixel`dim_text`Func<T, ImageView> get_pixel_`string.lower(dim_text)`_fun
       return nullptr;
    } else if (dim_type(image.block_dim()) == dim_type(1)) {
       assert(sizeof(T) <= image.block_size());
-      return detail::image_pixel_access_uncompressed<T, ImageView, `i`, true>::get;
+      return detail::image_pixel_access_uncompressed<T, ImageView, Coord, true>::get;
    } else {
       assert(sizeof(T) <= image_block_pixel_size(image.format().packing()));
-      return detail::image_pixel_access_uncompressed<T, ImageView, `i`, false>::get;
+      return detail::image_pixel_access_uncompressed<T, ImageView, Coord, false>::get;
    }
 }
-]], 'get_pixel')
-
-register_template_string([[
 
 ///////////////////////////////////////////////////////////////////////////////
-template <typename T, typename ImageView>
-PutImagePixel`dim_text`Func<T, ImageView> put_pixel_`string.lower(dim_text)`_func(const ImageView& image) {
-   using dim_type = glm::vec<`i`, ImageFormat::block_size_type>;
-   assert(image);
-   assert(!is_compressed(image.format().packing()));
-   if (dim_type(image.block_dim()) == dim_type(1)) {
-      assert(sizeof(T) <= image.block_size());
-      return detail::image_pixel_access_uncompressed<T, ImageView, `i`, true>::put;
-   } else {
-      assert(sizeof(T) <= image_block_pixel_size(image.format().packing()));
-      return detail::image_pixel_access_uncompressed<T, ImageView, `i`, false>::put;
-   }
+template <typename T, typename ImageView, typename Coord>
+T get_pixel(const ImageView& image, Coord pixel_coord) {
+   return get_pixel_func<T, ImageView, Coord>(image)(image, pixel_coord);
 }
-]], 'put_pixel')
-
-write_template('get_pixel', { i = 1, dim_text = 'Lineal' })
-write_template('get_pixel', { i = 2, dim_text = 'Planar' })
-write_template('get_pixel', { i = 3, dim_text = 'Volumetric' })
-
-write_template('put_pixel', { i = 1, dim_text = 'Lineal' })
-write_template('put_pixel', { i = 2, dim_text = 'Planar' })
-write_template('put_pixel', { i = 3, dim_text = 'Volumetric' })
-!! 157 */
-/* ################# !! GENERATED CODE -- DO NOT MODIFY !! ################# */
 
 ///////////////////////////////////////////////////////////////////////////////
 template <typename T, typename ImageView>
 GetImagePixelLinealFunc<T, ImageView> get_pixel_lineal_func(const ImageView& image) {
-   using dim_type = glm::vec<1, ImageFormat::block_size_type>;
-   assert(image);
-   if (is_compressed(image.format().packing())) {
-      switch (image.format().packing()) {
-         case ImageBlockPacking::c_astc:
-         case ImageBlockPacking::c_atc:
-         case ImageBlockPacking::c_bptc:
-         case ImageBlockPacking::c_eac:
-         case ImageBlockPacking::c_etc1:
-         case ImageBlockPacking::c_etc2:
-         case ImageBlockPacking::c_pvrtc1:
-         case ImageBlockPacking::c_pvrtc2:
-         case ImageBlockPacking::c_s3tc1:
-         case ImageBlockPacking::c_s3tc2:
-         case ImageBlockPacking::c_s3tc3:
-         case ImageBlockPacking::c_s3tc4:
-         case ImageBlockPacking::c_s3tc5:
-            // TODO
-            break;
-         default:
-            assert(false);
-            break;
-      }
-      return nullptr;
-   } else if (dim_type(image.block_dim()) == dim_type(1)) {
-      assert(sizeof(T) <= image.block_size());
-      return detail::image_pixel_access_uncompressed<T, ImageView, 1, true>::get;
-   } else {
-      assert(sizeof(T) <= image_block_pixel_size(image.format().packing()));
-      return detail::image_pixel_access_uncompressed<T, ImageView, 1, false>::get;
-   }
+   return get_pixel_func<T, ImageView, I32>(image);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 template <typename T, typename ImageView>
 GetImagePixelPlanarFunc<T, ImageView> get_pixel_planar_func(const ImageView& image) {
-   using dim_type = glm::vec<2, ImageFormat::block_size_type>;
-   assert(image);
-   if (is_compressed(image.format().packing())) {
-      switch (image.format().packing()) {
-         case ImageBlockPacking::c_astc:
-         case ImageBlockPacking::c_atc:
-         case ImageBlockPacking::c_bptc:
-         case ImageBlockPacking::c_eac:
-         case ImageBlockPacking::c_etc1:
-         case ImageBlockPacking::c_etc2:
-         case ImageBlockPacking::c_pvrtc1:
-         case ImageBlockPacking::c_pvrtc2:
-         case ImageBlockPacking::c_s3tc1:
-         case ImageBlockPacking::c_s3tc2:
-         case ImageBlockPacking::c_s3tc3:
-         case ImageBlockPacking::c_s3tc4:
-         case ImageBlockPacking::c_s3tc5:
-            // TODO
-            break;
-         default:
-            assert(false);
-            break;
-      }
-      return nullptr;
-   } else if (dim_type(image.block_dim()) == dim_type(1)) {
-      assert(sizeof(T) <= image.block_size());
-      return detail::image_pixel_access_uncompressed<T, ImageView, 2, true>::get;
-   } else {
-      assert(sizeof(T) <= image_block_pixel_size(image.format().packing()));
-      return detail::image_pixel_access_uncompressed<T, ImageView, 2, false>::get;
-   }
+   return get_pixel_func<T, ImageView, ivec2>(image);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 template <typename T, typename ImageView>
 GetImagePixelVolumetricFunc<T, ImageView> get_pixel_volumetric_func(const ImageView& image) {
-   using dim_type = glm::vec<3, ImageFormat::block_size_type>;
+   return get_pixel_func<T, ImageView, ivec3>(image);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+template <typename T, typename ImageView, typename Coord>
+PutImagePixelFunc<T, ImageView, Coord> put_pixel_func(const ImageView& image) {
+   using dim_type = glm::vec<t::vector_components<Coord>::value, ImageFormat::block_size_type>;
    assert(image);
-   if (is_compressed(image.format().packing())) {
-      switch (image.format().packing()) {
-         case ImageBlockPacking::c_astc:
-         case ImageBlockPacking::c_atc:
-         case ImageBlockPacking::c_bptc:
-         case ImageBlockPacking::c_eac:
-         case ImageBlockPacking::c_etc1:
-         case ImageBlockPacking::c_etc2:
-         case ImageBlockPacking::c_pvrtc1:
-         case ImageBlockPacking::c_pvrtc2:
-         case ImageBlockPacking::c_s3tc1:
-         case ImageBlockPacking::c_s3tc2:
-         case ImageBlockPacking::c_s3tc3:
-         case ImageBlockPacking::c_s3tc4:
-         case ImageBlockPacking::c_s3tc5:
-            // TODO
-            break;
-         default:
-            assert(false);
-            break;
-      }
-      return nullptr;
-   } else if (dim_type(image.block_dim()) == dim_type(1)) {
+   assert(!is_compressed(image.format().packing()));
+   if (dim_type(image.block_dim()) == dim_type(1)) {
       assert(sizeof(T) <= image.block_size());
-      return detail::image_pixel_access_uncompressed<T, ImageView, 3, true>::get;
+      return detail::image_pixel_access_uncompressed<T, ImageView, Coord, true>::put;
    } else {
       assert(sizeof(T) <= image_block_pixel_size(image.format().packing()));
-      return detail::image_pixel_access_uncompressed<T, ImageView, 3, false>::get;
+      return detail::image_pixel_access_uncompressed<T, ImageView, Coord, false>::put;
    }
+}
+
+///////////////////////////////////////////////////////////////////////////////
+template <typename T, typename ImageView, typename Coord>
+void put_pixel(ImageView& image, Coord pixel_coord, T pixel) {
+   put_pixel_func<T, ImageView, Coord>(image)(image, pixel_coord, pixel);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 template <typename T, typename ImageView>
 PutImagePixelLinealFunc<T, ImageView> put_pixel_lineal_func(const ImageView& image) {
-   using dim_type = glm::vec<1, ImageFormat::block_size_type>;
-   assert(image);
-   assert(!is_compressed(image.format().packing()));
-   if (dim_type(image.block_dim()) == dim_type(1)) {
-      assert(sizeof(T) <= image.block_size());
-      return detail::image_pixel_access_uncompressed<T, ImageView, 1, true>::put;
-   } else {
-      assert(sizeof(T) <= image_block_pixel_size(image.format().packing()));
-      return detail::image_pixel_access_uncompressed<T, ImageView, 1, false>::put;
-   }
+   return put_pixel_func<T, ImageView, I32>(image);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 template <typename T, typename ImageView>
 PutImagePixelPlanarFunc<T, ImageView> put_pixel_planar_func(const ImageView& image) {
-   using dim_type = glm::vec<2, ImageFormat::block_size_type>;
-   assert(image);
-   assert(!is_compressed(image.format().packing()));
-   if (dim_type(image.block_dim()) == dim_type(1)) {
-      assert(sizeof(T) <= image.block_size());
-      return detail::image_pixel_access_uncompressed<T, ImageView, 2, true>::put;
-   } else {
-      assert(sizeof(T) <= image_block_pixel_size(image.format().packing()));
-      return detail::image_pixel_access_uncompressed<T, ImageView, 2, false>::put;
-   }
+   return put_pixel_func<T, ImageView, ivec2>(image);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 template <typename T, typename ImageView>
 PutImagePixelVolumetricFunc<T, ImageView> put_pixel_volumetric_func(const ImageView& image) {
-   using dim_type = glm::vec<3, ImageFormat::block_size_type>;
-   assert(image);
-   assert(!is_compressed(image.format().packing()));
-   if (dim_type(image.block_dim()) == dim_type(1)) {
-      assert(sizeof(T) <= image.block_size());
-      return detail::image_pixel_access_uncompressed<T, ImageView, 3, true>::put;
-   } else {
-      assert(sizeof(T) <= image_block_pixel_size(image.format().packing()));
-      return detail::image_pixel_access_uncompressed<T, ImageView, 3, false>::put;
-   }
-}
-
-/* ######################### END OF GENERATED CODE ######################### */
-
-///////////////////////////////////////////////////////////////////////////////
-template <typename T, typename ImageView>
-T get_pixel(const ImageView& image, I32 pixel_coord) {
-   return get_pixel_lineal_func<T, ImageView>(image)(image, pixel_coord);
-}
-
-///////////////////////////////////////////////////////////////////////////////
-template <typename T, typename ImageView>
-T get_pixel(const ImageView& image, ivec2 pixel_coord) {
-   return get_pixel_planar_func<T, ImageView>(image)(image, pixel_coord);
-}
-
-///////////////////////////////////////////////////////////////////////////////
-template <typename T, typename ImageView>
-T get_pixel(const ImageView& image, ivec3 pixel_coord) {
-   return get_pixel_volumetric_func<T, ImageView>(image)(image, pixel_coord);
-}
-
-///////////////////////////////////////////////////////////////////////////////
-template <typename T, typename ImageView>
-void put_pixel(ImageView& image, I32 pixel_coord, T pixel) {
-   put_pixel_lineal_func<T, ImageView>(image)(image, pixel_coord, pixel);
-}
-
-///////////////////////////////////////////////////////////////////////////////
-template <typename T, typename ImageView>
-void put_pixel(ImageView& image, ivec2 pixel_coord, T pixel) {
-   put_pixel_planar_func<T, ImageView>(image)(image, pixel_coord, pixel);
-}
-
-///////////////////////////////////////////////////////////////////////////////
-template <typename T, typename ImageView>
-void put_pixel(ImageView& image, ivec3 pixel_coord, T pixel) {
-   put_pixel_volumetric_func<T, ImageView>(image)(image, pixel_coord, pixel);
+   return put_pixel_func<T, ImageView, ivec3>(image);
 }
 
 } // be::gfx

@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 #ifndef BE_GFX_IMAGE_PIXEL_NORM_HPP_
 #define BE_GFX_IMAGE_PIXEL_NORM_HPP_
 

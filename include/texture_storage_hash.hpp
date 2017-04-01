@@ -3,10 +3,11 @@
 #define BE_GFX_TEXTURE_STORAGE_HASH_HPP_
 
 #include "texture_storage.hpp"
-/*!! write_template('common/std_hash', 'be::gfx::TextureStorage') !! 14 */
-/* ################# !! GENERATED CODE -- DO NOT MODIFY !! ################# */
 #include <be/core/alg.hpp>
 #include <functional>
+
+/*!! write_template('common/std_hash', 'be::gfx::TextureStorage') !! 12 */
+/* ################# !! GENERATED CODE -- DO NOT MODIFY !! ################# */
 
 template <>
 struct std::hash<be::gfx::TextureStorage> {

@@ -1,4 +1,4 @@
-﻿#include "pch.hpp"
+#include "pch.hpp"
 #include "image_format.hpp"
 
 namespace be::gfx {

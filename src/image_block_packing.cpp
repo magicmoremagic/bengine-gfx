@@ -212,45 +212,45 @@ U8 component_count(ImageBlockPacking constant) noexcept {
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-U16 image_block_pixel_size(ImageBlockPacking constant) noexcept {
+U8 image_block_pixel_size(ImageBlockPacking constant) noexcept {
    switch (constant) {
-      case ImageBlockPacking::s_8:           return U16(1);
-      case ImageBlockPacking::s_8_8:         return U16(2);
-      case ImageBlockPacking::s_8_8_8:       return U16(3);
-      case ImageBlockPacking::s_16:          return U16(2);
-      case ImageBlockPacking::s_16_16_16:    return U16(6);
-      case ImageBlockPacking::s_16_16_16_16: return U16(8);
-      case ImageBlockPacking::s_32_32:       return U16(8);
-      case ImageBlockPacking::s_32_32_32:    return U16(12);
-      case ImageBlockPacking::s_32_32_32_32: return U16(16);
-      case ImageBlockPacking::s_64:          return U16(8);
-      case ImageBlockPacking::s_64_64:       return U16(16);
-      case ImageBlockPacking::s_64_64_64:    return U16(24);
-      case ImageBlockPacking::s_64_64_64_64: return U16(32);
-      case ImageBlockPacking::p_4_4:         return U16(1);
-      case ImageBlockPacking::p_3_3_2:       return U16(1);
-      case ImageBlockPacking::p_2_3_3:       return U16(1);
-      case ImageBlockPacking::p_3_2_3:       return U16(1);
-      case ImageBlockPacking::p_4_4_4_4:     return U16(2);
-      case ImageBlockPacking::p_1_5_5_5:     return U16(2);
-      case ImageBlockPacking::p_5_5_5_1:     return U16(2);
-      case ImageBlockPacking::p_5_6_5:       return U16(2);
-      case ImageBlockPacking::s_32_p_24_8:   return U16(8);
-      case ImageBlockPacking::c_astc:        return U16(0);
-      case ImageBlockPacking::c_atc:         return U16(0);
-      case ImageBlockPacking::c_bptc:        return U16(0);
-      case ImageBlockPacking::c_eac:         return U16(0);
-      case ImageBlockPacking::c_etc1:        return U16(0);
-      case ImageBlockPacking::c_etc2:        return U16(0);
-      case ImageBlockPacking::c_pvrtc1:      return U16(0);
-      case ImageBlockPacking::c_pvrtc2:      return U16(0);
-      case ImageBlockPacking::c_s3tc1:       return U16(0);
-      case ImageBlockPacking::c_s3tc2:       return U16(0);
-      case ImageBlockPacking::c_s3tc3:       return U16(0);
-      case ImageBlockPacking::c_s3tc4:       return U16(0);
-      case ImageBlockPacking::c_s3tc5:       return U16(0);
+      case ImageBlockPacking::s_8:           return U8(1);
+      case ImageBlockPacking::s_8_8:         return U8(2);
+      case ImageBlockPacking::s_8_8_8:       return U8(3);
+      case ImageBlockPacking::s_16:          return U8(2);
+      case ImageBlockPacking::s_16_16_16:    return U8(6);
+      case ImageBlockPacking::s_16_16_16_16: return U8(8);
+      case ImageBlockPacking::s_32_32:       return U8(8);
+      case ImageBlockPacking::s_32_32_32:    return U8(12);
+      case ImageBlockPacking::s_32_32_32_32: return U8(16);
+      case ImageBlockPacking::s_64:          return U8(8);
+      case ImageBlockPacking::s_64_64:       return U8(16);
+      case ImageBlockPacking::s_64_64_64:    return U8(24);
+      case ImageBlockPacking::s_64_64_64_64: return U8(32);
+      case ImageBlockPacking::p_4_4:         return U8(1);
+      case ImageBlockPacking::p_3_3_2:       return U8(1);
+      case ImageBlockPacking::p_2_3_3:       return U8(1);
+      case ImageBlockPacking::p_3_2_3:       return U8(1);
+      case ImageBlockPacking::p_4_4_4_4:     return U8(2);
+      case ImageBlockPacking::p_1_5_5_5:     return U8(2);
+      case ImageBlockPacking::p_5_5_5_1:     return U8(2);
+      case ImageBlockPacking::p_5_6_5:       return U8(2);
+      case ImageBlockPacking::s_32_p_24_8:   return U8(8);
+      case ImageBlockPacking::c_astc:        return U8(0);
+      case ImageBlockPacking::c_atc:         return U8(0);
+      case ImageBlockPacking::c_bptc:        return U8(0);
+      case ImageBlockPacking::c_eac:         return U8(0);
+      case ImageBlockPacking::c_etc1:        return U8(0);
+      case ImageBlockPacking::c_etc2:        return U8(0);
+      case ImageBlockPacking::c_pvrtc1:      return U8(0);
+      case ImageBlockPacking::c_pvrtc2:      return U8(0);
+      case ImageBlockPacking::c_s3tc1:       return U8(0);
+      case ImageBlockPacking::c_s3tc2:       return U8(0);
+      case ImageBlockPacking::c_s3tc3:       return U8(0);
+      case ImageBlockPacking::c_s3tc4:       return U8(0);
+      case ImageBlockPacking::c_s3tc5:       return U8(0);
       default:
-         return U16(4);
+         return U8(4);
    }
 }
 

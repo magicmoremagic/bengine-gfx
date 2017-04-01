@@ -1,4 +1,4 @@
-﻿#if !defined(BE_GFX_IMAGE_PIXEL_ACCESS_NORM_HPP_) && !defined(DOXYGEN)
+#if !defined(BE_GFX_IMAGE_PIXEL_ACCESS_NORM_HPP_) && !defined(DOXYGEN)
 #include "image_pixel_access_norm.hpp"
 #elif !defined(BE_GFX_IMAGE_PIXEL_ACCESS_NORM_INL_)
 #define BE_GFX_IMAGE_PIXEL_ACCESS_NORM_INL_

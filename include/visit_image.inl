@@ -1,4 +1,4 @@
-﻿#if !defined(BE_GFX_VISIT_IMAGE_HPP_) && !defined(DOXYGEN)
+#if !defined(BE_GFX_VISIT_IMAGE_HPP_) && !defined(DOXYGEN)
 #include "visit_image.hpp"
 #elif !defined(BE_GFX_VISIT_IMAGE_INL_)
 #define BE_GFX_VISIT_IMAGE_INL_

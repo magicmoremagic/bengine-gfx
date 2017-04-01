@@ -3,10 +3,11 @@
 #define BE_GFX_IMAGE_FORMAT_HASH_HPP_
 
 #include "image_format.hpp"
-/*!! write_template('common/std_hash', 'be::gfx::ImageFormat') !! 14 */
-/* ################# !! GENERATED CODE -- DO NOT MODIFY !! ################# */
 #include <be/core/alg.hpp>
 #include <functional>
+
+/*!! write_template('common/std_hash', 'be::gfx::ImageFormat') !! 12 */
+/* ################# !! GENERATED CODE -- DO NOT MODIFY !! ################# */
 
 template <>
 struct std::hash<be::gfx::ImageFormat> {

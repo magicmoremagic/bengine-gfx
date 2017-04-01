@@ -1,4 +1,4 @@
-﻿#if !defined(BE_GFX_IMAGE_BLOCK_ACCESS_HPP_) && !defined(DOXYGEN)
+#if !defined(BE_GFX_IMAGE_BLOCK_ACCESS_HPP_) && !defined(DOXYGEN)
 #include "image_block_access.hpp"
 #elif !defined(BE_GFX_IMAGE_BLOCK_ACCESS_INL_)
 #define BE_GFX_IMAGE_BLOCK_ACCESS_INL_

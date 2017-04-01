@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 #ifndef BE_GFX_VISIT_TEXTURE_HPP_
 #define BE_GFX_VISIT_TEXTURE_HPP_
 

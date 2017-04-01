@@ -1,4 +1,4 @@
-﻿#include "pch.hpp"
+#include "pch.hpp"
 #include "premultiply_alpha.hpp"
 #include <glm/vec4.hpp>
 

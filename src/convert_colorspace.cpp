@@ -1,4 +1,4 @@
-﻿#include "pch.hpp"
+#include "pch.hpp"
 #include "convert_colorspace.hpp"
 #include "convert_colorspace_static.hpp"
 

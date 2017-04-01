@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 #ifndef BE_GFX_PREMULTIPLY_ALPHA_STATIC_HPP_
 #define BE_GFX_PREMULTIPLY_ALPHA_STATIC_HPP_
 

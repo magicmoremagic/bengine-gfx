@@ -1,4 +1,4 @@
-﻿#ifdef BE_TEST
+#ifdef BE_TEST
 
 #include "image.hpp"
 #include "image_view_hash.hpp"

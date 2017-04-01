@@ -66,7 +66,7 @@ const char* image_block_packing_name(ImageBlockPacking constant) noexcept;
 bool is_compressed(ImageBlockPacking constant) noexcept;
 bool is_packed(ImageBlockPacking constant) noexcept;
 U8 component_count(ImageBlockPacking constant) noexcept;
-U16 image_block_pixel_size(ImageBlockPacking constant) noexcept;
+U8 image_block_pixel_size(ImageBlockPacking constant) noexcept;
 U8 image_block_word_size(ImageBlockPacking constant) noexcept;
 U8 image_block_word_count(ImageBlockPacking constant) noexcept;
 U8 image_block_word_offset_0(ImageBlockPacking constant) noexcept;

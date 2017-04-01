@@ -1,4 +1,4 @@
-﻿#if !defined(BE_GFX_CONVERT_COLORSPACE_STATIC_HPP_) && !defined(DOXYGEN)
+#if !defined(BE_GFX_CONVERT_COLORSPACE_STATIC_HPP_) && !defined(DOXYGEN)
 #include "convert_colorspace_static.hpp"
 #elif !defined(BE_GFX_CONVERT_COLORSPACE_STATIC_INL_)
 #define BE_GFX_CONVERT_COLORSPACE_STATIC_INL_

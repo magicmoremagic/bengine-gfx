@@ -1,4 +1,4 @@
-﻿#if !defined(BE_GFX_CONVERTING_PIXEL_BLITTER_HPP_) && !defined(DOXYGEN)
+#if !defined(BE_GFX_CONVERTING_PIXEL_BLITTER_HPP_) && !defined(DOXYGEN)
 #include "converting_pixel_blitter.hpp"
 #elif !defined(BE_GFX_CONVERTING_PIXEL_BLITTER_INL_)
 #define BE_GFX_CONVERTING_PIXEL_BLITTER_INL_

@@ -1,4 +1,4 @@
-﻿#if !defined(BE_GFX_VISIT_TEXTURE_HPP_) && !defined(DOXYGEN)
+#if !defined(BE_GFX_VISIT_TEXTURE_HPP_) && !defined(DOXYGEN)
 #include "visit_texture.hpp"
 #elif !defined(BE_GFX_VISIT_TEXTURE_INL_)
 #define BE_GFX_VISIT_TEXTURE_INL_

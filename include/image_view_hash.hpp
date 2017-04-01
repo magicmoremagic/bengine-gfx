@@ -1,12 +1,14 @@
-﻿#pragma once
+#pragma once
 #ifndef BE_GFX_IMAGE_VIEW_HASH_HPP_
 #define BE_GFX_IMAGE_VIEW_HASH_HPP_
 
 #include "image_view.hpp"
-/*!! write_template('common/std_hash', 'be::gfx::ImageView') !! 14 */
-/* ################# !! GENERATED CODE -- DO NOT MODIFY !! ################# */
 #include <be/core/alg.hpp>
 #include <functional>
+
+/*!! write_template('common/std_hash', 'be::gfx::ImageView')
+write_template('common/std_hash', 'be::gfx::ConstImageView') !! 20 */
+/* ################# !! GENERATED CODE -- DO NOT MODIFY !! ################# */
 
 template <>
 struct std::hash<be::gfx::ImageView> {

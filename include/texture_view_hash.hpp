@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #ifndef BE_GFX_TEXTURE_VIEW_HASH_HPP_
 #define BE_GFX_TEXTURE_VIEW_HASH_HPP_
 
@@ -11,6 +11,14 @@
 template <>
 struct std::hash<be::gfx::TextureView> {
    std::size_t operator()(const be::gfx::TextureView& o) const {
+      using be::std_hash;
+      return std_hash(o);
+   }
+};
+
+template <>
+struct std::hash<be::gfx::ConstTextureView> {
+   std::size_t operator()(const be::gfx::ConstTextureView& o) const {
       using be::std_hash;
       return std_hash(o);
    }

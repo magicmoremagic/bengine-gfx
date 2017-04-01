@@ -218,6 +218,17 @@ bool ImageFormat::operator!=(const ImageFormat& other) const {
 }
 
 ///////////////////////////////////////////////////////////////////////////////
+ImageFormat simple_format(ImageFormat format) {
+   if (is_compressed(format.packing())) {
+      return format;
+   } else {
+      return ImageFormat(image_block_pixel_size(format.packing()), 1u, format.packing(),
+                         format.components(), format.component_types(), format.swizzles(),
+                         format.colorspace(), format.premultiplied());
+   }
+}
+
+///////////////////////////////////////////////////////////////////////////////
 ImageFormat::component_types_type component_types(ImageComponentType type, glm::length_t n_components) {
    using V = ImageFormat::component_types_type;
    using T = V::value_type;

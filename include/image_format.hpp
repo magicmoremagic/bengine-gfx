@@ -77,6 +77,8 @@ private:
    bool premultiplied_;
 };
 
+ImageFormat simple_format(ImageFormat format);
+
 ImageFormat::component_types_type component_types(ImageComponentType type, glm::length_t n_components = 1);
 ImageFormat::component_types_type component_types(ImageComponentType type0, ImageComponentType type1);
 ImageFormat::component_types_type component_types(ImageComponentType type0, ImageComponentType type1, ImageComponentType type2);

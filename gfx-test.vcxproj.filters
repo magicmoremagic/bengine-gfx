@@ -4,15 +4,12 @@
     <Filter Include="Tests">
       <UniqueIdentifier>{2ef94398-bbdc-4619-beb6-7816f83fc8a2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Tests\old">
+      <UniqueIdentifier>{8117a5d8-4d4b-4eb9-9ea6-f96e6fc43b3d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="test\test_main.cpp" />
-    <ClCompile Include="test\test_read_write_image.cpp">
-      <Filter>Tests</Filter>
-    </ClCompile>
-    <ClCompile Include="test\test_uniform_resample.cpp">
-      <Filter>Tests</Filter>
-    </ClCompile>
     <ClCompile Include="test\test_image_view.cpp">
       <Filter>Tests</Filter>
     </ClCompile>
@@ -24,6 +21,15 @@
     </ClCompile>
     <ClCompile Include="test\test_texture_storage.cpp">
       <Filter>Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="test\test_image_region.cpp">
+      <Filter>Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="test\test_uniform_resample.cpp">
+      <Filter>Tests\old</Filter>
+    </ClCompile>
+    <ClCompile Include="test\test_read_write_image.cpp">
+      <Filter>Tests\old</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

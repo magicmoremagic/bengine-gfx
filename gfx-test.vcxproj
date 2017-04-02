@@ -46,6 +46,7 @@
   <PropertyGroup />
   <ItemGroup>
     <ClCompile Include="test\test_image_format.cpp" />
+    <ClCompile Include="test\test_image_region.cpp" />
     <ClCompile Include="test\test_image_view.cpp" />
     <ClCompile Include="test\test_main.cpp" />
     <ClCompile Include="test\test_read_write_image.cpp" />

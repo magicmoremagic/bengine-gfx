@@ -63,11 +63,12 @@
     <ClInclude Include="include\image.hpp" />
     <ClInclude Include="include\image_component_type.hpp" />
     <ClInclude Include="include\image_format.hpp" />
-    <ClInclude Include="include\image_formats.hpp" />
     <ClInclude Include="include\image_format_hash.hpp" />
     <ClInclude Include="include\image_pixel_access.hpp" />
     <ClInclude Include="include\image_pixel_access_norm.hpp" />
     <ClInclude Include="include\image_pixel_norm.hpp" />
+    <ClInclude Include="include\image_region.hpp" />
+    <ClInclude Include="include\image_region_hash.hpp" />
     <ClInclude Include="include\image_view.hpp" />
     <ClInclude Include="include\image_view_hash.hpp" />
     <ClInclude Include="include\make_image.hpp" />
@@ -110,6 +111,7 @@
     <ClCompile Include="src\convert_colorspace.cpp" />
     <ClCompile Include="src\image_component_type.cpp" />
     <ClCompile Include="src\image_format.cpp" />
+    <ClCompile Include="src\image_region.cpp" />
     <ClCompile Include="src\image_view.cpp" />
     <ClCompile Include="src\make_image.cpp" />
     <ClCompile Include="src\make_texture.cpp" />
@@ -142,6 +144,7 @@
     <None Include="include\image_block_access.inl" />
     <None Include="include\image_pixel_access.inl" />
     <None Include="include\image_pixel_access_norm.inl" />
+    <None Include="include\image_region.inl" />
     <None Include="include\uniform_resample.inl" />
     <None Include="include\variable_size_median_kernel.inl" />
     <None Include="include\visit_image.inl" />

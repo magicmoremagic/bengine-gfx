@@ -9,7 +9,7 @@ namespace be::gfx {
 namespace detail {
 
 ///////////////////////////////////////////////////////////////////////////////
-struct convert_premultiplication_nop {
+struct ConvertPremultiplicationNop {
    static vec4 convert(vec4 pixel_norm) {
       return pixel_norm;
    }
@@ -17,17 +17,17 @@ struct convert_premultiplication_nop {
 
 ///////////////////////////////////////////////////////////////////////////////
 template <bool Input, bool Output>
-struct convert_premultiplication : convert_premultiplication_nop { };
+struct ConvertPremultiplication : ConvertPremultiplicationNop { };
 
 ///////////////////////////////////////////////////////////////////////////////
-template <> struct convert_premultiplication<false, true> {
+template <> struct ConvertPremultiplication<false, true> {
    static vec4 convert(vec4 pixel_norm) {
       return premultiply_alpha(pixel_norm);
    }
 };
 
 ///////////////////////////////////////////////////////////////////////////////
-template <> struct convert_premultiplication<true, false> {
+template <> struct ConvertPremultiplication<true, false> {
    static vec4 convert(vec4 pixel_norm) {
       return unpremultiply_alpha(pixel_norm);
    }
@@ -37,7 +37,7 @@ template <> struct convert_premultiplication<true, false> {
 
 template <bool Input, bool Output>
 ImagePixelNormTransformFunc convert_premultiplication_func() {
-   return detail::convert_premultiplication<Input, Output>::convert;
+   return detail::ConvertPremultiplication<Input, Output>::convert;
 }
 
 } // be::gfx

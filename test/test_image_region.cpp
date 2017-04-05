@@ -60,15 +60,22 @@ TEST_CASE("ImageRegion direct construction", BE_CATCH_TAGS) {
 }
 
 TEST_CASE("ImageRegion from ImageView", BE_CATCH_TAGS) {
-   gfx::ImageFormat format(U8(4), 1, gfx::ImageBlockPacking::s_8_8_8_8, 4, gfx::component_types(gfx::ImageComponentType::unorm, 4),
+   gfx::ImageFormat format(U8(32), 2, gfx::ImageBlockPacking::s_8_8_8_8, 4, gfx::component_types(gfx::ImageComponentType::unorm, 4),
                            gfx::swizzles_rgba(), gfx::Colorspace::srgb, false);
 
    const int dim = 4;
    gfx::Image img = gfx::make_image(format, ivec3(dim));
 
-   gfx::ImageRegion region(img.view);
+   gfx::ImageRegion region = pixel_region(img.view);
 
    REQUIRE(region.extents() == make_extents(ivec3(), img.view.dim()));
+   REQUIRE(region.x_basis() == gfx::ImageRegion::pos_x);
+   REQUIRE(region.y_basis() == gfx::ImageRegion::pos_y);
+   REQUIRE(region.z_basis() == gfx::ImageRegion::pos_z);
+
+   region = block_region(img.view);
+
+   REQUIRE(region.extents() == make_extents(ivec3(), img.view.dim_blocks()));
    REQUIRE(region.x_basis() == gfx::ImageRegion::pos_x);
    REQUIRE(region.y_basis() == gfx::ImageRegion::pos_y);
    REQUIRE(region.z_basis() == gfx::ImageRegion::pos_z);

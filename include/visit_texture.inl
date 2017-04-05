@@ -4,11 +4,156 @@
 #define BE_GFX_VISIT_TEXTURE_INL_
 
 namespace be::gfx {
+namespace detail {
 
 ///////////////////////////////////////////////////////////////////////////////
-template <typename TextureView, typename Visitor>
+template <typename TextureView, typename Coord, typename Visitor, glm::length_t Dimension = t::vector_components<Coord>::value>
+struct VisitTextureImages { };
+
+///////////////////////////////////////////////////////////////////////////////
+template <typename TextureView, typename Coord, typename Visitor>
+struct VisitTextureImages<TextureView, Coord, Visitor, 1> {
+   static void visit_blocks(TextureView& texture, Visitor visitor) {
+      typename TextureView::image_view_type view;
+      std::size_t n_layers = texture.layers();
+      std::size_t n_faces = texture.faces();
+      std::size_t n_levels = texture.levels();
+      for (std::size_t layer = 0; layer < n_layers) {
+         for (std::size_t face = 0; face < n_faces) {
+            for (std::size_t level = 0; level < n_levels) {
+               view = texture.image(layer, face, level);
+               Coord bc;
+               Coord dim = Coord(view.dim_blocks().x);
+               for (bc = 0; bc < dim; ++bc) {
+                  visitor(view, bc);
+               }
+            }
+         }
+      }
+   }
+
+   static void visit_pixels(TextureView& texture, Visitor visitor) {
+      typename TextureView::image_view_type view;
+      std::size_t n_layers = texture.layers();
+      std::size_t n_faces = texture.faces();
+      std::size_t n_levels = texture.levels();
+      for (std::size_t layer = 0; layer < n_layers) {
+         for (std::size_t face = 0; face < n_faces) {
+            for (std::size_t level = 0; level < n_levels) {
+               view = texture.image(layer, face, level);
+               Coord pc;
+               Coord dim = Coord(view.dim().x);
+               for (pc = 0; pc < dim; ++pc) {
+                  visitor(view, pc);
+               }
+            }
+         }
+      }
+   }
+};
+
+///////////////////////////////////////////////////////////////////////////////
+template <typename TextureView, typename Coord, typename Visitor>
+struct VisitTextureImages<TextureView, Coord, Visitor, 2> {
+   static void visit_blocks(TextureView& texture, Visitor visitor) {
+      typename TextureView::image_view_type view;
+      std::size_t n_layers = texture.layers();
+      std::size_t n_faces = texture.faces();
+      std::size_t n_levels = texture.levels();
+      for (std::size_t layer = 0; layer < n_layers) {
+         for (std::size_t face = 0; face < n_faces) {
+            for (std::size_t level = 0; level < n_levels) {
+               view = texture.image(layer, face, level);
+               Coord bc;
+               Coord dim = Coord(view.dim_blocks());
+               for (bc.y = 0; bc.y < dim.y; ++bc.y) {
+                  for (bc.x = 0; bc.x < dim.x; ++bc.x) {
+                     visitor(view, bc);
+                  }
+               }
+            }
+         }
+      }
+   }
+
+   static void visit_pixels(TextureView& texture, Visitor visitor) {
+      typename TextureView::image_view_type view;
+      std::size_t n_layers = texture.layers();
+      std::size_t n_faces = texture.faces();
+      std::size_t n_levels = texture.levels();
+      for (std::size_t layer = 0; layer < n_layers) {
+         for (std::size_t face = 0; face < n_faces) {
+            for (std::size_t level = 0; level < n_levels) {
+               view = texture.image(layer, face, level);
+               Coord pc;
+               Coord dim = Coord(view.dim());
+               for (pc.y = 0; pc.y < dim.y; ++pc.y) {
+                  for (pc.x = 0; pc.x < dim.x; ++pc.x) {
+                     visitor(view, pc);
+                  }
+               }
+            }
+         }
+      }
+   }
+};
+
+///////////////////////////////////////////////////////////////////////////////
+template <typename TextureView, typename Coord, typename Visitor>
+struct VisitTextureImages<TextureView, Coord, Visitor, 3> {
+   static void visit_blocks(TextureView& texture, Visitor visitor) {
+      typename TextureView::image_view_type view;
+      std::size_t n_layers = texture.layers();
+      std::size_t n_faces = texture.faces();
+      std::size_t n_levels = texture.levels();
+      for (std::size_t layer = 0; layer < n_layers) {
+         for (std::size_t face = 0; face < n_faces) {
+            for (std::size_t level = 0; level < n_levels) {
+               view = texture.image(layer, face, level);
+               Coord bc;
+               Coord dim = Coord(view.dim_blocks());
+               for (bc.z = 0; bc.z < dim.z; ++bc.z) {
+                  for (bc.y = 0; bc.y < dim.y; ++bc.y) {
+                     for (bc.x = 0; bc.x < dim.x; ++bc.x) {
+                        visitor(view, bc);
+                     }
+                  }
+               }
+            }
+         }
+      }
+   }
+
+   static void visit_pixels(TextureView& texture, Visitor visitor) {
+      typename TextureView::image_view_type view;
+      std::size_t n_layers = texture.layers();
+      std::size_t n_faces = texture.faces();
+      std::size_t n_levels = texture.levels();
+      for (std::size_t layer = 0; layer < n_layers) {
+         for (std::size_t face = 0; face < n_faces) {
+            for (std::size_t level = 0; level < n_levels) {
+               view = texture.image(layer, face, level);
+               Coord pc;
+               Coord dim = Coord(view.dim());
+               for (pc.z = 0; pc.z < dim.z; ++pc.z) {
+                  for (pc.y = 0; pc.y < dim.y; ++pc.y) {
+                     for (pc.x = 0; pc.x < dim.x; ++pc.x) {
+                        visitor(view, pc);
+                     }
+                  }
+               }
+            }
+         }
+      }
+   }
+};
+
+} // be::gfx::detail
+
+///////////////////////////////////////////////////////////////////////////////
+template <typename Visitor, typename TextureView>
 void visit_texture_images(TextureView& texture, Visitor visitor) {
-   TextureView::image_view_type view;
+   typename TextureView::image_view_type view;
    std::size_t n_layers = texture.layers();
    std::size_t n_faces = texture.faces();
    std::size_t n_levels = texture.levels();
@@ -23,141 +168,15 @@ void visit_texture_images(TextureView& texture, Visitor visitor) {
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-template <typename TextureView, typename Visitor>
-void visit_texture_blocks_lineal(TextureView& texture, Visitor visitor) {
-   TextureView::image_view_type view;
-   std::size_t n_layers = texture.layers();
-   std::size_t n_faces = texture.faces();
-   std::size_t n_levels = texture.levels();
-   for (std::size_t layer = 0; layer < n_layers) {
-      for (std::size_t face = 0; face < n_faces) {
-         for (std::size_t level = 0; level < n_levels) {
-            view = texture.image(layer, face, level);
-            I32 bc;
-            I32 dim = view.dim_blocks().x;
-            for (bc = 0; bc < dim; ++bc) {
-               visitor(view, bc);
-            }
-         }
-      }
-   }
+template <typename Coord, typename Visitor, typename TextureView>
+void visit_texture_blocks(TextureView& texture, Visitor visitor) {
+   detail::VisitTextureImages<TextureView, Coord, Visitor>::visit_blocks(texture, std::move(visitor));
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-template <typename TextureView, typename Visitor>
-void visit_texture_blocks_planar(TextureView& texture, Visitor visitor) {
-   TextureView::image_view_type view;
-   std::size_t n_layers = texture.layers();
-   std::size_t n_faces = texture.faces();
-   std::size_t n_levels = texture.levels();
-   for (std::size_t layer = 0; layer < n_layers) {
-      for (std::size_t face = 0; face < n_faces) {
-         for (std::size_t level = 0; level < n_levels) {
-            view = texture.image(layer, face, level);
-            ivec2 bc;
-            ivec2 dim = ivec2(view.dim_blocks());
-            for (bc.y = 0; bc.y < dim.y; ++bc.y) {
-               for (bc.x = 0; bc.x < dim.x; ++bc.x) {
-                  visitor(view, bc);
-               }
-            }
-         }
-      }
-   }
-}
-
-///////////////////////////////////////////////////////////////////////////////
-template <typename TextureView, typename Visitor>
-void visit_texture_blocks_volumetric(TextureView& texture, Visitor visitor) {
-   TextureView::image_view_type view;
-   std::size_t n_layers = texture.layers();
-   std::size_t n_faces = texture.faces();
-   std::size_t n_levels = texture.levels();
-   for (std::size_t layer = 0; layer < n_layers) {
-      for (std::size_t face = 0; face < n_faces) {
-         for (std::size_t level = 0; level < n_levels) {
-            view = texture.image(layer, face, level);
-            ivec3 bc;
-            ivec3 dim = view.dim_blocks();
-            for (bc.z = 0; bc.z < dim.z; ++bc.z) {
-               for (bc.y = 0; bc.y < dim.y; ++bc.y) {
-                  for (bc.x = 0; bc.x < dim.x; ++bc.x) {
-                     visitor(view, bc);
-                  }
-               }
-            }
-         }
-      }
-   }
-}
-
-///////////////////////////////////////////////////////////////////////////////
-template <typename TextureView, typename Visitor>
-void visit_texture_pixels_lineal(TextureView& texture, Visitor visitor) {
-   TextureView::image_view_type view;
-   std::size_t n_layers = texture.layers();
-   std::size_t n_faces = texture.faces();
-   std::size_t n_levels = texture.levels();
-   for (std::size_t layer = 0; layer < n_layers) {
-      for (std::size_t face = 0; face < n_faces) {
-         for (std::size_t level = 0; level < n_levels) {
-            view = texture.image(layer, face, level);
-            I32 pc;
-            I32 dim = view.dim().x;
-            for (pc = 0; pc < dim; ++pc) {
-               visitor(view, pc);
-            }
-         }
-      }
-   }
-}
-
-///////////////////////////////////////////////////////////////////////////////
-template <typename TextureView, typename Visitor>
-void visit_texture_pixels_planar(TextureView& texture, Visitor visitor) {
-   TextureView::image_view_type view;
-   std::size_t n_layers = texture.layers();
-   std::size_t n_faces = texture.faces();
-   std::size_t n_levels = texture.levels();
-   for (std::size_t layer = 0; layer < n_layers) {
-      for (std::size_t face = 0; face < n_faces) {
-         for (std::size_t level = 0; level < n_levels) {
-            view = texture.image(layer, face, level);
-            ivec2 pc;
-            ivec2 dim = ivec2(view.dim());
-            for (pc.y = 0; pc.y < dim.y; ++pc.y) {
-               for (pc.x = 0; pc.x < dim.x; ++pc.x) {
-                  visitor(view, pc);
-               }
-            }
-         }
-      }
-   }
-}
-
-///////////////////////////////////////////////////////////////////////////////
-template <typename TextureView, typename Visitor>
-void visit_texture_pixels_volumetric(TextureView& texture, Visitor visitor) {
-   TextureView::image_view_type view;
-   std::size_t n_layers = texture.layers();
-   std::size_t n_faces = texture.faces();
-   std::size_t n_levels = texture.levels();
-   for (std::size_t layer = 0; layer < n_layers) {
-      for (std::size_t face = 0; face < n_faces) {
-         for (std::size_t level = 0; level < n_levels) {
-            view = texture.image(layer, face, level);
-            ivec3 pc;
-            ivec3 dim = view.dim();
-            for (pc.z = 0; pc.z < dim.z; ++pc.z) {
-               for (pc.y = 0; pc.y < dim.y; ++pc.y) {
-                  for (pc.x = 0; pc.x < dim.x; ++pc.x) {
-                     visitor(view, pc);
-                  }
-               }
-            }
-         }
-      }
-   }
+template <typename Coord, typename Visitor, typename TextureView>
+void visit_texture_pixels(TextureView& texture, Visitor visitor) {
+   detail::VisitTextureImages<TextureView, Coord, Visitor>::visit_pixels(texture, std::move(visitor));
 }
 
 } // be::gfx

@@ -4,6 +4,7 @@
 
 #include "image_format.hpp"
 #include "texture_storage.hpp"
+#include <be/core/t_select.hpp>
 
 namespace be::gfx {
 namespace detail {
@@ -18,6 +19,7 @@ public:
    using level_index_type = typename TextureStorage::level_index_type;
    using block_size_type = typename ImageFormat::block_size_type;
    using block_dim_type = typename ImageFormat::block_dim_type;
+   using char_type = UC;
 
    ImageView();
    ImageView(const ImageFormat& format, TextureStorage& storage, std::size_t layer, std::size_t face, std::size_t level);
@@ -44,7 +46,7 @@ public:
    std::size_t face() const; ///< The face index of the portion of the texture this view represents.
    std::size_t level() const; ///< The mipmapping level of the portion of the texture this view represents.
 
-   block_size_type block_size() const; ///< The displacement in bytes between a block and the next one in the x direction.  Equivalent to block_size().
+   block_size_type block_size() const; ///< The displacement in bytes between a block and the next one in the x direction.
    std::size_t line_span() const; ///< The displacement in bytes between a block and the next one in the y direction.
    std::size_t plane_span() const; ///< The displacement in bytes between a block and the next one in the z direction.
 

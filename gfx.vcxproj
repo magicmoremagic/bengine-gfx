@@ -55,6 +55,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="include\apply.hpp" />
+    <ClInclude Include="include\blit_image_blocks.hpp" />
+    <ClInclude Include="include\blit_image_pixels.hpp" />
     <ClInclude Include="include\converting_pixel_blitter.hpp" />
     <ClInclude Include="include\convert_colorspace.hpp" />
     <ClInclude Include="include\convert_colorspace_static.hpp" />
@@ -138,6 +140,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="include\apply.inl" />
+    <None Include="include\blit_image_blocks.inl" />
+    <None Include="include\blit_image_pixels.inl" />
     <None Include="include\converting_pixel_blitter.inl" />
     <None Include="include\convert_colorspace_static.inl" />
     <None Include="include\fixed_size_median_kernel.inl" />

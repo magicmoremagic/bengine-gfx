@@ -33,6 +33,39 @@
     <Filter Include="Meta-Source Files\old">
       <UniqueIdentifier>{6b05565d-fe52-4bd6-8691-75cba9ff9f2c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\textures\enums">
+      <UniqueIdentifier>{24933a1e-1c11-4197-b592-94a5da9af7ca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\textures\data structures">
+      <UniqueIdentifier>{24dee0b2-bf48-43d8-8b10-fdb8afc87f7d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\textures\operations">
+      <UniqueIdentifier>{a20672a9-823c-4de3-8f32-96c9d8032015}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\textures\operations\normalized conversions">
+      <UniqueIdentifier>{bd6532d4-8c55-4739-8320-c9faecded4d6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\textures\operations\block/pixel access">
+      <UniqueIdentifier>{d5142ade-c218-4c2f-8e98-fa26da4da9d7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\textures\operations\visitation">
+      <UniqueIdentifier>{62024480-9676-43d8-abb0-60b258cc9913}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\textures\operations\blitting">
+      <UniqueIdentifier>{735f9633-d9e3-4e2e-9763-c2b064992440}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\textures\enums">
+      <UniqueIdentifier>{cd4a8149-2bee-491f-a544-8216cf6ce192}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\textures\data structures">
+      <UniqueIdentifier>{9f89191a-9ec4-4fd1-aa62-2e0f6a3b2aec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\textures\operations">
+      <UniqueIdentifier>{93cc23c9-8e8f-470a-9935-247200925e60}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\textures\operations\normalized conversions">
+      <UniqueIdentifier>{4d956a87-3436-45dc-bfe0-f819eb27e122}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\pch.hpp">
@@ -61,75 +94,6 @@
     </ClInclude>
     <ClInclude Include="include\step_filter.hpp">
       <Filter>Header Files\old\filters</Filter>
-    </ClInclude>
-    <ClInclude Include="include\texture_storage.hpp">
-      <Filter>Header Files\textures</Filter>
-    </ClInclude>
-    <ClInclude Include="include\texture_view.hpp">
-      <Filter>Header Files\textures</Filter>
-    </ClInclude>
-    <ClInclude Include="include\texture.hpp">
-      <Filter>Header Files\textures</Filter>
-    </ClInclude>
-    <ClInclude Include="include\image_format.hpp">
-      <Filter>Header Files\textures</Filter>
-    </ClInclude>
-    <ClInclude Include="include\image_view.hpp">
-      <Filter>Header Files\textures</Filter>
-    </ClInclude>
-    <ClInclude Include="include\image.hpp">
-      <Filter>Header Files\textures</Filter>
-    </ClInclude>
-    <ClInclude Include="include\colorspace.hpp">
-      <Filter>Header Files\textures</Filter>
-    </ClInclude>
-    <ClInclude Include="include\swizzle.hpp">
-      <Filter>Header Files\textures</Filter>
-    </ClInclude>
-    <ClInclude Include="include\texture_class.hpp">
-      <Filter>Header Files\textures</Filter>
-    </ClInclude>
-    <ClInclude Include="include\mipmapping.hpp">
-      <Filter>Header Files\textures</Filter>
-    </ClInclude>
-    <ClInclude Include="include\make_texture.hpp">
-      <Filter>Header Files\textures</Filter>
-    </ClInclude>
-    <ClInclude Include="include\make_image.hpp">
-      <Filter>Header Files\textures</Filter>
-    </ClInclude>
-    <ClInclude Include="include\image_format_hash.hpp">
-      <Filter>Header Files\textures</Filter>
-    </ClInclude>
-    <ClInclude Include="include\texture_storage_hash.hpp">
-      <Filter>Header Files\textures</Filter>
-    </ClInclude>
-    <ClInclude Include="include\texture_view_hash.hpp">
-      <Filter>Header Files\textures</Filter>
-    </ClInclude>
-    <ClInclude Include="include\image_view_hash.hpp">
-      <Filter>Header Files\textures</Filter>
-    </ClInclude>
-    <ClInclude Include="include\image_block_access.hpp">
-      <Filter>Header Files\textures</Filter>
-    </ClInclude>
-    <ClInclude Include="include\image_pixel_access.hpp">
-      <Filter>Header Files\textures</Filter>
-    </ClInclude>
-    <ClInclude Include="include\image_pixel_access_norm.hpp">
-      <Filter>Header Files\textures</Filter>
-    </ClInclude>
-    <ClInclude Include="include\visit_texture.hpp">
-      <Filter>Header Files\textures</Filter>
-    </ClInclude>
-    <ClInclude Include="include\visit_image.hpp">
-      <Filter>Header Files\textures</Filter>
-    </ClInclude>
-    <ClInclude Include="include\image_block_packing.hpp">
-      <Filter>Header Files\textures</Filter>
-    </ClInclude>
-    <ClInclude Include="include\image_component_type.hpp">
-      <Filter>Header Files\textures</Filter>
     </ClInclude>
     <ClInclude Include="include\fwd_types.hpp">
       <Filter>Header Files\old</Filter>
@@ -164,70 +128,109 @@
     <ClInclude Include="include\variable_size_median_kernel.hpp">
       <Filter>Header Files\old</Filter>
     </ClInclude>
-    <ClInclude Include="include\convert_colorspace.hpp">
-      <Filter>Header Files\textures</Filter>
+    <ClInclude Include="include\colorspace.hpp">
+      <Filter>Header Files\textures\enums</Filter>
     </ClInclude>
-    <ClInclude Include="include\image_pixel_norm.hpp">
-      <Filter>Header Files\textures</Filter>
+    <ClInclude Include="include\convert_colorspace.hpp">
+      <Filter>Header Files\textures\operations\normalized conversions</Filter>
     </ClInclude>
     <ClInclude Include="include\convert_colorspace_static.hpp">
-      <Filter>Header Files\textures</Filter>
+      <Filter>Header Files\textures\operations\normalized conversions</Filter>
     </ClInclude>
-    <ClInclude Include="include\premultiply_alpha.hpp">
-      <Filter>Header Files\textures</Filter>
+    <ClInclude Include="include\image_pixel_norm.hpp">
+      <Filter>Header Files\textures\operations\normalized conversions</Filter>
     </ClInclude>
-    <ClInclude Include="include\premultiply_alpha_static.hpp">
-      <Filter>Header Files\textures</Filter>
+    <ClInclude Include="include\image_format.hpp">
+      <Filter>Header Files\textures\data structures</Filter>
     </ClInclude>
-    <ClInclude Include="include\converting_pixel_blitter.hpp">
-      <Filter>Header Files\textures</Filter>
+    <ClInclude Include="include\image_format_hash.hpp">
+      <Filter>Header Files\textures\data structures</Filter>
+    </ClInclude>
+    <ClInclude Include="include\image.hpp">
+      <Filter>Header Files\textures\data structures</Filter>
+    </ClInclude>
+    <ClInclude Include="include\image_component_type.hpp">
+      <Filter>Header Files\textures\enums</Filter>
     </ClInclude>
     <ClInclude Include="include\image_region.hpp">
-      <Filter>Header Files\textures</Filter>
+      <Filter>Header Files\textures\data structures</Filter>
     </ClInclude>
     <ClInclude Include="include\image_region_hash.hpp">
-      <Filter>Header Files\textures</Filter>
+      <Filter>Header Files\textures\data structures</Filter>
+    </ClInclude>
+    <ClInclude Include="include\image_view_hash.hpp">
+      <Filter>Header Files\textures\data structures</Filter>
+    </ClInclude>
+    <ClInclude Include="include\image_view.hpp">
+      <Filter>Header Files\textures\data structures</Filter>
+    </ClInclude>
+    <ClInclude Include="include\texture.hpp">
+      <Filter>Header Files\textures\data structures</Filter>
+    </ClInclude>
+    <ClInclude Include="include\texture_storage.hpp">
+      <Filter>Header Files\textures\data structures</Filter>
+    </ClInclude>
+    <ClInclude Include="include\texture_storage_hash.hpp">
+      <Filter>Header Files\textures\data structures</Filter>
+    </ClInclude>
+    <ClInclude Include="include\texture_view.hpp">
+      <Filter>Header Files\textures\data structures</Filter>
+    </ClInclude>
+    <ClInclude Include="include\texture_view_hash.hpp">
+      <Filter>Header Files\textures\data structures</Filter>
+    </ClInclude>
+    <ClInclude Include="include\premultiply_alpha.hpp">
+      <Filter>Header Files\textures\operations\normalized conversions</Filter>
+    </ClInclude>
+    <ClInclude Include="include\premultiply_alpha_static.hpp">
+      <Filter>Header Files\textures\operations\normalized conversions</Filter>
+    </ClInclude>
+    <ClInclude Include="include\texture_class.hpp">
+      <Filter>Header Files\textures\enums</Filter>
+    </ClInclude>
+    <ClInclude Include="include\swizzle.hpp">
+      <Filter>Header Files\textures\enums</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mipmapping.hpp">
+      <Filter>Header Files\textures\operations</Filter>
+    </ClInclude>
+    <ClInclude Include="include\image_block_packing.hpp">
+      <Filter>Header Files\textures\enums</Filter>
+    </ClInclude>
+    <ClInclude Include="include\image_block_access.hpp">
+      <Filter>Header Files\textures\operations\block/pixel access</Filter>
+    </ClInclude>
+    <ClInclude Include="include\image_pixel_access.hpp">
+      <Filter>Header Files\textures\operations\block/pixel access</Filter>
+    </ClInclude>
+    <ClInclude Include="include\image_pixel_access_norm.hpp">
+      <Filter>Header Files\textures\operations\block/pixel access</Filter>
+    </ClInclude>
+    <ClInclude Include="include\make_image.hpp">
+      <Filter>Header Files\textures\operations</Filter>
+    </ClInclude>
+    <ClInclude Include="include\make_texture.hpp">
+      <Filter>Header Files\textures\operations</Filter>
+    </ClInclude>
+    <ClInclude Include="include\visit_image.hpp">
+      <Filter>Header Files\textures\operations\visitation</Filter>
+    </ClInclude>
+    <ClInclude Include="include\visit_texture.hpp">
+      <Filter>Header Files\textures\operations\visitation</Filter>
+    </ClInclude>
+    <ClInclude Include="include\blit_image_blocks.hpp">
+      <Filter>Header Files\textures\operations\blitting</Filter>
+    </ClInclude>
+    <ClInclude Include="include\blit_image_pixels.hpp">
+      <Filter>Header Files\textures\operations\blitting</Filter>
+    </ClInclude>
+    <ClInclude Include="include\converting_pixel_blitter.hpp">
+      <Filter>Header Files\textures\operations\blitting</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\pch.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\texture_storage.cpp">
-      <Filter>Source Files\textures</Filter>
-    </ClCompile>
-    <ClCompile Include="src\colorspace.cpp">
-      <Filter>Source Files\textures</Filter>
-    </ClCompile>
-    <ClCompile Include="src\swizzle.cpp">
-      <Filter>Source Files\textures</Filter>
-    </ClCompile>
-    <ClCompile Include="src\image_format.cpp">
-      <Filter>Source Files\textures</Filter>
-    </ClCompile>
-    <ClCompile Include="src\image_view.cpp">
-      <Filter>Source Files\textures</Filter>
-    </ClCompile>
-    <ClCompile Include="src\texture_view.cpp">
-      <Filter>Source Files\textures</Filter>
-    </ClCompile>
-    <ClCompile Include="src\texture_class.cpp">
-      <Filter>Source Files\textures</Filter>
-    </ClCompile>
-    <ClCompile Include="src\mipmapping.cpp">
-      <Filter>Source Files\textures</Filter>
-    </ClCompile>
-    <ClCompile Include="src\make_image.cpp">
-      <Filter>Source Files\textures</Filter>
-    </ClCompile>
-    <ClCompile Include="src\make_texture.cpp">
-      <Filter>Source Files\textures</Filter>
-    </ClCompile>
-    <ClCompile Include="src\image_block_packing.cpp">
-      <Filter>Source Files\textures</Filter>
-    </ClCompile>
-    <ClCompile Include="src\image_component_type.cpp">
-      <Filter>Source Files\textures</Filter>
     </ClCompile>
     <ClCompile Include="src\write_image.cpp">
       <Filter>Source Files\old</Filter>
@@ -247,14 +250,50 @@
     <ClCompile Include="src\stbiw_detail.c">
       <Filter>Source Files\old</Filter>
     </ClCompile>
-    <ClCompile Include="src\convert_colorspace.cpp">
-      <Filter>Source Files\textures</Filter>
+    <ClCompile Include="src\colorspace.cpp">
+      <Filter>Source Files\textures\enums</Filter>
     </ClCompile>
-    <ClCompile Include="src\premultiply_alpha.cpp">
-      <Filter>Source Files\textures</Filter>
+    <ClCompile Include="src\swizzle.cpp">
+      <Filter>Source Files\textures\enums</Filter>
+    </ClCompile>
+    <ClCompile Include="src\texture_class.cpp">
+      <Filter>Source Files\textures\enums</Filter>
+    </ClCompile>
+    <ClCompile Include="src\image_component_type.cpp">
+      <Filter>Source Files\textures\enums</Filter>
+    </ClCompile>
+    <ClCompile Include="src\image_block_packing.cpp">
+      <Filter>Source Files\textures\enums</Filter>
+    </ClCompile>
+    <ClCompile Include="src\image_format.cpp">
+      <Filter>Source Files\textures\data structures</Filter>
     </ClCompile>
     <ClCompile Include="src\image_region.cpp">
-      <Filter>Source Files\textures</Filter>
+      <Filter>Source Files\textures\data structures</Filter>
+    </ClCompile>
+    <ClCompile Include="src\image_view.cpp">
+      <Filter>Source Files\textures\data structures</Filter>
+    </ClCompile>
+    <ClCompile Include="src\texture_storage.cpp">
+      <Filter>Source Files\textures\data structures</Filter>
+    </ClCompile>
+    <ClCompile Include="src\texture_view.cpp">
+      <Filter>Source Files\textures\data structures</Filter>
+    </ClCompile>
+    <ClCompile Include="src\convert_colorspace.cpp">
+      <Filter>Source Files\textures\operations\normalized conversions</Filter>
+    </ClCompile>
+    <ClCompile Include="src\premultiply_alpha.cpp">
+      <Filter>Source Files\textures\operations\normalized conversions</Filter>
+    </ClCompile>
+    <ClCompile Include="src\make_image.cpp">
+      <Filter>Source Files\textures\operations</Filter>
+    </ClCompile>
+    <ClCompile Include="src\make_texture.cpp">
+      <Filter>Source Files\textures\operations</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mipmapping.cpp">
+      <Filter>Source Files\textures\operations</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -285,21 +324,6 @@
     <None Include="meta\texture_class.tsv">
       <Filter>Meta-Source Files</Filter>
     </None>
-    <None Include="include\image_block_access.inl">
-      <Filter>Header Files\textures</Filter>
-    </None>
-    <None Include="include\image_pixel_access.inl">
-      <Filter>Header Files\textures</Filter>
-    </None>
-    <None Include="include\visit_image.inl">
-      <Filter>Header Files\textures</Filter>
-    </None>
-    <None Include="include\visit_texture.inl">
-      <Filter>Header Files\textures</Filter>
-    </None>
-    <None Include="include\image_pixel_access_norm.inl">
-      <Filter>Header Files\textures</Filter>
-    </None>
     <None Include="include\apply.inl">
       <Filter>Header Files\old</Filter>
     </None>
@@ -325,13 +349,34 @@
       <Filter>Meta-Source Files\old</Filter>
     </None>
     <None Include="include\convert_colorspace_static.inl">
-      <Filter>Header Files\textures</Filter>
-    </None>
-    <None Include="include\converting_pixel_blitter.inl">
-      <Filter>Header Files\textures</Filter>
+      <Filter>Header Files\textures\operations\normalized conversions</Filter>
     </None>
     <None Include="include\image_region.inl">
-      <Filter>Header Files\textures</Filter>
+      <Filter>Header Files\textures\data structures</Filter>
+    </None>
+    <None Include="include\image_pixel_access_norm.inl">
+      <Filter>Header Files\textures\operations\block/pixel access</Filter>
+    </None>
+    <None Include="include\image_block_access.inl">
+      <Filter>Header Files\textures\operations\block/pixel access</Filter>
+    </None>
+    <None Include="include\image_pixel_access.inl">
+      <Filter>Header Files\textures\operations\block/pixel access</Filter>
+    </None>
+    <None Include="include\visit_texture.inl">
+      <Filter>Header Files\textures\operations\visitation</Filter>
+    </None>
+    <None Include="include\visit_image.inl">
+      <Filter>Header Files\textures\operations\visitation</Filter>
+    </None>
+    <None Include="include\blit_image_blocks.inl">
+      <Filter>Header Files\textures\operations\blitting</Filter>
+    </None>
+    <None Include="include\blit_image_pixels.inl">
+      <Filter>Header Files\textures\operations\blitting</Filter>
+    </None>
+    <None Include="include\converting_pixel_blitter.inl">
+      <Filter>Header Files\textures\operations\blitting</Filter>
     </None>
   </ItemGroup>
 </Project>

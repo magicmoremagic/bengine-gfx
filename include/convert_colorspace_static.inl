@@ -8,36 +8,36 @@ namespace detail {
 
 ///////////////////////////////////////////////////////////////////////////////
 template <Colorspace S>
-using ColorspaceType = std::integral_constant<Colorspace, S>;
+using ColorspaceTag = std::integral_constant<Colorspace, S>;
 
 ///////////////////////////////////////////////////////////////////////////////
 template <ColorspaceFamily F>
-using ColorspaceFamilyType = std::integral_constant<ColorspaceFamily, F>;
+using ColorspaceFamilyTag = std::integral_constant<ColorspaceFamily, F>;
 
 ///////////////////////////////////////////////////////////////////////////////
 template <ColorspaceVariant V>
-using ColorspaceVariantType = std::integral_constant<ColorspaceVariant, V>;
+using ColorspaceVariantTag = std::integral_constant<ColorspaceVariant, V>;
 
 ///////////////////////////////////////////////////////////////////////////////
 template <typename Input, typename Output,
    bool Same = std::is_same_v<Input, Output>,
-   typename InputFamily = ColorspaceFamilyType<ColorspaceInfo<Input::value>::family>,
-   typename OutputFamily = ColorspaceFamilyType<ColorspaceInfo<Output::value>::family>,
-   typename InputVariant = ColorspaceVariantType<ColorspaceInfo<Input::value>::variant>,
-   typename OutputVariant = ColorspaceVariantType<ColorspaceInfo<Output::value>::variant>>
-struct convert_colorspace {
+   typename InputFamily = ColorspaceFamilyTag<ColorspaceInfo<Input::value>::family>,
+   typename OutputFamily = ColorspaceFamilyTag<ColorspaceInfo<Output::value>::family>,
+   typename InputVariant = ColorspaceVariantTag<ColorspaceInfo<Input::value>::variant>,
+   typename OutputVariant = ColorspaceVariantTag<ColorspaceInfo<Output::value>::variant>>
+struct ConvertColorspace {
    static vec4 convert(vec4 pixel_norm) {
-      using InputBase = ColorspaceType<ColorspaceFamilyInfo<InputFamily::value>::base>;
-      using OutputBase = ColorspaceType<ColorspaceFamilyInfo<OutputFamily::value>::base>;
-      pixel_norm = convert_colorspace<Input, InputBase>::convert(pixel_norm);
-      pixel_norm = convert_colorspace<InputBase, OutputBase>::convert(pixel_norm);
-      pixel_norm = convert_colorspace<OutputBase, Output>::convert(pixel_norm);
+      using InputBase = ColorspaceTag<ColorspaceFamilyInfo<InputFamily::value>::base>;
+      using OutputBase = ColorspaceTag<ColorspaceFamilyInfo<OutputFamily::value>::base>;
+      pixel_norm = ConvertColorspace<Input, InputBase>::convert(pixel_norm);
+      pixel_norm = ConvertColorspace<InputBase, OutputBase>::convert(pixel_norm);
+      pixel_norm = ConvertColorspace<OutputBase, Output>::convert(pixel_norm);
       return pixel_norm;
    }
 };
 
 ///////////////////////////////////////////////////////////////////////////////
-struct convert_colorspace_nop {
+struct ConvertColorspaceNop {
    static vec4 convert(vec4 pixel_norm) {
       return pixel_norm;
    }
@@ -45,12 +45,12 @@ struct convert_colorspace_nop {
 
 ///////////////////////////////////////////////////////////////////////////////
 template <typename S>
-struct convert_colorspace<S, S, true> : convert_colorspace_nop { };
+struct ConvertColorspace<S, S, true> : ConvertColorspaceNop { };
 
 #pragma region RGB <--> HSL/HSV
 
 ///////////////////////////////////////////////////////////////////////////////
-struct convert_colorspace_hsl_to_hsv {
+struct ConvertColorspaceHslHsv {
    static vec4 convert(vec4 hsl) {
       F32 s = hsl.y * (hsl.z <= 0.5f ? hsl.z : 1.f - hsl.z);
       F32 v = hsl.z + s;
@@ -60,7 +60,7 @@ struct convert_colorspace_hsl_to_hsv {
 };
 
 ///////////////////////////////////////////////////////////////////////////////
-struct convert_colorspace_hsv_to_hsl {
+struct ConvertColorspaceHsvHsl {
    static vec4 convert(vec4 hsv) {
       F32 l = hsv.z * (2.f - hsv.y);
       F32 s;
@@ -77,7 +77,7 @@ struct convert_colorspace_hsv_to_hsl {
 };
 
 ///////////////////////////////////////////////////////////////////////////////
-struct convert_colorspace_none_to_hsv {
+struct ConvertColorspaceNoneHsv {
    static vec4 convert(vec4 pixel_norm) {
       F32 h = 0, s, v, m, d;
 
@@ -103,7 +103,7 @@ struct convert_colorspace_none_to_hsv {
 };
 
 ///////////////////////////////////////////////////////////////////////////////
-struct convert_colorspace_hsv_to_none {
+struct ConvertColorspaceHsvNone {
    static vec4 convert(vec4 hsv) {
       F32 h, f, p, q, t, v;
       I32 i;
@@ -133,63 +133,63 @@ struct convert_colorspace_hsv_to_none {
 };
 
 ///////////////////////////////////////////////////////////////////////////////
-struct convert_colorspace_none_to_hsl {
+struct ConvertColorspaceNoneHsl {
    static vec4 convert(vec4 pixel_norm) {
-      return convert_colorspace_hsv_to_hsl::convert(convert_colorspace_none_to_hsv::convert(pixel_norm));
+      return ConvertColorspaceHsvHsl::convert(ConvertColorspaceNoneHsv::convert(pixel_norm));
    }
 };
 
 ///////////////////////////////////////////////////////////////////////////////
-struct convert_colorspace_hsl_to_none {
+struct ConvertColorspaceHslNone {
    static vec4 convert(vec4 hsl) {
-      return convert_colorspace_hsv_to_none::convert(convert_colorspace_hsl_to_hsv::convert(hsl));
+      return ConvertColorspaceHsvNone::convert(ConvertColorspaceHslHsv::convert(hsl));
    }
 };
 
 ///////////////////////////////////////////////////////////////////////////////
 template <typename Input, typename Output, typename Family>
-struct convert_colorspace<Input, Output, false, Family, Family,
-   ColorspaceVariantType<ColorspaceVariant::hsl>,
-   ColorspaceVariantType<ColorspaceVariant::hsv>> : convert_colorspace_hsl_to_hsv { };
+struct ConvertColorspace<Input, Output, false, Family, Family,
+   ColorspaceVariantTag<ColorspaceVariant::hsl>,
+   ColorspaceVariantTag<ColorspaceVariant::hsv>> : ConvertColorspaceHslHsv { };
 
 ///////////////////////////////////////////////////////////////////////////////
 template <typename Input, typename Output, typename Family>
-struct convert_colorspace<Input, Output, false, Family, Family,
-   ColorspaceVariantType<ColorspaceVariant::hsv>,
-   ColorspaceVariantType<ColorspaceVariant::hsl>> : convert_colorspace_hsv_to_hsl { };
+struct ConvertColorspace<Input, Output, false, Family, Family,
+   ColorspaceVariantTag<ColorspaceVariant::hsv>,
+   ColorspaceVariantTag<ColorspaceVariant::hsl>> : ConvertColorspaceHsvHsl { };
 
 ///////////////////////////////////////////////////////////////////////////////
 template <typename Input, typename Output, typename Family>
-struct convert_colorspace<Input, Output, false, Family, Family,
-   ColorspaceVariantType<ColorspaceVariant::none>,
-   ColorspaceVariantType<ColorspaceVariant::hsl>> : convert_colorspace_none_to_hsl { };
+struct ConvertColorspace<Input, Output, false, Family, Family,
+   ColorspaceVariantTag<ColorspaceVariant::none>,
+   ColorspaceVariantTag<ColorspaceVariant::hsl>> : ConvertColorspaceNoneHsl { };
 
 ///////////////////////////////////////////////////////////////////////////////
 template <typename Input, typename Output, typename Family>
-struct convert_colorspace<Input, Output, false, Family, Family,
-   ColorspaceVariantType<ColorspaceVariant::hsl>,
-   ColorspaceVariantType<ColorspaceVariant::none>> : convert_colorspace_hsl_to_none { };
+struct ConvertColorspace<Input, Output, false, Family, Family,
+   ColorspaceVariantTag<ColorspaceVariant::hsl>,
+   ColorspaceVariantTag<ColorspaceVariant::none>> : ConvertColorspaceHslNone { };
 
 ///////////////////////////////////////////////////////////////////////////////
 template <typename Input, typename Output, typename Family>
-struct convert_colorspace<Input, Output, false, Family, Family,
-   ColorspaceVariantType<ColorspaceVariant::none>,
-   ColorspaceVariantType<ColorspaceVariant::hsv>> : convert_colorspace_none_to_hsv { };
+struct ConvertColorspace<Input, Output, false, Family, Family,
+   ColorspaceVariantTag<ColorspaceVariant::none>,
+   ColorspaceVariantTag<ColorspaceVariant::hsv>> : ConvertColorspaceNoneHsv { };
 
 ///////////////////////////////////////////////////////////////////////////////
 template <typename Input, typename Output, typename Family>
-struct convert_colorspace<Input, Output, false, Family, Family,
-   ColorspaceVariantType<ColorspaceVariant::hsv>,
-   ColorspaceVariantType<ColorspaceVariant::none>> : convert_colorspace_hsv_to_none { };
+struct ConvertColorspace<Input, Output, false, Family, Family,
+   ColorspaceVariantTag<ColorspaceVariant::hsv>,
+   ColorspaceVariantTag<ColorspaceVariant::none>> : ConvertColorspaceHsvNone { };
 
 #pragma endregion
 #pragma region RGB <--> YCbCr
 
 ///////////////////////////////////////////////////////////////////////////////
 template <typename Input, typename Output, typename Family>
-struct convert_colorspace<Input, Output, false, Family, Family,
-   ColorspaceVariantType<ColorspaceVariant::none>,
-   ColorspaceVariantType<ColorspaceVariant::ycbcr>> {
+struct ConvertColorspace<Input, Output, false, Family, Family,
+   ColorspaceVariantTag<ColorspaceVariant::none>,
+   ColorspaceVariantTag<ColorspaceVariant::ycbcr>> {
    static vec4 convert(vec4 rgb) {
       using Info = ColorspaceFamilyInfo<Family::value>;
       F32 y = Info::kr * rgb.r + Info::kg * rgb.g + Info::kb * rgb.b;
@@ -199,9 +199,9 @@ struct convert_colorspace<Input, Output, false, Family, Family,
 
 ///////////////////////////////////////////////////////////////////////////////
 template <typename Input, typename Output, typename Family>
-struct convert_colorspace<Input, Output, false, Family, Family,
-   ColorspaceVariantType<ColorspaceVariant::ycbcr>,
-   ColorspaceVariantType<ColorspaceVariant::none>> {
+struct ConvertColorspace<Input, Output, false, Family, Family,
+   ColorspaceVariantTag<ColorspaceVariant::ycbcr>,
+   ColorspaceVariantTag<ColorspaceVariant::none>> {
    static vec4 convert(vec4 ycbcr) {
       using Info = ColorspaceFamilyInfo<Family::value>;
       F32 b = ycbcr[0] + ycbcr[1] * (2.f - 2.f * Info::kb);
@@ -215,7 +215,7 @@ struct convert_colorspace<Input, Output, false, Family, Family,
 
 ///////////////////////////////////////////////////////////////////////////////
 template <>
-struct convert_colorspace<ColorspaceType<Colorspace::cie_xyz>, ColorspaceType<Colorspace::bt709_linear_rgb>> {
+struct ConvertColorspace<ColorspaceTag<Colorspace::cie_xyz>, ColorspaceTag<Colorspace::bt709_linear_rgb>> {
    static vec4 convert(vec4 xyz) {
       const mat3 xform(
           3.2404542f, -0.9692660f,  0.0556434f,
@@ -228,7 +228,7 @@ struct convert_colorspace<ColorspaceType<Colorspace::cie_xyz>, ColorspaceType<Co
 
 ///////////////////////////////////////////////////////////////////////////////
 template <>
-struct convert_colorspace<ColorspaceType<Colorspace::bt709_linear_rgb>, ColorspaceType<Colorspace::cie_xyz>> {
+struct ConvertColorspace<ColorspaceTag<Colorspace::bt709_linear_rgb>, ColorspaceTag<Colorspace::cie_xyz>> {
    static vec4 convert(vec4 rgb) {
       const mat3 xform(
          0.4124564f, 0.2126729f, 0.0193339f,
@@ -244,7 +244,7 @@ struct convert_colorspace<ColorspaceType<Colorspace::bt709_linear_rgb>, Colorspa
 
 ///////////////////////////////////////////////////////////////////////////////
 template <>
-struct convert_colorspace<ColorspaceType<Colorspace::bt709_linear_rgb>, ColorspaceType<Colorspace::srgb>> {
+struct ConvertColorspace<ColorspaceTag<Colorspace::bt709_linear_rgb>, ColorspaceTag<Colorspace::srgb>> {
    static vec4 convert(vec4 rgb) {
       for (glm::length_t i = 0; i < 3; ++i) {
          const F32 c = rgb[i];
@@ -260,7 +260,7 @@ struct convert_colorspace<ColorspaceType<Colorspace::bt709_linear_rgb>, Colorspa
 
 ///////////////////////////////////////////////////////////////////////////////
 template <>
-struct convert_colorspace<ColorspaceType<Colorspace::srgb>, ColorspaceType<Colorspace::bt709_linear_rgb>> {
+struct ConvertColorspace<ColorspaceTag<Colorspace::srgb>, ColorspaceTag<Colorspace::bt709_linear_rgb>> {
    static vec4 convert(vec4 rgb) {
       for (glm::length_t i = 0; i < 3; ++i) {
          const F32 c = rgb[i];
@@ -276,7 +276,7 @@ struct convert_colorspace<ColorspaceType<Colorspace::srgb>, ColorspaceType<Color
 
 ///////////////////////////////////////////////////////////////////////////////
 template <>
-struct convert_colorspace<ColorspaceType<Colorspace::bt709_linear_rgb>, ColorspaceType<Colorspace::bt709_rgb>> {
+struct ConvertColorspace<ColorspaceTag<Colorspace::bt709_linear_rgb>, ColorspaceTag<Colorspace::bt709_rgb>> {
    static vec4 convert(vec4 rgb) {
       for (glm::length_t i = 0; i < 3; ++i) {
          const F32 c = rgb[i];
@@ -292,7 +292,7 @@ struct convert_colorspace<ColorspaceType<Colorspace::bt709_linear_rgb>, Colorspa
 
 ///////////////////////////////////////////////////////////////////////////////
 template <>
-struct convert_colorspace<ColorspaceType<Colorspace::bt709_rgb>, ColorspaceType<Colorspace::bt709_linear_rgb>> {
+struct ConvertColorspace<ColorspaceTag<Colorspace::bt709_rgb>, ColorspaceTag<Colorspace::bt709_linear_rgb>> {
    static vec4 convert(vec4 rgb) {
       for (glm::length_t i = 0; i < 3; ++i) {
          const F32 c = rgb[i];
@@ -308,55 +308,55 @@ struct convert_colorspace<ColorspaceType<Colorspace::bt709_rgb>, ColorspaceType<
 
 ///////////////////////////////////////////////////////////////////////////////
 template <>
-struct convert_colorspace<ColorspaceType<Colorspace::bt709_rgb>, ColorspaceType<Colorspace::srgb>> {
+struct ConvertColorspace<ColorspaceTag<Colorspace::bt709_rgb>, ColorspaceTag<Colorspace::srgb>> {
    static vec4 convert(vec4 rgb) {
-      return convert_colorspace<ColorspaceType<Colorspace::bt709_linear_rgb>, ColorspaceType<Colorspace::srgb>>::convert(
-         convert_colorspace<ColorspaceType<Colorspace::bt709_rgb>, ColorspaceType<Colorspace::bt709_linear_rgb>>::convert(rgb));
+      return ConvertColorspace<ColorspaceTag<Colorspace::bt709_linear_rgb>, ColorspaceTag<Colorspace::srgb>>::convert(
+         ConvertColorspace<ColorspaceTag<Colorspace::bt709_rgb>, ColorspaceTag<Colorspace::bt709_linear_rgb>>::convert(rgb));
    }
 };
 
 ///////////////////////////////////////////////////////////////////////////////
 template <>
-struct convert_colorspace<ColorspaceType<Colorspace::srgb>, ColorspaceType<Colorspace::bt709_rgb>> {
+struct ConvertColorspace<ColorspaceTag<Colorspace::srgb>, ColorspaceTag<Colorspace::bt709_rgb>> {
    static vec4 convert(vec4 rgb) {
-      return convert_colorspace<ColorspaceType<Colorspace::bt709_linear_rgb>, ColorspaceType<Colorspace::bt709_rgb>>::convert(
-         convert_colorspace<ColorspaceType<Colorspace::srgb>, ColorspaceType<Colorspace::bt709_linear_rgb>>::convert(rgb));
+      return ConvertColorspace<ColorspaceTag<Colorspace::bt709_linear_rgb>, ColorspaceTag<Colorspace::bt709_rgb>>::convert(
+         ConvertColorspace<ColorspaceTag<Colorspace::srgb>, ColorspaceTag<Colorspace::bt709_linear_rgb>>::convert(rgb));
    }
 };
 
 ///////////////////////////////////////////////////////////////////////////////
 template <>
-struct convert_colorspace<ColorspaceType<Colorspace::cie_xyz>, ColorspaceType<Colorspace::srgb>> {
+struct ConvertColorspace<ColorspaceTag<Colorspace::cie_xyz>, ColorspaceTag<Colorspace::srgb>> {
    static vec4 convert(vec4 xyz) {
-      return convert_colorspace<ColorspaceType<Colorspace::bt709_linear_rgb>, ColorspaceType<Colorspace::srgb>>::convert(
-         convert_colorspace<ColorspaceType<Colorspace::cie_xyz>, ColorspaceType<Colorspace::bt709_linear_rgb>>::convert(xyz));
+      return ConvertColorspace<ColorspaceTag<Colorspace::bt709_linear_rgb>, ColorspaceTag<Colorspace::srgb>>::convert(
+         ConvertColorspace<ColorspaceTag<Colorspace::cie_xyz>, ColorspaceTag<Colorspace::bt709_linear_rgb>>::convert(xyz));
    }
 };
 
 ///////////////////////////////////////////////////////////////////////////////
 template <>
-struct convert_colorspace<ColorspaceType<Colorspace::srgb>, ColorspaceType<Colorspace::cie_xyz>> {
+struct ConvertColorspace<ColorspaceTag<Colorspace::srgb>, ColorspaceTag<Colorspace::cie_xyz>> {
    static vec4 convert(vec4 rgb) {
-      return convert_colorspace<ColorspaceType<Colorspace::bt709_linear_rgb>, ColorspaceType<Colorspace::cie_xyz>>::convert(
-         convert_colorspace<ColorspaceType<Colorspace::srgb>, ColorspaceType<Colorspace::bt709_linear_rgb>>::convert(rgb));
+      return ConvertColorspace<ColorspaceTag<Colorspace::bt709_linear_rgb>, ColorspaceTag<Colorspace::cie_xyz>>::convert(
+         ConvertColorspace<ColorspaceTag<Colorspace::srgb>, ColorspaceTag<Colorspace::bt709_linear_rgb>>::convert(rgb));
    }
 };
 
 ///////////////////////////////////////////////////////////////////////////////
 template <>
-struct convert_colorspace<ColorspaceType<Colorspace::cie_xyz>, ColorspaceType<Colorspace::bt709_rgb>> {
+struct ConvertColorspace<ColorspaceTag<Colorspace::cie_xyz>, ColorspaceTag<Colorspace::bt709_rgb>> {
    static vec4 convert(vec4 xyz) {
-      return convert_colorspace<ColorspaceType<Colorspace::bt709_linear_rgb>, ColorspaceType<Colorspace::bt709_rgb>>::convert(
-         convert_colorspace<ColorspaceType<Colorspace::cie_xyz>, ColorspaceType<Colorspace::bt709_linear_rgb>>::convert(xyz));
+      return ConvertColorspace<ColorspaceTag<Colorspace::bt709_linear_rgb>, ColorspaceTag<Colorspace::bt709_rgb>>::convert(
+         ConvertColorspace<ColorspaceTag<Colorspace::cie_xyz>, ColorspaceTag<Colorspace::bt709_linear_rgb>>::convert(xyz));
    }
 };
 
 ///////////////////////////////////////////////////////////////////////////////
 template <>
-struct convert_colorspace<ColorspaceType<Colorspace::bt709_rgb>, ColorspaceType<Colorspace::cie_xyz>> {
+struct ConvertColorspace<ColorspaceTag<Colorspace::bt709_rgb>, ColorspaceTag<Colorspace::cie_xyz>> {
    static vec4 convert(vec4 rgb) {
-      return convert_colorspace<ColorspaceType<Colorspace::bt709_linear_rgb>, ColorspaceType<Colorspace::cie_xyz>>::convert(
-         convert_colorspace<ColorspaceType<Colorspace::bt709_rgb>, ColorspaceType<Colorspace::bt709_linear_rgb>>::convert(rgb));
+      return ConvertColorspace<ColorspaceTag<Colorspace::bt709_linear_rgb>, ColorspaceTag<Colorspace::cie_xyz>>::convert(
+         ConvertColorspace<ColorspaceTag<Colorspace::bt709_rgb>, ColorspaceTag<Colorspace::bt709_linear_rgb>>::convert(rgb));
    }
 };
 
@@ -365,7 +365,7 @@ struct convert_colorspace<ColorspaceType<Colorspace::bt709_rgb>, ColorspaceType<
 
 ///////////////////////////////////////////////////////////////////////////////
 template <>
-struct convert_colorspace<ColorspaceType<Colorspace::cie_xyz>, ColorspaceType<Colorspace::cie_xyy>> {
+struct ConvertColorspace<ColorspaceTag<Colorspace::cie_xyz>, ColorspaceTag<Colorspace::cie_xyy>> {
    static vec4 convert(vec4 xyz) {
       F32 d = xyz.x + xyz.y + xyz.z;
       return d == 0.f ? vec4(0.f, 0.f, 0.f, xyz.a) : vec4(xyz.x / d, xyz.y / d, xyz.y, xyz.a);
@@ -374,7 +374,7 @@ struct convert_colorspace<ColorspaceType<Colorspace::cie_xyz>, ColorspaceType<Co
 
 ///////////////////////////////////////////////////////////////////////////////
 template <>
-struct convert_colorspace<ColorspaceType<Colorspace::cie_xyy>, ColorspaceType<Colorspace::cie_xyz>> {
+struct ConvertColorspace<ColorspaceTag<Colorspace::cie_xyy>, ColorspaceTag<Colorspace::cie_xyz>> {
    static vec4 convert(vec4 xyy) {
       return xyy.y == 0.f ? vec4(0.f, 0.f, 0.f, xyy.a) : vec4(xyy.x * xyy.z / xyy.y, xyy.z, (1.f - xyy.x - xyy.y) * xyy.z / xyy.y, xyy.a);
    }
@@ -382,7 +382,7 @@ struct convert_colorspace<ColorspaceType<Colorspace::cie_xyy>, ColorspaceType<Co
 
 ///////////////////////////////////////////////////////////////////////////////
 template <>
-struct convert_colorspace<ColorspaceType<Colorspace::cie_xyz>, ColorspaceType<Colorspace::cie_lab_d65>> {
+struct ConvertColorspace<ColorspaceTag<Colorspace::cie_xyz>, ColorspaceTag<Colorspace::cie_lab_d65>> {
    static vec4 convert(vec4 xyz) {
       constexpr F32 epsilon = 216.f / 24389.f;
       constexpr F32 kappa = 24389.f / 27.f;
@@ -406,7 +406,7 @@ struct convert_colorspace<ColorspaceType<Colorspace::cie_xyz>, ColorspaceType<Co
 
 ///////////////////////////////////////////////////////////////////////////////
 template <>
-struct convert_colorspace<ColorspaceType<Colorspace::cie_lab_d65>, ColorspaceType<Colorspace::cie_xyz>> {
+struct ConvertColorspace<ColorspaceTag<Colorspace::cie_lab_d65>, ColorspaceTag<Colorspace::cie_xyz>> {
    static vec4 convert(vec4 lab) {
       constexpr F32 epsilon = 216.f / 24389.f;
       constexpr F32 kappa = 24389.f / 27.f;
@@ -445,7 +445,7 @@ struct convert_colorspace<ColorspaceType<Colorspace::cie_lab_d65>, ColorspaceTyp
 
 ///////////////////////////////////////////////////////////////////////////////
 template <>
-struct convert_colorspace<ColorspaceType<Colorspace::cie_xyz>, ColorspaceType<Colorspace::cie_luv_d65>> {
+struct ConvertColorspace<ColorspaceTag<Colorspace::cie_xyz>, ColorspaceTag<Colorspace::cie_luv_d65>> {
    static vec4 convert(vec4 xyz) {
       constexpr F32 epsilon = 216.f / 24389.f;
       constexpr F32 kappa = 24389.f / 27.f;
@@ -471,7 +471,7 @@ struct convert_colorspace<ColorspaceType<Colorspace::cie_xyz>, ColorspaceType<Co
 
 ///////////////////////////////////////////////////////////////////////////////
 template <>
-struct convert_colorspace<ColorspaceType<Colorspace::cie_luv_d65>, ColorspaceType<Colorspace::cie_xyz>> {
+struct ConvertColorspace<ColorspaceTag<Colorspace::cie_luv_d65>, ColorspaceTag<Colorspace::cie_xyz>> {
    static vec4 convert(vec4 luv) {
       constexpr F32 epsilon = 216.f / 24389.f;
       constexpr F32 kappa = 24389.f / 27.f;
@@ -503,7 +503,7 @@ struct convert_colorspace<ColorspaceType<Colorspace::cie_luv_d65>, ColorspaceTyp
 };
 
 ///////////////////////////////////////////////////////////////////////////////
-struct convert_colorspace_lmn_to_lch {
+struct ConvertColorspaceLmnLch {
    static vec4 convert(vec4 lmn) {
       const F32 c = std::sqrt(lmn.y * lmn.y + lmn.z * lmn.z);
       const F32 h = glm::degrees(std::atan2(lmn.z, lmn.y));
@@ -512,7 +512,7 @@ struct convert_colorspace_lmn_to_lch {
 };
 
 ///////////////////////////////////////////////////////////////////////////////
-struct convert_colorspace_lch_to_lmn {
+struct ConvertColorspaceLchLmn {
    static vec4 convert(vec4 lch) {
       const F32 rad = glm::radians(lch.z);
       return vec4(lch.x, lch.y * std::cos(rad), lch.y * std::sin(rad), lch.a);
@@ -520,42 +520,42 @@ struct convert_colorspace_lch_to_lmn {
 };
 
 ///////////////////////////////////////////////////////////////////////////////
-template <> struct convert_colorspace<ColorspaceType<Colorspace::cie_lab_d65>, ColorspaceType<Colorspace::cie_lchab_d65>> : convert_colorspace_lmn_to_lch { };
-template <> struct convert_colorspace<ColorspaceType<Colorspace::cie_luv_d65>, ColorspaceType<Colorspace::cie_lchuv_d65>> : convert_colorspace_lmn_to_lch { };
+template <> struct ConvertColorspace<ColorspaceTag<Colorspace::cie_lab_d65>, ColorspaceTag<Colorspace::cie_lchab_d65>> : ConvertColorspaceLmnLch { };
+template <> struct ConvertColorspace<ColorspaceTag<Colorspace::cie_luv_d65>, ColorspaceTag<Colorspace::cie_lchuv_d65>> : ConvertColorspaceLmnLch { };
 
 ///////////////////////////////////////////////////////////////////////////////
-template <> struct convert_colorspace<ColorspaceType<Colorspace::cie_lchab_d65>, ColorspaceType<Colorspace::cie_lab_d65>> : convert_colorspace_lch_to_lmn { };
-template <> struct convert_colorspace<ColorspaceType<Colorspace::cie_lchuv_d65>, ColorspaceType<Colorspace::cie_luv_d65>> : convert_colorspace_lch_to_lmn { };
+template <> struct ConvertColorspace<ColorspaceTag<Colorspace::cie_lchab_d65>, ColorspaceTag<Colorspace::cie_lab_d65>> : ConvertColorspaceLchLmn { };
+template <> struct ConvertColorspace<ColorspaceTag<Colorspace::cie_lchuv_d65>, ColorspaceTag<Colorspace::cie_luv_d65>> : ConvertColorspaceLchLmn { };
 
 ///////////////////////////////////////////////////////////////////////////////
-template <> struct convert_colorspace<ColorspaceType<Colorspace::cie_xyz>, ColorspaceType<Colorspace::cie_lchab_d65>> {
+template <> struct ConvertColorspace<ColorspaceTag<Colorspace::cie_xyz>, ColorspaceTag<Colorspace::cie_lchab_d65>> {
    static vec4 convert(vec4 xyz) {
-      return convert_colorspace<ColorspaceType<Colorspace::cie_lab_d65>, ColorspaceType<Colorspace::cie_lchab_d65>>::convert(
-         convert_colorspace<ColorspaceType<Colorspace::cie_xyz>, ColorspaceType<Colorspace::cie_lab_d65>>::convert(xyz));
+      return ConvertColorspace<ColorspaceTag<Colorspace::cie_lab_d65>, ColorspaceTag<Colorspace::cie_lchab_d65>>::convert(
+         ConvertColorspace<ColorspaceTag<Colorspace::cie_xyz>, ColorspaceTag<Colorspace::cie_lab_d65>>::convert(xyz));
    }
 };
 
 ///////////////////////////////////////////////////////////////////////////////
-template <> struct convert_colorspace<ColorspaceType<Colorspace::cie_lchab_d65>, ColorspaceType<Colorspace::cie_xyz>> {
+template <> struct ConvertColorspace<ColorspaceTag<Colorspace::cie_lchab_d65>, ColorspaceTag<Colorspace::cie_xyz>> {
    static vec4 convert(vec4 lchab) {
-      return convert_colorspace<ColorspaceType<Colorspace::cie_lab_d65>, ColorspaceType<Colorspace::cie_xyz>>::convert(
-         convert_colorspace<ColorspaceType<Colorspace::cie_lchab_d65>, ColorspaceType<Colorspace::cie_lab_d65>>::convert(lchab));
+      return ConvertColorspace<ColorspaceTag<Colorspace::cie_lab_d65>, ColorspaceTag<Colorspace::cie_xyz>>::convert(
+         ConvertColorspace<ColorspaceTag<Colorspace::cie_lchab_d65>, ColorspaceTag<Colorspace::cie_lab_d65>>::convert(lchab));
    }
 };
 
 ///////////////////////////////////////////////////////////////////////////////
-template <> struct convert_colorspace<ColorspaceType<Colorspace::cie_xyz>, ColorspaceType<Colorspace::cie_lchuv_d65>> {
+template <> struct ConvertColorspace<ColorspaceTag<Colorspace::cie_xyz>, ColorspaceTag<Colorspace::cie_lchuv_d65>> {
    static vec4 convert(vec4 xyz) {
-      return convert_colorspace<ColorspaceType<Colorspace::cie_luv_d65>, ColorspaceType<Colorspace::cie_lchuv_d65>>::convert(
-         convert_colorspace<ColorspaceType<Colorspace::cie_xyz>, ColorspaceType<Colorspace::cie_luv_d65>>::convert(xyz));
+      return ConvertColorspace<ColorspaceTag<Colorspace::cie_luv_d65>, ColorspaceTag<Colorspace::cie_lchuv_d65>>::convert(
+         ConvertColorspace<ColorspaceTag<Colorspace::cie_xyz>, ColorspaceTag<Colorspace::cie_luv_d65>>::convert(xyz));
    }
 };
 
 ///////////////////////////////////////////////////////////////////////////////
-template <> struct convert_colorspace<ColorspaceType<Colorspace::cie_lchuv_d65>, ColorspaceType<Colorspace::cie_xyz>> {
+template <> struct ConvertColorspace<ColorspaceTag<Colorspace::cie_lchuv_d65>, ColorspaceTag<Colorspace::cie_xyz>> {
    static vec4 convert(vec4 lchuv) {
-      return convert_colorspace<ColorspaceType<Colorspace::cie_luv_d65>, ColorspaceType<Colorspace::cie_xyz>>::convert(
-         convert_colorspace<ColorspaceType<Colorspace::cie_lchuv_d65>, ColorspaceType<Colorspace::cie_luv_d65>>::convert(lchuv));
+      return ConvertColorspace<ColorspaceTag<Colorspace::cie_luv_d65>, ColorspaceTag<Colorspace::cie_xyz>>::convert(
+         ConvertColorspace<ColorspaceTag<Colorspace::cie_lchuv_d65>, ColorspaceTag<Colorspace::cie_luv_d65>>::convert(lchuv));
    }
 };
 
@@ -564,23 +564,23 @@ template <> struct convert_colorspace<ColorspaceType<Colorspace::cie_lchuv_d65>,
 
 ///////////////////////////////////////////////////////////////////////////////
 template <typename Input>
-struct convert_colorspace<Input, ColorspaceType<Colorspace::unknown>, false> : convert_colorspace_nop { };
+struct ConvertColorspace<Input, ColorspaceTag<Colorspace::unknown>, false> : ConvertColorspaceNop { };
 
 ///////////////////////////////////////////////////////////////////////////////
 template <typename Output>
-struct convert_colorspace<ColorspaceType<Colorspace::unknown>, Output, false> : convert_colorspace_nop { };
+struct ConvertColorspace<ColorspaceTag<Colorspace::unknown>, Output, false> : ConvertColorspaceNop { };
 
 ///////////////////////////////////////////////////////////////////////////////
-template <> struct convert_colorspace<ColorspaceType<Colorspace::linear_other>, ColorspaceType<Colorspace::linear_depth_stencil>> : convert_colorspace_nop { };
-template <> struct convert_colorspace<ColorspaceType<Colorspace::linear_other>, ColorspaceType<Colorspace::bt709_linear_rgb>> : convert_colorspace_nop { };
-template <> struct convert_colorspace<ColorspaceType<Colorspace::linear_other>, ColorspaceType<Colorspace::bt709_rgb>> : convert_colorspace<ColorspaceType<Colorspace::bt709_linear_rgb>, ColorspaceType<Colorspace::bt709_rgb>> { };
-template <> struct convert_colorspace<ColorspaceType<Colorspace::linear_other>, ColorspaceType<Colorspace::srgb>> : convert_colorspace<ColorspaceType<Colorspace::bt709_linear_rgb>, ColorspaceType<Colorspace::srgb>> { };
-template <> struct convert_colorspace<ColorspaceType<Colorspace::linear_other>, ColorspaceType<Colorspace::cie_xyz>> : convert_colorspace_nop { };
-template <> struct convert_colorspace<ColorspaceType<Colorspace::linear_depth_stencil>, ColorspaceType<Colorspace::linear_other>> : convert_colorspace_nop { };
-template <> struct convert_colorspace<ColorspaceType<Colorspace::bt709_linear_rgb>, ColorspaceType<Colorspace::linear_other>> : convert_colorspace_nop { };
-template <> struct convert_colorspace<ColorspaceType<Colorspace::cie_xyz>, ColorspaceType<Colorspace::linear_other>> : convert_colorspace_nop { };
-template <> struct convert_colorspace<ColorspaceType<Colorspace::bt709_rgb>, ColorspaceType<Colorspace::linear_other>> : convert_colorspace<ColorspaceType<Colorspace::bt709_rgb>, ColorspaceType<Colorspace::bt709_linear_rgb>> { };
-template <> struct convert_colorspace<ColorspaceType<Colorspace::srgb>, ColorspaceType<Colorspace::linear_other>> : convert_colorspace<ColorspaceType<Colorspace::srgb>, ColorspaceType<Colorspace::bt709_linear_rgb>> { };
+template <> struct ConvertColorspace<ColorspaceTag<Colorspace::linear_other>, ColorspaceTag<Colorspace::linear_depth_stencil>> : ConvertColorspaceNop { };
+template <> struct ConvertColorspace<ColorspaceTag<Colorspace::linear_other>, ColorspaceTag<Colorspace::bt709_linear_rgb>> : ConvertColorspaceNop { };
+template <> struct ConvertColorspace<ColorspaceTag<Colorspace::linear_other>, ColorspaceTag<Colorspace::bt709_rgb>> : ConvertColorspace<ColorspaceTag<Colorspace::bt709_linear_rgb>, ColorspaceTag<Colorspace::bt709_rgb>> { };
+template <> struct ConvertColorspace<ColorspaceTag<Colorspace::linear_other>, ColorspaceTag<Colorspace::srgb>> : ConvertColorspace<ColorspaceTag<Colorspace::bt709_linear_rgb>, ColorspaceTag<Colorspace::srgb>> { };
+template <> struct ConvertColorspace<ColorspaceTag<Colorspace::linear_other>, ColorspaceTag<Colorspace::cie_xyz>> : ConvertColorspaceNop { };
+template <> struct ConvertColorspace<ColorspaceTag<Colorspace::linear_depth_stencil>, ColorspaceTag<Colorspace::linear_other>> : ConvertColorspaceNop { };
+template <> struct ConvertColorspace<ColorspaceTag<Colorspace::bt709_linear_rgb>, ColorspaceTag<Colorspace::linear_other>> : ConvertColorspaceNop { };
+template <> struct ConvertColorspace<ColorspaceTag<Colorspace::cie_xyz>, ColorspaceTag<Colorspace::linear_other>> : ConvertColorspaceNop { };
+template <> struct ConvertColorspace<ColorspaceTag<Colorspace::bt709_rgb>, ColorspaceTag<Colorspace::linear_other>> : ConvertColorspace<ColorspaceTag<Colorspace::bt709_rgb>, ColorspaceTag<Colorspace::bt709_linear_rgb>> { };
+template <> struct ConvertColorspace<ColorspaceTag<Colorspace::srgb>, ColorspaceTag<Colorspace::linear_other>> : ConvertColorspace<ColorspaceTag<Colorspace::srgb>, ColorspaceTag<Colorspace::bt709_linear_rgb>> { };
 
 #pragma endregion
 
@@ -589,13 +589,13 @@ template <> struct convert_colorspace<ColorspaceType<Colorspace::srgb>, Colorspa
 ///////////////////////////////////////////////////////////////////////////////
 template <Colorspace Input, Colorspace Output>
 ImagePixelNormTransformFunc convert_colorspace_func() {
-   return detail::convert_colorspace<detail::ColorspaceType<Input>, detail::ColorspaceType<Output>>::convert;
+   return detail::ConvertColorspace<detail::ColorspaceTag<Input>, detail::ColorspaceTag<Output>>::convert;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 template <Colorspace Input, Colorspace Output>
 vec4 convert_colorspace(vec4 pixel_norm) {
-   return detail::convert_colorspace<detail::ColorspaceType<Input>, detail::ColorspaceType<Output>>::convert(pixel_norm);
+   return detail::ConvertColorspace<detail::ColorspaceTag<Input>, detail::ColorspaceTag<Output>>::convert(pixel_norm);
 }
 
 } // be::gfx

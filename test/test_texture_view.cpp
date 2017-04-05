@@ -13,4 +13,8 @@ TEST_CASE("std::hash<TextureView>", BE_CATCH_TAGS) {
    REQUIRE_NOTHROW(stet.emplace());
 }
 
+// TODO visit_texture_images
+// TODO visit_texture_blocks
+// TODO visit_texture_pixels
+
 #endif

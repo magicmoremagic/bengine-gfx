@@ -7,6 +7,7 @@
 #include "image_pixel_access.hpp"
 #include "image_pixel_access_norm.hpp"
 #include "visit_image.hpp"
+#include "blit_image_blocks.hpp"
 #include <be/core/be.hpp>
 #include <catch/catch.hpp>
 #include <unordered_set>
@@ -97,20 +98,20 @@ TEST_CASE("ImageView pixel access (simple)", BE_CATCH_TAGS) {
 
    SECTION("lineal") {
       SECTION("func") {
-         auto get = gfx::get_pixel_lineal_func<RGBA>(img.view);
-         auto put = gfx::put_pixel_lineal_func<RGBA>(img.view);
-         gfx::visit_image_pixels_lineal(img.view, [put](gfx::ImageView& view, I32 pc) {
+         auto get = gfx::get_pixel_func<RGBA, I32>(img.view);
+         auto put = gfx::put_pixel_func<RGBA, I32>(img.view);
+         gfx::visit_image_pixels<I32>(img.view, [put](gfx::ImageView& view, I32 pc) {
             put(view, pc, RGBA(pc, pc * 2, pc * 4, 13u));
          });
-         gfx::visit_image_pixels_lineal(img.view, [get](gfx::ImageView& view, I32 pc) {
+         gfx::visit_image_pixels<I32>(img.view, [get](gfx::ImageView& view, I32 pc) {
             REQUIRE(get(view, pc) == RGBA(pc, pc * 2, pc * 4, 13u));
          });
       }
       SECTION("helper") {
-         gfx::visit_image_pixels_lineal(img.view, [](gfx::ImageView& view, I32 pc) {
+         gfx::visit_image_pixels<I32>(img.view, [](gfx::ImageView& view, I32 pc) {
             gfx::put_pixel(view, pc, RGBA(pc, pc * 2, pc * 4, 13u));
          });
-         gfx::visit_image_pixels_lineal(img.view, [](gfx::ImageView& view, I32 pc) {
+         gfx::visit_image_pixels<I32>(img.view, [](gfx::ImageView& view, I32 pc) {
             REQUIRE(gfx::get_pixel<RGBA>(view, pc) == RGBA(pc, pc * 2, pc * 4, 13u));
          });
       }
@@ -118,20 +119,20 @@ TEST_CASE("ImageView pixel access (simple)", BE_CATCH_TAGS) {
 
    SECTION("planar") {
       SECTION("func") {
-         auto get = gfx::get_pixel_planar_func<RGBA>(img.view);
-         auto put = gfx::put_pixel_planar_func<RGBA>(img.view);
-         gfx::visit_image_pixels_planar(img.view, [put](gfx::ImageView& view, ivec2 pc) {
+         auto get = gfx::get_pixel_func<RGBA, ivec2>(img.view);
+         auto put = gfx::put_pixel_func<RGBA, ivec2>(img.view);
+         gfx::visit_image_pixels<ivec2>(img.view, [put](gfx::ImageView& view, ivec2 pc) {
             put(view, pc, RGBA(pc.x * 64, pc.y * 64, 0, 13u));
          });
-         gfx::visit_image_pixels_planar(img.view, [get](gfx::ImageView& view, ivec2 pc) {
+         gfx::visit_image_pixels<ivec2>(img.view, [get](gfx::ImageView& view, ivec2 pc) {
             REQUIRE(get(view, pc) == RGBA(pc.x * 64, pc.y * 64, 0, 13u));
          });
       }
       SECTION("helper") {
-         gfx::visit_image_pixels_planar(img.view, [](gfx::ImageView& view, ivec2 pc) {
+         gfx::visit_image_pixels<ivec2>(img.view, [](gfx::ImageView& view, ivec2 pc) {
             gfx::put_pixel(view, pc, RGBA(pc.x * 64, pc.y * 64, 0, 13u));
          });
-         gfx::visit_image_pixels_planar(img.view, [](gfx::ImageView& view, ivec2 pc) {
+         gfx::visit_image_pixels<ivec2>(img.view, [](gfx::ImageView& view, ivec2 pc) {
             REQUIRE(gfx::get_pixel<RGBA>(view, pc) == RGBA(pc.x * 64, pc.y * 64, 0, 13u));
          });
       }
@@ -139,20 +140,20 @@ TEST_CASE("ImageView pixel access (simple)", BE_CATCH_TAGS) {
 
    SECTION("volumetric") {
       SECTION("func") {
-         auto get = gfx::get_pixel_volumetric_func<RGBA>(img.view);
-         auto put = gfx::put_pixel_volumetric_func<RGBA>(img.view);
-         gfx::visit_image_pixels_volumetric(img.view, [put](gfx::ImageView& view, ivec3 pc) {
+         auto get = gfx::get_pixel_func<RGBA, ivec3>(img.view);
+         auto put = gfx::put_pixel_func<RGBA, ivec3>(img.view);
+         gfx::visit_image_pixels<ivec3>(img.view, [put](gfx::ImageView& view, ivec3 pc) {
             put(view, pc, RGBA(glm::u8vec3(pc * 64), 13u));
          });
-         gfx::visit_image_pixels_volumetric(img.view, [get](gfx::ImageView& view, ivec3 pc) {
+         gfx::visit_image_pixels<ivec3>(img.view, [get](gfx::ImageView& view, ivec3 pc) {
             REQUIRE(get(view, pc) == RGBA(glm::u8vec3(pc * 64), 13u));
          });
       }
       SECTION("helper") {
-         gfx::visit_image_pixels_volumetric(img.view, [](gfx::ImageView& view, ivec3 pc) {
+         gfx::visit_image_pixels<ivec3>(img.view, [](gfx::ImageView& view, ivec3 pc) {
             gfx::put_pixel(view, pc, RGBA(glm::u8vec3(pc * 64), 13u));
          });
-         gfx::visit_image_pixels_volumetric(img.view, [](gfx::ImageView& view, ivec3 pc) {
+         gfx::visit_image_pixels<ivec3>(img.view, [](gfx::ImageView& view, ivec3 pc) {
             REQUIRE(gfx::get_pixel<RGBA>(view, pc) == RGBA(glm::u8vec3(pc * 64), 13u));
          });
       }
@@ -168,8 +169,8 @@ TEST_CASE("ImageView pixel access (packed block)", BE_CATCH_TAGS) {
 
    SECTION("lineal") {
       SECTION("func") {
-         auto get = gfx::get_pixel_lineal_func<RGBA>(img.view);
-         auto put = gfx::put_pixel_lineal_func<RGBA>(img.view);
+         auto get = gfx::get_pixel_func<RGBA, I32>(img.view);
+         auto put = gfx::put_pixel_func<RGBA, I32>(img.view);
          int tc;
          for (tc = 0; tc < dim; ++tc) {
             put(img.view, tc, RGBA(tc, tc * 2, tc * 4, 13u));
@@ -191,8 +192,8 @@ TEST_CASE("ImageView pixel access (packed block)", BE_CATCH_TAGS) {
 
    SECTION("planar") {
       SECTION("func") {
-         auto get = gfx::get_pixel_planar_func<RGBA>(img.view);
-         auto put = gfx::put_pixel_planar_func<RGBA>(img.view);
+         auto get = gfx::get_pixel_func<RGBA, ivec2>(img.view);
+         auto put = gfx::put_pixel_func<RGBA, ivec2>(img.view);
          ivec2 tc;
          for (tc.y = 0; tc.y < dim; ++tc.y) {
             for (tc.x = 0; tc.x < dim; ++tc.x) {
@@ -222,8 +223,8 @@ TEST_CASE("ImageView pixel access (packed block)", BE_CATCH_TAGS) {
 
    SECTION("volumetric") {
       SECTION("func") {
-         auto get = gfx::get_pixel_volumetric_func<RGBA>(img.view);
-         auto put = gfx::put_pixel_volumetric_func<RGBA>(img.view);
+         auto get = gfx::get_pixel_func<RGBA, ivec3>(img.view);
+         auto put = gfx::put_pixel_func<RGBA, ivec3>(img.view);
          ivec3 tc;
          for (tc.z = 0; tc.z < dim; ++tc.z) {
             for (tc.y = 0; tc.y < dim; ++tc.y) {
@@ -260,8 +261,8 @@ TEST_CASE("ImageView pixel access (packed block)", BE_CATCH_TAGS) {
    }
 }
 
-TEST_CASE("gfx::detail::image_component_rawnorm<U16, 11, ufloat>", BE_CATCH_TAGS) {
-   using clazz = gfx::detail::image_component_rawnorm<U16, 11, gfx::ImageComponentType::ufloat>;
+TEST_CASE("gfx::detail::ImageComponentRawNorm<U16, 11, ufloat>", BE_CATCH_TAGS) {
+   using clazz = gfx::detail::ImageComponentRawNorm<U16, 11, gfx::ImageComponentType::ufloat>;
 
    SECTION("decode") {
       REQUIRE(clazz::decode(0) == 0.f);
@@ -295,8 +296,8 @@ TEST_CASE("gfx::detail::image_component_rawnorm<U16, 11, ufloat>", BE_CATCH_TAGS
    }
 }
 
-TEST_CASE("gfx::detail::image_component_rawnorm<U16, 10, ufloat>", BE_CATCH_TAGS) {
-   using clazz = gfx::detail::image_component_rawnorm<U16, 10, gfx::ImageComponentType::ufloat>;
+TEST_CASE("gfx::detail::ImageComponentRawNorm<U16, 10, ufloat>", BE_CATCH_TAGS) {
+   using clazz = gfx::detail::ImageComponentRawNorm<U16, 10, gfx::ImageComponentType::ufloat>;
 
    SECTION("decode") {
       REQUIRE(clazz::decode(0) == 0.f);
@@ -330,8 +331,8 @@ TEST_CASE("gfx::detail::image_component_rawnorm<U16, 10, ufloat>", BE_CATCH_TAGS
    }
 }
 
-TEST_CASE("gfx::detail::image_component_rawnorm<U16, 16, sfloat>", BE_CATCH_TAGS) {
-   using clazz = gfx::detail::image_component_rawnorm<U16, 16, gfx::ImageComponentType::sfloat>;
+TEST_CASE("gfx::detail::ImageComponentRawNorm<U16, 16, sfloat>", BE_CATCH_TAGS) {
+   using clazz = gfx::detail::ImageComponentRawNorm<U16, 16, gfx::ImageComponentType::sfloat>;
 
    SECTION("decode") {
       REQUIRE(clazz::decode(0) == 0.f);
@@ -491,6 +492,87 @@ TEST_CASE("ImageView normalized pixel access bgra5551unorm", BE_CATCH_TAGS) {
          }
       }
    }
+}
+
+TEST_CASE("ImageView blit_blocks(ImageView, ImageView)", BE_CATCH_TAGS) {
+   gfx::ImageFormat format(U8(4), 1, gfx::ImageBlockPacking::s_8_8_8_8, 4, gfx::component_types(gfx::ImageComponentType::unorm, 4),
+                           gfx::swizzles_rgba(), gfx::Colorspace::srgb, false);
+
+   ivec3 dim(4);
+   gfx::Image img = gfx::make_image(format, ivec3(dim));
+
+   auto get = gfx::get_pixel_func<RGBA, ivec3>(img.view);
+   auto put = gfx::put_pixel_func<RGBA, ivec3>(img.view);
+   gfx::visit_image_pixels<ivec3>(img.view, [put](gfx::ImageView& view, ivec3 pc) {
+      put(view, pc, RGBA(RGB(pc * 64), 255u));
+   });
+
+   SECTION("Same format, dim") {
+      gfx::Image img2 = gfx::make_image(format, ivec3(dim));
+
+      gfx::blit_blocks(img.view, img2.view);
+
+      auto get2 = gfx::get_pixel_func<RGBA, ivec3>(img2.view);
+
+      gfx::visit_image_pixels<ivec3>(img.view, [get, get2, &img2](gfx::ImageView& view, ivec3 pc) {
+         REQUIRE(get(view, pc) == get2(img2.view, pc));
+      });
+   }
+
+   SECTION("Same format, different block size") {
+      gfx::Image img2;
+      img2.data = std::make_unique<gfx::TextureStorage>(1, 1, 1, dim, format.block_dim(), U8(format.block_size() * 2));
+      img2.view = gfx::ImageView(format, *img2.data, 0, 0, 0);
+
+      gfx::blit_blocks(img.view, img2.view);
+
+      auto get2 = gfx::get_pixel_func<RGBA, ivec3>(img2.view);
+
+      gfx::visit_image_pixels<ivec3>(img.view, [get, get2, &img2](gfx::ImageView& view, ivec3 pc) {
+         REQUIRE(get(view, pc) == get2(img2.view, pc));
+      });
+   }
+
+   SECTION("Same format, different line alignment") {
+      gfx::Image img2;
+      img2.data = std::make_unique<gfx::TextureStorage>(1, 1, 1, dim, format.block_dim(), format.block_size(), gfx::TextureStorage::alignment_type(256u));
+      img2.view = gfx::ImageView(format, *img2.data, 0, 0, 0);
+
+      gfx::blit_blocks(img.view, img2.view);
+
+      auto get2 = gfx::get_pixel_func<RGBA, ivec3>(img2.view);
+
+      gfx::visit_image_pixels<ivec3>(img.view, [get, get2, &img2](gfx::ImageView& view, ivec3 pc) {
+         REQUIRE(get(view, pc) == get2(img2.view, pc));
+      });
+   }
+
+   SECTION("Same format, different plane alignment") {
+      gfx::Image img2;
+      img2.data = std::make_unique<gfx::TextureStorage>(1, 1, 1, dim, format.block_dim(), format.block_size(), gfx::TextureStorage::alignment_type(8u), gfx::TextureStorage::alignment_type(256u));
+      img2.view = gfx::ImageView(format, *img2.data, 0, 0, 0);
+
+      gfx::blit_blocks(img.view, img2.view);
+
+      auto get2 = gfx::get_pixel_func<RGBA, ivec3>(img2.view);
+
+      gfx::visit_image_pixels<ivec3>(img.view, [get, get2, &img2](gfx::ImageView& view, ivec3 pc) {
+         REQUIRE(get(view, pc) == get2(img2.view, pc));
+      });
+   }
+
+   SECTION("Same format, different dim") {
+      gfx::Image img2 = gfx::make_image(format, ivec3(dim) + 1);
+
+      gfx::blit_blocks(img.view, img2.view);
+
+      auto get2 = gfx::get_pixel_func<RGBA, ivec3>(img2.view);
+
+      gfx::visit_image_pixels<ivec3>(img.view, [get, get2, &img2](gfx::ImageView& view, ivec3 pc) {
+         REQUIRE(get(view, pc) == get2(img2.view, pc));
+      });
+   }
+
 }
 
 #endif

@@ -6,12 +6,13 @@
 namespace be::gfx {
 
 ///////////////////////////////////////////////////////////////////////////////
-template <typename SC, typename DC, typename SIV, typename DIV, typename GF, typename PF>
-ConvertingPixelBlitter<SC, DC, SIV, DIV, GF, PF>::ConvertingPixelBlitter(const SIV& source, DIV& dest)
+template <typename SourceCoord, typename DestCoord, typename SourceImageView, typename DestImageView>
+ConvertingPixelBlitter<SourceCoord, DestCoord, SourceImageView, DestImageView>::
+ConvertingPixelBlitter(const SourceImageView& source, DestImageView& dest)
    : source_(source),
      dest_(dest),
-     get_(get_pixel_norm_lineal_func(source)),
-     put_(put_pixel_norm_lineal_func(dest)) {
+     get_(get_pixel_norm_func<SourceCoord, SourceImageView>(source)),
+     put_(put_pixel_norm_func<DestCoord, DestImageView>(dest)) {
    Colorspace source_color = source.format().colorspace();
    Colorspace dest_color = dest.format().colorspace();
 
@@ -49,36 +50,6 @@ ConvertingPixelBlitter<SC, DC, SIV, DIV, GF, PF>::ConvertingPixelBlitter(const S
          convert_ = &convert0_;
       }
    }
-}
-
-///////////////////////////////////////////////////////////////////////////////
-template <typename SC, typename DC, typename SIV, typename DIV, typename GF, typename PF>
-void ConvertingPixelBlitter<SC, DC, SIV, DIV, GF, PF>::operator()(SC source, DC dest) {
-   (this->*convert_)(source, dest);
-}
-
-///////////////////////////////////////////////////////////////////////////////
-template <typename SC, typename DC, typename SIV, typename DIV, typename GF, typename PF>
-void ConvertingPixelBlitter<SC, DC, SIV, DIV, GF, PF>::convert0_(SC source, DC dest) {
-   put_(dest_, dest, get_(source_, source));
-}
-
-///////////////////////////////////////////////////////////////////////////////
-template <typename SC, typename DC, typename SIV, typename DIV, typename GF, typename PF>
-void ConvertingPixelBlitter<SC, DC, SIV, DIV, GF, PF>::convert1_(SC source, DC dest) {
-   put_(dest_, dest, conversions_[0](get_(source_, source)));
-}
-
-///////////////////////////////////////////////////////////////////////////////
-template <typename SC, typename DC, typename SIV, typename DIV, typename GF, typename PF>
-void ConvertingPixelBlitter<SC, DC, SIV, DIV, GF, PF>::convert2_(SC source, DC dest) {
-   put_(dest_, dest, conversions_[1](conversions_[0](get_(source_, source))));
-}
-
-///////////////////////////////////////////////////////////////////////////////
-template <typename SC, typename DC, typename SIV, typename DIV, typename GF, typename PF>
-void ConvertingPixelBlitter<SC, DC, SIV, DIV, GF, PF>::convert3_(SC source, DC dest) {
-   put_(dest_, dest, conversions_[2](conversions_[1](conversions_[0](get_(source_, source)))));
 }
 
 } // be::gfx

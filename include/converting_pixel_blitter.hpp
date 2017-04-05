@@ -10,44 +10,41 @@
 namespace be::gfx {
 
 ///////////////////////////////////////////////////////////////////////////////
-template <typename SourceCoord, typename DestCoord, typename SourceImageView, typename DestImageView = ImageView,
-   typename GetFunc = GetImagePixelNormFunc<SourceImageView, SourceCoord>,
-   typename PutFunc = PutImagePixelNormFunc<DestImageView, DestCoord>>
+template <typename SourceCoord, typename DestCoord, typename SourceImageView, typename DestImageView>
 class ConvertingPixelBlitter final {
-   using type = ConvertingPixelBlitter<SourceCoord, DestCoord, SourceImageView, DestImageView, GetFunc, PutFunc>;
+   using type = ConvertingPixelBlitter<SourceCoord, DestCoord, SourceImageView, DestImageView>;
+   using get_func = GetPixelNormFunc<SourceCoord, SourceImageView>;
+   using put_func = PutPixelNormFunc<DestCoord, DestImageView>;
+   using convert_func = void (type::*)(SourceCoord, DestCoord);
 public:
    ConvertingPixelBlitter(const SourceImageView& source, DestImageView& dest);
 
-   void operator()(SourceCoord source, DestCoord dest);
+   void operator()(SourceCoord source, DestCoord dest) {
+      (this->*convert_)(source, dest);
+   }
 
 private:
-   void convert0_(SourceCoord source, DestCoord dest);
-   void convert1_(SourceCoord source, DestCoord dest);
-   void convert2_(SourceCoord source, DestCoord dest);
-   void convert3_(SourceCoord source, DestCoord dest);
-
-   using ConvertFunc = void (type::*)(SourceCoord, DestCoord);
+   void convert0_(SourceCoord source, DestCoord dest) {
+      put_(dest_, dest, get_(source_, source));
+   }
+   void convert1_(SourceCoord source, DestCoord dest) {
+      put_(dest_, dest, conversions_[0](get_(source_, source)));
+   }
+   void convert2_(SourceCoord source, DestCoord dest) {
+      put_(dest_, dest, conversions_[1](conversions_[0](get_(source_, source))));
+   }
+   void convert3_(SourceCoord source, DestCoord dest) {
+      put_(dest_, dest, conversions_[2](conversions_[1](conversions_[0](get_(source_, source)))));
+   }
 
    const SourceImageView& source_;
    DestImageView& dest_;
 
-   ConvertFunc convert_;
-   GetFunc get_;
-   PutFunc put_;
+   convert_func convert_;
+   get_func get_;
+   put_func put_;
    ImagePixelNormTransformFunc conversions_[3];
 };
-
-///////////////////////////////////////////////////////////////////////////////
-template <typename SourceImageView, typename DestImageView>
-using ConvertingPixelBlitterLineal = ConvertingPixelBlitter<I32, I32, SourceImageView, DestImageView>;
-
-///////////////////////////////////////////////////////////////////////////////
-template <typename SourceImageView, typename DestImageView>
-using ConvertingPixelBlitterPlanar = ConvertingPixelBlitter<ivec2, ivec2, SourceImageView, DestImageView>;
-
-///////////////////////////////////////////////////////////////////////////////
-template <typename SourceImageView, typename DestImageView>
-using ConvertingPixelBlitterVolumetric = ConvertingPixelBlitter<ivec3, ivec3, SourceImageView, DestImageView>;
 
 } // be::gfx
 

@@ -24,11 +24,6 @@ public:
    ImageRegion();
    ImageRegion(ibox extents);
    ImageRegion(ibox extents, basis x_basis, basis y_basis, basis z_basis);
-
-   template <typename ImageView> 
-   explicit ImageRegion(const ImageView& image) : ImageRegion(ibox { ivec3(), image.dim() }) { }
-
-   ImageRegion(const ImageRegion& other) = default;
    
    ibox extents() const;
 
@@ -45,6 +40,16 @@ private:
    ibox extents_; // image-space coordinates
    basis_vec_type basis_;
 };
+
+template <typename ImageView>
+ImageRegion pixel_region(const ImageView& image) {
+   return ImageRegion(ibox { ivec3(), image.dim() });
+}
+
+template <typename ImageView>
+ImageRegion block_region(const ImageView& image) {
+   return ImageRegion(ibox { ivec3(), image.dim_blocks() });
+}
 
 ivec3 region_dim(ImageRegion region);
 

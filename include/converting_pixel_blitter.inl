@@ -24,30 +24,30 @@ ConvertingPixelBlitter(const SourceImageView& source, DestImageView& dest)
          if (source_color != dest_color) {
             conversions_[0] = convert_premultiplication_func(source_premult, dest_premult);
             conversions_[1] = convert_colorspace_func(source_color, dest_color);
-            convert_ = &convert2_;
+            convert_ = &type::convert2_;
          } else {
             conversions_[0] = convert_premultiplication_func(source_premult, dest_premult);
-            convert_ = &convert1_;
+            convert_ = &type::convert1_;
          }
       } else if (is_linear(dest_color)) {
          // we know dest_color != source_color, otherwise the is_linear(source_color) would have been true
          conversions_[0] = convert_colorspace_func(source_color, dest_color);
          conversions_[1] = convert_premultiplication_func(source_premult, dest_premult);
-         convert_ = &convert2_;
+         convert_ = &type::convert2_;
       } else {
          // we know we need 3 conversions here because we know source_color and dest_color are both nonlinear
          Colorspace linear_source_color = linear_colorspace(colorspace_family(source_color));
          conversions_[0] = convert_colorspace_func(source_color, linear_source_color);
          conversions_[1] = convert_premultiplication_func(source_premult, dest_premult);
          conversions_[2] = convert_colorspace_func(linear_source_color, dest_color);
-         convert_ = &convert3_;
+         convert_ = &type::convert3_;
       }
    } else {
       if (source_color != dest_color) {
          conversions_[0] = convert_colorspace_func(source_color, dest_color);
-         convert_ = &convert1_;
+         convert_ = &type::convert1_;
       } else {
-         convert_ = &convert0_;
+         convert_ = &type::convert0_;
       }
    }
 }

@@ -8,6 +8,7 @@
 #include "image_pixel_access_norm.hpp"
 #include "visit_image.hpp"
 #include "blit_image_blocks.hpp"
+#include "blit_image_pixels.hpp"
 #include <be/core/be.hpp>
 #include <catch/catch.hpp>
 #include <unordered_set>
@@ -570,6 +571,222 @@ TEST_CASE("ImageView blit_blocks(ImageView, ImageView)", BE_CATCH_TAGS) {
 
       gfx::visit_image_pixels<ivec3>(img.view, [get, get2, &img2](gfx::ImageView& view, ivec3 pc) {
          REQUIRE(get(view, pc) == get2(img2.view, pc));
+      });
+   }
+
+}
+
+TEST_CASE("ImageView blit_blocks(ImageView, ImageRegion, ImageView, ImageRegion)", BE_CATCH_TAGS) {
+   gfx::ImageFormat format(U8(4), 1, gfx::ImageBlockPacking::s_8_8_8_8, 4, gfx::component_types(gfx::ImageComponentType::unorm, 4),
+                           gfx::swizzles_rgba(), gfx::Colorspace::srgb, false);
+
+   ivec3 dim(4);
+   gfx::Image img = gfx::make_image(format, ivec3(dim));
+
+   auto get = gfx::get_pixel_func<RGBA, ivec3>(img.view);
+   auto put = gfx::put_pixel_func<RGBA, ivec3>(img.view);
+   gfx::visit_image_pixels<ivec3>(img.view, [put](gfx::ImageView& view, ivec3 pc) {
+      put(view, pc, RGBA(RGB(pc * 64), 255u));
+   });
+
+   gfx::ImageRegion region = gfx::rotate_cw(gfx::block_region(img.view));
+
+   SECTION("Same format, dim, unrotated") {
+      gfx::Image img2 = gfx::make_image(format, ivec3(dim));
+
+      gfx::blit_blocks(img.view, gfx::block_region(img.view), img2.view, gfx::block_region(img2.view));
+
+      auto get2 = gfx::get_pixel_func<RGBA, ivec3>(img2.view);
+
+      gfx::visit_image_pixels<ivec3>(img.view, [get, get2, &img2](gfx::ImageView& view, ivec3 pc) {
+         REQUIRE(get(view, pc) == get2(img2.view, pc));
+      });
+   }
+
+   SECTION("Same format, dim") {
+      gfx::Image img2 = gfx::make_image(format, ivec3(dim));
+
+      gfx::blit_blocks(img.view, region, img2.view, gfx::block_region(img2.view));
+
+      auto get2 = gfx::get_pixel_func<RGBA, ivec3>(img2.view);
+
+      gfx::visit_image_pixels<ivec3>(img.view, [get, get2, region, &img2](gfx::ImageView& view, ivec3 pc) {
+         REQUIRE(get(view, gfx::region_to_image(region, pc)) == get2(img2.view, pc));
+      });
+   }
+
+   SECTION("Same format, different block size") {
+      gfx::Image img2;
+      img2.data = std::make_unique<gfx::TextureStorage>(1, 1, 1, dim, format.block_dim(), U8(format.block_size() * 2));
+      img2.view = gfx::ImageView(format, *img2.data, 0, 0, 0);
+
+      gfx::blit_blocks(img.view, region, img2.view, gfx::block_region(img2.view));
+
+      auto get2 = gfx::get_pixel_func<RGBA, ivec3>(img2.view);
+
+      gfx::visit_image_pixels<ivec3>(img.view, [get, get2, region, &img2](gfx::ImageView& view, ivec3 pc) {
+         REQUIRE(get(view, gfx::region_to_image(region, pc)) == get2(img2.view, pc));
+      });
+   }
+
+   SECTION("Same format, different dim") {
+      gfx::Image img2 = gfx::make_image(format, ivec3(dim) + 1);
+
+      gfx::blit_blocks(img.view, region, img2.view, gfx::block_region(img2.view));
+
+      auto get2 = gfx::get_pixel_func<RGBA, ivec3>(img2.view);
+
+      gfx::visit_image_pixels<ivec3>(img.view, [get, get2, region, &img2](gfx::ImageView& view, ivec3 pc) {
+         REQUIRE(get(view, gfx::region_to_image(region, pc)) == get2(img2.view, pc));
+      });
+   }
+
+}
+
+
+TEST_CASE("ImageView blit_pixels(ImageView, ImageView)", BE_CATCH_TAGS) {
+   gfx::ImageFormat format(U8(4), 1, gfx::ImageBlockPacking::s_8_8_8_8, 4, gfx::component_types(gfx::ImageComponentType::unorm, 4),
+                           gfx::swizzles_rgba(), gfx::Colorspace::srgb, false);
+
+   ivec3 dim(4);
+   gfx::Image img = gfx::make_image(format, ivec3(dim));
+
+   auto get = gfx::get_pixel_func<RGBA, ivec3>(img.view);
+   auto put = gfx::put_pixel_func<RGBA, ivec3>(img.view);
+   gfx::visit_image_pixels<ivec3>(img.view, [put](gfx::ImageView& view, ivec3 pc) {
+      put(view, pc, RGBA(RGB(pc * 64), 255u));
+   });
+
+   SECTION("Same format, dim") {
+      gfx::Image img2 = gfx::make_image(format, ivec3(dim));
+
+      gfx::blit_pixels(img.view, img2.view);
+
+      auto get2 = gfx::get_pixel_func<RGBA, ivec3>(img2.view);
+
+      gfx::visit_image_pixels<ivec3>(img.view, [get, get2, &img2](gfx::ImageView& view, ivec3 pc) {
+         REQUIRE(get(view, pc) == get2(img2.view, pc));
+      });
+   }
+
+   SECTION("Same format, different block size") {
+      gfx::Image img2;
+      img2.data = std::make_unique<gfx::TextureStorage>(1, 1, 1, dim, format.block_dim(), U8(format.block_size() * 2));
+      img2.view = gfx::ImageView(format, *img2.data, 0, 0, 0);
+
+      gfx::blit_pixels(img.view, img2.view);
+
+      auto get2 = gfx::get_pixel_func<RGBA, ivec3>(img2.view);
+
+      gfx::visit_image_pixels<ivec3>(img.view, [get, get2, &img2](gfx::ImageView& view, ivec3 pc) {
+         REQUIRE(get(view, pc) == get2(img2.view, pc));
+      });
+   }
+
+   SECTION("Same format, different line alignment") {
+      gfx::Image img2;
+      img2.data = std::make_unique<gfx::TextureStorage>(1, 1, 1, dim, format.block_dim(), format.block_size(), gfx::TextureStorage::alignment_type(256u));
+      img2.view = gfx::ImageView(format, *img2.data, 0, 0, 0);
+
+      gfx::blit_pixels(img.view, img2.view);
+
+      auto get2 = gfx::get_pixel_func<RGBA, ivec3>(img2.view);
+
+      gfx::visit_image_pixels<ivec3>(img.view, [get, get2, &img2](gfx::ImageView& view, ivec3 pc) {
+         REQUIRE(get(view, pc) == get2(img2.view, pc));
+      });
+   }
+
+   SECTION("Same format, different plane alignment") {
+      gfx::Image img2;
+      img2.data = std::make_unique<gfx::TextureStorage>(1, 1, 1, dim, format.block_dim(), format.block_size(), gfx::TextureStorage::alignment_type(8u), gfx::TextureStorage::alignment_type(256u));
+      img2.view = gfx::ImageView(format, *img2.data, 0, 0, 0);
+
+      gfx::blit_pixels(img.view, img2.view);
+
+      auto get2 = gfx::get_pixel_func<RGBA, ivec3>(img2.view);
+
+      gfx::visit_image_pixels<ivec3>(img.view, [get, get2, &img2](gfx::ImageView& view, ivec3 pc) {
+         REQUIRE(get(view, pc) == get2(img2.view, pc));
+      });
+   }
+
+   SECTION("Same format, different dim") {
+      gfx::Image img2 = gfx::make_image(format, ivec3(dim) + 1);
+
+      gfx::blit_pixels(img.view, img2.view);
+
+      auto get2 = gfx::get_pixel_func<RGBA, ivec3>(img2.view);
+
+      gfx::visit_image_pixels<ivec3>(img.view, [get, get2, &img2](gfx::ImageView& view, ivec3 pc) {
+         REQUIRE(get(view, pc) == get2(img2.view, pc));
+      });
+   }
+
+}
+
+TEST_CASE("ImageView blit_pixels(ImageView, ImageRegion, ImageView, ImageRegion)", BE_CATCH_TAGS) {
+   gfx::ImageFormat format(U8(4), 1, gfx::ImageBlockPacking::s_8_8_8_8, 4, gfx::component_types(gfx::ImageComponentType::unorm, 4),
+                           gfx::swizzles_rgba(), gfx::Colorspace::srgb, false);
+
+   ivec3 dim(4);
+   gfx::Image img = gfx::make_image(format, ivec3(dim));
+
+   auto get = gfx::get_pixel_func<RGBA, ivec3>(img.view);
+   auto put = gfx::put_pixel_func<RGBA, ivec3>(img.view);
+   gfx::visit_image_pixels<ivec3>(img.view, [put](gfx::ImageView& view, ivec3 pc) {
+      put(view, pc, RGBA(RGB(pc * 64), 255u));
+   });
+
+   gfx::ImageRegion region = gfx::rotate_cw(gfx::pixel_region(img.view));
+
+   SECTION("Same format, dim, unrotated") {
+      gfx::Image img2 = gfx::make_image(format, ivec3(dim));
+
+      gfx::blit_pixels(img.view, gfx::pixel_region(img.view), img2.view, gfx::pixel_region(img2.view));
+
+      auto get2 = gfx::get_pixel_func<RGBA, ivec3>(img2.view);
+
+      gfx::visit_image_pixels<ivec3>(img.view, [get, get2, &img2](gfx::ImageView& view, ivec3 pc) {
+         REQUIRE(get(view, pc) == get2(img2.view, pc));
+      });
+   }
+
+   SECTION("Same format, dim") {
+      gfx::Image img2 = gfx::make_image(format, ivec3(dim));
+
+      gfx::blit_pixels(img.view, region, img2.view, gfx::pixel_region(img2.view));
+
+      auto get2 = gfx::get_pixel_func<RGBA, ivec3>(img2.view);
+
+      gfx::visit_image_pixels<ivec3>(img.view, [get, get2, region, &img2](gfx::ImageView& view, ivec3 pc) {
+         REQUIRE(get(view, gfx::region_to_image(region, pc)) == get2(img2.view, pc));
+      });
+   }
+
+   SECTION("Same format, different block size") {
+      gfx::Image img2;
+      img2.data = std::make_unique<gfx::TextureStorage>(1, 1, 1, dim, format.block_dim(), U8(format.block_size() * 2));
+      img2.view = gfx::ImageView(format, *img2.data, 0, 0, 0);
+
+      gfx::blit_blocks(img.view, region, img2.view, gfx::pixel_region(img2.view));
+
+      auto get2 = gfx::get_pixel_func<RGBA, ivec3>(img2.view);
+
+      gfx::visit_image_pixels<ivec3>(img.view, [get, get2, region, &img2](gfx::ImageView& view, ivec3 pc) {
+         REQUIRE(get(view, gfx::region_to_image(region, pc)) == get2(img2.view, pc));
+      });
+   }
+
+   SECTION("Same format, different dim") {
+      gfx::Image img2 = gfx::make_image(format, ivec3(dim) + 1);
+
+      gfx::blit_pixels(img.view, region, img2.view, gfx::pixel_region(img2.view));
+
+      auto get2 = gfx::get_pixel_func<RGBA, ivec3>(img2.view);
+
+      gfx::visit_image_pixels<ivec3>(img.view, [get, get2, region, &img2](gfx::ImageView& view, ivec3 pc) {
+         REQUIRE(get(view, gfx::region_to_image(region, pc)) == get2(img2.view, pc));
       });
    }
 

@@ -95,6 +95,7 @@
     <ClInclude Include="include\swizzle.hpp" />
     <ClInclude Include="include\texture.hpp" />
     <ClInclude Include="include\image_block_access.hpp" />
+    <ClInclude Include="include\texture_alignment.hpp" />
     <ClInclude Include="include\texture_class.hpp" />
     <ClInclude Include="include\texture_storage.hpp" />
     <ClInclude Include="include\texture_storage_hash.hpp" />
@@ -149,6 +150,7 @@
     <None Include="include\image_pixel_access.inl" />
     <None Include="include\image_pixel_access_norm.inl" />
     <None Include="include\image_region.inl" />
+    <None Include="include\make_image.inl" />
     <None Include="include\uniform_resample.inl" />
     <None Include="include\variable_size_median_kernel.inl" />
     <None Include="include\visit_image.inl" />

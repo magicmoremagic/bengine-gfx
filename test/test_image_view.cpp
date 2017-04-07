@@ -536,7 +536,7 @@ TEST_CASE("ImageView blit_blocks(ImageView, ImageView)", BE_CATCH_TAGS) {
 
    SECTION("Same format, different line alignment") {
       gfx::Image img2;
-      img2.data = std::make_unique<gfx::TextureStorage>(1, 1, 1, dim, format.block_dim(), format.block_size(), gfx::TextureStorage::alignment_type(256u));
+      img2.data = std::make_unique<gfx::TextureStorage>(1, 1, 1, dim, format.block_dim(), format.block_size(), gfx::TextureAlignment((U8)128));
       img2.view = gfx::ImageView(format, *img2.data, 0, 0, 0);
 
       gfx::blit_blocks(img.view, img2.view);
@@ -550,7 +550,7 @@ TEST_CASE("ImageView blit_blocks(ImageView, ImageView)", BE_CATCH_TAGS) {
 
    SECTION("Same format, different plane alignment") {
       gfx::Image img2;
-      img2.data = std::make_unique<gfx::TextureStorage>(1, 1, 1, dim, format.block_dim(), format.block_size(), gfx::TextureStorage::alignment_type(8u), gfx::TextureStorage::alignment_type(256u));
+      img2.data = std::make_unique<gfx::TextureStorage>(1, 1, 1, dim, format.block_dim(), format.block_size(), gfx::TextureAlignment((U8)8, (U8)128));
       img2.view = gfx::ImageView(format, *img2.data, 0, 0, 0);
 
       gfx::blit_blocks(img.view, img2.view);
@@ -685,7 +685,7 @@ TEST_CASE("ImageView blit_pixels(ImageView, ImageView)", BE_CATCH_TAGS) {
 
    SECTION("Same format, different line alignment") {
       gfx::Image img2;
-      img2.data = std::make_unique<gfx::TextureStorage>(1, 1, 1, dim, format.block_dim(), format.block_size(), gfx::TextureStorage::alignment_type(256u));
+      img2.data = std::make_unique<gfx::TextureStorage>(1, 1, 1, dim, format.block_dim(), format.block_size(), gfx::TextureAlignment((U8)128));
       img2.view = gfx::ImageView(format, *img2.data, 0, 0, 0);
 
       gfx::blit_pixels(img.view, img2.view);
@@ -699,7 +699,7 @@ TEST_CASE("ImageView blit_pixels(ImageView, ImageView)", BE_CATCH_TAGS) {
 
    SECTION("Same format, different plane alignment") {
       gfx::Image img2;
-      img2.data = std::make_unique<gfx::TextureStorage>(1, 1, 1, dim, format.block_dim(), format.block_size(), gfx::TextureStorage::alignment_type(8u), gfx::TextureStorage::alignment_type(256u));
+      img2.data = std::make_unique<gfx::TextureStorage>(1, 1, 1, dim, format.block_dim(), format.block_size(), gfx::TextureAlignment((U8)8, (U8)128));
       img2.view = gfx::ImageView(format, *img2.data, 0, 0, 0);
 
       gfx::blit_pixels(img.view, img2.view);

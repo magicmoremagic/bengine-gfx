@@ -3,6 +3,7 @@
 #define BE_GFX_TEXTURE_STORAGE_HPP_
 
 #include "image_format.hpp"
+#include "texture_alignment.hpp"
 #include <be/core/buf.hpp>
 #include <glm/vec2.hpp>
 
@@ -13,7 +14,7 @@ class TextureStorage final {
 public:
    static TextureStorage nil;
 
-   using alignment_type = U8;
+   using alignment_type = TextureAlignment::alignment_type;
 
    using layer_index_type = U16;
    using face_index_type = U8;
@@ -35,11 +36,7 @@ public:
                   ivec3 base_dim,
                   block_dim_type block_dim,
                   block_size_type block_size,
-                  alignment_type line_alignment = 8u,
-                  alignment_type plane_alignment = 0u,
-                  alignment_type level_alignment = 0u,
-                  alignment_type face_alignment = 0u,
-                  alignment_type layer_alignment = 0u);
+                  TextureAlignment alignment = TextureAlignment());
    TextureStorage(std::size_t layers,
                   std::size_t faces,
                   std::size_t levels,
@@ -47,11 +44,7 @@ public:
                   block_dim_type block_dim,
                   block_size_type block_size,
                   Buf<UC> data,
-                  alignment_type line_alignment = 8u,
-                  alignment_type plane_alignment = 0u,
-                  alignment_type level_alignment = 0u,
-                  alignment_type face_alignment = 0u,
-                  alignment_type layer_alignment = 0u);
+                  TextureAlignment alignment = TextureAlignment());
 
    explicit operator bool() const; ///< Returns true if 0 < size()
    bool empty() const; ///< Returns true if 0 == size()
@@ -77,6 +70,7 @@ public:
    ivec3 dim(std::size_t level) const; ///< The dimensions of a single face image at the specified mipmapping level.
    ivec3 dim_blocks(std::size_t level) const; ///< The dimensions of the block array covering a single face image at the specified mipmapping level.
 
+   TextureAlignment alignment() const;
    alignment_type line_alignment() const;
    alignment_type plane_alignment() const;
    alignment_type level_alignment() const;
@@ -104,11 +98,7 @@ private:
    std::array<ivec3, max_levels> dim_blocks_;
    std::array<uvec2, max_levels> line_plane_span_;
    std::array<std::size_t, max_levels> level_offset_;
-   alignment_type line_alignment_;
-   alignment_type plane_alignment_;
-   alignment_type level_alignment_;
-   alignment_type face_alignment_;
-   alignment_type layer_alignment_;
+   TextureAlignment alignment_;
 };
 
 std::size_t calculate_required_texture_storage(std::size_t layers,
@@ -117,11 +107,7 @@ std::size_t calculate_required_texture_storage(std::size_t layers,
                                                ivec3 base_dim,
                                                TextureStorage::block_dim_type block_dim,
                                                TextureStorage::block_size_type block_size,
-                                               TextureStorage::alignment_type line_alignment = 8u,
-                                               TextureStorage::alignment_type plane_alignment = 0u,
-                                               TextureStorage::alignment_type level_alignment = 0u,
-                                               TextureStorage::alignment_type face_alignment = 0u,
-                                               TextureStorage::alignment_type layer_alignment = 0u);
+                                               TextureAlignment alignment = TextureAlignment());
 
 } // be::gfx
 

@@ -7,9 +7,11 @@
 
 namespace be::gfx {
 
+///////////////////////////////////////////////////////////////////////////////
 template <typename SourceImageView, typename DestImageView>
 void blit_pixels(const SourceImageView& src, DestImageView& dest);
 
+///////////////////////////////////////////////////////////////////////////////
 template <typename SourceImageView, typename DestImageView>
 void blit_pixels(const SourceImageView& src, ImageRegion src_region, DestImageView& dest, ImageRegion dest_region);
 

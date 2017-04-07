@@ -230,6 +230,12 @@
     <ClInclude Include="include\texture_alignment.hpp">
       <Filter>Header Files\textures\data structures</Filter>
     </ClInclude>
+    <ClInclude Include="include\duplicate_image.hpp">
+      <Filter>Header Files\textures\operations</Filter>
+    </ClInclude>
+    <ClInclude Include="include\duplicate_texture.hpp">
+      <Filter>Header Files\textures\operations</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\pch.cpp">
@@ -288,9 +294,6 @@
     </ClCompile>
     <ClCompile Include="src\premultiply_alpha.cpp">
       <Filter>Source Files\textures\operations\normalized conversions</Filter>
-    </ClCompile>
-    <ClCompile Include="src\make_image.cpp">
-      <Filter>Source Files\textures\operations</Filter>
     </ClCompile>
     <ClCompile Include="src\make_texture.cpp">
       <Filter>Source Files\textures\operations</Filter>

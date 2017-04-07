@@ -8,6 +8,7 @@
 namespace be::gfx {
 namespace detail {
 
+///////////////////////////////////////////////////////////////////////////////
 template <typename TextureStorage, typename ImageView>
 class TextureView final {
 public:

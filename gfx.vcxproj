@@ -60,6 +60,8 @@
     <ClInclude Include="include\converting_pixel_blitter.hpp" />
     <ClInclude Include="include\convert_colorspace.hpp" />
     <ClInclude Include="include\convert_colorspace_static.hpp" />
+    <ClInclude Include="include\duplicate_image.hpp" />
+    <ClInclude Include="include\duplicate_texture.hpp" />
     <ClInclude Include="include\image_block_packing.hpp" />
     <ClInclude Include="include\colorspace.hpp" />
     <ClInclude Include="include\image.hpp" />
@@ -116,7 +118,6 @@
     <ClCompile Include="src\image_format.cpp" />
     <ClCompile Include="src\image_region.cpp" />
     <ClCompile Include="src\image_view.cpp" />
-    <ClCompile Include="src\make_image.cpp" />
     <ClCompile Include="src\make_texture.cpp" />
     <ClCompile Include="src\mipmapping.cpp" />
     <ClCompile Include="src\pch.cpp">

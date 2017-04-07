@@ -1,0 +1,83 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Meta-Source Files">
+      <UniqueIdentifier>{810e6e8f-7a80-4074-ad5b-e4a2f615dcb1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\textures">
+      <UniqueIdentifier>{0a777fe2-9844-4c92-95b9-3a593767deb4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\textures">
+      <UniqueIdentifier>{48ee0916-d10f-45a3-ae79-58476da27d63}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\old">
+      <UniqueIdentifier>{ef5bee63-1540-42bb-822c-12cfb582a47d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\old\filters">
+      <UniqueIdentifier>{caa6db15-381c-47fc-a33d-4482facfb440}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\old\wraps">
+      <UniqueIdentifier>{d35088d5-0db2-400f-9331-1bdec30d1be0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\old">
+      <UniqueIdentifier>{3a31d7a6-f65f-4202-8517-0ce474f07f72}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Meta-Source Files\old">
+      <UniqueIdentifier>{6b05565d-fe52-4bd6-8691-75cba9ff9f2c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\textures\enums">
+      <UniqueIdentifier>{24933a1e-1c11-4197-b592-94a5da9af7ca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\textures\data structures">
+      <UniqueIdentifier>{24dee0b2-bf48-43d8-8b10-fdb8afc87f7d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\textures\operations">
+      <UniqueIdentifier>{a20672a9-823c-4de3-8f32-96c9d8032015}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\textures\operations\normalized conversions">
+      <UniqueIdentifier>{bd6532d4-8c55-4739-8320-c9faecded4d6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\textures\operations\block/pixel access">
+      <UniqueIdentifier>{d5142ade-c218-4c2f-8e98-fa26da4da9d7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\textures\operations\visitation">
+      <UniqueIdentifier>{62024480-9676-43d8-abb0-60b258cc9913}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\textures\operations\blitting">
+      <UniqueIdentifier>{735f9633-d9e3-4e2e-9763-c2b064992440}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\textures\enums">
+      <UniqueIdentifier>{cd4a8149-2bee-491f-a544-8216cf6ce192}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\textures\data structures">
+      <UniqueIdentifier>{9f89191a-9ec4-4fd1-aa62-2e0f6a3b2aec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\textures\operations">
+      <UniqueIdentifier>{93cc23c9-8e8f-470a-9935-247200925e60}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\textures\operations\normalized conversions">
+      <UniqueIdentifier>{4d956a87-3436-45dc-bfe0-f819eb27e122}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\tex\pch.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\tex\gfx_tex_autolink.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\tex\pch.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

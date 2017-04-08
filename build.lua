@@ -11,6 +11,7 @@ module 'gfx' {
       define 'BE_GFX_TEX_IMPL',
       link_project 'core'
    },
+   
    lib {
       src {
          'src/*.cpp',
@@ -18,8 +19,14 @@ module 'gfx' {
       },
       
       define 'BE_GFX_IMPL',
-      link_project { 'core', 'util', 'gfx-tex' }
+      link_project {
+         'core',
+         'util',
+         'gfx-tex',
+         'globjects'
+      }
    },
+
    app '-test' {
       icon 'icon/bengine-test-perf.ico',
       link_project { 'testing', 'gfx' }

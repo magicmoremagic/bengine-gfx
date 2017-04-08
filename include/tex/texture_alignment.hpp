@@ -1,10 +1,11 @@
 #pragma once
-#ifndef BE_GFX_TEXTURE_ALIGNMENT_HPP_
-#define BE_GFX_TEXTURE_ALIGNMENT_HPP_
+#ifndef BE_GFX_TEX_TEXTURE_ALIGNMENT_HPP_
+#define BE_GFX_TEX_TEXTURE_ALIGNMENT_HPP_
 
+#include "gfx_tex_autolink.hpp"
 #include <be/core/be.hpp>
 
-namespace be::gfx {
+namespace be::gfx::tex {
 
 struct TextureAlignment {
    using alignment_type = U8;
@@ -35,6 +36,6 @@ struct TextureAlignment {
    }
 };
 
-} // be::gfx
+} // be::gfx::tex
 
 #endif

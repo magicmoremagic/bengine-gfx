@@ -1,10 +1,10 @@
 #pragma once
-#ifndef BE_GFX_DUPLICATE_IMAGE_HPP_
-#define BE_GFX_DUPLICATE_IMAGE_HPP_
+#ifndef BE_GFX_TEX_DUPLICATE_IMAGE_HPP_
+#define BE_GFX_TEX_DUPLICATE_IMAGE_HPP_
 
 #include "image.hpp"
 
-namespace be::gfx {
+namespace be::gfx::tex {
 
 ///////////////////////////////////////////////////////////////////////////////
 template <typename ImageView>
@@ -17,6 +17,6 @@ Image duplicate_image(const ImageView& source) {
    return img;
 }
 
-} // be::gfx
+} // be::gfx::tex
 
 #endif

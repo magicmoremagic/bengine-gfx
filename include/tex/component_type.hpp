@@ -1,16 +1,16 @@
 #pragma once
-#ifndef BE_GFX_IMAGE_COMPONENT_TYPE_HPP_
-#define BE_GFX_IMAGE_COMPONENT_TYPE_HPP_
+#ifndef BE_GFX_TEX_COMPONENT_TYPE_HPP_
+#define BE_GFX_TEX_COMPONENT_TYPE_HPP_
 
 #include <be/core/be.hpp>
 
-namespace be::gfx {
+namespace be::gfx::tex {
 
-/*!! include 'image_component_type' !! 18 */
+/*!! include 'tex/component_type' !! 18 */
 /* ################# !! GENERATED CODE -- DO NOT MODIFY !! ################# */
 
 ///////////////////////////////////////////////////////////////////////////////
-enum class ImageComponentType : U8 {
+enum class ComponentType : U8 {
    none = 0,
    unorm,
    snorm,
@@ -21,10 +21,10 @@ enum class ImageComponentType : U8 {
    expo
 };
 
-bool is_valid(ImageComponentType constant) noexcept;
-const char* image_component_type_name(ImageComponentType constant) noexcept;
+bool is_valid(ComponentType constant) noexcept;
+const char* component_type_name(ComponentType constant) noexcept;
 /* ######################### END OF GENERATED CODE ######################### */
 
-} // be::gfx
+} // be::gfx::tex
 
 #endif

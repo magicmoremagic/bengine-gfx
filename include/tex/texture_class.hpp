@@ -1,12 +1,12 @@
 #pragma once
-#ifndef BE_GFX_TEXTURE_CLASS_HPP_
-#define BE_GFX_TEXTURE_CLASS_HPP_
+#ifndef BE_GFX_TEX_TEXTURE_CLASS_HPP_
+#define BE_GFX_TEX_TEXTURE_CLASS_HPP_
 
 #include <be/core/be.hpp>
 
-namespace be::gfx {
+namespace be::gfx::tex {
 
-/*!! include 'texture_class' !! 21 */
+/*!! include 'tex/texture_class' !! 21 */
 /* ################# !! GENERATED CODE -- DO NOT MODIFY !! ################# */
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -28,6 +28,6 @@ U8 degree(TextureClass constant) noexcept;
 U8 faces(TextureClass constant) noexcept;
 /* ######################### END OF GENERATED CODE ######################### */
 
-} // be::gfx
+} // be::gfx::tex
 
 #endif

@@ -1,22 +1,22 @@
-#include "pch.hpp"
-#include "image_component_type.hpp"
+#include "tex/pch.hpp"
+#include "tex/component_type.hpp"
 
-namespace be::gfx {
+namespace be::gfx::tex {
 
-/*!! include 'image_component_type' !! 37 */
+/*!! include 'tex/component_type' !! 37 */
 /* ################# !! GENERATED CODE -- DO NOT MODIFY !! ################# */
 
 ///////////////////////////////////////////////////////////////////////////////
-bool is_valid(ImageComponentType constant) noexcept {
+bool is_valid(ComponentType constant) noexcept {
    switch (constant) {
-      case ImageComponentType::none:
-      case ImageComponentType::unorm:
-      case ImageComponentType::snorm:
-      case ImageComponentType::uint:
-      case ImageComponentType::sint:
-      case ImageComponentType::ufloat:
-      case ImageComponentType::sfloat:
-      case ImageComponentType::expo:
+      case ComponentType::none:
+      case ComponentType::unorm:
+      case ComponentType::snorm:
+      case ComponentType::uint:
+      case ComponentType::sint:
+      case ComponentType::ufloat:
+      case ComponentType::sfloat:
+      case ComponentType::expo:
          return true;
       default:
          return false;
@@ -24,16 +24,16 @@ bool is_valid(ImageComponentType constant) noexcept {
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-const char* image_component_type_name(ImageComponentType constant) noexcept {
+const char* component_type_name(ComponentType constant) noexcept {
    switch (constant) {
-      case ImageComponentType::none:   return "none";
-      case ImageComponentType::unorm:  return "unorm";
-      case ImageComponentType::snorm:  return "snorm";
-      case ImageComponentType::uint:   return "uint";
-      case ImageComponentType::sint:   return "sint";
-      case ImageComponentType::ufloat: return "ufloat";
-      case ImageComponentType::sfloat: return "sfloat";
-      case ImageComponentType::expo:   return "expo";
+      case ComponentType::none:   return "none";
+      case ComponentType::unorm:  return "unorm";
+      case ComponentType::snorm:  return "snorm";
+      case ComponentType::uint:   return "uint";
+      case ComponentType::sint:   return "sint";
+      case ComponentType::ufloat: return "ufloat";
+      case ComponentType::sfloat: return "sfloat";
+      case ComponentType::expo:   return "expo";
       default:
          return "?";
    }
@@ -41,4 +41,4 @@ const char* image_component_type_name(ImageComponentType constant) noexcept {
 
 /* ######################### END OF GENERATED CODE ######################### */
 
-} // be::gfx
+} // be::gfx::tex

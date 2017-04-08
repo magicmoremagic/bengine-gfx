@@ -1,9 +1,9 @@
 module 'gfx' {
    lib '-tex' {
-      include 'include/tex',
       src {
          'src/tex/*.cpp',
-         pch_src 'src/tex/pch.cpp'
+         pch_src 'src/tex/pch.cpp',
+         pch 'tex/pch.hpp'
       },
       src {
          'src/tex/*.c',

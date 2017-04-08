@@ -1,12 +1,12 @@
 #pragma once
-#ifndef BE_GFX_IMAGE_PIXEL_ACCESS_NORM_HPP_
-#define BE_GFX_IMAGE_PIXEL_ACCESS_NORM_HPP_
+#ifndef BE_GFX_TEX_PIXEL_ACCESS_NORM_HPP_
+#define BE_GFX_TEX_PIXEL_ACCESS_NORM_HPP_
 
-#include "image_pixel_access.hpp"
+#include "pixel_access.hpp"
 #include <be/core/builtins.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-namespace be::gfx {
+namespace be::gfx::tex {
 
 ///////////////////////////////////////////////////////////////////////////////
 template <typename Coord, typename ImageView>
@@ -32,8 +32,8 @@ PutPixelNormFunc<Coord, ImageView> put_pixel_norm_func(const ImageView& image);
 template <typename Coord, typename ImageView>
 void put_pixel_norm(ImageView& image, Coord pixel_coord, vec4 pixel);
 
-} // be::gfx
+} // be::gfx::tex
 
-#include "image_pixel_access_norm.inl"
+#include "pixel_access_norm.inl"
 
 #endif

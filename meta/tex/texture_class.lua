@@ -1,7 +1,7 @@
 include 'common/enum'
 include 'common/load_tsv'
 
-local data = load_tsv(resolve_include_path('texture_class.tsv'), function (token, key)
+local data = load_tsv(resolve_include_path('tex/texture_class.tsv'), function (token, key)
    if key == 'name' then
       return token
    elseif key == 'array' then

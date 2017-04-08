@@ -1,9 +1,9 @@
-#if !defined(BE_GFX_IMAGE_PIXEL_ACCESS_HPP_) && !defined(DOXYGEN)
-#include "image_pixel_access.hpp"
-#elif !defined(BE_GFX_IMAGE_PIXEL_ACCESS_INL_)
-#define BE_GFX_IMAGE_PIXEL_ACCESS_INL_
+#if !defined(BE_GFX_TEX_PIXEL_ACCESS_HPP_) && !defined(DOXYGEN)
+#include "pixel_access.hpp"
+#elif !defined(BE_GFX_TEX_PIXEL_ACCESS_INL_)
+#define BE_GFX_TEX_PIXEL_ACCESS_INL_
 
-namespace be::gfx {
+namespace be::gfx::tex {
 namespace detail {
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -29,7 +29,7 @@ struct PixelOffset<ImageView, Coord, false, DimensionTag<1>> {
       assert((I32)block_coord < image.dim_blocks().x);
       assert((I32)pixel_coord >= 0);
       return (std::size_t)block_coord * image.block_size() +
-         (std::size_t)pixel_coord * image_block_pixel_size(image.format().packing());
+         (std::size_t)pixel_coord * block_pixel_size(image.format().packing());
    }
 };
 
@@ -49,7 +49,7 @@ struct PixelOffset<ImageView, Coord, false, DimensionTag<2>> {
       return (std::size_t)block_coord.y * image.line_span() +
          (std::size_t)block_coord.x * image.block_size() +
          (std::size_t)(pixel_coord.y * block_dim.x + pixel_coord.x) *
-         image_block_pixel_size(image.format().packing());
+         block_pixel_size(image.format().packing());
    }
 };
 
@@ -73,7 +73,7 @@ struct PixelOffset<ImageView, Coord, false, DimensionTag<3>> {
          (std::size_t)block_coord.y * image.line_span() +
          (std::size_t)block_coord.x * image.block_size() +
          (std::size_t)((pixel_coord.z * block_dim.y + pixel_coord.y) * block_dim.x + pixel_coord.x) *
-         image_block_pixel_size(image.format().packing());
+         block_pixel_size(image.format().packing());
    }
 };
 
@@ -93,7 +93,7 @@ void put_pixel_uncompressed(ImageView& image, Coord coord, T pixel) {
    std::memcpy(ptr, &pixel, sizeof(T));
 }
 
-} // be::gfx::detail
+} // be::gfx::tex::detail
 
 ///////////////////////////////////////////////////////////////////////////////
 template <typename Coord, typename ImageView>
@@ -121,19 +121,19 @@ GetPixelFunc<T, Coord, ImageView> get_pixel_func(const ImageView& image) {
    assert(image);
    if (is_compressed(image.format().packing())) {
       switch (image.format().packing()) {
-         case ImageBlockPacking::c_astc:
-         case ImageBlockPacking::c_atc:
-         case ImageBlockPacking::c_bptc:
-         case ImageBlockPacking::c_eac:
-         case ImageBlockPacking::c_etc1:
-         case ImageBlockPacking::c_etc2:
-         case ImageBlockPacking::c_pvrtc1:
-         case ImageBlockPacking::c_pvrtc2:
-         case ImageBlockPacking::c_s3tc1:
-         case ImageBlockPacking::c_s3tc2:
-         case ImageBlockPacking::c_s3tc3:
-         case ImageBlockPacking::c_s3tc4:
-         case ImageBlockPacking::c_s3tc5:
+         case BlockPacking::c_astc:
+         case BlockPacking::c_atc:
+         case BlockPacking::c_bptc:
+         case BlockPacking::c_eac:
+         case BlockPacking::c_etc1:
+         case BlockPacking::c_etc2:
+         case BlockPacking::c_pvrtc1:
+         case BlockPacking::c_pvrtc2:
+         case BlockPacking::c_s3tc1:
+         case BlockPacking::c_s3tc2:
+         case BlockPacking::c_s3tc3:
+         case BlockPacking::c_s3tc4:
+         case BlockPacking::c_s3tc5:
             // TODO
             break;
          default:
@@ -142,7 +142,7 @@ GetPixelFunc<T, Coord, ImageView> get_pixel_func(const ImageView& image) {
       }
       return nullptr;
    } else {
-      assert(sizeof(T) <= image_block_pixel_size(image.format().packing()));
+      assert(sizeof(T) <= block_pixel_size(image.format().packing()));
       if (dim_type(image.block_dim()) == dim_type(1)) {
          return detail::get_pixel_uncompressed<T, Coord, ImageView, true>;
       } else {
@@ -163,7 +163,7 @@ PutPixelFunc<T, Coord, ImageView> put_pixel_func(const ImageView& image) {
    using dim_type = glm::vec<t::vector_components<Coord>::value, ImageFormat::block_size_type>;
    assert(image);
    assert(!is_compressed(image.format().packing()));
-   assert(sizeof(T) <= image_block_pixel_size(image.format().packing()));
+   assert(sizeof(T) <= block_pixel_size(image.format().packing()));
    if (dim_type(image.block_dim()) == dim_type(1)) {
       return detail::put_pixel_uncompressed<T, Coord, ImageView, true>;
    } else {
@@ -177,6 +177,6 @@ void put_pixel(ImageView& image, Coord pixel_coord, T pixel) {
    put_pixel_func<T, Coord, ImageView>(image)(image, pixel_coord, pixel);
 }
 
-} // be::gfx
+} // be::gfx::tex
 
 #endif

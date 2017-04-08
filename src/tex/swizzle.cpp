@@ -1,9 +1,9 @@
-#include "pch.hpp"
-#include "swizzle.hpp"
+#include "tex/pch.hpp"
+#include "tex/swizzle.hpp"
 
-namespace be::gfx {
+namespace be::gfx::tex {
 
-/*!! include 'swizzle' !! 33 */
+/*!! include 'tex/swizzle' !! 33 */
 /* ################# !! GENERATED CODE -- DO NOT MODIFY !! ################# */
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -37,4 +37,4 @@ const char* swizzle_name(Swizzle constant) noexcept {
 
 /* ######################### END OF GENERATED CODE ######################### */
 
-} // be::gfx
+} // be::gfx::tex

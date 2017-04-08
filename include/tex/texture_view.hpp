@@ -1,11 +1,11 @@
 #pragma once
-#ifndef BE_GFX_TEXTURE_VIEW_HPP_
-#define BE_GFX_TEXTURE_VIEW_HPP_
+#ifndef BE_GFX_TEX_TEXTURE_VIEW_HPP_
+#define BE_GFX_TEX_TEXTURE_VIEW_HPP_
 
 #include "image_view.hpp"
 #include "texture_class.hpp"
 
-namespace be::gfx {
+namespace be::gfx::tex {
 namespace detail {
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -95,11 +95,11 @@ bool operator!=(const TextureView<TextureStorageA, ImageViewA>& a, const Texture
    return !(a == b);
 }
 
-} // be::gfx::detail
+} // be::gfx::tex::detail
 
 using TextureView = detail::TextureView<TextureStorage, ImageView>;
 using ConstTextureView = detail::TextureView<const TextureStorage, ConstImageView>;
 
-} // be::gfx
+} // be::gfx::tex
 
 #endif

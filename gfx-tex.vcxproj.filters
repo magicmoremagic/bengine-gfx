@@ -12,59 +12,38 @@
     <Filter Include="Meta-Source Files">
       <UniqueIdentifier>{810e6e8f-7a80-4074-ad5b-e4a2f615dcb1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\textures">
-      <UniqueIdentifier>{0a777fe2-9844-4c92-95b9-3a593767deb4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\textures">
-      <UniqueIdentifier>{48ee0916-d10f-45a3-ae79-58476da27d63}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\old">
-      <UniqueIdentifier>{ef5bee63-1540-42bb-822c-12cfb582a47d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\old\filters">
-      <UniqueIdentifier>{caa6db15-381c-47fc-a33d-4482facfb440}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\old\wraps">
-      <UniqueIdentifier>{d35088d5-0db2-400f-9331-1bdec30d1be0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\old">
-      <UniqueIdentifier>{3a31d7a6-f65f-4202-8517-0ce474f07f72}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Meta-Source Files\old">
-      <UniqueIdentifier>{6b05565d-fe52-4bd6-8691-75cba9ff9f2c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\textures\enums">
-      <UniqueIdentifier>{24933a1e-1c11-4197-b592-94a5da9af7ca}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\textures\data structures">
-      <UniqueIdentifier>{24dee0b2-bf48-43d8-8b10-fdb8afc87f7d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\textures\operations">
-      <UniqueIdentifier>{a20672a9-823c-4de3-8f32-96c9d8032015}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\textures\operations\normalized conversions">
-      <UniqueIdentifier>{bd6532d4-8c55-4739-8320-c9faecded4d6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\textures\operations\block/pixel access">
-      <UniqueIdentifier>{d5142ade-c218-4c2f-8e98-fa26da4da9d7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\textures\operations\visitation">
-      <UniqueIdentifier>{62024480-9676-43d8-abb0-60b258cc9913}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\textures\operations\blitting">
-      <UniqueIdentifier>{735f9633-d9e3-4e2e-9763-c2b064992440}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\textures\enums">
-      <UniqueIdentifier>{cd4a8149-2bee-491f-a544-8216cf6ce192}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\textures\data structures">
-      <UniqueIdentifier>{9f89191a-9ec4-4fd1-aa62-2e0f6a3b2aec}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\textures\operations">
+    <Filter Include="Source Files\operations">
       <UniqueIdentifier>{93cc23c9-8e8f-470a-9935-247200925e60}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\textures\operations\normalized conversions">
+    <Filter Include="Source Files\operations\normalized conversions">
       <UniqueIdentifier>{4d956a87-3436-45dc-bfe0-f819eb27e122}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\data structures">
+      <UniqueIdentifier>{9f89191a-9ec4-4fd1-aa62-2e0f6a3b2aec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\enums">
+      <UniqueIdentifier>{cd4a8149-2bee-491f-a544-8216cf6ce192}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\data structures">
+      <UniqueIdentifier>{24dee0b2-bf48-43d8-8b10-fdb8afc87f7d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\enums">
+      <UniqueIdentifier>{24933a1e-1c11-4197-b592-94a5da9af7ca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\operations">
+      <UniqueIdentifier>{a20672a9-823c-4de3-8f32-96c9d8032015}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\operations\normalized conversions">
+      <UniqueIdentifier>{bd6532d4-8c55-4739-8320-c9faecded4d6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\operations\block/pixel access">
+      <UniqueIdentifier>{d5142ade-c218-4c2f-8e98-fa26da4da9d7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\operations\visitation">
+      <UniqueIdentifier>{62024480-9676-43d8-abb0-60b258cc9913}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\operations\blitting">
+      <UniqueIdentifier>{735f9633-d9e3-4e2e-9763-c2b064992440}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -74,10 +53,231 @@
     <ClInclude Include="include\tex\gfx_tex_autolink.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\tex\blit_blocks.hpp">
+      <Filter>Header Files\operations\blitting</Filter>
+    </ClInclude>
+    <ClInclude Include="include\tex\blit_pixels.hpp">
+      <Filter>Header Files\operations\blitting</Filter>
+    </ClInclude>
+    <ClInclude Include="include\tex\block_access.hpp">
+      <Filter>Header Files\operations\block/pixel access</Filter>
+    </ClInclude>
+    <ClInclude Include="include\tex\block_packing.hpp">
+      <Filter>Header Files\enums</Filter>
+    </ClInclude>
+    <ClInclude Include="include\tex\colorspace.hpp">
+      <Filter>Header Files\enums</Filter>
+    </ClInclude>
+    <ClInclude Include="include\tex\component_type.hpp">
+      <Filter>Header Files\enums</Filter>
+    </ClInclude>
+    <ClInclude Include="include\tex\convert_colorspace.hpp">
+      <Filter>Header Files\operations\normalized conversions</Filter>
+    </ClInclude>
+    <ClInclude Include="include\tex\convert_colorspace_static.hpp">
+      <Filter>Header Files\operations\normalized conversions</Filter>
+    </ClInclude>
+    <ClInclude Include="include\tex\converting_pixel_blitter.hpp">
+      <Filter>Header Files\operations\blitting</Filter>
+    </ClInclude>
+    <ClInclude Include="include\tex\duplicate_image.hpp">
+      <Filter>Header Files\operations</Filter>
+    </ClInclude>
+    <ClInclude Include="include\tex\duplicate_texture.hpp">
+      <Filter>Header Files\operations</Filter>
+    </ClInclude>
+    <ClInclude Include="include\tex\image.hpp">
+      <Filter>Header Files\data structures</Filter>
+    </ClInclude>
+    <ClInclude Include="include\tex\image_format.hpp">
+      <Filter>Header Files\data structures</Filter>
+    </ClInclude>
+    <ClInclude Include="include\tex\image_format_hash.hpp">
+      <Filter>Header Files\data structures</Filter>
+    </ClInclude>
+    <ClInclude Include="include\tex\image_region.hpp">
+      <Filter>Header Files\data structures</Filter>
+    </ClInclude>
+    <ClInclude Include="include\tex\image_region_hash.hpp">
+      <Filter>Header Files\data structures</Filter>
+    </ClInclude>
+    <ClInclude Include="include\tex\image_view.hpp">
+      <Filter>Header Files\data structures</Filter>
+    </ClInclude>
+    <ClInclude Include="include\tex\image_view_hash.hpp">
+      <Filter>Header Files\data structures</Filter>
+    </ClInclude>
+    <ClInclude Include="include\tex\make_image.hpp">
+      <Filter>Header Files\operations</Filter>
+    </ClInclude>
+    <ClInclude Include="include\tex\make_texture.hpp">
+      <Filter>Header Files\operations</Filter>
+    </ClInclude>
+    <ClInclude Include="include\tex\mipmapping.hpp">
+      <Filter>Header Files\operations</Filter>
+    </ClInclude>
+    <ClInclude Include="include\tex\pixel_access.hpp">
+      <Filter>Header Files\operations\block/pixel access</Filter>
+    </ClInclude>
+    <ClInclude Include="include\tex\pixel_access_norm.hpp">
+      <Filter>Header Files\operations\block/pixel access</Filter>
+    </ClInclude>
+    <ClInclude Include="include\tex\swizzle.hpp">
+      <Filter>Header Files\enums</Filter>
+    </ClInclude>
+    <ClInclude Include="include\tex\texture.hpp">
+      <Filter>Header Files\data structures</Filter>
+    </ClInclude>
+    <ClInclude Include="include\tex\texture_alignment.hpp">
+      <Filter>Header Files\data structures</Filter>
+    </ClInclude>
+    <ClInclude Include="include\tex\texture_class.hpp">
+      <Filter>Header Files\enums</Filter>
+    </ClInclude>
+    <ClInclude Include="include\tex\texture_storage.hpp">
+      <Filter>Header Files\data structures</Filter>
+    </ClInclude>
+    <ClInclude Include="include\tex\texture_storage_hash.hpp">
+      <Filter>Header Files\data structures</Filter>
+    </ClInclude>
+    <ClInclude Include="include\tex\texture_view.hpp">
+      <Filter>Header Files\data structures</Filter>
+    </ClInclude>
+    <ClInclude Include="include\tex\texture_view_hash.hpp">
+      <Filter>Header Files\data structures</Filter>
+    </ClInclude>
+    <ClInclude Include="include\tex\visit_image.hpp">
+      <Filter>Header Files\operations\visitation</Filter>
+    </ClInclude>
+    <ClInclude Include="include\tex\visit_texture.hpp">
+      <Filter>Header Files\operations\visitation</Filter>
+    </ClInclude>
+    <ClInclude Include="include\tex\premultiply_alpha_static.hpp">
+      <Filter>Header Files\operations\normalized conversions</Filter>
+    </ClInclude>
+    <ClInclude Include="include\tex\premultiply_alpha.hpp">
+      <Filter>Header Files\operations\normalized conversions</Filter>
+    </ClInclude>
+    <ClInclude Include="include\tex\pixel_norm_transform.hpp">
+      <Filter>Header Files\operations\normalized conversions</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\tex\pch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\tex\block_packing.cpp">
+      <Filter>Source Files\enums</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tex\colorspace.cpp">
+      <Filter>Source Files\enums</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tex\component_type.cpp">
+      <Filter>Source Files\enums</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tex\convert_colorspace.cpp">
+      <Filter>Source Files\operations\normalized conversions</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tex\image_format.cpp">
+      <Filter>Source Files\data structures</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tex\image_region.cpp">
+      <Filter>Source Files\data structures</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tex\image_view.cpp">
+      <Filter>Source Files\data structures</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tex\make_texture.cpp">
+      <Filter>Source Files\operations</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tex\mipmapping.cpp">
+      <Filter>Source Files\operations</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tex\premultiply_alpha.cpp">
+      <Filter>Source Files\operations\normalized conversions</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tex\texture_view.cpp">
+      <Filter>Source Files\data structures</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tex\texture_storage.cpp">
+      <Filter>Source Files\data structures</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tex\texture_class.cpp">
+      <Filter>Source Files\enums</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tex\swizzle.cpp">
+      <Filter>Source Files\enums</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="meta\tex\block_packing.lua">
+      <Filter>Meta-Source Files</Filter>
+    </None>
+    <None Include="meta\tex\block_packing.tsv">
+      <Filter>Meta-Source Files</Filter>
+    </None>
+    <None Include="meta\tex\block_packing_info.blt">
+      <Filter>Meta-Source Files</Filter>
+    </None>
+    <None Include="meta\tex\colorspace.lua">
+      <Filter>Meta-Source Files</Filter>
+    </None>
+    <None Include="meta\tex\colorspace.tsv">
+      <Filter>Meta-Source Files</Filter>
+    </None>
+    <None Include="meta\tex\colorspace_family.tsv">
+      <Filter>Meta-Source Files</Filter>
+    </None>
+    <None Include="meta\tex\colorspace_family_info.blt">
+      <Filter>Meta-Source Files</Filter>
+    </None>
+    <None Include="meta\tex\colorspace_info.blt">
+      <Filter>Meta-Source Files</Filter>
+    </None>
+    <None Include="meta\tex\component_type.lua">
+      <Filter>Meta-Source Files</Filter>
+    </None>
+    <None Include="meta\tex\swizzle.lua">
+      <Filter>Meta-Source Files</Filter>
+    </None>
+    <None Include="meta\tex\texture_class.lua">
+      <Filter>Meta-Source Files</Filter>
+    </None>
+    <None Include="meta\tex\texture_class.tsv">
+      <Filter>Meta-Source Files</Filter>
+    </None>
+    <None Include="include\tex\blit_blocks.inl">
+      <Filter>Header Files\operations\blitting</Filter>
+    </None>
+    <None Include="include\tex\blit_pixels.inl">
+      <Filter>Header Files\operations\blitting</Filter>
+    </None>
+    <None Include="include\tex\block_access.inl">
+      <Filter>Header Files\operations\block/pixel access</Filter>
+    </None>
+    <None Include="include\tex\convert_colorspace_static.inl">
+      <Filter>Header Files\operations\normalized conversions</Filter>
+    </None>
+    <None Include="include\tex\converting_pixel_blitter.inl">
+      <Filter>Header Files\operations\blitting</Filter>
+    </None>
+    <None Include="include\tex\image_region.inl">
+      <Filter>Header Files\data structures</Filter>
+    </None>
+    <None Include="include\tex\make_image.inl">
+      <Filter>Header Files\operations</Filter>
+    </None>
+    <None Include="include\tex\pixel_access.inl">
+      <Filter>Header Files\operations\block/pixel access</Filter>
+    </None>
+    <None Include="include\tex\pixel_access_norm.inl">
+      <Filter>Header Files\operations\block/pixel access</Filter>
+    </None>
+    <None Include="include\tex\visit_texture.inl">
+      <Filter>Header Files\operations\visitation</Filter>
+    </None>
+    <None Include="include\tex\visit_image.inl">
+      <Filter>Header Files\operations\visitation</Filter>
+    </None>
   </ItemGroup>
 </Project>

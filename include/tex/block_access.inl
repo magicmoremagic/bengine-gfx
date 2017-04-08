@@ -1,9 +1,9 @@
-#if !defined(BE_GFX_IMAGE_BLOCK_ACCESS_HPP_) && !defined(DOXYGEN)
-#include "image_block_access.hpp"
-#elif !defined(BE_GFX_IMAGE_BLOCK_ACCESS_INL_)
-#define BE_GFX_IMAGE_BLOCK_ACCESS_INL_
+#if !defined(BE_GFX_TEX_BLOCK_ACCESS_HPP_) && !defined(DOXYGEN)
+#include "block_access.hpp"
+#elif !defined(BE_GFX_TEX_BLOCK_ACCESS_INL_)
+#define BE_GFX_TEX_BLOCK_ACCESS_INL_
 
-namespace be::gfx {
+namespace be::gfx::tex {
 namespace detail {
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -52,7 +52,7 @@ struct BlockOffset<ImageView, Coord, 3> {
    }
 };
 
-} // be::gfx::detail
+} // be::gfx::tex::detail
 
 ///////////////////////////////////////////////////////////////////////////////
 template <typename Coord, typename ImageView>
@@ -76,6 +76,6 @@ void put_block(ImageView& image, Coord block_coord, const T& block) {
    std::memcpy(image.data() + block_offset<Coord, ImageView>(image, block_coord), &block, sizeof(T));
 }
 
-} // be::gfx
+} // be::gfx::tex
 
 #endif

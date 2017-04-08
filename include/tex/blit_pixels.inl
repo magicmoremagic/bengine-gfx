@@ -1,15 +1,15 @@
-#if !defined(BE_GFX_BLIT_IMAGE_PIXELS_HPP_) && !defined(DOXYGEN)
-#include "blit_image_pixels.hpp"
-#elif !defined(BE_GFX_BLIT_IMAGE_PIXELS_INL_)
-#define BE_GFX_BLIT_IMAGE_PIXELS_INL_
+#if !defined(BE_GFX_TEX_BLIT_PIXELS_HPP_) && !defined(DOXYGEN)
+#include "blit_pixels.hpp"
+#elif !defined(BE_GFX_TEX_BLIT_PIXELS_INL_)
+#define BE_GFX_TEX_BLIT_PIXELS_INL_
 
-namespace be::gfx {
+namespace be::gfx::tex {
 namespace detail {
 
 ///////////////////////////////////////////////////////////////////////////////
 template <typename SourceImageView, typename DestImageView>
 void memcpy_blit_by_pixels(const SourceImageView& src, DestImageView& dest) {
-   const std::size_t size = image_block_pixel_size(src.format().packing());
+   const std::size_t size = block_pixel_size(src.format().packing());
    const std::size_t src_plane_span = src.plane_span();
    const std::size_t dest_plane_span = dest.plane_span();
    const std::size_t src_line_span = src.line_span();
@@ -82,7 +82,7 @@ void memcpy_blit_by_pixels(const SourceImageView& src, DestImageView& dest) {
    }
 }
 
-} // be::gfx::detail
+} // be::gfx::tex::detail
 
 ///////////////////////////////////////////////////////////////////////////////
 template <typename SourceImageView, typename DestImageView>
@@ -94,7 +94,7 @@ void blit_pixels(const SourceImageView& src, DestImageView& dest) {
    ImageFormat sf = src.format();
    ImageFormat df = dest.format();
 
-   if (gfx::is_compressed(df.packing())) {
+   if (is_compressed(df.packing())) {
       assert(sf == df);
       assert(src.dim().x == dest.dim().x || src.dim().x % sf.block_dim().x == 0);
       assert(src.dim().y == dest.dim().y || src.dim().y % sf.block_dim().y == 0);
@@ -180,7 +180,7 @@ void blit_pixels(const SourceImageView& src, ImageRegion src_region, DestImageVi
    ImageFormat sf = src.format();
    ImageFormat df = dest.format();
 
-   if (gfx::is_compressed(df.packing())) {
+   if (is_compressed(df.packing())) {
       assert(sf == df);
       assert(src_region.basis_vec() == dest_region.basis_vec());
       assert(src_region.extents().left() % sf.block_dim().x == 0);
@@ -219,7 +219,7 @@ void blit_pixels(const SourceImageView& src, ImageRegion src_region, DestImageVi
                return;
             }
          }
-         const std::size_t size = image_block_pixel_size(sf.packing());
+         const std::size_t size = block_pixel_size(sf.packing());
 
          if (src_extents.offset.z == 0 && src_extents.dim.z == 1 && dest_extents.offset.z == 0 && dest_extents.dim.z == 1) {
             if (src_extents.offset.y == 0 && src_extents.dim.y == 1 && dest_extents.offset.y == 0 && dest_extents.dim.y == 1) {
@@ -308,6 +308,6 @@ void blit_pixels(const SourceImageView& src, ImageRegion src_region, DestImageVi
    }
 }
 
-} // be::gfx
+} // be::gfx::tex
 
 #endif

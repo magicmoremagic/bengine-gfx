@@ -1,9 +1,9 @@
-#include "pch.hpp"
-#include "texture_class.hpp"
+#include "tex/pch.hpp"
+#include "tex/texture_class.hpp"
 
-namespace be::gfx {
+namespace be::gfx::tex {
 
-/*!! include 'texture_class' !! 79 */
+/*!! include 'tex/texture_class' !! 79 */
 /* ################# !! GENERATED CODE -- DO NOT MODIFY !! ################# */
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -83,4 +83,4 @@ U8 faces(TextureClass constant) noexcept {
 
 /* ######################### END OF GENERATED CODE ######################### */
 
-} // be::gfx
+} // be::gfx::tex

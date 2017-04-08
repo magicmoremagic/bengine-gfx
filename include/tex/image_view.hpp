@@ -1,12 +1,12 @@
 #pragma once
-#ifndef BE_GFX_IMAGE_VIEW_HPP_
-#define BE_GFX_IMAGE_VIEW_HPP_
+#ifndef BE_GFX_TEX_IMAGE_VIEW_HPP_
+#define BE_GFX_TEX_IMAGE_VIEW_HPP_
 
 #include "image_format.hpp"
 #include "texture_storage.hpp"
 #include <be/core/t_select.hpp>
 
-namespace be::gfx {
+namespace be::gfx::tex {
 namespace detail {
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -89,11 +89,11 @@ bool operator!=(const ImageView<TextureStorageA, UCA>& a, const ImageView<Textur
    return !(a == b);
 }
 
-} // be::gfx::detail
+} // be::gfx::tex::detail
 
 using ImageView = detail::ImageView<TextureStorage, UC>;
 using ConstImageView = detail::ImageView<const TextureStorage, const UC>;
 
-} // be::gfx
+} // be::gfx::tex
 
 #endif

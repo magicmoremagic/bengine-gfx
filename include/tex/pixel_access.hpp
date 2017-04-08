@@ -1,15 +1,15 @@
 #pragma once
-#ifndef BE_GFX_IMAGE_PIXEL_ACCESS_HPP_
-#define BE_GFX_IMAGE_PIXEL_ACCESS_HPP_
+#ifndef BE_GFX_TEX_PIXEL_ACCESS_HPP_
+#define BE_GFX_TEX_PIXEL_ACCESS_HPP_
 
-#include "image_block_packing.hpp"
+#include "block_packing.hpp"
 #include "image_format.hpp"
-#include "image_block_access.hpp"
+#include "block_access.hpp"
 #include <be/core/glm.hpp>
 #include <be/core/glm_helpers.hpp>
 #include <cassert>
 
-namespace be::gfx {
+namespace be::gfx::tex {
 
 ///////////////////////////////////////////////////////////////////////////////
 template <typename Coord, typename ImageView>
@@ -47,8 +47,8 @@ PutPixelFunc<T, Coord, ImageView> put_pixel_func(const ImageView& image);
 template <typename T, typename Coord, typename ImageView>
 void put_pixel(ImageView& image, Coord pixel_coord, T pixel);
 
-} // be::gfx
+} // be::gfx::tex
 
-#include "image_pixel_access.inl"
+#include "pixel_access.inl"
 
 #endif

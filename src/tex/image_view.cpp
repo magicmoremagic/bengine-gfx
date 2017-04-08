@@ -1,7 +1,7 @@
-#include "pch.hpp"
-#include "image_view.hpp"
+#include "tex/pch.hpp"
+#include "tex/image_view.hpp"
 
-namespace be::gfx::detail {
+namespace be::gfx::tex::detail {
 
 ///////////////////////////////////////////////////////////////////////////////
 template <typename TextureStorage, typename UC>
@@ -175,4 +175,4 @@ ivec3 ImageView<TextureStorage, UC>::dim_blocks() const {
 template class ImageView<TextureStorage, UC>;
 template class ImageView<const TextureStorage, const UC>;
 
-} // be::gfx::detail
+} // be::gfx::tex::detail

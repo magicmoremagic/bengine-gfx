@@ -1,12 +1,12 @@
-#include "pch.hpp"
-#include "image_format.hpp"
+#include "tex/pch.hpp"
+#include "tex/image_format.hpp"
 
-namespace be::gfx {
+namespace be::gfx::tex {
 
 ///////////////////////////////////////////////////////////////////////////////
 ImageFormat::ImageFormat() 
    : block_size_(0),
-     packing_(ImageBlockPacking::s_8),
+     packing_(BlockPacking::s_8),
      components_(0),
      colorspace_(Colorspace::unknown),
      premultiplied_(false) { }
@@ -14,7 +14,7 @@ ImageFormat::ImageFormat()
 ///////////////////////////////////////////////////////////////////////////////
 ImageFormat::ImageFormat(block_size_type block_size,
                          block_size_type block_dim,
-                         ImageBlockPacking packing,
+                         BlockPacking packing,
                          U8 components,
                          component_types_type component_types,
                          swizzles_type swizzles,
@@ -25,7 +25,7 @@ ImageFormat::ImageFormat(block_size_type block_size,
 ///////////////////////////////////////////////////////////////////////////////
 ImageFormat::ImageFormat(block_size_type block_size,
                          block_dim_type block_dim,
-                         ImageBlockPacking packing,
+                         BlockPacking packing,
                          U8 components,
                          component_types_type component_types,
                          swizzles_type swizzles,
@@ -45,17 +45,17 @@ ImageFormat::ImageFormat(block_size_type block_size,
    assert(block_dim.z > 0);
    assert(is_valid(packing));
    assert(components > 0);
-   assert(is_valid(static_cast<ImageComponentType>(component_types.r)));
-   assert(is_valid(static_cast<ImageComponentType>(component_types.g)));
-   assert(is_valid(static_cast<ImageComponentType>(component_types.b)));
-   assert(is_valid(static_cast<ImageComponentType>(component_types.a)));
+   assert(is_valid(static_cast<ComponentType>(component_types.r)));
+   assert(is_valid(static_cast<ComponentType>(component_types.g)));
+   assert(is_valid(static_cast<ComponentType>(component_types.b)));
+   assert(is_valid(static_cast<ComponentType>(component_types.a)));
    assert(is_valid(static_cast<Swizzle>(swizzles.r)));
    assert(is_valid(static_cast<Swizzle>(swizzles.g)));
    assert(is_valid(static_cast<Swizzle>(swizzles.b)));
    assert(is_valid(static_cast<Swizzle>(swizzles.a)));
    assert(is_valid(colorspace));
    assert(!premultiplied || components == 4);
-   assert(block_size >= block_dim.x * block_dim.y * block_dim.z * image_block_pixel_size(packing));
+   assert(block_size >= block_dim.x * block_dim.y * block_dim.z * block_pixel_size(packing));
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -111,23 +111,23 @@ U8 ImageFormat::components() const {
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-ImageFormat& ImageFormat::packing(ImageBlockPacking value) {
+ImageFormat& ImageFormat::packing(BlockPacking value) {
    assert(is_valid(value));
    packing_ = value;
    return *this;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-ImageBlockPacking ImageFormat::packing() const {
+BlockPacking ImageFormat::packing() const {
    return packing_;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 ImageFormat& ImageFormat::component_types(component_types_type types) {
-   assert(is_valid(static_cast<ImageComponentType>(types.r)));
-   assert(is_valid(static_cast<ImageComponentType>(types.g)));
-   assert(is_valid(static_cast<ImageComponentType>(types.b)));
-   assert(is_valid(static_cast<ImageComponentType>(types.a)));
+   assert(is_valid(static_cast<ComponentType>(types.r)));
+   assert(is_valid(static_cast<ComponentType>(types.g)));
+   assert(is_valid(static_cast<ComponentType>(types.b)));
+   assert(is_valid(static_cast<ComponentType>(types.a)));
    component_types_ = types;
    return *this;
 }
@@ -138,15 +138,15 @@ ImageFormat::component_types_type ImageFormat::component_types() const {
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-ImageFormat& ImageFormat::component_type(glm::length_t component, ImageComponentType type) {
-   assert(is_valid(static_cast<ImageComponentType>(type)));
+ImageFormat& ImageFormat::component_type(glm::length_t component, ComponentType type) {
+   assert(is_valid(static_cast<ComponentType>(type)));
    component_types_[component] = static_cast<component_types_type::value_type>(type);
    return *this;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-ImageComponentType ImageFormat::component_type(glm::length_t component) const {
-   return static_cast<ImageComponentType>(component_types_[component]);
+ComponentType ImageFormat::component_type(glm::length_t component) const {
+   return static_cast<ComponentType>(component_types_[component]);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -222,17 +222,17 @@ ImageFormat simple_format(ImageFormat format) {
    if (is_compressed(format.packing())) {
       return format;
    } else {
-      return ImageFormat(image_block_pixel_size(format.packing()), 1u, format.packing(),
+      return ImageFormat(block_pixel_size(format.packing()), 1u, format.packing(),
                          format.components(), format.component_types(), format.swizzles(),
                          format.colorspace(), format.premultiplied());
    }
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-ImageFormat::component_types_type component_types(ImageComponentType type, glm::length_t n_components) {
+ImageFormat::component_types_type component_types(ComponentType type, glm::length_t n_components) {
    using V = ImageFormat::component_types_type;
    using T = V::value_type;
-   V vec(static_cast<T>(ImageComponentType::none));
+   V vec(static_cast<T>(ComponentType::none));
    for (glm::length_t i = 0; i < n_components; ++i) {
       vec[i] = static_cast<T>(type);
    }
@@ -240,27 +240,27 @@ ImageFormat::component_types_type component_types(ImageComponentType type, glm::
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-ImageFormat::component_types_type component_types(ImageComponentType type0, ImageComponentType type1) {
+ImageFormat::component_types_type component_types(ComponentType type0, ComponentType type1) {
    using V = ImageFormat::component_types_type;
    using T = V::value_type;
    return V(static_cast<T>(type0),
             static_cast<T>(type1),
-            static_cast<T>(ImageComponentType::none),
-            static_cast<T>(ImageComponentType::none));
+            static_cast<T>(ComponentType::none),
+            static_cast<T>(ComponentType::none));
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-ImageFormat::component_types_type component_types(ImageComponentType type0, ImageComponentType type1, ImageComponentType type2) {
+ImageFormat::component_types_type component_types(ComponentType type0, ComponentType type1, ComponentType type2) {
    using V = ImageFormat::component_types_type;
    using T = V::value_type;
    return V(static_cast<T>(type0),
             static_cast<T>(type1),
             static_cast<T>(type2),
-            static_cast<T>(ImageComponentType::none));
+            static_cast<T>(ComponentType::none));
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-ImageFormat::component_types_type component_types(ImageComponentType type0, ImageComponentType type1, ImageComponentType type2, ImageComponentType type3) {
+ImageFormat::component_types_type component_types(ComponentType type0, ComponentType type1, ComponentType type2, ComponentType type3) {
    using V = ImageFormat::component_types_type;
    using T = V::value_type;
    return V(static_cast<T>(type0),
@@ -270,13 +270,13 @@ ImageFormat::component_types_type component_types(ImageComponentType type0, Imag
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-ImageFormat::component_types_type component_types(std::initializer_list<ImageComponentType> types) {
+ImageFormat::component_types_type component_types(std::initializer_list<ComponentType> types) {
    assert(types.size() <= 4);
    using V = ImageFormat::component_types_type;
    using T = V::value_type;
-   V vec(static_cast<T>(ImageComponentType::none));
+   V vec(static_cast<T>(ComponentType::none));
    glm::length_t i = 0;
-   for (ImageComponentType type : types) {
+   for (ComponentType type : types) {
       vec[i++] = static_cast<T>(type);
    }
    return vec;
@@ -358,4 +358,4 @@ ImageFormat::swizzles_type swizzles_bgra() {
    return swizzles(Swizzle::red, Swizzle::green, Swizzle::blue, Swizzle::alpha);
 }
 
-} // be::gfx
+} // be::gfx::tex

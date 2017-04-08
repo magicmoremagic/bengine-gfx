@@ -1,15 +1,16 @@
 #ifdef BE_TEST
 
-#include "texture_view_hash.hpp"
+#include "tex/texture_view_hash.hpp"
 #include <catch/catch.hpp>
 #include <unordered_set>
 
-#define BE_CATCH_TAGS "[gfx][gfx:TextureView]"
+#define BE_CATCH_TAGS "[gfx][gfx:tex][gfx:tex:TextureView]"
 
 using namespace be;
+using namespace be::gfx::tex;
 
 TEST_CASE("std::hash<TextureView>", BE_CATCH_TAGS) {
-   std::unordered_set<be::gfx::TextureView> stet;
+   std::unordered_set<TextureView> stet;
    REQUIRE_NOTHROW(stet.emplace());
 }
 

@@ -1,9 +1,9 @@
-#include "pch.hpp"
-#include "colorspace.hpp"
+#include "tex/pch.hpp"
+#include "tex/colorspace.hpp"
 
-namespace be::gfx {
+namespace be::gfx::tex {
 
-/*!! include 'colorspace' !! 195 */
+/*!! include 'tex/colorspace' !! 195 */
 /* ################# !! GENERATED CODE -- DO NOT MODIFY !! ################# */
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -199,4 +199,4 @@ ColorspaceVariant colorspace_variant(Colorspace constant) noexcept {
 
 /* ######################### END OF GENERATED CODE ######################### */
 
-} // be::gfx
+} // be::gfx::tex

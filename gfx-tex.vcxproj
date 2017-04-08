@@ -14,7 +14,7 @@
     <ProjectName>gfx-tex</ProjectName>
     <RootNamespace>gfx</RootNamespace>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
-    <ProjectGuid>{BED84038-3FE4-4D45-9CAB-C26608FDD822}</ProjectGuid>
+    <ProjectGuid>{E01644E3-C89A-4B9F-991B-EF5DFCFE5E83}</ProjectGuid>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'" Label="Configuration">
@@ -45,22 +45,100 @@
     <ClCompile>
       <PreprocessorDefinitions>BE_GFX_TEX_IMPL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>tex/pch.hpp</PrecompiledHeaderFile>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'">
     <ClCompile>
       <PreprocessorDefinitions>BE_GFX_TEX_IMPL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>tex/pch.hpp</PrecompiledHeaderFile>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="include\tex\blit_blocks.hpp" />
+    <ClInclude Include="include\tex\blit_pixels.hpp" />
+    <ClInclude Include="include\tex\block_access.hpp" />
+    <ClInclude Include="include\tex\block_packing.hpp" />
+    <ClInclude Include="include\tex\colorspace.hpp" />
+    <ClInclude Include="include\tex\component_type.hpp" />
+    <ClInclude Include="include\tex\converting_pixel_blitter.hpp" />
+    <ClInclude Include="include\tex\convert_colorspace.hpp" />
+    <ClInclude Include="include\tex\convert_colorspace_static.hpp" />
+    <ClInclude Include="include\tex\duplicate_image.hpp" />
+    <ClInclude Include="include\tex\duplicate_texture.hpp" />
+    <ClInclude Include="include\tex\image.hpp" />
+    <ClInclude Include="include\tex\image_format.hpp" />
+    <ClInclude Include="include\tex\image_format_hash.hpp" />
+    <ClInclude Include="include\tex\image_region.hpp" />
+    <ClInclude Include="include\tex\image_region_hash.hpp" />
+    <ClInclude Include="include\tex\image_view.hpp" />
+    <ClInclude Include="include\tex\image_view_hash.hpp" />
+    <ClInclude Include="include\tex\make_image.hpp" />
+    <ClInclude Include="include\tex\make_texture.hpp" />
+    <ClInclude Include="include\tex\mipmapping.hpp" />
     <ClInclude Include="include\tex\pch.hpp" />
     <ClInclude Include="include\tex\gfx_tex_autolink.hpp" />
+    <ClInclude Include="include\tex\pixel_access.hpp" />
+    <ClInclude Include="include\tex\pixel_access_norm.hpp" />
+    <ClInclude Include="include\tex\pixel_norm_transform.hpp" />
+    <ClInclude Include="include\tex\premultiply_alpha.hpp" />
+    <ClInclude Include="include\tex\premultiply_alpha_static.hpp" />
+    <ClInclude Include="include\tex\swizzle.hpp" />
+    <ClInclude Include="include\tex\texture.hpp" />
+    <ClInclude Include="include\tex\texture_alignment.hpp" />
+    <ClInclude Include="include\tex\texture_class.hpp" />
+    <ClInclude Include="include\tex\texture_storage.hpp" />
+    <ClInclude Include="include\tex\texture_storage_hash.hpp" />
+    <ClInclude Include="include\tex\texture_view.hpp" />
+    <ClInclude Include="include\tex\texture_view_hash.hpp" />
+    <ClInclude Include="include\tex\visit_image.hpp" />
+    <ClInclude Include="include\tex\visit_texture.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\pch.cpp">
-      <PrecompiledHeader>Create</PrecompiledHeader>
+    <ClCompile Include="src\tex\block_packing.cpp" />
+    <ClCompile Include="src\tex\colorspace.cpp" />
+    <ClCompile Include="src\tex\component_type.cpp" />
+    <ClCompile Include="src\tex\convert_colorspace.cpp" />
+    <ClCompile Include="src\tex\image_format.cpp" />
+    <ClCompile Include="src\tex\image_region.cpp" />
+    <ClCompile Include="src\tex\image_view.cpp" />
+    <ClCompile Include="src\tex\make_texture.cpp" />
+    <ClCompile Include="src\tex\mipmapping.cpp" />
+    <ClCompile Include="src\tex\pch.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='release|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="src\tex\premultiply_alpha.cpp" />
+    <ClCompile Include="src\tex\swizzle.cpp" />
+    <ClCompile Include="src\tex\texture_class.cpp" />
+    <ClCompile Include="src\tex\texture_storage.cpp" />
+    <ClCompile Include="src\tex\texture_view.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="include\tex\blit_blocks.inl" />
+    <None Include="include\tex\blit_pixels.inl" />
+    <None Include="include\tex\block_access.inl" />
+    <None Include="include\tex\converting_pixel_blitter.inl" />
+    <None Include="include\tex\convert_colorspace_static.inl" />
+    <None Include="include\tex\image_region.inl" />
+    <None Include="include\tex\make_image.inl" />
+    <None Include="include\tex\pixel_access.inl" />
+    <None Include="include\tex\pixel_access_norm.inl" />
+    <None Include="include\tex\visit_image.inl" />
+    <None Include="include\tex\visit_texture.inl" />
+    <None Include="meta\tex\block_packing.lua" />
+    <None Include="meta\tex\block_packing.tsv" />
+    <None Include="meta\tex\block_packing_info.blt" />
+    <None Include="meta\tex\colorspace.lua" />
+    <None Include="meta\tex\colorspace.tsv" />
+    <None Include="meta\tex\colorspace_family.tsv" />
+    <None Include="meta\tex\colorspace_family_info.blt" />
+    <None Include="meta\tex\colorspace_info.blt" />
+    <None Include="meta\tex\component_type.lua" />
+    <None Include="meta\tex\swizzle.lua" />
+    <None Include="meta\tex\texture_class.lua" />
+    <None Include="meta\tex\texture_class.tsv" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

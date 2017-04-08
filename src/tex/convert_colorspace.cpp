@@ -1,16 +1,16 @@
-#include "pch.hpp"
-#include "convert_colorspace.hpp"
-#include "convert_colorspace_static.hpp"
+#include "tex/pch.hpp"
+#include "tex/convert_colorspace.hpp"
+#include "tex/convert_colorspace_static.hpp"
 
-namespace be::gfx {
+namespace be::gfx::tex {
 
-/*!! include('colorspace', true)
+/*!! include('tex/colorspace', true)
 register_template_string([[
 `max_length = colorspace.max_constant_name_length
 constants = colorspace.constants
 `
 ///////////////////////////////////////////////////////////////////////////////
-ImagePixelNormTransformFunc convert_colorspace_func(Colorspace input, Colorspace output) {
+PixelNormTransformFunc convert_colorspace_func(Colorspace input, Colorspace output) {
    switch (input) {`
 with each constants using # {`
       case Colorspace::`name`:
@@ -34,7 +34,7 @@ write_template 'convert_colorspace_func' !! 536 */
 /* ################# !! GENERATED CODE -- DO NOT MODIFY !! ################# */
 
 ///////////////////////////////////////////////////////////////////////////////
-ImagePixelNormTransformFunc convert_colorspace_func(Colorspace input, Colorspace output) {
+PixelNormTransformFunc convert_colorspace_func(Colorspace input, Colorspace output) {
    switch (input) {
       case Colorspace::unknown:
          switch (output) {
@@ -572,4 +572,4 @@ vec4 convert_colorspace(vec4 pixel_norm, Colorspace input, Colorspace output) {
    return convert_colorspace_func(input, output)(pixel_norm);
 }
 
-} // be::gfx
+} // be::gfx::tex

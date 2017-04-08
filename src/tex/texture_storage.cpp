@@ -1,11 +1,11 @@
-#include "pch.hpp"
-#include "texture_storage.hpp"
+#include "tex/pch.hpp"
+#include "tex/texture_storage.hpp"
 #include <be/core/alg.hpp>
 #include <glm/vector_relational.hpp>
 #include <glm/gtc/round.hpp>
 #include <cassert>
 
-namespace be::gfx {
+namespace be::gfx::tex {
 
 ///////////////////////////////////////////////////////////////////////////////
 TextureStorage TextureStorage::nil = TextureStorage();
@@ -368,4 +368,4 @@ std::size_t calculate_required_texture_storage(std::size_t layers,
    return layer_span * layers;
 }
 
-} // be::gfx
+} // be::gfx::tex

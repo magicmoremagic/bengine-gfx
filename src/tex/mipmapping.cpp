@@ -1,9 +1,9 @@
-#include "pch.hpp"
-#include "mipmapping.hpp"
+#include "tex/pch.hpp"
+#include "tex/mipmapping.hpp"
 #include <glm/gtc/integer.hpp>
 #include <be/core/alg.hpp>
 
-namespace be::gfx {
+namespace be::gfx::tex {
 
 ///////////////////////////////////////////////////////////////////////////////
 U8 mipmap_levels(std::size_t dim) {
@@ -40,4 +40,4 @@ U8 mipmap_levels(uvec3 dim) {
    return static_cast<U8>(glm::log2(max(max(0u, dim.x), max(dim.y, dim.z))) + 1u);
 }
 
-} // be::gfx
+} // be::gfx::tex

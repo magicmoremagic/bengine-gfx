@@ -1,9 +1,9 @@
-#if !defined(BE_GFX_VISIT_IMAGE_HPP_) && !defined(DOXYGEN)
+#if !defined(BE_GFX_TEX_VISIT_IMAGE_HPP_) && !defined(DOXYGEN)
 #include "visit_image.hpp"
-#elif !defined(BE_GFX_VISIT_IMAGE_INL_)
-#define BE_GFX_VISIT_IMAGE_INL_
+#elif !defined(BE_GFX_TEX_VISIT_IMAGE_INL_)
+#define BE_GFX_TEX_VISIT_IMAGE_INL_
 
-namespace be::gfx {
+namespace be::gfx::tex {
 namespace detail {
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -55,7 +55,7 @@ struct VisitImage<ImageView, Coord, Visitor, 3> {
    }
 };
 
-} // be::gfx::detail
+} // be::gfx::tex::detail
 
 ///////////////////////////////////////////////////////////////////////////////
 template <typename Coord, typename Visitor, typename ImageView>
@@ -93,6 +93,6 @@ void visit_image_pixels(ImageView& image, ibox extents, Visitor visitor) {
    detail::VisitImage<ImageView, Coord, Visitor>::visit(image, extents, std::move(visitor));
 }
 
-} // be::gfx
+} // be::gfx::tex
 
 #endif

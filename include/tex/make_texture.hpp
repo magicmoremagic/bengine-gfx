@@ -1,10 +1,10 @@
 #pragma once
-#ifndef BE_GFX_MAKE_TEXTURE_HPP_
-#define BE_GFX_MAKE_TEXTURE_HPP_
+#ifndef BE_GFX_TEX_MAKE_TEXTURE_HPP_
+#define BE_GFX_TEX_MAKE_TEXTURE_HPP_
 
 #include "texture.hpp"
 
-namespace be::gfx {
+namespace be::gfx::tex {
 
 Texture make_lineal_texture(const ImageFormat& format,
                             I32 dim,
@@ -103,6 +103,6 @@ std::size_t calculate_required_texture_size(TextureClass tex_class,
                                             std::size_t levels = TextureStorage::max_levels,
                                             TextureAlignment alignment = TextureAlignment());
 
-} // be::gfx
+} // be::gfx::tex
 
 #endif

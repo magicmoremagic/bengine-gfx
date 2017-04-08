@@ -1,11 +1,11 @@
-#include "pch.hpp"
-#include "make_texture.hpp"
-#include "mipmapping.hpp"
+#include "tex/pch.hpp"
+#include "tex/make_texture.hpp"
+#include "tex/mipmapping.hpp"
 #include <be/core/alg.hpp>
 #include <glm/vec2.hpp>
 #include <glm/gtc/vec1.hpp>
 
-namespace be::gfx {
+namespace be::gfx::tex {
 
 ///////////////////////////////////////////////////////////////////////////////
 Texture make_lineal_texture(const ImageFormat& format, I32 dim, std::size_t levels, Buf<UC> buf, TextureAlignment alignment) {
@@ -51,7 +51,7 @@ Texture make_texture(TextureClass tex_class, const ImageFormat& format, ivec3 di
       layers = 1;
    }
 
-   std::size_t faces = be::gfx::faces(tex_class);
+   std::size_t faces = be::gfx::tex::faces(tex_class);
 
    if (buf) {
       img.data = std::make_unique<TextureStorage>(layers, faces, levels, dim, format.block_dim(), format.block_size(), std::move(buf), alignment);
@@ -106,9 +106,9 @@ std::size_t calculate_required_texture_size(TextureClass tex_class, const ImageF
       layers = 1;
    }
 
-   std::size_t faces = be::gfx::faces(tex_class);
+   std::size_t faces = be::gfx::tex::faces(tex_class);
 
    return calculate_required_texture_storage(layers, faces, levels, dim, format.block_dim(), format.block_size(), alignment);
 }
 
-} // be::gfx
+} // be::gfx::tex

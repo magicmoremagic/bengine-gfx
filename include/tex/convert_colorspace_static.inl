@@ -1,9 +1,9 @@
-#if !defined(BE_GFX_CONVERT_COLORSPACE_STATIC_HPP_) && !defined(DOXYGEN)
+#if !defined(BE_GFX_TEX_CONVERT_COLORSPACE_STATIC_HPP_) && !defined(DOXYGEN)
 #include "convert_colorspace_static.hpp"
-#elif !defined(BE_GFX_CONVERT_COLORSPACE_STATIC_INL_)
-#define BE_GFX_CONVERT_COLORSPACE_STATIC_INL_
+#elif !defined(BE_GFX_TEX_CONVERT_COLORSPACE_STATIC_INL_)
+#define BE_GFX_TEX_CONVERT_COLORSPACE_STATIC_INL_
 
-namespace be::gfx {
+namespace be::gfx::tex {
 namespace detail {
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -584,11 +584,11 @@ template <> struct ConvertColorspace<ColorspaceTag<Colorspace::srgb>, Colorspace
 
 #pragma endregion
 
-} // be::gfx::detail
+} // be::gfx::tex::detail
 
 ///////////////////////////////////////////////////////////////////////////////
 template <Colorspace Input, Colorspace Output>
-ImagePixelNormTransformFunc convert_colorspace_func() {
+PixelNormTransformFunc convert_colorspace_func() {
    return detail::ConvertColorspace<detail::ColorspaceTag<Input>, detail::ColorspaceTag<Output>>::convert;
 }
 
@@ -598,6 +598,6 @@ vec4 convert_colorspace(vec4 pixel_norm) {
    return detail::ConvertColorspace<detail::ColorspaceTag<Input>, detail::ColorspaceTag<Output>>::convert(pixel_norm);
 }
 
-} // be::gfx
+} // be::gfx::tex
 
 #endif

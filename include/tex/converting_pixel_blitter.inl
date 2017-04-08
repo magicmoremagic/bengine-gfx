@@ -1,9 +1,9 @@
-#if !defined(BE_GFX_CONVERTING_PIXEL_BLITTER_HPP_) && !defined(DOXYGEN)
+#if !defined(BE_GFX_TEX_CONVERTING_PIXEL_BLITTER_HPP_) && !defined(DOXYGEN)
 #include "converting_pixel_blitter.hpp"
-#elif !defined(BE_GFX_CONVERTING_PIXEL_BLITTER_INL_)
-#define BE_GFX_CONVERTING_PIXEL_BLITTER_INL_
+#elif !defined(BE_GFX_TEX_CONVERTING_PIXEL_BLITTER_INL_)
+#define BE_GFX_TEX_CONVERTING_PIXEL_BLITTER_INL_
 
-namespace be::gfx {
+namespace be::gfx::tex {
 
 ///////////////////////////////////////////////////////////////////////////////
 template <typename SourceCoord, typename DestCoord, typename SourceImageView, typename DestImageView>
@@ -52,6 +52,6 @@ ConvertingPixelBlitter(const SourceImageView& source, DestImageView& dest)
    }
 }
 
-} // be::gfx
+} // be::gfx::tex
 
 #endif

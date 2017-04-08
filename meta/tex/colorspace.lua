@@ -3,14 +3,14 @@ local no_write = ...
 include 'common/enum'
 include 'common/load_tsv'
 
-local family_data = load_tsv(resolve_include_path('colorspace_family.tsv'))
+local family_data = load_tsv(resolve_include_path('tex/colorspace_family.tsv'))
 colorspace_family = make_enum_class('ColorspaceFamily', 'U8', family_data)
 
 colorspace_variant = make_enum_class('ColorspaceVariant', 'U8', {
    'none', 'hsl', 'hsv', 'ycbcr'
 })
 
-local data = load_tsv(resolve_include_path('colorspace.tsv'), function (token, key)
+local data = load_tsv(resolve_include_path('tex/colorspace.tsv'), function (token, key)
    if key == 'linear' then
       return string.lower(token) == 'true'
    else
@@ -42,8 +42,8 @@ if not no_write then
       write_template('common/enum_bool_mapping_decl', colorspace_is_linear_map)
       write_template('common/enum_enum_mapping_decl', colorspace_family_map)
       write_template('common/enum_enum_mapping_decl', colorspace_variant_map)
-      write_template('colorspace_info', colorspace)
-      write_template('colorspace_family_info', colorspace_family)
+      write_template('tex/colorspace_info', colorspace)
+      write_template('tex/colorspace_family_info', colorspace_family)
    else
       write_template('common/enum_is_valid', colorspace)
       write_template('common/enum_is_valid', colorspace_family)

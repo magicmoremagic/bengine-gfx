@@ -1,12 +1,13 @@
 #pragma once
-#ifndef BE_GFX_IMAGE_REGION_HPP_
-#define BE_GFX_IMAGE_REGION_HPP_
+#ifndef BE_GFX_TEX_IMAGE_REGION_HPP_
+#define BE_GFX_TEX_IMAGE_REGION_HPP_
 
+#include "gfx_tex_autolink.hpp"
 #include <be/core/extents.hpp>
 #include <be/core/glm_helpers.hpp>
 #include <glm/vec3.hpp>
 
-namespace be::gfx {
+namespace be::gfx::tex {
 
 class ImageRegion final {
 public:
@@ -72,7 +73,7 @@ template <typename Coord> Coord region_to_image(ImageRegion region, Coord region
 ivec3 image_to_region(ivec3 image_coord, ImageRegion region);
 template <typename Coord> Coord image_to_region(Coord image_coord, ImageRegion region);
 
-} // be::gfx
+} // be::gfx::tex
 
 #include "image_region.inl"
 

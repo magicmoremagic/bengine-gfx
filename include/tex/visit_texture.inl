@@ -1,9 +1,9 @@
-#if !defined(BE_GFX_VISIT_TEXTURE_HPP_) && !defined(DOXYGEN)
+#if !defined(BE_GFX_TEX_VISIT_TEXTURE_HPP_) && !defined(DOXYGEN)
 #include "visit_texture.hpp"
-#elif !defined(BE_GFX_VISIT_TEXTURE_INL_)
-#define BE_GFX_VISIT_TEXTURE_INL_
+#elif !defined(BE_GFX_TEX_VISIT_TEXTURE_INL_)
+#define BE_GFX_TEX_VISIT_TEXTURE_INL_
 
-namespace be::gfx {
+namespace be::gfx::tex {
 namespace detail {
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -148,7 +148,7 @@ struct VisitTextureImages<TextureView, Coord, Visitor, 3> {
    }
 };
 
-} // be::gfx::detail
+} // be::gfx::tex::detail
 
 ///////////////////////////////////////////////////////////////////////////////
 template <typename Visitor, typename TextureView>
@@ -179,6 +179,6 @@ void visit_texture_pixels(TextureView& texture, Visitor visitor) {
    detail::VisitTextureImages<TextureView, Coord, Visitor>::visit_pixels(texture, std::move(visitor));
 }
 
-} // be::gfx
+} // be::gfx::tex
 
 #endif

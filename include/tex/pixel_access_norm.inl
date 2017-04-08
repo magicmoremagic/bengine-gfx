@@ -1,9 +1,9 @@
-#if !defined(BE_GFX_IMAGE_PIXEL_ACCESS_NORM_HPP_) && !defined(DOXYGEN)
-#include "image_pixel_access_norm.hpp"
-#elif !defined(BE_GFX_IMAGE_PIXEL_ACCESS_NORM_INL_)
-#define BE_GFX_IMAGE_PIXEL_ACCESS_NORM_INL_
+#if !defined(BE_GFX_TEX_PIXEL_ACCESS_NORM_HPP_) && !defined(DOXYGEN)
+#include "pixel_access_norm.hpp"
+#elif !defined(BE_GFX_TEX_PIXEL_ACCESS_NORM_INL_)
+#define BE_GFX_TEX_PIXEL_ACCESS_NORM_INL_
 
-namespace be::gfx {
+namespace be::gfx::tex {
 namespace detail {
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -17,11 +17,11 @@ I32 image_component_to_signed(UnsignedType data) {
    }
 }
 
-#pragma region ImageComponentRawNorm
+#pragma region ComponentRawNorm
 
 ///////////////////////////////////////////////////////////////////////////////
-template <typename T, std::size_t Bits, ImageComponentType ComponentType>
-struct ImageComponentRawNorm {
+template <typename T, std::size_t Bits, ComponentType ComponentType>
+struct ComponentRawNorm {
    static_assert(Bits > 0);
    static F32 decode(T data) {
       return 0.f;
@@ -33,7 +33,7 @@ struct ImageComponentRawNorm {
 
 ///////////////////////////////////////////////////////////////////////////////
 template <typename T, std::size_t Bits>
-struct ImageComponentRawNorm<T, Bits, ImageComponentType::uint> {
+struct ComponentRawNorm<T, Bits, ComponentType::uint> {
    static_assert(Bits > 0);
    static F32 decode(T data) {
       return static_cast<F32>(data);
@@ -46,7 +46,7 @@ struct ImageComponentRawNorm<T, Bits, ImageComponentType::uint> {
 
 ///////////////////////////////////////////////////////////////////////////////
 template <typename T>
-struct ImageComponentRawNorm<T, 64, ImageComponentType::uint> {
+struct ComponentRawNorm<T, 64, ComponentType::uint> {
    static F32 decode(T data) {
       return static_cast<F32>(data);
    }
@@ -58,7 +58,7 @@ struct ImageComponentRawNorm<T, 64, ImageComponentType::uint> {
 
 ///////////////////////////////////////////////////////////////////////////////
 template <typename T, std::size_t Bits>
-struct ImageComponentRawNorm<T, Bits, ImageComponentType::sint> {
+struct ComponentRawNorm<T, Bits, ComponentType::sint> {
    static_assert(Bits > 1);
    static F32 decode(T data) {
       return static_cast<F32>(image_component_to_signed<T, Bits>(data));
@@ -75,7 +75,7 @@ struct ImageComponentRawNorm<T, Bits, ImageComponentType::sint> {
 
 ///////////////////////////////////////////////////////////////////////////////
 template <typename T>
-struct ImageComponentRawNorm<T, 1, ImageComponentType::sint> {
+struct ComponentRawNorm<T, 1, ComponentType::sint> {
    static F32 decode(T data) {
       return static_cast<F32>(data);
    }
@@ -87,7 +87,7 @@ struct ImageComponentRawNorm<T, 1, ImageComponentType::sint> {
 
 ///////////////////////////////////////////////////////////////////////////////
 template <typename T>
-struct ImageComponentRawNorm<T, 64, ImageComponentType::sint> {
+struct ComponentRawNorm<T, 64, ComponentType::sint> {
    static F32 decode(T data) {
       return static_cast<F32>(static_cast<I64>(data));
    }
@@ -100,7 +100,7 @@ struct ImageComponentRawNorm<T, 64, ImageComponentType::sint> {
 
 ///////////////////////////////////////////////////////////////////////////////
 template <typename T, std::size_t Bits>
-struct ImageComponentRawNorm<T, Bits, ImageComponentType::unorm> {
+struct ComponentRawNorm<T, Bits, ComponentType::unorm> {
    static_assert(Bits > 0);
    static constexpr F32 scale = static_cast<F32>((1ull << Bits) - 1ull);
    static constexpr F32 invscale = 1.f / scale;
@@ -114,7 +114,7 @@ struct ImageComponentRawNorm<T, Bits, ImageComponentType::unorm> {
 
 ///////////////////////////////////////////////////////////////////////////////
 template <typename T>
-struct ImageComponentRawNorm<T, 64, ImageComponentType::unorm> {
+struct ComponentRawNorm<T, 64, ComponentType::unorm> {
    static constexpr F32 scale = static_cast<F32>(~U64(0));
    static constexpr F32 invscale = 1.f / scale;
    static F32 decode(T data) {
@@ -127,7 +127,7 @@ struct ImageComponentRawNorm<T, 64, ImageComponentType::unorm> {
 
 ///////////////////////////////////////////////////////////////////////////////
 template <typename T, std::size_t Bits>
-struct ImageComponentRawNorm<T, Bits, ImageComponentType::snorm> {
+struct ComponentRawNorm<T, Bits, ComponentType::snorm> {
    static_assert(Bits > 1);
    static constexpr F32 scale = static_cast<F32>((1ull << (Bits - 1)) - 1ull);
    static constexpr F32 invscale = 1.f / scale;
@@ -145,7 +145,7 @@ struct ImageComponentRawNorm<T, Bits, ImageComponentType::snorm> {
 
 ///////////////////////////////////////////////////////////////////////////////
 template <typename T>
-struct ImageComponentRawNorm<T, 1, ImageComponentType::snorm> {
+struct ComponentRawNorm<T, 1, ComponentType::snorm> {
    static F32 decode(T data) {
       return std::max(0.f, static_cast<F32>(data));
    }
@@ -157,7 +157,7 @@ struct ImageComponentRawNorm<T, 1, ImageComponentType::snorm> {
 
 ///////////////////////////////////////////////////////////////////////////////
 template <typename T>
-struct ImageComponentRawNorm<T, 64, ImageComponentType::snorm> {
+struct ComponentRawNorm<T, 64, ComponentType::snorm> {
    static constexpr F32 scale = static_cast<F32>((1ull << 63) - 1ull);
    static constexpr F32 invscale = 1.f / scale;
    static F32 decode(T data) {
@@ -171,7 +171,7 @@ struct ImageComponentRawNorm<T, 64, ImageComponentType::snorm> {
 
 ///////////////////////////////////////////////////////////////////////////////
 template <typename T>
-struct ImageComponentRawNorm<T, 11, ImageComponentType::ufloat> {
+struct ComponentRawNorm<T, 11, ComponentType::ufloat> {
    static constexpr int f11_mantissa_bits = 6;
    static constexpr int f11_exponent_bits = 5;
    static constexpr U16 f11_mantissa_mask = (1u << f11_mantissa_bits) - 1u;
@@ -283,7 +283,7 @@ struct ImageComponentRawNorm<T, 11, ImageComponentType::ufloat> {
 
 ///////////////////////////////////////////////////////////////////////////////
 template <typename T>
-struct ImageComponentRawNorm<T, 10, ImageComponentType::ufloat> {
+struct ComponentRawNorm<T, 10, ComponentType::ufloat> {
    static constexpr int f10_mantissa_bits = 5;
    static constexpr int f10_exponent_bits = 5;
    static constexpr U16 f10_mantissa_mask = (1u << f10_mantissa_bits) - 1u;
@@ -395,7 +395,7 @@ struct ImageComponentRawNorm<T, 10, ImageComponentType::ufloat> {
 
 ///////////////////////////////////////////////////////////////////////////////
 template <typename T>
-struct ImageComponentRawNorm<T, 64, ImageComponentType::sfloat> {
+struct ComponentRawNorm<T, 64, ComponentType::sfloat> {
    static F32 decode(T data) {
       static_assert(sizeof(T) == 8);
       F64 float_data;
@@ -413,7 +413,7 @@ struct ImageComponentRawNorm<T, 64, ImageComponentType::sfloat> {
 
 ///////////////////////////////////////////////////////////////////////////////
 template <typename T>
-struct ImageComponentRawNorm<T, 32, ImageComponentType::sfloat> {
+struct ComponentRawNorm<T, 32, ComponentType::sfloat> {
    static F32 decode(T data) {
       static_assert(sizeof(T) == 4);
       F32 float_data;
@@ -430,7 +430,7 @@ struct ImageComponentRawNorm<T, 32, ImageComponentType::sfloat> {
 
 ///////////////////////////////////////////////////////////////////////////////
 template <typename T>
-struct ImageComponentRawNorm<T, 16, ImageComponentType::sfloat> {
+struct ComponentRawNorm<T, 16, ComponentType::sfloat> {
    static constexpr int f16_mantissa_bits = 10;
    static constexpr int f16_exponent_bits = 5;
    static constexpr U16 f16_mantissa_mask = (1u << f16_mantissa_bits) - 1u;
@@ -541,50 +541,50 @@ struct ImageComponentRawNorm<T, 16, ImageComponentType::sfloat> {
 
 ///////////////////////////////////////////////////////////////////////////////
 template <typename UnsignedType, std::size_t Bits>
-F32 decode_image_component(UnsignedType data, ImageComponentType type) {
+F32 decode_image_component(UnsignedType data, ComponentType type) {
    switch (type) {
-      case ImageComponentType::expo:
-      case ImageComponentType::uint:   return ImageComponentRawNorm<UnsignedType, Bits, ImageComponentType::uint>::decode(data);
-      case ImageComponentType::sint:   return ImageComponentRawNorm<UnsignedType, Bits, ImageComponentType::sint>::decode(data);
-      case ImageComponentType::unorm:  return ImageComponentRawNorm<UnsignedType, Bits, ImageComponentType::unorm>::decode(data);
-      case ImageComponentType::snorm:  return ImageComponentRawNorm<UnsignedType, Bits, ImageComponentType::snorm>::decode(data);
-      case ImageComponentType::ufloat: return ImageComponentRawNorm<UnsignedType, Bits, ImageComponentType::ufloat>::decode(data);
-      case ImageComponentType::sfloat: return ImageComponentRawNorm<UnsignedType, Bits, ImageComponentType::sfloat>::decode(data);
-      default:                         return ImageComponentRawNorm<UnsignedType, Bits, ImageComponentType::none>::decode(data);
+      case ComponentType::expo:
+      case ComponentType::uint:   return ComponentRawNorm<UnsignedType, Bits, ComponentType::uint>::decode(data);
+      case ComponentType::sint:   return ComponentRawNorm<UnsignedType, Bits, ComponentType::sint>::decode(data);
+      case ComponentType::unorm:  return ComponentRawNorm<UnsignedType, Bits, ComponentType::unorm>::decode(data);
+      case ComponentType::snorm:  return ComponentRawNorm<UnsignedType, Bits, ComponentType::snorm>::decode(data);
+      case ComponentType::ufloat: return ComponentRawNorm<UnsignedType, Bits, ComponentType::ufloat>::decode(data);
+      case ComponentType::sfloat: return ComponentRawNorm<UnsignedType, Bits, ComponentType::sfloat>::decode(data);
+      default:                         return ComponentRawNorm<UnsignedType, Bits, ComponentType::none>::decode(data);
    }
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 template <typename UnsignedType, std::size_t Bits>
-UnsignedType encode_image_component(F32 component, ImageComponentType type) {
+UnsignedType encode_image_component(F32 component, ComponentType type) {
    switch (type) {
-      case ImageComponentType::expo:
-      case ImageComponentType::uint:   return ImageComponentRawNorm<UnsignedType, Bits, ImageComponentType::uint>::encode(component);
-      case ImageComponentType::sint:   return ImageComponentRawNorm<UnsignedType, Bits, ImageComponentType::sint>::encode(component);
-      case ImageComponentType::unorm:  return ImageComponentRawNorm<UnsignedType, Bits, ImageComponentType::unorm>::encode(component);
-      case ImageComponentType::snorm:  return ImageComponentRawNorm<UnsignedType, Bits, ImageComponentType::snorm>::encode(component);
-      case ImageComponentType::ufloat: return ImageComponentRawNorm<UnsignedType, Bits, ImageComponentType::ufloat>::encode(component);
-      case ImageComponentType::sfloat: return ImageComponentRawNorm<UnsignedType, Bits, ImageComponentType::sfloat>::encode(component);
-      default:                         return ImageComponentRawNorm<UnsignedType, Bits, ImageComponentType::none>::encode(component);
+      case ComponentType::expo:
+      case ComponentType::uint:   return ComponentRawNorm<UnsignedType, Bits, ComponentType::uint>::encode(component);
+      case ComponentType::sint:   return ComponentRawNorm<UnsignedType, Bits, ComponentType::sint>::encode(component);
+      case ComponentType::unorm:  return ComponentRawNorm<UnsignedType, Bits, ComponentType::unorm>::encode(component);
+      case ComponentType::snorm:  return ComponentRawNorm<UnsignedType, Bits, ComponentType::snorm>::encode(component);
+      case ComponentType::ufloat: return ComponentRawNorm<UnsignedType, Bits, ComponentType::ufloat>::encode(component);
+      case ComponentType::sfloat: return ComponentRawNorm<UnsignedType, Bits, ComponentType::sfloat>::encode(component);
+      default:                         return ComponentRawNorm<UnsignedType, Bits, ComponentType::none>::encode(component);
    }
 }
 
 #pragma region PixelRawNormAccessUncompressedNonPacked
 
 ///////////////////////////////////////////////////////////////////////////////
-template <typename ImageView, typename Coord, bool IsSimple, ImageBlockPacking Packing, ImageComponentType ComponentType>
+template <typename ImageView, typename Coord, bool IsSimple, BlockPacking Packing, ComponentType ComponentType>
 struct PixelRawNormAccessUncompressedNonPacked {
-   static constexpr glm::length_t components = ImageBlockPackingInfo<Packing>::components;
-   static constexpr std::size_t word_size_bits = ImageBlockPackingInfo<Packing>::word_size * 8;
+   static constexpr glm::length_t components = BlockPackingInfo<Packing>::components;
+   static constexpr std::size_t word_size_bits = BlockPackingInfo<Packing>::word_size * 8;
 
-   using word_type = typename ImageBlockPackingInfo<Packing>::unsigned_word_type;
+   using word_type = typename BlockPackingInfo<Packing>::unsigned_word_type;
    using data_type = glm::vec<components, word_type>;
 
    static vec4 get(const ImageView& image, Coord pixel_coord) {
       vec4 pixel;
       data_type data = get_pixel_uncompressed<data_type, Coord, ImageView, IsSimple>(image, pixel_coord);
       for (glm::length_t c = 0; c < components; ++c) {
-         pixel[c] = ImageComponentRawNorm<word_type, word_size_bits, ComponentType>::decode(data[c]);
+         pixel[c] = ComponentRawNorm<word_type, word_size_bits, ComponentType>::decode(data[c]);
       }
       return pixel;
    }
@@ -592,19 +592,19 @@ struct PixelRawNormAccessUncompressedNonPacked {
    static void put(ImageView& image, Coord pixel_coord, vec4 pixel) {
       data_type data;
       for (glm::length_t c = 0; c < components; ++c) {
-         data[c] = ImageComponentRawNorm<word_type, word_size_bits, ComponentType>::encode(pixel[c]);
+         data[c] = ComponentRawNorm<word_type, word_size_bits, ComponentType>::encode(pixel[c]);
       }
       put_pixel_uncompressed<data_type, Coord, ImageView, IsSimple>(image, pixel_coord, data);
    }
 };
 
 ///////////////////////////////////////////////////////////////////////////////
-template <typename ImageView, typename Coord, bool IsSimple, ImageBlockPacking Packing>
-struct PixelRawNormAccessUncompressedNonPacked<ImageView, Coord, IsSimple, Packing, ImageComponentType::none> {
-   static constexpr glm::length_t components = ImageBlockPackingInfo<Packing>::components;
-   static constexpr std::size_t word_size_bits = ImageBlockPackingInfo<Packing>::word_size * 8;
+template <typename ImageView, typename Coord, bool IsSimple, BlockPacking Packing>
+struct PixelRawNormAccessUncompressedNonPacked<ImageView, Coord, IsSimple, Packing, ComponentType::none> {
+   static constexpr glm::length_t components = BlockPackingInfo<Packing>::components;
+   static constexpr std::size_t word_size_bits = BlockPackingInfo<Packing>::word_size * 8;
 
-   using word_type = typename ImageBlockPackingInfo<Packing>::unsigned_word_type;
+   using word_type = typename BlockPackingInfo<Packing>::unsigned_word_type;
    using data_type = glm::vec<components, word_type>;
 
    static vec4 get(const ImageView& image, Coord pixel_coord) {
@@ -612,7 +612,7 @@ struct PixelRawNormAccessUncompressedNonPacked<ImageView, Coord, IsSimple, Packi
       data_type data = get_pixel_uncompressed<data_type, Coord, ImageView, IsSimple>(image, pixel_coord);
       const auto component_types = image.format().component_types();
       for (glm::length_t c = 0; c < components; ++c) {
-         pixel[c] = decode_image_component<word_type, word_size_bits>(data[c], static_cast<ImageComponentType>(component_types[c]));
+         pixel[c] = decode_image_component<word_type, word_size_bits>(data[c], static_cast<ComponentType>(component_types[c]));
       }
       return pixel;
    }
@@ -621,7 +621,7 @@ struct PixelRawNormAccessUncompressedNonPacked<ImageView, Coord, IsSimple, Packi
       data_type data;
       const auto component_types = image.format().component_types();
       for (glm::length_t c = 0; c < components; ++c) {
-         data[c] = encode_image_component<word_type, word_size_bits>(pixel[c], static_cast<ImageComponentType>(component_types[c]));
+         data[c] = encode_image_component<word_type, word_size_bits>(pixel[c], static_cast<ComponentType>(component_types[c]));
       }
       put_pixel_uncompressed<data_type, Coord, ImageView, IsSimple>(image, pixel_coord, data);
    }
@@ -631,34 +631,34 @@ struct PixelRawNormAccessUncompressedNonPacked<ImageView, Coord, IsSimple, Packi
 #pragma region PixelRawNormAccessUncompressedPacked
 
 ///////////////////////////////////////////////////////////////////////////////
-template <typename ImageView, typename Coord, bool IsSimple, ImageBlockPacking Packing, ImageComponentType ComponentType, U8 Components = ImageBlockPackingInfo<Packing>::components>
+template <typename ImageView, typename Coord, bool IsSimple, BlockPacking Packing, ComponentType ComponentType, U8 Components = BlockPackingInfo<Packing>::components>
 struct PixelRawNormAccessUncompressedPacked { };
 
 ///////////////////////////////////////////////////////////////////////////////
-template <typename ImageView, typename Coord, bool IsSimple, ImageBlockPacking Packing, ImageComponentType ComponentType>
+template <typename ImageView, typename Coord, bool IsSimple, BlockPacking Packing, ComponentType ComponentType>
 struct PixelRawNormAccessUncompressedPacked<ImageView, Coord, IsSimple, Packing, ComponentType, 1> {
-   using packing_info = ImageBlockPackingInfo<Packing>;
+   using packing_info = BlockPackingInfo<Packing>;
    using word_type = typename packing_info::unsigned_word_type;
    using data_type = glm::vec<packing_info::words, word_type>;
 
    static vec4 get(const ImageView& image, Coord pixel_coord) {
       vec4 pixel;
       data_type data = get_pixel_uncompressed<data_type, Coord, ImageView, IsSimple>(image, pixel_coord);
-      pixel[0] = ImageComponentRawNorm<word_type, packing_info::component_bit_width[0], ComponentType>::decode((data[packing_info::component_word_offset[0]] >> packing_info::component_bit_offset[0]) & ((1 << packing_info::component_bit_width[0]) - 1));
+      pixel[0] = ComponentRawNorm<word_type, packing_info::component_bit_width[0], ComponentType>::decode((data[packing_info::component_word_offset[0]] >> packing_info::component_bit_offset[0]) & ((1 << packing_info::component_bit_width[0]) - 1));
       return pixel;
    }
 
    static void put(ImageView& image, Coord pixel_coord, vec4 pixel) {
       data_type data;
-      data[packing_info::component_word_offset[0]] |= (ImageComponentRawNorm<word_type, packing_info::component_bit_width[0], ComponentType>::encode(pixel[0]) & ((1 << packing_info::component_bit_width[0]) - 1)) << packing_info::component_bit_offset[0];
+      data[packing_info::component_word_offset[0]] |= (ComponentRawNorm<word_type, packing_info::component_bit_width[0], ComponentType>::encode(pixel[0]) & ((1 << packing_info::component_bit_width[0]) - 1)) << packing_info::component_bit_offset[0];
       put_pixel_uncompressed<data_type, Coord, ImageView, IsSimple>(image, pixel_coord, data);
    }
 };
 
 ///////////////////////////////////////////////////////////////////////////////
-template <typename ImageView, typename Coord, bool IsSimple, ImageBlockPacking Packing>
-struct PixelRawNormAccessUncompressedPacked<ImageView, Coord, IsSimple, Packing, ImageComponentType::none, 1> {
-   using packing_info = ImageBlockPackingInfo<Packing>;
+template <typename ImageView, typename Coord, bool IsSimple, BlockPacking Packing>
+struct PixelRawNormAccessUncompressedPacked<ImageView, Coord, IsSimple, Packing, ComponentType::none, 1> {
+   using packing_info = BlockPackingInfo<Packing>;
    using word_type = typename packing_info::unsigned_word_type;
    using data_type = glm::vec<packing_info::words, word_type>;
 
@@ -666,45 +666,45 @@ struct PixelRawNormAccessUncompressedPacked<ImageView, Coord, IsSimple, Packing,
       vec4 pixel;
       data_type data = get_pixel_uncompressed<data_type, Coord, ImageView, IsSimple>(image, pixel_coord);
       const auto component_types = image.format().component_types();
-      pixel[0] = decode_image_component<word_type, packing_info::component_bit_width[0]>((data[packing_info::component_word_offset[0]] >> packing_info::component_bit_offset[0]) & ((1 << packing_info::component_bit_width[0]) - 1), static_cast<ImageComponentType>(component_types[0]));
+      pixel[0] = decode_image_component<word_type, packing_info::component_bit_width[0]>((data[packing_info::component_word_offset[0]] >> packing_info::component_bit_offset[0]) & ((1 << packing_info::component_bit_width[0]) - 1), static_cast<ComponentType>(component_types[0]));
       return pixel;
    }
 
    static void put(ImageView& image, Coord pixel_coord, vec4 pixel) {
       data_type data;
       const auto component_types = image.format().component_types();
-      data[packing_info::component_word_offset[0]] |= (encode_image_component<word_type, packing_info::component_bit_width[0]>(pixel[0], static_cast<ImageComponentType>(component_types[0])) & ((1 << packing_info::component_bit_width[0]) - 1)) << packing_info::component_bit_offset[0];
+      data[packing_info::component_word_offset[0]] |= (encode_image_component<word_type, packing_info::component_bit_width[0]>(pixel[0], static_cast<ComponentType>(component_types[0])) & ((1 << packing_info::component_bit_width[0]) - 1)) << packing_info::component_bit_offset[0];
       put_pixel_uncompressed<data_type, Coord, ImageView, IsSimple>(image, pixel_coord, data);
    }
 };
 
 ///////////////////////////////////////////////////////////////////////////////
-template <typename ImageView, typename Coord, bool IsSimple, ImageBlockPacking Packing, ImageComponentType ComponentType>
+template <typename ImageView, typename Coord, bool IsSimple, BlockPacking Packing, ComponentType ComponentType>
 struct PixelRawNormAccessUncompressedPacked<ImageView, Coord, IsSimple, Packing, ComponentType, 2> {
-   using packing_info = ImageBlockPackingInfo<Packing>;
+   using packing_info = BlockPackingInfo<Packing>;
    using word_type = typename packing_info::unsigned_word_type;
    using data_type = glm::vec<packing_info::words, word_type>;
 
    static vec4 get(const ImageView& image, Coord pixel_coord) {
       vec4 pixel;
       data_type data = get_pixel_uncompressed<data_type, Coord, ImageView, IsSimple>(image, pixel_coord);
-      pixel[0] = ImageComponentRawNorm<word_type, packing_info::component_bit_width[0], ComponentType>::decode((data[packing_info::component_word_offset[0]] >> packing_info::component_bit_offset[0]) & ((1 << packing_info::component_bit_width[0]) - 1));
-      pixel[1] = ImageComponentRawNorm<word_type, packing_info::component_bit_width[1], ComponentType>::decode((data[packing_info::component_word_offset[1]] >> packing_info::component_bit_offset[1]) & ((1 << packing_info::component_bit_width[1]) - 1));
+      pixel[0] = ComponentRawNorm<word_type, packing_info::component_bit_width[0], ComponentType>::decode((data[packing_info::component_word_offset[0]] >> packing_info::component_bit_offset[0]) & ((1 << packing_info::component_bit_width[0]) - 1));
+      pixel[1] = ComponentRawNorm<word_type, packing_info::component_bit_width[1], ComponentType>::decode((data[packing_info::component_word_offset[1]] >> packing_info::component_bit_offset[1]) & ((1 << packing_info::component_bit_width[1]) - 1));
       return pixel;
    }
 
    static void put(ImageView& image, Coord pixel_coord, vec4 pixel) {
       data_type data;
-      data[packing_info::component_word_offset[0]] |= (ImageComponentRawNorm<word_type, packing_info::component_bit_width[0], ComponentType>::encode(pixel[0]) & ((1 << packing_info::component_bit_width[0]) - 1)) << packing_info::component_bit_offset[0];
-      data[packing_info::component_word_offset[1]] |= (ImageComponentRawNorm<word_type, packing_info::component_bit_width[1], ComponentType>::encode(pixel[1]) & ((1 << packing_info::component_bit_width[1]) - 1)) << packing_info::component_bit_offset[1];
+      data[packing_info::component_word_offset[0]] |= (ComponentRawNorm<word_type, packing_info::component_bit_width[0], ComponentType>::encode(pixel[0]) & ((1 << packing_info::component_bit_width[0]) - 1)) << packing_info::component_bit_offset[0];
+      data[packing_info::component_word_offset[1]] |= (ComponentRawNorm<word_type, packing_info::component_bit_width[1], ComponentType>::encode(pixel[1]) & ((1 << packing_info::component_bit_width[1]) - 1)) << packing_info::component_bit_offset[1];
       put_pixel_uncompressed<data_type, Coord, ImageView, IsSimple>(image, pixel_coord, data);
    }
 };
 
 ///////////////////////////////////////////////////////////////////////////////
-template <typename ImageView, typename Coord, bool IsSimple, ImageBlockPacking Packing>
-struct PixelRawNormAccessUncompressedPacked<ImageView, Coord, IsSimple, Packing, ImageComponentType::none, 2> {
-   using packing_info = ImageBlockPackingInfo<Packing>;
+template <typename ImageView, typename Coord, bool IsSimple, BlockPacking Packing>
+struct PixelRawNormAccessUncompressedPacked<ImageView, Coord, IsSimple, Packing, ComponentType::none, 2> {
+   using packing_info = BlockPackingInfo<Packing>;
    using word_type = typename packing_info::unsigned_word_type;
    using data_type = glm::vec<packing_info::words, word_type>;
 
@@ -712,49 +712,49 @@ struct PixelRawNormAccessUncompressedPacked<ImageView, Coord, IsSimple, Packing,
       vec4 pixel;
       data_type data = get_pixel_uncompressed<data_type, Coord, ImageView, IsSimple>(image, pixel_coord);
       const auto component_types = image.format().component_types();
-      pixel[0] = decode_image_component<word_type, packing_info::component_bit_width[0]>((data[packing_info::component_word_offset[0]] >> packing_info::component_bit_offset[0]) & ((1 << packing_info::component_bit_width[0]) - 1), static_cast<ImageComponentType>(component_types[0]));
-      pixel[1] = decode_image_component<word_type, packing_info::component_bit_width[1]>((data[packing_info::component_word_offset[1]] >> packing_info::component_bit_offset[1]) & ((1 << packing_info::component_bit_width[1]) - 1), static_cast<ImageComponentType>(component_types[1]));
+      pixel[0] = decode_image_component<word_type, packing_info::component_bit_width[0]>((data[packing_info::component_word_offset[0]] >> packing_info::component_bit_offset[0]) & ((1 << packing_info::component_bit_width[0]) - 1), static_cast<ComponentType>(component_types[0]));
+      pixel[1] = decode_image_component<word_type, packing_info::component_bit_width[1]>((data[packing_info::component_word_offset[1]] >> packing_info::component_bit_offset[1]) & ((1 << packing_info::component_bit_width[1]) - 1), static_cast<ComponentType>(component_types[1]));
       return pixel;
    }
 
    static void put(ImageView& image, Coord pixel_coord, vec4 pixel) {
       data_type data;
       const auto component_types = image.format().component_types();
-      data[packing_info::component_word_offset[0]] |= (encode_image_component<word_type, packing_info::component_bit_width[0]>(pixel[0], static_cast<ImageComponentType>(component_types[0])) & ((1 << packing_info::component_bit_width[0]) - 1)) << packing_info::component_bit_offset[0];
-      data[packing_info::component_word_offset[1]] |= (encode_image_component<word_type, packing_info::component_bit_width[1]>(pixel[1], static_cast<ImageComponentType>(component_types[1])) & ((1 << packing_info::component_bit_width[1]) - 1)) << packing_info::component_bit_offset[1];
+      data[packing_info::component_word_offset[0]] |= (encode_image_component<word_type, packing_info::component_bit_width[0]>(pixel[0], static_cast<ComponentType>(component_types[0])) & ((1 << packing_info::component_bit_width[0]) - 1)) << packing_info::component_bit_offset[0];
+      data[packing_info::component_word_offset[1]] |= (encode_image_component<word_type, packing_info::component_bit_width[1]>(pixel[1], static_cast<ComponentType>(component_types[1])) & ((1 << packing_info::component_bit_width[1]) - 1)) << packing_info::component_bit_offset[1];
       put_pixel_uncompressed<data_type, Coord, ImageView, IsSimple>(image, pixel_coord, data);
    }
 };
 
 ///////////////////////////////////////////////////////////////////////////////
-template <typename ImageView, typename Coord, bool IsSimple, ImageBlockPacking Packing, ImageComponentType ComponentType>
+template <typename ImageView, typename Coord, bool IsSimple, BlockPacking Packing, ComponentType ComponentType>
 struct PixelRawNormAccessUncompressedPacked<ImageView, Coord, IsSimple, Packing, ComponentType, 3> {
-   using packing_info = ImageBlockPackingInfo<Packing>;
+   using packing_info = BlockPackingInfo<Packing>;
    using word_type = typename packing_info::unsigned_word_type;
    using data_type = glm::vec<packing_info::words, word_type>;
 
    static vec4 get(const ImageView& image, Coord pixel_coord) {
       vec4 pixel;
       data_type data = get_pixel_uncompressed<data_type, Coord, ImageView, IsSimple>(image, pixel_coord);
-      pixel[0] = ImageComponentRawNorm<word_type, packing_info::component_bit_width[0], ComponentType>::decode((data[packing_info::component_word_offset[0]] >> packing_info::component_bit_offset[0]) & ((1 << packing_info::component_bit_width[0]) - 1));
-      pixel[1] = ImageComponentRawNorm<word_type, packing_info::component_bit_width[1], ComponentType>::decode((data[packing_info::component_word_offset[1]] >> packing_info::component_bit_offset[1]) & ((1 << packing_info::component_bit_width[1]) - 1));
-      pixel[2] = ImageComponentRawNorm<word_type, packing_info::component_bit_width[2], ComponentType>::decode((data[packing_info::component_word_offset[2]] >> packing_info::component_bit_offset[2]) & ((1 << packing_info::component_bit_width[2]) - 1));
+      pixel[0] = ComponentRawNorm<word_type, packing_info::component_bit_width[0], ComponentType>::decode((data[packing_info::component_word_offset[0]] >> packing_info::component_bit_offset[0]) & ((1 << packing_info::component_bit_width[0]) - 1));
+      pixel[1] = ComponentRawNorm<word_type, packing_info::component_bit_width[1], ComponentType>::decode((data[packing_info::component_word_offset[1]] >> packing_info::component_bit_offset[1]) & ((1 << packing_info::component_bit_width[1]) - 1));
+      pixel[2] = ComponentRawNorm<word_type, packing_info::component_bit_width[2], ComponentType>::decode((data[packing_info::component_word_offset[2]] >> packing_info::component_bit_offset[2]) & ((1 << packing_info::component_bit_width[2]) - 1));
       return pixel;
    }
 
    static void put(ImageView& image, Coord pixel_coord, vec4 pixel) {
       data_type data;
-      data[packing_info::component_word_offset[0]] |= (ImageComponentRawNorm<word_type, packing_info::component_bit_width[0], ComponentType>::encode(pixel[0]) & ((1 << packing_info::component_bit_width[0]) - 1)) << packing_info::component_bit_offset[0];
-      data[packing_info::component_word_offset[1]] |= (ImageComponentRawNorm<word_type, packing_info::component_bit_width[1], ComponentType>::encode(pixel[1]) & ((1 << packing_info::component_bit_width[1]) - 1)) << packing_info::component_bit_offset[1];
-      data[packing_info::component_word_offset[2]] |= (ImageComponentRawNorm<word_type, packing_info::component_bit_width[2], ComponentType>::encode(pixel[2]) & ((1 << packing_info::component_bit_width[2]) - 1)) << packing_info::component_bit_offset[2];
+      data[packing_info::component_word_offset[0]] |= (ComponentRawNorm<word_type, packing_info::component_bit_width[0], ComponentType>::encode(pixel[0]) & ((1 << packing_info::component_bit_width[0]) - 1)) << packing_info::component_bit_offset[0];
+      data[packing_info::component_word_offset[1]] |= (ComponentRawNorm<word_type, packing_info::component_bit_width[1], ComponentType>::encode(pixel[1]) & ((1 << packing_info::component_bit_width[1]) - 1)) << packing_info::component_bit_offset[1];
+      data[packing_info::component_word_offset[2]] |= (ComponentRawNorm<word_type, packing_info::component_bit_width[2], ComponentType>::encode(pixel[2]) & ((1 << packing_info::component_bit_width[2]) - 1)) << packing_info::component_bit_offset[2];
       put_pixel_uncompressed<data_type, Coord, ImageView, IsSimple>(image, pixel_coord, data);
    }
 };
 
 ///////////////////////////////////////////////////////////////////////////////
-template <typename ImageView, typename Coord, bool IsSimple, ImageBlockPacking Packing>
-struct PixelRawNormAccessUncompressedPacked<ImageView, Coord, IsSimple, Packing, ImageComponentType::none, 3> {
-   using packing_info = ImageBlockPackingInfo<Packing>;
+template <typename ImageView, typename Coord, bool IsSimple, BlockPacking Packing>
+struct PixelRawNormAccessUncompressedPacked<ImageView, Coord, IsSimple, Packing, ComponentType::none, 3> {
+   using packing_info = BlockPackingInfo<Packing>;
    using word_type = typename packing_info::unsigned_word_type;
    using data_type = glm::vec<packing_info::words, word_type>;
 
@@ -762,53 +762,53 @@ struct PixelRawNormAccessUncompressedPacked<ImageView, Coord, IsSimple, Packing,
       vec4 pixel;
       data_type data = get_pixel_uncompressed<data_type, Coord, ImageView, IsSimple>(image, pixel_coord);
       const auto component_types = image.format().component_types();
-      pixel[0] = decode_image_component<word_type, packing_info::component_bit_width[0]>((data[packing_info::component_word_offset[0]] >> packing_info::component_bit_offset[0]) & ((1 << packing_info::component_bit_width[0]) - 1), static_cast<ImageComponentType>(component_types[0]));
-      pixel[1] = decode_image_component<word_type, packing_info::component_bit_width[1]>((data[packing_info::component_word_offset[1]] >> packing_info::component_bit_offset[1]) & ((1 << packing_info::component_bit_width[1]) - 1), static_cast<ImageComponentType>(component_types[1]));
-      pixel[2] = decode_image_component<word_type, packing_info::component_bit_width[2]>((data[packing_info::component_word_offset[2]] >> packing_info::component_bit_offset[2]) & ((1 << packing_info::component_bit_width[2]) - 1), static_cast<ImageComponentType>(component_types[2]));
+      pixel[0] = decode_image_component<word_type, packing_info::component_bit_width[0]>((data[packing_info::component_word_offset[0]] >> packing_info::component_bit_offset[0]) & ((1 << packing_info::component_bit_width[0]) - 1), static_cast<ComponentType>(component_types[0]));
+      pixel[1] = decode_image_component<word_type, packing_info::component_bit_width[1]>((data[packing_info::component_word_offset[1]] >> packing_info::component_bit_offset[1]) & ((1 << packing_info::component_bit_width[1]) - 1), static_cast<ComponentType>(component_types[1]));
+      pixel[2] = decode_image_component<word_type, packing_info::component_bit_width[2]>((data[packing_info::component_word_offset[2]] >> packing_info::component_bit_offset[2]) & ((1 << packing_info::component_bit_width[2]) - 1), static_cast<ComponentType>(component_types[2]));
       return pixel;
    }
 
    static void put(ImageView& image, Coord pixel_coord, vec4 pixel) {
       data_type data;
       const auto component_types = image.format().component_types();
-      data[packing_info::component_word_offset[0]] |= (encode_image_component<word_type, packing_info::component_bit_width[0]>(pixel[0], static_cast<ImageComponentType>(component_types[0])) & ((1 << packing_info::component_bit_width[0]) - 1)) << packing_info::component_bit_offset[0];
-      data[packing_info::component_word_offset[1]] |= (encode_image_component<word_type, packing_info::component_bit_width[1]>(pixel[1], static_cast<ImageComponentType>(component_types[1])) & ((1 << packing_info::component_bit_width[1]) - 1)) << packing_info::component_bit_offset[1];
-      data[packing_info::component_word_offset[2]] |= (encode_image_component<word_type, packing_info::component_bit_width[2]>(pixel[2], static_cast<ImageComponentType>(component_types[2])) & ((1 << packing_info::component_bit_width[2]) - 1)) << packing_info::component_bit_offset[2];
+      data[packing_info::component_word_offset[0]] |= (encode_image_component<word_type, packing_info::component_bit_width[0]>(pixel[0], static_cast<ComponentType>(component_types[0])) & ((1 << packing_info::component_bit_width[0]) - 1)) << packing_info::component_bit_offset[0];
+      data[packing_info::component_word_offset[1]] |= (encode_image_component<word_type, packing_info::component_bit_width[1]>(pixel[1], static_cast<ComponentType>(component_types[1])) & ((1 << packing_info::component_bit_width[1]) - 1)) << packing_info::component_bit_offset[1];
+      data[packing_info::component_word_offset[2]] |= (encode_image_component<word_type, packing_info::component_bit_width[2]>(pixel[2], static_cast<ComponentType>(component_types[2])) & ((1 << packing_info::component_bit_width[2]) - 1)) << packing_info::component_bit_offset[2];
       put_pixel_uncompressed<data_type, Coord, ImageView, IsSimple>(image, pixel_coord, data);
    }
 };
 
 ///////////////////////////////////////////////////////////////////////////////
-template <typename ImageView, typename Coord, bool IsSimple, ImageBlockPacking Packing, ImageComponentType ComponentType>
+template <typename ImageView, typename Coord, bool IsSimple, BlockPacking Packing, ComponentType ComponentType>
 struct PixelRawNormAccessUncompressedPacked<ImageView, Coord, IsSimple, Packing, ComponentType, 4> {
-   using packing_info = ImageBlockPackingInfo<Packing>;
+   using packing_info = BlockPackingInfo<Packing>;
    using word_type = typename packing_info::unsigned_word_type;
    using data_type = glm::vec<packing_info::words, word_type>;
 
    static vec4 get(const ImageView& image, Coord pixel_coord) {
       vec4 pixel;
       data_type data = get_pixel_uncompressed<data_type, Coord, ImageView, IsSimple>(image, pixel_coord);
-      pixel[0] = ImageComponentRawNorm<word_type, packing_info::component_bit_width[0], ComponentType>::decode((data[packing_info::component_word_offset[0]] >> packing_info::component_bit_offset[0]) & ((1 << packing_info::component_bit_width[0]) - 1));
-      pixel[1] = ImageComponentRawNorm<word_type, packing_info::component_bit_width[1], ComponentType>::decode((data[packing_info::component_word_offset[1]] >> packing_info::component_bit_offset[1]) & ((1 << packing_info::component_bit_width[1]) - 1));
-      pixel[2] = ImageComponentRawNorm<word_type, packing_info::component_bit_width[2], ComponentType>::decode((data[packing_info::component_word_offset[2]] >> packing_info::component_bit_offset[2]) & ((1 << packing_info::component_bit_width[2]) - 1));
-      pixel[3] = ImageComponentRawNorm<word_type, packing_info::component_bit_width[3], ComponentType>::decode((data[packing_info::component_word_offset[3]] >> packing_info::component_bit_offset[3]) & ((1 << packing_info::component_bit_width[3]) - 1));
+      pixel[0] = ComponentRawNorm<word_type, packing_info::component_bit_width[0], ComponentType>::decode((data[packing_info::component_word_offset[0]] >> packing_info::component_bit_offset[0]) & ((1 << packing_info::component_bit_width[0]) - 1));
+      pixel[1] = ComponentRawNorm<word_type, packing_info::component_bit_width[1], ComponentType>::decode((data[packing_info::component_word_offset[1]] >> packing_info::component_bit_offset[1]) & ((1 << packing_info::component_bit_width[1]) - 1));
+      pixel[2] = ComponentRawNorm<word_type, packing_info::component_bit_width[2], ComponentType>::decode((data[packing_info::component_word_offset[2]] >> packing_info::component_bit_offset[2]) & ((1 << packing_info::component_bit_width[2]) - 1));
+      pixel[3] = ComponentRawNorm<word_type, packing_info::component_bit_width[3], ComponentType>::decode((data[packing_info::component_word_offset[3]] >> packing_info::component_bit_offset[3]) & ((1 << packing_info::component_bit_width[3]) - 1));
       return pixel;
    }
 
    static void put(ImageView& image, Coord pixel_coord, vec4 pixel) {
       data_type data;
-      data[packing_info::component_word_offset[0]] |= (ImageComponentRawNorm<word_type, packing_info::component_bit_width[0], ComponentType>::encode(pixel[0]) & ((1 << packing_info::component_bit_width[0]) - 1)) << packing_info::component_bit_offset[0];
-      data[packing_info::component_word_offset[1]] |= (ImageComponentRawNorm<word_type, packing_info::component_bit_width[1], ComponentType>::encode(pixel[1]) & ((1 << packing_info::component_bit_width[1]) - 1)) << packing_info::component_bit_offset[1];
-      data[packing_info::component_word_offset[2]] |= (ImageComponentRawNorm<word_type, packing_info::component_bit_width[2], ComponentType>::encode(pixel[2]) & ((1 << packing_info::component_bit_width[2]) - 1)) << packing_info::component_bit_offset[2];
-      data[packing_info::component_word_offset[3]] |= (ImageComponentRawNorm<word_type, packing_info::component_bit_width[3], ComponentType>::encode(pixel[3]) & ((1 << packing_info::component_bit_width[3]) - 1)) << packing_info::component_bit_offset[3];
+      data[packing_info::component_word_offset[0]] |= (ComponentRawNorm<word_type, packing_info::component_bit_width[0], ComponentType>::encode(pixel[0]) & ((1 << packing_info::component_bit_width[0]) - 1)) << packing_info::component_bit_offset[0];
+      data[packing_info::component_word_offset[1]] |= (ComponentRawNorm<word_type, packing_info::component_bit_width[1], ComponentType>::encode(pixel[1]) & ((1 << packing_info::component_bit_width[1]) - 1)) << packing_info::component_bit_offset[1];
+      data[packing_info::component_word_offset[2]] |= (ComponentRawNorm<word_type, packing_info::component_bit_width[2], ComponentType>::encode(pixel[2]) & ((1 << packing_info::component_bit_width[2]) - 1)) << packing_info::component_bit_offset[2];
+      data[packing_info::component_word_offset[3]] |= (ComponentRawNorm<word_type, packing_info::component_bit_width[3], ComponentType>::encode(pixel[3]) & ((1 << packing_info::component_bit_width[3]) - 1)) << packing_info::component_bit_offset[3];
       put_pixel_uncompressed<data_type, Coord, ImageView, IsSimple>(image, pixel_coord, data);
    }
 };
 
 ///////////////////////////////////////////////////////////////////////////////
-template <typename ImageView, typename Coord, bool IsSimple, ImageBlockPacking Packing>
-struct PixelRawNormAccessUncompressedPacked<ImageView, Coord, IsSimple, Packing, ImageComponentType::none, 4> {
-   using packing_info = ImageBlockPackingInfo<Packing>;
+template <typename ImageView, typename Coord, bool IsSimple, BlockPacking Packing>
+struct PixelRawNormAccessUncompressedPacked<ImageView, Coord, IsSimple, Packing, ComponentType::none, 4> {
+   using packing_info = BlockPackingInfo<Packing>;
    using word_type = typename packing_info::unsigned_word_type;
    using data_type = glm::vec<packing_info::words, word_type>;
 
@@ -816,28 +816,28 @@ struct PixelRawNormAccessUncompressedPacked<ImageView, Coord, IsSimple, Packing,
       vec4 pixel;
       data_type data = get_pixel_uncompressed<data_type, Coord, ImageView, IsSimple>(image, pixel_coord);
       const auto component_types = image.format().component_types();
-      pixel[0] = decode_image_component<word_type, packing_info::component_bit_width[0]>((data[packing_info::component_word_offset[0]] >> packing_info::component_bit_offset[0]) & ((1 << packing_info::component_bit_width[0]) - 1), static_cast<ImageComponentType>(component_types[0]));
-      pixel[1] = decode_image_component<word_type, packing_info::component_bit_width[1]>((data[packing_info::component_word_offset[1]] >> packing_info::component_bit_offset[1]) & ((1 << packing_info::component_bit_width[1]) - 1), static_cast<ImageComponentType>(component_types[1]));
-      pixel[2] = decode_image_component<word_type, packing_info::component_bit_width[2]>((data[packing_info::component_word_offset[2]] >> packing_info::component_bit_offset[2]) & ((1 << packing_info::component_bit_width[2]) - 1), static_cast<ImageComponentType>(component_types[2]));
-      pixel[3] = decode_image_component<word_type, packing_info::component_bit_width[3]>((data[packing_info::component_word_offset[3]] >> packing_info::component_bit_offset[3]) & ((1 << packing_info::component_bit_width[3]) - 1), static_cast<ImageComponentType>(component_types[3]));
+      pixel[0] = decode_image_component<word_type, packing_info::component_bit_width[0]>((data[packing_info::component_word_offset[0]] >> packing_info::component_bit_offset[0]) & ((1 << packing_info::component_bit_width[0]) - 1), static_cast<ComponentType>(component_types[0]));
+      pixel[1] = decode_image_component<word_type, packing_info::component_bit_width[1]>((data[packing_info::component_word_offset[1]] >> packing_info::component_bit_offset[1]) & ((1 << packing_info::component_bit_width[1]) - 1), static_cast<ComponentType>(component_types[1]));
+      pixel[2] = decode_image_component<word_type, packing_info::component_bit_width[2]>((data[packing_info::component_word_offset[2]] >> packing_info::component_bit_offset[2]) & ((1 << packing_info::component_bit_width[2]) - 1), static_cast<ComponentType>(component_types[2]));
+      pixel[3] = decode_image_component<word_type, packing_info::component_bit_width[3]>((data[packing_info::component_word_offset[3]] >> packing_info::component_bit_offset[3]) & ((1 << packing_info::component_bit_width[3]) - 1), static_cast<ComponentType>(component_types[3]));
       return pixel;
    }
 
    static void put(ImageView& image, Coord pixel_coord, vec4 pixel) {
       data_type data;
       const auto component_types = image.format().component_types();
-      data[packing_info::component_word_offset[0]] |= (encode_image_component<word_type, packing_info::component_bit_width[0]>(pixel[0], static_cast<ImageComponentType>(component_types[0])) & ((1 << packing_info::component_bit_width[0]) - 1)) << packing_info::component_bit_offset[0];
-      data[packing_info::component_word_offset[1]] |= (encode_image_component<word_type, packing_info::component_bit_width[1]>(pixel[1], static_cast<ImageComponentType>(component_types[1])) & ((1 << packing_info::component_bit_width[1]) - 1)) << packing_info::component_bit_offset[1];
-      data[packing_info::component_word_offset[2]] |= (encode_image_component<word_type, packing_info::component_bit_width[2]>(pixel[2], static_cast<ImageComponentType>(component_types[2])) & ((1 << packing_info::component_bit_width[2]) - 1)) << packing_info::component_bit_offset[2];
-      data[packing_info::component_word_offset[3]] |= (encode_image_component<word_type, packing_info::component_bit_width[3]>(pixel[3], static_cast<ImageComponentType>(component_types[3])) & ((1 << packing_info::component_bit_width[3]) - 1)) << packing_info::component_bit_offset[3];
+      data[packing_info::component_word_offset[0]] |= (encode_image_component<word_type, packing_info::component_bit_width[0]>(pixel[0], static_cast<ComponentType>(component_types[0])) & ((1 << packing_info::component_bit_width[0]) - 1)) << packing_info::component_bit_offset[0];
+      data[packing_info::component_word_offset[1]] |= (encode_image_component<word_type, packing_info::component_bit_width[1]>(pixel[1], static_cast<ComponentType>(component_types[1])) & ((1 << packing_info::component_bit_width[1]) - 1)) << packing_info::component_bit_offset[1];
+      data[packing_info::component_word_offset[2]] |= (encode_image_component<word_type, packing_info::component_bit_width[2]>(pixel[2], static_cast<ComponentType>(component_types[2])) & ((1 << packing_info::component_bit_width[2]) - 1)) << packing_info::component_bit_offset[2];
+      data[packing_info::component_word_offset[3]] |= (encode_image_component<word_type, packing_info::component_bit_width[3]>(pixel[3], static_cast<ComponentType>(component_types[3])) & ((1 << packing_info::component_bit_width[3]) - 1)) << packing_info::component_bit_offset[3];
       put_pixel_uncompressed<data_type, Coord, ImageView, IsSimple>(image, pixel_coord, data);
    }
 };
 
 ///////////////////////////////////////////////////////////////////////////////
 template <typename ImageView, typename Coord, bool IsSimple>
-struct PixelRawNormAccessUncompressedPacked<ImageView, Coord, IsSimple, ImageBlockPacking::p_9_9_9_5, ImageComponentType::none, 4> {
-   using packing_info = ImageBlockPackingInfo<ImageBlockPacking::p_9_9_9_5>;
+struct PixelRawNormAccessUncompressedPacked<ImageView, Coord, IsSimple, BlockPacking::p_9_9_9_5, ComponentType::none, 4> {
+   using packing_info = BlockPackingInfo<BlockPacking::p_9_9_9_5>;
    using word_type = typename packing_info::unsigned_word_type;
    using data_type = glm::vec<packing_info::words, word_type>;
 
@@ -873,23 +873,23 @@ struct PixelRawNormAccessUncompressedPacked<ImageView, Coord, IsSimple, ImageBlo
       vec4 pixel;
       data_type data = get_pixel_uncompressed<data_type, Coord, ImageView, IsSimple>(image, pixel_coord);
       const auto component_types = image.format().component_types();
-      constexpr U8 ufloat = static_cast<U8>(ImageComponentType::ufloat);
-      constexpr U8 expo = static_cast<U8>(ImageComponentType::expo);
+      constexpr U8 ufloat = static_cast<U8>(ComponentType::ufloat);
+      constexpr U8 expo = static_cast<U8>(ComponentType::expo);
       if (component_types == ImageFormat::component_types_type(ufloat, ufloat, ufloat, expo)) {
          // https://www.khronos.org/registry/OpenGL/extensions/EXT/EXT_texture_shared_exponent.txt
          vec3 pixel3;
-         pixel3[0] = ImageComponentRawNorm<word_type, packing_info::component_bit_width[0], ImageComponentType::uint>::decode((data[packing_info::component_word_offset[0]] >> packing_info::component_bit_offset[0]) & ((1 << packing_info::component_bit_width[0]) - 1));
-         pixel3[1] = ImageComponentRawNorm<word_type, packing_info::component_bit_width[1], ImageComponentType::uint>::decode((data[packing_info::component_word_offset[1]] >> packing_info::component_bit_offset[1]) & ((1 << packing_info::component_bit_width[1]) - 1));
-         pixel3[2] = ImageComponentRawNorm<word_type, packing_info::component_bit_width[2], ImageComponentType::uint>::decode((data[packing_info::component_word_offset[2]] >> packing_info::component_bit_offset[2]) & ((1 << packing_info::component_bit_width[2]) - 1));
+         pixel3[0] = ComponentRawNorm<word_type, packing_info::component_bit_width[0], ComponentType::uint>::decode((data[packing_info::component_word_offset[0]] >> packing_info::component_bit_offset[0]) & ((1 << packing_info::component_bit_width[0]) - 1));
+         pixel3[1] = ComponentRawNorm<word_type, packing_info::component_bit_width[1], ComponentType::uint>::decode((data[packing_info::component_word_offset[1]] >> packing_info::component_bit_offset[1]) & ((1 << packing_info::component_bit_width[1]) - 1));
+         pixel3[2] = ComponentRawNorm<word_type, packing_info::component_bit_width[2], ComponentType::uint>::decode((data[packing_info::component_word_offset[2]] >> packing_info::component_bit_offset[2]) & ((1 << packing_info::component_bit_width[2]) - 1));
 
          word_type exponent = (data[packing_info::component_word_offset[3]] >> packing_info::component_bit_offset[3]) & ((1 << packing_info::component_bit_width[3]) - 1);
          pixel3 *= pow2(exponent - f14_exponent_basis - f14_mantissa_bits);
          pixel = vec4(pixel3, 0.f);
       } else {
-         pixel[0] = decode_image_component<word_type, packing_info::component_bit_width[0]>((data[packing_info::component_word_offset[0]] >> packing_info::component_bit_offset[0]) & ((1 << packing_info::component_bit_width[0]) - 1), static_cast<ImageComponentType>(component_types[0]));
-         pixel[1] = decode_image_component<word_type, packing_info::component_bit_width[1]>((data[packing_info::component_word_offset[1]] >> packing_info::component_bit_offset[1]) & ((1 << packing_info::component_bit_width[1]) - 1), static_cast<ImageComponentType>(component_types[1]));
-         pixel[2] = decode_image_component<word_type, packing_info::component_bit_width[2]>((data[packing_info::component_word_offset[2]] >> packing_info::component_bit_offset[2]) & ((1 << packing_info::component_bit_width[2]) - 1), static_cast<ImageComponentType>(component_types[2]));
-         pixel[3] = decode_image_component<word_type, packing_info::component_bit_width[3]>((data[packing_info::component_word_offset[3]] >> packing_info::component_bit_offset[3]) & ((1 << packing_info::component_bit_width[3]) - 1), static_cast<ImageComponentType>(component_types[3]));
+         pixel[0] = decode_image_component<word_type, packing_info::component_bit_width[0]>((data[packing_info::component_word_offset[0]] >> packing_info::component_bit_offset[0]) & ((1 << packing_info::component_bit_width[0]) - 1), static_cast<ComponentType>(component_types[0]));
+         pixel[1] = decode_image_component<word_type, packing_info::component_bit_width[1]>((data[packing_info::component_word_offset[1]] >> packing_info::component_bit_offset[1]) & ((1 << packing_info::component_bit_width[1]) - 1), static_cast<ComponentType>(component_types[1]));
+         pixel[2] = decode_image_component<word_type, packing_info::component_bit_width[2]>((data[packing_info::component_word_offset[2]] >> packing_info::component_bit_offset[2]) & ((1 << packing_info::component_bit_width[2]) - 1), static_cast<ComponentType>(component_types[2]));
+         pixel[3] = decode_image_component<word_type, packing_info::component_bit_width[3]>((data[packing_info::component_word_offset[3]] >> packing_info::component_bit_offset[3]) & ((1 << packing_info::component_bit_width[3]) - 1), static_cast<ComponentType>(component_types[3]));
       }
       return pixel;
    }
@@ -897,8 +897,8 @@ struct PixelRawNormAccessUncompressedPacked<ImageView, Coord, IsSimple, ImageBlo
    static void put(ImageView& image, Coord pixel_coord, vec4 pixel) {
       data_type data;
       const auto component_types = image.format().component_types();
-      constexpr U8 ufloat = static_cast<U8>(ImageComponentType::ufloat);
-      constexpr U8 expo = static_cast<U8>(ImageComponentType::expo);
+      constexpr U8 ufloat = static_cast<U8>(ComponentType::ufloat);
+      constexpr U8 expo = static_cast<U8>(ComponentType::expo);
       if (component_types == ImageFormat::component_types_type(ufloat, ufloat, ufloat, expo)) {
          // https://www.khronos.org/registry/OpenGL/extensions/EXT/EXT_texture_shared_exponent.txt
          constexpr F32 limit = (F32)f14_mantissa_mask * (1 << (f14_exponent_max - f14_exponent_basis - f14_mantissa_bits));
@@ -932,10 +932,10 @@ struct PixelRawNormAccessUncompressedPacked<ImageView, Coord, IsSimple, ImageBlo
          data[packing_info::component_word_offset[2]] |= (components[2] & ((1 << packing_info::component_bit_width[2]) - 1)) << packing_info::component_bit_offset[2];
          data[packing_info::component_word_offset[3]] |= (static_cast<unsigned int>(exp_shared) & ((1 << packing_info::component_bit_width[3]) - 1)) << packing_info::component_bit_offset[3];
       } else {
-         data[packing_info::component_word_offset[0]] |= (encode_image_component<word_type, packing_info::component_bit_width[0]>(pixel[0], static_cast<ImageComponentType>(component_types[0])) & ((1 << packing_info::component_bit_width[0]) - 1)) << packing_info::component_bit_offset[0];
-         data[packing_info::component_word_offset[1]] |= (encode_image_component<word_type, packing_info::component_bit_width[1]>(pixel[1], static_cast<ImageComponentType>(component_types[1])) & ((1 << packing_info::component_bit_width[1]) - 1)) << packing_info::component_bit_offset[1];
-         data[packing_info::component_word_offset[2]] |= (encode_image_component<word_type, packing_info::component_bit_width[2]>(pixel[2], static_cast<ImageComponentType>(component_types[2])) & ((1 << packing_info::component_bit_width[2]) - 1)) << packing_info::component_bit_offset[2];
-         data[packing_info::component_word_offset[3]] |= (encode_image_component<word_type, packing_info::component_bit_width[3]>(pixel[3], static_cast<ImageComponentType>(component_types[3])) & ((1 << packing_info::component_bit_width[3]) - 1)) << packing_info::component_bit_offset[3];
+         data[packing_info::component_word_offset[0]] |= (encode_image_component<word_type, packing_info::component_bit_width[0]>(pixel[0], static_cast<ComponentType>(component_types[0])) & ((1 << packing_info::component_bit_width[0]) - 1)) << packing_info::component_bit_offset[0];
+         data[packing_info::component_word_offset[1]] |= (encode_image_component<word_type, packing_info::component_bit_width[1]>(pixel[1], static_cast<ComponentType>(component_types[1])) & ((1 << packing_info::component_bit_width[1]) - 1)) << packing_info::component_bit_offset[1];
+         data[packing_info::component_word_offset[2]] |= (encode_image_component<word_type, packing_info::component_bit_width[2]>(pixel[2], static_cast<ComponentType>(component_types[2])) & ((1 << packing_info::component_bit_width[2]) - 1)) << packing_info::component_bit_offset[2];
+         data[packing_info::component_word_offset[3]] |= (encode_image_component<word_type, packing_info::component_bit_width[3]>(pixel[3], static_cast<ComponentType>(component_types[3])) & ((1 << packing_info::component_bit_width[3]) - 1)) << packing_info::component_bit_offset[3];
       }
       put_pixel_uncompressed<data_type, Coord, ImageView, IsSimple>(image, pixel_coord, data);
    }
@@ -943,8 +943,8 @@ struct PixelRawNormAccessUncompressedPacked<ImageView, Coord, IsSimple, ImageBlo
 
 ///////////////////////////////////////////////////////////////////////////////
 template <typename ImageView, typename Coord, bool IsSimple>
-struct PixelRawNormAccessUncompressedPacked<ImageView, Coord, IsSimple, ImageBlockPacking::p_5_9_9_9, ImageComponentType::none, 4> {
-   using packing_info = ImageBlockPackingInfo<ImageBlockPacking::p_5_9_9_9>;
+struct PixelRawNormAccessUncompressedPacked<ImageView, Coord, IsSimple, BlockPacking::p_5_9_9_9, ComponentType::none, 4> {
+   using packing_info = BlockPackingInfo<BlockPacking::p_5_9_9_9>;
    using word_type = typename packing_info::unsigned_word_type;
    using data_type = glm::vec<packing_info::words, word_type>;
 
@@ -980,23 +980,23 @@ struct PixelRawNormAccessUncompressedPacked<ImageView, Coord, IsSimple, ImageBlo
       vec4 pixel;
       data_type data = get_pixel_uncompressed<data_type, Coord, ImageView, IsSimple>(image, pixel_coord);
       const auto component_types = image.format().component_types();
-      constexpr U8 ufloat = static_cast<U8>(ImageComponentType::ufloat);
-      constexpr U8 expo = static_cast<U8>(ImageComponentType::expo);
+      constexpr U8 ufloat = static_cast<U8>(ComponentType::ufloat);
+      constexpr U8 expo = static_cast<U8>(ComponentType::expo);
       if (component_types == ImageFormat::component_types_type(expo, ufloat, ufloat, ufloat)) {
          // https://www.khronos.org/registry/OpenGL/extensions/EXT/EXT_texture_shared_exponent.txt
          vec3 pixel3;
-         pixel3[0] = ImageComponentRawNorm<word_type, packing_info::component_bit_width[1], ImageComponentType::uint>::decode((data[packing_info::component_word_offset[1]] >> packing_info::component_bit_offset[1]) & ((1 << packing_info::component_bit_width[1]) - 1));
-         pixel3[1] = ImageComponentRawNorm<word_type, packing_info::component_bit_width[2], ImageComponentType::uint>::decode((data[packing_info::component_word_offset[2]] >> packing_info::component_bit_offset[2]) & ((1 << packing_info::component_bit_width[2]) - 1));
-         pixel3[2] = ImageComponentRawNorm<word_type, packing_info::component_bit_width[3], ImageComponentType::uint>::decode((data[packing_info::component_word_offset[3]] >> packing_info::component_bit_offset[3]) & ((1 << packing_info::component_bit_width[3]) - 1));
+         pixel3[0] = ComponentRawNorm<word_type, packing_info::component_bit_width[1], ComponentType::uint>::decode((data[packing_info::component_word_offset[1]] >> packing_info::component_bit_offset[1]) & ((1 << packing_info::component_bit_width[1]) - 1));
+         pixel3[1] = ComponentRawNorm<word_type, packing_info::component_bit_width[2], ComponentType::uint>::decode((data[packing_info::component_word_offset[2]] >> packing_info::component_bit_offset[2]) & ((1 << packing_info::component_bit_width[2]) - 1));
+         pixel3[2] = ComponentRawNorm<word_type, packing_info::component_bit_width[3], ComponentType::uint>::decode((data[packing_info::component_word_offset[3]] >> packing_info::component_bit_offset[3]) & ((1 << packing_info::component_bit_width[3]) - 1));
 
          word_type exponent = (data[packing_info::component_word_offset[0]] >> packing_info::component_bit_offset[0]) & ((1 << packing_info::component_bit_width[0]) - 1);
          pixel3 *= pow2(exponent - f14_exponent_basis - f14_mantissa_bits);
          pixel = vec4(0.f, pixel3);
       } else {
-         pixel[0] = decode_image_component<word_type, packing_info::component_bit_width[0]>((data[packing_info::component_word_offset[0]] >> packing_info::component_bit_offset[0]) & ((1 << packing_info::component_bit_width[0]) - 1), static_cast<ImageComponentType>(component_types[0]));
-         pixel[1] = decode_image_component<word_type, packing_info::component_bit_width[1]>((data[packing_info::component_word_offset[1]] >> packing_info::component_bit_offset[1]) & ((1 << packing_info::component_bit_width[1]) - 1), static_cast<ImageComponentType>(component_types[1]));
-         pixel[2] = decode_image_component<word_type, packing_info::component_bit_width[2]>((data[packing_info::component_word_offset[2]] >> packing_info::component_bit_offset[2]) & ((1 << packing_info::component_bit_width[2]) - 1), static_cast<ImageComponentType>(component_types[2]));
-         pixel[3] = decode_image_component<word_type, packing_info::component_bit_width[3]>((data[packing_info::component_word_offset[3]] >> packing_info::component_bit_offset[3]) & ((1 << packing_info::component_bit_width[3]) - 1), static_cast<ImageComponentType>(component_types[3]));
+         pixel[0] = decode_image_component<word_type, packing_info::component_bit_width[0]>((data[packing_info::component_word_offset[0]] >> packing_info::component_bit_offset[0]) & ((1 << packing_info::component_bit_width[0]) - 1), static_cast<ComponentType>(component_types[0]));
+         pixel[1] = decode_image_component<word_type, packing_info::component_bit_width[1]>((data[packing_info::component_word_offset[1]] >> packing_info::component_bit_offset[1]) & ((1 << packing_info::component_bit_width[1]) - 1), static_cast<ComponentType>(component_types[1]));
+         pixel[2] = decode_image_component<word_type, packing_info::component_bit_width[2]>((data[packing_info::component_word_offset[2]] >> packing_info::component_bit_offset[2]) & ((1 << packing_info::component_bit_width[2]) - 1), static_cast<ComponentType>(component_types[2]));
+         pixel[3] = decode_image_component<word_type, packing_info::component_bit_width[3]>((data[packing_info::component_word_offset[3]] >> packing_info::component_bit_offset[3]) & ((1 << packing_info::component_bit_width[3]) - 1), static_cast<ComponentType>(component_types[3]));
       }
       return pixel;
    }
@@ -1004,8 +1004,8 @@ struct PixelRawNormAccessUncompressedPacked<ImageView, Coord, IsSimple, ImageBlo
    static void put(ImageView& image, Coord pixel_coord, vec4 pixel) {
       data_type data;
       const auto component_types = image.format().component_types();
-      constexpr U8 ufloat = static_cast<U8>(ImageComponentType::ufloat);
-      constexpr U8 expo = static_cast<U8>(ImageComponentType::expo);
+      constexpr U8 ufloat = static_cast<U8>(ComponentType::ufloat);
+      constexpr U8 expo = static_cast<U8>(ComponentType::expo);
       if (component_types == ImageFormat::component_types_type(expo, ufloat, ufloat, ufloat)) {
          // https://www.khronos.org/registry/OpenGL/extensions/EXT/EXT_texture_shared_exponent.txt
          constexpr F32 limit = (F32)f14_mantissa_mask * (1 << (f14_exponent_max - f14_exponent_basis - f14_mantissa_bits));
@@ -1039,10 +1039,10 @@ struct PixelRawNormAccessUncompressedPacked<ImageView, Coord, IsSimple, ImageBlo
          data[packing_info::component_word_offset[2]] |= (components[2] & ((1 << packing_info::component_bit_width[2]) - 1)) << packing_info::component_bit_offset[2];
          data[packing_info::component_word_offset[3]] |= (components[3] & ((1 << packing_info::component_bit_width[3]) - 1)) << packing_info::component_bit_offset[3];
       } else {
-         data[packing_info::component_word_offset[0]] |= (encode_image_component<word_type, packing_info::component_bit_width[0]>(pixel[0], static_cast<ImageComponentType>(component_types[0])) & ((1 << packing_info::component_bit_width[0]) - 1)) << packing_info::component_bit_offset[0];
-         data[packing_info::component_word_offset[1]] |= (encode_image_component<word_type, packing_info::component_bit_width[1]>(pixel[1], static_cast<ImageComponentType>(component_types[1])) & ((1 << packing_info::component_bit_width[1]) - 1)) << packing_info::component_bit_offset[1];
-         data[packing_info::component_word_offset[2]] |= (encode_image_component<word_type, packing_info::component_bit_width[2]>(pixel[2], static_cast<ImageComponentType>(component_types[2])) & ((1 << packing_info::component_bit_width[2]) - 1)) << packing_info::component_bit_offset[2];
-         data[packing_info::component_word_offset[3]] |= (encode_image_component<word_type, packing_info::component_bit_width[3]>(pixel[3], static_cast<ImageComponentType>(component_types[3])) & ((1 << packing_info::component_bit_width[3]) - 1)) << packing_info::component_bit_offset[3];
+         data[packing_info::component_word_offset[0]] |= (encode_image_component<word_type, packing_info::component_bit_width[0]>(pixel[0], static_cast<ComponentType>(component_types[0])) & ((1 << packing_info::component_bit_width[0]) - 1)) << packing_info::component_bit_offset[0];
+         data[packing_info::component_word_offset[1]] |= (encode_image_component<word_type, packing_info::component_bit_width[1]>(pixel[1], static_cast<ComponentType>(component_types[1])) & ((1 << packing_info::component_bit_width[1]) - 1)) << packing_info::component_bit_offset[1];
+         data[packing_info::component_word_offset[2]] |= (encode_image_component<word_type, packing_info::component_bit_width[2]>(pixel[2], static_cast<ComponentType>(component_types[2])) & ((1 << packing_info::component_bit_width[2]) - 1)) << packing_info::component_bit_offset[2];
+         data[packing_info::component_word_offset[3]] |= (encode_image_component<word_type, packing_info::component_bit_width[3]>(pixel[3], static_cast<ComponentType>(component_types[3])) & ((1 << packing_info::component_bit_width[3]) - 1)) << packing_info::component_bit_offset[3];
       }
       put_pixel_uncompressed<data_type, Coord, ImageView, IsSimple>(image, pixel_coord, data);
    }
@@ -1052,16 +1052,16 @@ struct PixelRawNormAccessUncompressedPacked<ImageView, Coord, IsSimple, ImageBlo
 #pragma region PixelRawNormAccessUncompressed
 
 ///////////////////////////////////////////////////////////////////////////////
-template <typename ImageView, typename Coord, bool IsSimple, ImageBlockPacking Packing, ImageComponentType ComponentType, bool IsPacked = ImageBlockPackingInfo<Packing>::is_packed::value>
+template <typename ImageView, typename Coord, bool IsSimple, BlockPacking Packing, ComponentType ComponentType, bool IsPacked = BlockPackingInfo<Packing>::is_packed::value>
 struct PixelRawNormAccessUncompressed { };
 
 ///////////////////////////////////////////////////////////////////////////////
-template <typename ImageView, typename Coord, bool IsSimple, ImageBlockPacking Packing, ImageComponentType ComponentType>
+template <typename ImageView, typename Coord, bool IsSimple, BlockPacking Packing, ComponentType ComponentType>
 struct PixelRawNormAccessUncompressed<ImageView, Coord, IsSimple, Packing, ComponentType, false>
    : PixelRawNormAccessUncompressedNonPacked<ImageView, Coord, IsSimple, Packing, ComponentType> { };
 
 ///////////////////////////////////////////////////////////////////////////////
-template <typename ImageView, typename Coord, bool IsSimple, ImageBlockPacking Packing, ImageComponentType ComponentType>
+template <typename ImageView, typename Coord, bool IsSimple, BlockPacking Packing, ComponentType ComponentType>
 struct PixelRawNormAccessUncompressed<ImageView, Coord, IsSimple, Packing, ComponentType, true>
    : PixelRawNormAccessUncompressedPacked<ImageView, Coord, IsSimple, Packing, ComponentType> { };
 
@@ -1069,7 +1069,7 @@ struct PixelRawNormAccessUncompressed<ImageView, Coord, IsSimple, Packing, Compo
 #pragma region PixelNormAccessUncompressed
 
 ///////////////////////////////////////////////////////////////////////////////
-template <typename ImageView, typename Coord, bool IsSimple, ImageBlockPacking Packing, ImageComponentType ComponentType = ImageComponentType::none>
+template <typename ImageView, typename Coord, bool IsSimple, BlockPacking Packing, ComponentType ComponentType = ComponentType::none>
 struct PixelNormAccessUncompressed {
    static vec4 get(const ImageView& image, Coord pixel_coord) {
       F32 data[6] = { 0.f, 1.f };
@@ -1095,7 +1095,7 @@ struct PixelNormAccessUncompressed {
 #pragma endregion
 
 ///////////////////////////////////////////////////////////////////////////////
-template <typename ImageView, typename Coord, ImageBlockPacking Packing>
+template <typename ImageView, typename Coord, BlockPacking Packing>
 struct PixelNormAccessCompressed {
    static vec4 get(const ImageView& image, Coord pixel_coord) {
       // TODO
@@ -1103,7 +1103,7 @@ struct PixelNormAccessCompressed {
    }
 };
 
-} // be::gfx::detail
+} // be::gfx::tex::detail
 
 ///////////////////////////////////////////////////////////////////////////////
 template <typename Coord, typename ImageView>
@@ -1112,16 +1112,16 @@ GetPixelNormFunc<Coord, ImageView> get_pixel_norm_func(const ImageView& image) {
    assert(image);
    if (is_compressed(image.format().packing())) {
       switch (image.format().packing()) {
-         /*!! include('image_block_packing', true)
+         /*!! include('tex/block_packing', true)
          register_template_string([[`
          max_length = image_block_packing.max_constant_name_length
          c = $
          with each image_block_packing.constants using # {
             if not c.pred or c.pred($) {
-               `case ImageBlockPacking::`name`:`
+               `case BlockPacking::`name`:`
                string.rep(' ', max_length + 1 - #name)
                `return detail::` c.struct_name or 'PixelNormAccessUncompressed'
-               `<ImageView, Coord` c.pre_params`, ImageBlockPacking::`name c.post_params`>::`c.func_name`;` nl
+               `<ImageView, Coord` c.pre_params`, BlockPacking::`name c.post_params`>::`c.func_name`;` nl
             }
          }
          ]], 'packing_switch')
@@ -1132,19 +1132,19 @@ GetPixelNormFunc<Coord, ImageView> get_pixel_norm_func(const ImageView& image) {
 
          write_template('packing_switch', { pred = is_compressed, struct_name = 'PixelNormAccessCompressed', func_name = 'get' }) !! 17 */
          /* ################# !! GENERATED CODE -- DO NOT MODIFY !! ################# */
-         case ImageBlockPacking::c_astc:        return detail::PixelNormAccessCompressed<ImageView, Coord, ImageBlockPacking::c_astc>::get;
-         case ImageBlockPacking::c_atc:         return detail::PixelNormAccessCompressed<ImageView, Coord, ImageBlockPacking::c_atc>::get;
-         case ImageBlockPacking::c_bptc:        return detail::PixelNormAccessCompressed<ImageView, Coord, ImageBlockPacking::c_bptc>::get;
-         case ImageBlockPacking::c_eac:         return detail::PixelNormAccessCompressed<ImageView, Coord, ImageBlockPacking::c_eac>::get;
-         case ImageBlockPacking::c_etc1:        return detail::PixelNormAccessCompressed<ImageView, Coord, ImageBlockPacking::c_etc1>::get;
-         case ImageBlockPacking::c_etc2:        return detail::PixelNormAccessCompressed<ImageView, Coord, ImageBlockPacking::c_etc2>::get;
-         case ImageBlockPacking::c_pvrtc1:      return detail::PixelNormAccessCompressed<ImageView, Coord, ImageBlockPacking::c_pvrtc1>::get;
-         case ImageBlockPacking::c_pvrtc2:      return detail::PixelNormAccessCompressed<ImageView, Coord, ImageBlockPacking::c_pvrtc2>::get;
-         case ImageBlockPacking::c_s3tc1:       return detail::PixelNormAccessCompressed<ImageView, Coord, ImageBlockPacking::c_s3tc1>::get;
-         case ImageBlockPacking::c_s3tc2:       return detail::PixelNormAccessCompressed<ImageView, Coord, ImageBlockPacking::c_s3tc2>::get;
-         case ImageBlockPacking::c_s3tc3:       return detail::PixelNormAccessCompressed<ImageView, Coord, ImageBlockPacking::c_s3tc3>::get;
-         case ImageBlockPacking::c_s3tc4:       return detail::PixelNormAccessCompressed<ImageView, Coord, ImageBlockPacking::c_s3tc4>::get;
-         case ImageBlockPacking::c_s3tc5:       return detail::PixelNormAccessCompressed<ImageView, Coord, ImageBlockPacking::c_s3tc5>::get;
+         case BlockPacking::c_astc:        return detail::PixelNormAccessCompressed<ImageView, Coord, BlockPacking::c_astc>::get;
+         case BlockPacking::c_atc:         return detail::PixelNormAccessCompressed<ImageView, Coord, BlockPacking::c_atc>::get;
+         case BlockPacking::c_bptc:        return detail::PixelNormAccessCompressed<ImageView, Coord, BlockPacking::c_bptc>::get;
+         case BlockPacking::c_eac:         return detail::PixelNormAccessCompressed<ImageView, Coord, BlockPacking::c_eac>::get;
+         case BlockPacking::c_etc1:        return detail::PixelNormAccessCompressed<ImageView, Coord, BlockPacking::c_etc1>::get;
+         case BlockPacking::c_etc2:        return detail::PixelNormAccessCompressed<ImageView, Coord, BlockPacking::c_etc2>::get;
+         case BlockPacking::c_pvrtc1:      return detail::PixelNormAccessCompressed<ImageView, Coord, BlockPacking::c_pvrtc1>::get;
+         case BlockPacking::c_pvrtc2:      return detail::PixelNormAccessCompressed<ImageView, Coord, BlockPacking::c_pvrtc2>::get;
+         case BlockPacking::c_s3tc1:       return detail::PixelNormAccessCompressed<ImageView, Coord, BlockPacking::c_s3tc1>::get;
+         case BlockPacking::c_s3tc2:       return detail::PixelNormAccessCompressed<ImageView, Coord, BlockPacking::c_s3tc2>::get;
+         case BlockPacking::c_s3tc3:       return detail::PixelNormAccessCompressed<ImageView, Coord, BlockPacking::c_s3tc3>::get;
+         case BlockPacking::c_s3tc4:       return detail::PixelNormAccessCompressed<ImageView, Coord, BlockPacking::c_s3tc4>::get;
+         case BlockPacking::c_s3tc5:       return detail::PixelNormAccessCompressed<ImageView, Coord, BlockPacking::c_s3tc5>::get;
          
          /* ######################### END OF GENERATED CODE ######################### */
          default:
@@ -1154,170 +1154,170 @@ GetPixelNormFunc<Coord, ImageView> get_pixel_norm_func(const ImageView& image) {
    } else if (dim_type(image.block_dim()) == dim_type(1)) {
       auto component_types = image.format().component_types();
       glm::length_t packing_components = component_count(image.format().packing());
-      ImageComponentType component_type = static_cast<ImageComponentType>(component_types[0]);
+      ComponentType component_type = static_cast<ComponentType>(component_types[0]);
       for (glm::length_t c = 1; c < packing_components; ++c) {
-         if (static_cast<ImageComponentType>(component_types[c]) != component_type) {
-            component_type = ImageComponentType::none;
+         if (static_cast<ComponentType>(component_types[c]) != component_type) {
+            component_type = ComponentType::none;
             break;
          }
       }
 
-      if (component_type == ImageComponentType::unorm) {
+      if (component_type == ComponentType::unorm) {
          switch (image.format().packing()) {
-            /*!! write_template('packing_switch', { pred = not_compressed, pre_params = ', true', post_params = ', ImageComponentType::unorm', func_name = 'get' }) !! 39 */
+            /*!! write_template('packing_switch', { pred = not_compressed, pre_params = ', true', post_params = ', ComponentType::unorm', func_name = 'get' }) !! 39 */
             /* ################# !! GENERATED CODE -- DO NOT MODIFY !! ################# */
-            case ImageBlockPacking::s_8:           return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::s_8, ImageComponentType::unorm>::get;
-            case ImageBlockPacking::s_8_8:         return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::s_8_8, ImageComponentType::unorm>::get;
-            case ImageBlockPacking::s_8_8_8:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::s_8_8_8, ImageComponentType::unorm>::get;
-            case ImageBlockPacking::s_8_8_8_8:     return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::s_8_8_8_8, ImageComponentType::unorm>::get;
-            case ImageBlockPacking::s_16:          return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::s_16, ImageComponentType::unorm>::get;
-            case ImageBlockPacking::s_16_16:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::s_16_16, ImageComponentType::unorm>::get;
-            case ImageBlockPacking::s_16_16_16:    return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::s_16_16_16, ImageComponentType::unorm>::get;
-            case ImageBlockPacking::s_16_16_16_16: return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::s_16_16_16_16, ImageComponentType::unorm>::get;
-            case ImageBlockPacking::s_32:          return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::s_32, ImageComponentType::unorm>::get;
-            case ImageBlockPacking::s_32_32:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::s_32_32, ImageComponentType::unorm>::get;
-            case ImageBlockPacking::s_32_32_32:    return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::s_32_32_32, ImageComponentType::unorm>::get;
-            case ImageBlockPacking::s_32_32_32_32: return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::s_32_32_32_32, ImageComponentType::unorm>::get;
-            case ImageBlockPacking::s_64:          return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::s_64, ImageComponentType::unorm>::get;
-            case ImageBlockPacking::s_64_64:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::s_64_64, ImageComponentType::unorm>::get;
-            case ImageBlockPacking::s_64_64_64:    return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::s_64_64_64, ImageComponentType::unorm>::get;
-            case ImageBlockPacking::s_64_64_64_64: return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::s_64_64_64_64, ImageComponentType::unorm>::get;
-            case ImageBlockPacking::p_4_4:         return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::p_4_4, ImageComponentType::unorm>::get;
-            case ImageBlockPacking::p_3_3_2:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::p_3_3_2, ImageComponentType::unorm>::get;
-            case ImageBlockPacking::p_2_3_3:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::p_2_3_3, ImageComponentType::unorm>::get;
-            case ImageBlockPacking::p_3_2_3:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::p_3_2_3, ImageComponentType::unorm>::get;
-            case ImageBlockPacking::p_4_4_4_4:     return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::p_4_4_4_4, ImageComponentType::unorm>::get;
-            case ImageBlockPacking::p_1_5_5_5:     return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::p_1_5_5_5, ImageComponentType::unorm>::get;
-            case ImageBlockPacking::p_5_5_5_1:     return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::p_5_5_5_1, ImageComponentType::unorm>::get;
-            case ImageBlockPacking::p_5_6_5:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::p_5_6_5, ImageComponentType::unorm>::get;
-            case ImageBlockPacking::p_8_24:        return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::p_8_24, ImageComponentType::unorm>::get;
-            case ImageBlockPacking::p_24_8:        return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::p_24_8, ImageComponentType::unorm>::get;
-            case ImageBlockPacking::p_11_11_10:    return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::p_11_11_10, ImageComponentType::unorm>::get;
-            case ImageBlockPacking::p_10_11_11:    return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::p_10_11_11, ImageComponentType::unorm>::get;
-            case ImageBlockPacking::p_11_10_11:    return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::p_11_10_11, ImageComponentType::unorm>::get;
-            case ImageBlockPacking::p_8_8_8_8:     return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::p_8_8_8_8, ImageComponentType::unorm>::get;
-            case ImageBlockPacking::p_9_9_9_5:     return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::p_9_9_9_5, ImageComponentType::unorm>::get;
-            case ImageBlockPacking::p_5_9_9_9:     return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::p_5_9_9_9, ImageComponentType::unorm>::get;
-            case ImageBlockPacking::p_10_10_10_2:  return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::p_10_10_10_2, ImageComponentType::unorm>::get;
-            case ImageBlockPacking::p_2_10_10_10:  return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::p_2_10_10_10, ImageComponentType::unorm>::get;
-            case ImageBlockPacking::s_32_p_24_8:   return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::s_32_p_24_8, ImageComponentType::unorm>::get;
+            case BlockPacking::s_8:           return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_8, ComponentType::unorm>::get;
+            case BlockPacking::s_8_8:         return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_8_8, ComponentType::unorm>::get;
+            case BlockPacking::s_8_8_8:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_8_8_8, ComponentType::unorm>::get;
+            case BlockPacking::s_8_8_8_8:     return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_8_8_8_8, ComponentType::unorm>::get;
+            case BlockPacking::s_16:          return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_16, ComponentType::unorm>::get;
+            case BlockPacking::s_16_16:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_16_16, ComponentType::unorm>::get;
+            case BlockPacking::s_16_16_16:    return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_16_16_16, ComponentType::unorm>::get;
+            case BlockPacking::s_16_16_16_16: return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_16_16_16_16, ComponentType::unorm>::get;
+            case BlockPacking::s_32:          return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_32, ComponentType::unorm>::get;
+            case BlockPacking::s_32_32:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_32_32, ComponentType::unorm>::get;
+            case BlockPacking::s_32_32_32:    return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_32_32_32, ComponentType::unorm>::get;
+            case BlockPacking::s_32_32_32_32: return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_32_32_32_32, ComponentType::unorm>::get;
+            case BlockPacking::s_64:          return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_64, ComponentType::unorm>::get;
+            case BlockPacking::s_64_64:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_64_64, ComponentType::unorm>::get;
+            case BlockPacking::s_64_64_64:    return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_64_64_64, ComponentType::unorm>::get;
+            case BlockPacking::s_64_64_64_64: return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_64_64_64_64, ComponentType::unorm>::get;
+            case BlockPacking::p_4_4:         return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_4_4, ComponentType::unorm>::get;
+            case BlockPacking::p_3_3_2:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_3_3_2, ComponentType::unorm>::get;
+            case BlockPacking::p_2_3_3:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_2_3_3, ComponentType::unorm>::get;
+            case BlockPacking::p_3_2_3:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_3_2_3, ComponentType::unorm>::get;
+            case BlockPacking::p_4_4_4_4:     return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_4_4_4_4, ComponentType::unorm>::get;
+            case BlockPacking::p_1_5_5_5:     return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_1_5_5_5, ComponentType::unorm>::get;
+            case BlockPacking::p_5_5_5_1:     return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_5_5_5_1, ComponentType::unorm>::get;
+            case BlockPacking::p_5_6_5:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_5_6_5, ComponentType::unorm>::get;
+            case BlockPacking::p_8_24:        return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_8_24, ComponentType::unorm>::get;
+            case BlockPacking::p_24_8:        return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_24_8, ComponentType::unorm>::get;
+            case BlockPacking::p_11_11_10:    return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_11_11_10, ComponentType::unorm>::get;
+            case BlockPacking::p_10_11_11:    return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_10_11_11, ComponentType::unorm>::get;
+            case BlockPacking::p_11_10_11:    return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_11_10_11, ComponentType::unorm>::get;
+            case BlockPacking::p_8_8_8_8:     return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_8_8_8_8, ComponentType::unorm>::get;
+            case BlockPacking::p_9_9_9_5:     return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_9_9_9_5, ComponentType::unorm>::get;
+            case BlockPacking::p_5_9_9_9:     return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_5_9_9_9, ComponentType::unorm>::get;
+            case BlockPacking::p_10_10_10_2:  return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_10_10_10_2, ComponentType::unorm>::get;
+            case BlockPacking::p_2_10_10_10:  return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_2_10_10_10, ComponentType::unorm>::get;
+            case BlockPacking::s_32_p_24_8:   return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_32_p_24_8, ComponentType::unorm>::get;
             
             /* ######################### END OF GENERATED CODE ######################### */
 
-      //`return detail::PixelNormAccessUncompressed<ImageView, `i`, true, ImageBlockPacking::`name`, ImageComponentType::unorm>::get;`
+      //`return detail::PixelNormAccessUncompressed<ImageView, `i`, true, BlockPacking::`name`, ComponentType::unorm>::get;`
          }
-      } else if (component_type == ImageComponentType::uint) {
+      } else if (component_type == ComponentType::uint) {
          switch (image.format().packing()) {
-            /*!! write_template('packing_switch', { pred = not_compressed, pre_params = ', true', post_params = ', ImageComponentType::uint', func_name = 'get' }) !! 39 */
+            /*!! write_template('packing_switch', { pred = not_compressed, pre_params = ', true', post_params = ', ComponentType::uint', func_name = 'get' }) !! 39 */
             /* ################# !! GENERATED CODE -- DO NOT MODIFY !! ################# */
-            case ImageBlockPacking::s_8:           return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::s_8, ImageComponentType::uint>::get;
-            case ImageBlockPacking::s_8_8:         return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::s_8_8, ImageComponentType::uint>::get;
-            case ImageBlockPacking::s_8_8_8:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::s_8_8_8, ImageComponentType::uint>::get;
-            case ImageBlockPacking::s_8_8_8_8:     return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::s_8_8_8_8, ImageComponentType::uint>::get;
-            case ImageBlockPacking::s_16:          return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::s_16, ImageComponentType::uint>::get;
-            case ImageBlockPacking::s_16_16:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::s_16_16, ImageComponentType::uint>::get;
-            case ImageBlockPacking::s_16_16_16:    return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::s_16_16_16, ImageComponentType::uint>::get;
-            case ImageBlockPacking::s_16_16_16_16: return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::s_16_16_16_16, ImageComponentType::uint>::get;
-            case ImageBlockPacking::s_32:          return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::s_32, ImageComponentType::uint>::get;
-            case ImageBlockPacking::s_32_32:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::s_32_32, ImageComponentType::uint>::get;
-            case ImageBlockPacking::s_32_32_32:    return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::s_32_32_32, ImageComponentType::uint>::get;
-            case ImageBlockPacking::s_32_32_32_32: return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::s_32_32_32_32, ImageComponentType::uint>::get;
-            case ImageBlockPacking::s_64:          return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::s_64, ImageComponentType::uint>::get;
-            case ImageBlockPacking::s_64_64:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::s_64_64, ImageComponentType::uint>::get;
-            case ImageBlockPacking::s_64_64_64:    return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::s_64_64_64, ImageComponentType::uint>::get;
-            case ImageBlockPacking::s_64_64_64_64: return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::s_64_64_64_64, ImageComponentType::uint>::get;
-            case ImageBlockPacking::p_4_4:         return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::p_4_4, ImageComponentType::uint>::get;
-            case ImageBlockPacking::p_3_3_2:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::p_3_3_2, ImageComponentType::uint>::get;
-            case ImageBlockPacking::p_2_3_3:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::p_2_3_3, ImageComponentType::uint>::get;
-            case ImageBlockPacking::p_3_2_3:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::p_3_2_3, ImageComponentType::uint>::get;
-            case ImageBlockPacking::p_4_4_4_4:     return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::p_4_4_4_4, ImageComponentType::uint>::get;
-            case ImageBlockPacking::p_1_5_5_5:     return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::p_1_5_5_5, ImageComponentType::uint>::get;
-            case ImageBlockPacking::p_5_5_5_1:     return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::p_5_5_5_1, ImageComponentType::uint>::get;
-            case ImageBlockPacking::p_5_6_5:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::p_5_6_5, ImageComponentType::uint>::get;
-            case ImageBlockPacking::p_8_24:        return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::p_8_24, ImageComponentType::uint>::get;
-            case ImageBlockPacking::p_24_8:        return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::p_24_8, ImageComponentType::uint>::get;
-            case ImageBlockPacking::p_11_11_10:    return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::p_11_11_10, ImageComponentType::uint>::get;
-            case ImageBlockPacking::p_10_11_11:    return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::p_10_11_11, ImageComponentType::uint>::get;
-            case ImageBlockPacking::p_11_10_11:    return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::p_11_10_11, ImageComponentType::uint>::get;
-            case ImageBlockPacking::p_8_8_8_8:     return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::p_8_8_8_8, ImageComponentType::uint>::get;
-            case ImageBlockPacking::p_9_9_9_5:     return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::p_9_9_9_5, ImageComponentType::uint>::get;
-            case ImageBlockPacking::p_5_9_9_9:     return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::p_5_9_9_9, ImageComponentType::uint>::get;
-            case ImageBlockPacking::p_10_10_10_2:  return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::p_10_10_10_2, ImageComponentType::uint>::get;
-            case ImageBlockPacking::p_2_10_10_10:  return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::p_2_10_10_10, ImageComponentType::uint>::get;
-            case ImageBlockPacking::s_32_p_24_8:   return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::s_32_p_24_8, ImageComponentType::uint>::get;
+            case BlockPacking::s_8:           return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_8, ComponentType::uint>::get;
+            case BlockPacking::s_8_8:         return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_8_8, ComponentType::uint>::get;
+            case BlockPacking::s_8_8_8:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_8_8_8, ComponentType::uint>::get;
+            case BlockPacking::s_8_8_8_8:     return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_8_8_8_8, ComponentType::uint>::get;
+            case BlockPacking::s_16:          return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_16, ComponentType::uint>::get;
+            case BlockPacking::s_16_16:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_16_16, ComponentType::uint>::get;
+            case BlockPacking::s_16_16_16:    return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_16_16_16, ComponentType::uint>::get;
+            case BlockPacking::s_16_16_16_16: return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_16_16_16_16, ComponentType::uint>::get;
+            case BlockPacking::s_32:          return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_32, ComponentType::uint>::get;
+            case BlockPacking::s_32_32:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_32_32, ComponentType::uint>::get;
+            case BlockPacking::s_32_32_32:    return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_32_32_32, ComponentType::uint>::get;
+            case BlockPacking::s_32_32_32_32: return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_32_32_32_32, ComponentType::uint>::get;
+            case BlockPacking::s_64:          return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_64, ComponentType::uint>::get;
+            case BlockPacking::s_64_64:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_64_64, ComponentType::uint>::get;
+            case BlockPacking::s_64_64_64:    return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_64_64_64, ComponentType::uint>::get;
+            case BlockPacking::s_64_64_64_64: return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_64_64_64_64, ComponentType::uint>::get;
+            case BlockPacking::p_4_4:         return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_4_4, ComponentType::uint>::get;
+            case BlockPacking::p_3_3_2:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_3_3_2, ComponentType::uint>::get;
+            case BlockPacking::p_2_3_3:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_2_3_3, ComponentType::uint>::get;
+            case BlockPacking::p_3_2_3:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_3_2_3, ComponentType::uint>::get;
+            case BlockPacking::p_4_4_4_4:     return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_4_4_4_4, ComponentType::uint>::get;
+            case BlockPacking::p_1_5_5_5:     return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_1_5_5_5, ComponentType::uint>::get;
+            case BlockPacking::p_5_5_5_1:     return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_5_5_5_1, ComponentType::uint>::get;
+            case BlockPacking::p_5_6_5:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_5_6_5, ComponentType::uint>::get;
+            case BlockPacking::p_8_24:        return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_8_24, ComponentType::uint>::get;
+            case BlockPacking::p_24_8:        return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_24_8, ComponentType::uint>::get;
+            case BlockPacking::p_11_11_10:    return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_11_11_10, ComponentType::uint>::get;
+            case BlockPacking::p_10_11_11:    return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_10_11_11, ComponentType::uint>::get;
+            case BlockPacking::p_11_10_11:    return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_11_10_11, ComponentType::uint>::get;
+            case BlockPacking::p_8_8_8_8:     return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_8_8_8_8, ComponentType::uint>::get;
+            case BlockPacking::p_9_9_9_5:     return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_9_9_9_5, ComponentType::uint>::get;
+            case BlockPacking::p_5_9_9_9:     return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_5_9_9_9, ComponentType::uint>::get;
+            case BlockPacking::p_10_10_10_2:  return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_10_10_10_2, ComponentType::uint>::get;
+            case BlockPacking::p_2_10_10_10:  return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_2_10_10_10, ComponentType::uint>::get;
+            case BlockPacking::s_32_p_24_8:   return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_32_p_24_8, ComponentType::uint>::get;
             
             /* ######################### END OF GENERATED CODE ######################### */
 
-      //`return detail::PixelNormAccessUncompressed<ImageView, `i`, true, ImageBlockPacking::`name`, ImageComponentType::uint>::get;`
+      //`return detail::PixelNormAccessUncompressed<ImageView, `i`, true, BlockPacking::`name`, ComponentType::uint>::get;`
          }
-      } else if (component_type == ImageComponentType::sfloat) {
+      } else if (component_type == ComponentType::sfloat) {
          switch (image.format().packing()) {
-            /*!! write_template('packing_switch', { pred = is_standard, pre_params = ', true', post_params = ', ImageComponentType::sfloat', func_name = 'get' }) !! 20 */
+            /*!! write_template('packing_switch', { pred = is_standard, pre_params = ', true', post_params = ', ComponentType::sfloat', func_name = 'get' }) !! 20 */
             /* ################# !! GENERATED CODE -- DO NOT MODIFY !! ################# */
-            case ImageBlockPacking::s_8:           return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::s_8, ImageComponentType::sfloat>::get;
-            case ImageBlockPacking::s_8_8:         return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::s_8_8, ImageComponentType::sfloat>::get;
-            case ImageBlockPacking::s_8_8_8:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::s_8_8_8, ImageComponentType::sfloat>::get;
-            case ImageBlockPacking::s_8_8_8_8:     return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::s_8_8_8_8, ImageComponentType::sfloat>::get;
-            case ImageBlockPacking::s_16:          return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::s_16, ImageComponentType::sfloat>::get;
-            case ImageBlockPacking::s_16_16:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::s_16_16, ImageComponentType::sfloat>::get;
-            case ImageBlockPacking::s_16_16_16:    return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::s_16_16_16, ImageComponentType::sfloat>::get;
-            case ImageBlockPacking::s_16_16_16_16: return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::s_16_16_16_16, ImageComponentType::sfloat>::get;
-            case ImageBlockPacking::s_32:          return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::s_32, ImageComponentType::sfloat>::get;
-            case ImageBlockPacking::s_32_32:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::s_32_32, ImageComponentType::sfloat>::get;
-            case ImageBlockPacking::s_32_32_32:    return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::s_32_32_32, ImageComponentType::sfloat>::get;
-            case ImageBlockPacking::s_32_32_32_32: return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::s_32_32_32_32, ImageComponentType::sfloat>::get;
-            case ImageBlockPacking::s_64:          return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::s_64, ImageComponentType::sfloat>::get;
-            case ImageBlockPacking::s_64_64:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::s_64_64, ImageComponentType::sfloat>::get;
-            case ImageBlockPacking::s_64_64_64:    return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::s_64_64_64, ImageComponentType::sfloat>::get;
-            case ImageBlockPacking::s_64_64_64_64: return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::s_64_64_64_64, ImageComponentType::sfloat>::get;
+            case BlockPacking::s_8:           return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_8, ComponentType::sfloat>::get;
+            case BlockPacking::s_8_8:         return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_8_8, ComponentType::sfloat>::get;
+            case BlockPacking::s_8_8_8:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_8_8_8, ComponentType::sfloat>::get;
+            case BlockPacking::s_8_8_8_8:     return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_8_8_8_8, ComponentType::sfloat>::get;
+            case BlockPacking::s_16:          return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_16, ComponentType::sfloat>::get;
+            case BlockPacking::s_16_16:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_16_16, ComponentType::sfloat>::get;
+            case BlockPacking::s_16_16_16:    return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_16_16_16, ComponentType::sfloat>::get;
+            case BlockPacking::s_16_16_16_16: return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_16_16_16_16, ComponentType::sfloat>::get;
+            case BlockPacking::s_32:          return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_32, ComponentType::sfloat>::get;
+            case BlockPacking::s_32_32:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_32_32, ComponentType::sfloat>::get;
+            case BlockPacking::s_32_32_32:    return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_32_32_32, ComponentType::sfloat>::get;
+            case BlockPacking::s_32_32_32_32: return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_32_32_32_32, ComponentType::sfloat>::get;
+            case BlockPacking::s_64:          return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_64, ComponentType::sfloat>::get;
+            case BlockPacking::s_64_64:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_64_64, ComponentType::sfloat>::get;
+            case BlockPacking::s_64_64_64:    return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_64_64_64, ComponentType::sfloat>::get;
+            case BlockPacking::s_64_64_64_64: return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_64_64_64_64, ComponentType::sfloat>::get;
             
             /* ######################### END OF GENERATED CODE ######################### */
 
-      //`return detail::PixelNormAccessUncompressed<ImageView, `i`, true, ImageBlockPacking::`name`, ImageComponentType::sfloat>::get;`
+      //`return detail::PixelNormAccessUncompressed<ImageView, `i`, true, BlockPacking::`name`, ComponentType::sfloat>::get;`
          }
       }
       switch (image.format().packing()) {
          /*!! write_template('packing_switch', { pred = not_compressed, pre_params = ', true', func_name = 'get' }) !! 39 */
          /* ################# !! GENERATED CODE -- DO NOT MODIFY !! ################# */
-         case ImageBlockPacking::s_8:           return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::s_8>::get;
-         case ImageBlockPacking::s_8_8:         return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::s_8_8>::get;
-         case ImageBlockPacking::s_8_8_8:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::s_8_8_8>::get;
-         case ImageBlockPacking::s_8_8_8_8:     return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::s_8_8_8_8>::get;
-         case ImageBlockPacking::s_16:          return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::s_16>::get;
-         case ImageBlockPacking::s_16_16:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::s_16_16>::get;
-         case ImageBlockPacking::s_16_16_16:    return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::s_16_16_16>::get;
-         case ImageBlockPacking::s_16_16_16_16: return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::s_16_16_16_16>::get;
-         case ImageBlockPacking::s_32:          return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::s_32>::get;
-         case ImageBlockPacking::s_32_32:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::s_32_32>::get;
-         case ImageBlockPacking::s_32_32_32:    return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::s_32_32_32>::get;
-         case ImageBlockPacking::s_32_32_32_32: return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::s_32_32_32_32>::get;
-         case ImageBlockPacking::s_64:          return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::s_64>::get;
-         case ImageBlockPacking::s_64_64:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::s_64_64>::get;
-         case ImageBlockPacking::s_64_64_64:    return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::s_64_64_64>::get;
-         case ImageBlockPacking::s_64_64_64_64: return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::s_64_64_64_64>::get;
-         case ImageBlockPacking::p_4_4:         return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::p_4_4>::get;
-         case ImageBlockPacking::p_3_3_2:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::p_3_3_2>::get;
-         case ImageBlockPacking::p_2_3_3:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::p_2_3_3>::get;
-         case ImageBlockPacking::p_3_2_3:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::p_3_2_3>::get;
-         case ImageBlockPacking::p_4_4_4_4:     return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::p_4_4_4_4>::get;
-         case ImageBlockPacking::p_1_5_5_5:     return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::p_1_5_5_5>::get;
-         case ImageBlockPacking::p_5_5_5_1:     return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::p_5_5_5_1>::get;
-         case ImageBlockPacking::p_5_6_5:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::p_5_6_5>::get;
-         case ImageBlockPacking::p_8_24:        return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::p_8_24>::get;
-         case ImageBlockPacking::p_24_8:        return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::p_24_8>::get;
-         case ImageBlockPacking::p_11_11_10:    return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::p_11_11_10>::get;
-         case ImageBlockPacking::p_10_11_11:    return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::p_10_11_11>::get;
-         case ImageBlockPacking::p_11_10_11:    return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::p_11_10_11>::get;
-         case ImageBlockPacking::p_8_8_8_8:     return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::p_8_8_8_8>::get;
-         case ImageBlockPacking::p_9_9_9_5:     return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::p_9_9_9_5>::get;
-         case ImageBlockPacking::p_5_9_9_9:     return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::p_5_9_9_9>::get;
-         case ImageBlockPacking::p_10_10_10_2:  return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::p_10_10_10_2>::get;
-         case ImageBlockPacking::p_2_10_10_10:  return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::p_2_10_10_10>::get;
-         case ImageBlockPacking::s_32_p_24_8:   return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::s_32_p_24_8>::get;
+         case BlockPacking::s_8:           return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_8>::get;
+         case BlockPacking::s_8_8:         return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_8_8>::get;
+         case BlockPacking::s_8_8_8:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_8_8_8>::get;
+         case BlockPacking::s_8_8_8_8:     return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_8_8_8_8>::get;
+         case BlockPacking::s_16:          return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_16>::get;
+         case BlockPacking::s_16_16:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_16_16>::get;
+         case BlockPacking::s_16_16_16:    return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_16_16_16>::get;
+         case BlockPacking::s_16_16_16_16: return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_16_16_16_16>::get;
+         case BlockPacking::s_32:          return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_32>::get;
+         case BlockPacking::s_32_32:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_32_32>::get;
+         case BlockPacking::s_32_32_32:    return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_32_32_32>::get;
+         case BlockPacking::s_32_32_32_32: return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_32_32_32_32>::get;
+         case BlockPacking::s_64:          return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_64>::get;
+         case BlockPacking::s_64_64:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_64_64>::get;
+         case BlockPacking::s_64_64_64:    return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_64_64_64>::get;
+         case BlockPacking::s_64_64_64_64: return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_64_64_64_64>::get;
+         case BlockPacking::p_4_4:         return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_4_4>::get;
+         case BlockPacking::p_3_3_2:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_3_3_2>::get;
+         case BlockPacking::p_2_3_3:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_2_3_3>::get;
+         case BlockPacking::p_3_2_3:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_3_2_3>::get;
+         case BlockPacking::p_4_4_4_4:     return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_4_4_4_4>::get;
+         case BlockPacking::p_1_5_5_5:     return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_1_5_5_5>::get;
+         case BlockPacking::p_5_5_5_1:     return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_5_5_5_1>::get;
+         case BlockPacking::p_5_6_5:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_5_6_5>::get;
+         case BlockPacking::p_8_24:        return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_8_24>::get;
+         case BlockPacking::p_24_8:        return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_24_8>::get;
+         case BlockPacking::p_11_11_10:    return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_11_11_10>::get;
+         case BlockPacking::p_10_11_11:    return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_10_11_11>::get;
+         case BlockPacking::p_11_10_11:    return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_11_10_11>::get;
+         case BlockPacking::p_8_8_8_8:     return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_8_8_8_8>::get;
+         case BlockPacking::p_9_9_9_5:     return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_9_9_9_5>::get;
+         case BlockPacking::p_5_9_9_9:     return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_5_9_9_9>::get;
+         case BlockPacking::p_10_10_10_2:  return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_10_10_10_2>::get;
+         case BlockPacking::p_2_10_10_10:  return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_2_10_10_10>::get;
+         case BlockPacking::s_32_p_24_8:   return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_32_p_24_8>::get;
          
          /* ######################### END OF GENERATED CODE ######################### */
 
-      //`return detail::PixelNormAccessUncompressed<ImageView, `i`, true, ImageBlockPacking::`name`>::get;`
+      //`return detail::PixelNormAccessUncompressed<ImageView, `i`, true, BlockPacking::`name`>::get;`
          default:
             assert(false);
             break;
@@ -1326,45 +1326,45 @@ GetPixelNormFunc<Coord, ImageView> get_pixel_norm_func(const ImageView& image) {
       switch (image.format().packing()) {
          /*!! write_template('packing_switch', { pred = not_compressed, pre_params = ', false', func_name = 'get' }) !! 39 */
          /* ################# !! GENERATED CODE -- DO NOT MODIFY !! ################# */
-         case ImageBlockPacking::s_8:           return detail::PixelNormAccessUncompressed<ImageView, Coord, false, ImageBlockPacking::s_8>::get;
-         case ImageBlockPacking::s_8_8:         return detail::PixelNormAccessUncompressed<ImageView, Coord, false, ImageBlockPacking::s_8_8>::get;
-         case ImageBlockPacking::s_8_8_8:       return detail::PixelNormAccessUncompressed<ImageView, Coord, false, ImageBlockPacking::s_8_8_8>::get;
-         case ImageBlockPacking::s_8_8_8_8:     return detail::PixelNormAccessUncompressed<ImageView, Coord, false, ImageBlockPacking::s_8_8_8_8>::get;
-         case ImageBlockPacking::s_16:          return detail::PixelNormAccessUncompressed<ImageView, Coord, false, ImageBlockPacking::s_16>::get;
-         case ImageBlockPacking::s_16_16:       return detail::PixelNormAccessUncompressed<ImageView, Coord, false, ImageBlockPacking::s_16_16>::get;
-         case ImageBlockPacking::s_16_16_16:    return detail::PixelNormAccessUncompressed<ImageView, Coord, false, ImageBlockPacking::s_16_16_16>::get;
-         case ImageBlockPacking::s_16_16_16_16: return detail::PixelNormAccessUncompressed<ImageView, Coord, false, ImageBlockPacking::s_16_16_16_16>::get;
-         case ImageBlockPacking::s_32:          return detail::PixelNormAccessUncompressed<ImageView, Coord, false, ImageBlockPacking::s_32>::get;
-         case ImageBlockPacking::s_32_32:       return detail::PixelNormAccessUncompressed<ImageView, Coord, false, ImageBlockPacking::s_32_32>::get;
-         case ImageBlockPacking::s_32_32_32:    return detail::PixelNormAccessUncompressed<ImageView, Coord, false, ImageBlockPacking::s_32_32_32>::get;
-         case ImageBlockPacking::s_32_32_32_32: return detail::PixelNormAccessUncompressed<ImageView, Coord, false, ImageBlockPacking::s_32_32_32_32>::get;
-         case ImageBlockPacking::s_64:          return detail::PixelNormAccessUncompressed<ImageView, Coord, false, ImageBlockPacking::s_64>::get;
-         case ImageBlockPacking::s_64_64:       return detail::PixelNormAccessUncompressed<ImageView, Coord, false, ImageBlockPacking::s_64_64>::get;
-         case ImageBlockPacking::s_64_64_64:    return detail::PixelNormAccessUncompressed<ImageView, Coord, false, ImageBlockPacking::s_64_64_64>::get;
-         case ImageBlockPacking::s_64_64_64_64: return detail::PixelNormAccessUncompressed<ImageView, Coord, false, ImageBlockPacking::s_64_64_64_64>::get;
-         case ImageBlockPacking::p_4_4:         return detail::PixelNormAccessUncompressed<ImageView, Coord, false, ImageBlockPacking::p_4_4>::get;
-         case ImageBlockPacking::p_3_3_2:       return detail::PixelNormAccessUncompressed<ImageView, Coord, false, ImageBlockPacking::p_3_3_2>::get;
-         case ImageBlockPacking::p_2_3_3:       return detail::PixelNormAccessUncompressed<ImageView, Coord, false, ImageBlockPacking::p_2_3_3>::get;
-         case ImageBlockPacking::p_3_2_3:       return detail::PixelNormAccessUncompressed<ImageView, Coord, false, ImageBlockPacking::p_3_2_3>::get;
-         case ImageBlockPacking::p_4_4_4_4:     return detail::PixelNormAccessUncompressed<ImageView, Coord, false, ImageBlockPacking::p_4_4_4_4>::get;
-         case ImageBlockPacking::p_1_5_5_5:     return detail::PixelNormAccessUncompressed<ImageView, Coord, false, ImageBlockPacking::p_1_5_5_5>::get;
-         case ImageBlockPacking::p_5_5_5_1:     return detail::PixelNormAccessUncompressed<ImageView, Coord, false, ImageBlockPacking::p_5_5_5_1>::get;
-         case ImageBlockPacking::p_5_6_5:       return detail::PixelNormAccessUncompressed<ImageView, Coord, false, ImageBlockPacking::p_5_6_5>::get;
-         case ImageBlockPacking::p_8_24:        return detail::PixelNormAccessUncompressed<ImageView, Coord, false, ImageBlockPacking::p_8_24>::get;
-         case ImageBlockPacking::p_24_8:        return detail::PixelNormAccessUncompressed<ImageView, Coord, false, ImageBlockPacking::p_24_8>::get;
-         case ImageBlockPacking::p_11_11_10:    return detail::PixelNormAccessUncompressed<ImageView, Coord, false, ImageBlockPacking::p_11_11_10>::get;
-         case ImageBlockPacking::p_10_11_11:    return detail::PixelNormAccessUncompressed<ImageView, Coord, false, ImageBlockPacking::p_10_11_11>::get;
-         case ImageBlockPacking::p_11_10_11:    return detail::PixelNormAccessUncompressed<ImageView, Coord, false, ImageBlockPacking::p_11_10_11>::get;
-         case ImageBlockPacking::p_8_8_8_8:     return detail::PixelNormAccessUncompressed<ImageView, Coord, false, ImageBlockPacking::p_8_8_8_8>::get;
-         case ImageBlockPacking::p_9_9_9_5:     return detail::PixelNormAccessUncompressed<ImageView, Coord, false, ImageBlockPacking::p_9_9_9_5>::get;
-         case ImageBlockPacking::p_5_9_9_9:     return detail::PixelNormAccessUncompressed<ImageView, Coord, false, ImageBlockPacking::p_5_9_9_9>::get;
-         case ImageBlockPacking::p_10_10_10_2:  return detail::PixelNormAccessUncompressed<ImageView, Coord, false, ImageBlockPacking::p_10_10_10_2>::get;
-         case ImageBlockPacking::p_2_10_10_10:  return detail::PixelNormAccessUncompressed<ImageView, Coord, false, ImageBlockPacking::p_2_10_10_10>::get;
-         case ImageBlockPacking::s_32_p_24_8:   return detail::PixelNormAccessUncompressed<ImageView, Coord, false, ImageBlockPacking::s_32_p_24_8>::get;
+         case BlockPacking::s_8:           return detail::PixelNormAccessUncompressed<ImageView, Coord, false, BlockPacking::s_8>::get;
+         case BlockPacking::s_8_8:         return detail::PixelNormAccessUncompressed<ImageView, Coord, false, BlockPacking::s_8_8>::get;
+         case BlockPacking::s_8_8_8:       return detail::PixelNormAccessUncompressed<ImageView, Coord, false, BlockPacking::s_8_8_8>::get;
+         case BlockPacking::s_8_8_8_8:     return detail::PixelNormAccessUncompressed<ImageView, Coord, false, BlockPacking::s_8_8_8_8>::get;
+         case BlockPacking::s_16:          return detail::PixelNormAccessUncompressed<ImageView, Coord, false, BlockPacking::s_16>::get;
+         case BlockPacking::s_16_16:       return detail::PixelNormAccessUncompressed<ImageView, Coord, false, BlockPacking::s_16_16>::get;
+         case BlockPacking::s_16_16_16:    return detail::PixelNormAccessUncompressed<ImageView, Coord, false, BlockPacking::s_16_16_16>::get;
+         case BlockPacking::s_16_16_16_16: return detail::PixelNormAccessUncompressed<ImageView, Coord, false, BlockPacking::s_16_16_16_16>::get;
+         case BlockPacking::s_32:          return detail::PixelNormAccessUncompressed<ImageView, Coord, false, BlockPacking::s_32>::get;
+         case BlockPacking::s_32_32:       return detail::PixelNormAccessUncompressed<ImageView, Coord, false, BlockPacking::s_32_32>::get;
+         case BlockPacking::s_32_32_32:    return detail::PixelNormAccessUncompressed<ImageView, Coord, false, BlockPacking::s_32_32_32>::get;
+         case BlockPacking::s_32_32_32_32: return detail::PixelNormAccessUncompressed<ImageView, Coord, false, BlockPacking::s_32_32_32_32>::get;
+         case BlockPacking::s_64:          return detail::PixelNormAccessUncompressed<ImageView, Coord, false, BlockPacking::s_64>::get;
+         case BlockPacking::s_64_64:       return detail::PixelNormAccessUncompressed<ImageView, Coord, false, BlockPacking::s_64_64>::get;
+         case BlockPacking::s_64_64_64:    return detail::PixelNormAccessUncompressed<ImageView, Coord, false, BlockPacking::s_64_64_64>::get;
+         case BlockPacking::s_64_64_64_64: return detail::PixelNormAccessUncompressed<ImageView, Coord, false, BlockPacking::s_64_64_64_64>::get;
+         case BlockPacking::p_4_4:         return detail::PixelNormAccessUncompressed<ImageView, Coord, false, BlockPacking::p_4_4>::get;
+         case BlockPacking::p_3_3_2:       return detail::PixelNormAccessUncompressed<ImageView, Coord, false, BlockPacking::p_3_3_2>::get;
+         case BlockPacking::p_2_3_3:       return detail::PixelNormAccessUncompressed<ImageView, Coord, false, BlockPacking::p_2_3_3>::get;
+         case BlockPacking::p_3_2_3:       return detail::PixelNormAccessUncompressed<ImageView, Coord, false, BlockPacking::p_3_2_3>::get;
+         case BlockPacking::p_4_4_4_4:     return detail::PixelNormAccessUncompressed<ImageView, Coord, false, BlockPacking::p_4_4_4_4>::get;
+         case BlockPacking::p_1_5_5_5:     return detail::PixelNormAccessUncompressed<ImageView, Coord, false, BlockPacking::p_1_5_5_5>::get;
+         case BlockPacking::p_5_5_5_1:     return detail::PixelNormAccessUncompressed<ImageView, Coord, false, BlockPacking::p_5_5_5_1>::get;
+         case BlockPacking::p_5_6_5:       return detail::PixelNormAccessUncompressed<ImageView, Coord, false, BlockPacking::p_5_6_5>::get;
+         case BlockPacking::p_8_24:        return detail::PixelNormAccessUncompressed<ImageView, Coord, false, BlockPacking::p_8_24>::get;
+         case BlockPacking::p_24_8:        return detail::PixelNormAccessUncompressed<ImageView, Coord, false, BlockPacking::p_24_8>::get;
+         case BlockPacking::p_11_11_10:    return detail::PixelNormAccessUncompressed<ImageView, Coord, false, BlockPacking::p_11_11_10>::get;
+         case BlockPacking::p_10_11_11:    return detail::PixelNormAccessUncompressed<ImageView, Coord, false, BlockPacking::p_10_11_11>::get;
+         case BlockPacking::p_11_10_11:    return detail::PixelNormAccessUncompressed<ImageView, Coord, false, BlockPacking::p_11_10_11>::get;
+         case BlockPacking::p_8_8_8_8:     return detail::PixelNormAccessUncompressed<ImageView, Coord, false, BlockPacking::p_8_8_8_8>::get;
+         case BlockPacking::p_9_9_9_5:     return detail::PixelNormAccessUncompressed<ImageView, Coord, false, BlockPacking::p_9_9_9_5>::get;
+         case BlockPacking::p_5_9_9_9:     return detail::PixelNormAccessUncompressed<ImageView, Coord, false, BlockPacking::p_5_9_9_9>::get;
+         case BlockPacking::p_10_10_10_2:  return detail::PixelNormAccessUncompressed<ImageView, Coord, false, BlockPacking::p_10_10_10_2>::get;
+         case BlockPacking::p_2_10_10_10:  return detail::PixelNormAccessUncompressed<ImageView, Coord, false, BlockPacking::p_2_10_10_10>::get;
+         case BlockPacking::s_32_p_24_8:   return detail::PixelNormAccessUncompressed<ImageView, Coord, false, BlockPacking::s_32_p_24_8>::get;
          
          /* ######################### END OF GENERATED CODE ######################### */
 
-      //`return detail::PixelNormAccessUncompressed<ImageView, `i`, false, ImageBlockPacking::`name`>::get;`
+      //`return detail::PixelNormAccessUncompressed<ImageView, `i`, false, BlockPacking::`name`>::get;`
          default:
             assert(false);
             break;
@@ -1388,118 +1388,118 @@ PutPixelNormFunc<Coord, ImageView> put_pixel_norm_func(const ImageView& image) {
    if (dim_type(image.block_dim()) == dim_type(1)) {
       auto component_types = image.format().component_types();
       glm::length_t packing_components = component_count(image.format().packing());
-      ImageComponentType component_type = static_cast<ImageComponentType>(component_types[0]);
+      ComponentType component_type = static_cast<ComponentType>(component_types[0]);
       for (glm::length_t c = 1; c < packing_components; ++c) {
-         if (static_cast<ImageComponentType>(component_types[c]) != component_type) {
-            component_type = ImageComponentType::none;
+         if (static_cast<ComponentType>(component_types[c]) != component_type) {
+            component_type = ComponentType::none;
             break;
          }
       }
 
-      if (component_type == ImageComponentType::unorm) {
+      if (component_type == ComponentType::unorm) {
          switch (image.format().packing()) {
-            /*!! write_template('packing_switch', { pred = not_compressed, pre_params = ', true', post_params = ', ImageComponentType::unorm', func_name = 'put' }) !! 39 */
+            /*!! write_template('packing_switch', { pred = not_compressed, pre_params = ', true', post_params = ', ComponentType::unorm', func_name = 'put' }) !! 39 */
             /* ################# !! GENERATED CODE -- DO NOT MODIFY !! ################# */
-            case ImageBlockPacking::s_8:           return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::s_8, ImageComponentType::unorm>::put;
-            case ImageBlockPacking::s_8_8:         return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::s_8_8, ImageComponentType::unorm>::put;
-            case ImageBlockPacking::s_8_8_8:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::s_8_8_8, ImageComponentType::unorm>::put;
-            case ImageBlockPacking::s_8_8_8_8:     return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::s_8_8_8_8, ImageComponentType::unorm>::put;
-            case ImageBlockPacking::s_16:          return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::s_16, ImageComponentType::unorm>::put;
-            case ImageBlockPacking::s_16_16:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::s_16_16, ImageComponentType::unorm>::put;
-            case ImageBlockPacking::s_16_16_16:    return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::s_16_16_16, ImageComponentType::unorm>::put;
-            case ImageBlockPacking::s_16_16_16_16: return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::s_16_16_16_16, ImageComponentType::unorm>::put;
-            case ImageBlockPacking::s_32:          return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::s_32, ImageComponentType::unorm>::put;
-            case ImageBlockPacking::s_32_32:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::s_32_32, ImageComponentType::unorm>::put;
-            case ImageBlockPacking::s_32_32_32:    return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::s_32_32_32, ImageComponentType::unorm>::put;
-            case ImageBlockPacking::s_32_32_32_32: return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::s_32_32_32_32, ImageComponentType::unorm>::put;
-            case ImageBlockPacking::s_64:          return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::s_64, ImageComponentType::unorm>::put;
-            case ImageBlockPacking::s_64_64:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::s_64_64, ImageComponentType::unorm>::put;
-            case ImageBlockPacking::s_64_64_64:    return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::s_64_64_64, ImageComponentType::unorm>::put;
-            case ImageBlockPacking::s_64_64_64_64: return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::s_64_64_64_64, ImageComponentType::unorm>::put;
-            case ImageBlockPacking::p_4_4:         return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::p_4_4, ImageComponentType::unorm>::put;
-            case ImageBlockPacking::p_3_3_2:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::p_3_3_2, ImageComponentType::unorm>::put;
-            case ImageBlockPacking::p_2_3_3:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::p_2_3_3, ImageComponentType::unorm>::put;
-            case ImageBlockPacking::p_3_2_3:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::p_3_2_3, ImageComponentType::unorm>::put;
-            case ImageBlockPacking::p_4_4_4_4:     return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::p_4_4_4_4, ImageComponentType::unorm>::put;
-            case ImageBlockPacking::p_1_5_5_5:     return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::p_1_5_5_5, ImageComponentType::unorm>::put;
-            case ImageBlockPacking::p_5_5_5_1:     return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::p_5_5_5_1, ImageComponentType::unorm>::put;
-            case ImageBlockPacking::p_5_6_5:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::p_5_6_5, ImageComponentType::unorm>::put;
-            case ImageBlockPacking::p_8_24:        return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::p_8_24, ImageComponentType::unorm>::put;
-            case ImageBlockPacking::p_24_8:        return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::p_24_8, ImageComponentType::unorm>::put;
-            case ImageBlockPacking::p_11_11_10:    return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::p_11_11_10, ImageComponentType::unorm>::put;
-            case ImageBlockPacking::p_10_11_11:    return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::p_10_11_11, ImageComponentType::unorm>::put;
-            case ImageBlockPacking::p_11_10_11:    return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::p_11_10_11, ImageComponentType::unorm>::put;
-            case ImageBlockPacking::p_8_8_8_8:     return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::p_8_8_8_8, ImageComponentType::unorm>::put;
-            case ImageBlockPacking::p_9_9_9_5:     return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::p_9_9_9_5, ImageComponentType::unorm>::put;
-            case ImageBlockPacking::p_5_9_9_9:     return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::p_5_9_9_9, ImageComponentType::unorm>::put;
-            case ImageBlockPacking::p_10_10_10_2:  return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::p_10_10_10_2, ImageComponentType::unorm>::put;
-            case ImageBlockPacking::p_2_10_10_10:  return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::p_2_10_10_10, ImageComponentType::unorm>::put;
-            case ImageBlockPacking::s_32_p_24_8:   return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::s_32_p_24_8, ImageComponentType::unorm>::put;
+            case BlockPacking::s_8:           return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_8, ComponentType::unorm>::put;
+            case BlockPacking::s_8_8:         return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_8_8, ComponentType::unorm>::put;
+            case BlockPacking::s_8_8_8:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_8_8_8, ComponentType::unorm>::put;
+            case BlockPacking::s_8_8_8_8:     return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_8_8_8_8, ComponentType::unorm>::put;
+            case BlockPacking::s_16:          return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_16, ComponentType::unorm>::put;
+            case BlockPacking::s_16_16:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_16_16, ComponentType::unorm>::put;
+            case BlockPacking::s_16_16_16:    return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_16_16_16, ComponentType::unorm>::put;
+            case BlockPacking::s_16_16_16_16: return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_16_16_16_16, ComponentType::unorm>::put;
+            case BlockPacking::s_32:          return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_32, ComponentType::unorm>::put;
+            case BlockPacking::s_32_32:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_32_32, ComponentType::unorm>::put;
+            case BlockPacking::s_32_32_32:    return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_32_32_32, ComponentType::unorm>::put;
+            case BlockPacking::s_32_32_32_32: return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_32_32_32_32, ComponentType::unorm>::put;
+            case BlockPacking::s_64:          return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_64, ComponentType::unorm>::put;
+            case BlockPacking::s_64_64:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_64_64, ComponentType::unorm>::put;
+            case BlockPacking::s_64_64_64:    return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_64_64_64, ComponentType::unorm>::put;
+            case BlockPacking::s_64_64_64_64: return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_64_64_64_64, ComponentType::unorm>::put;
+            case BlockPacking::p_4_4:         return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_4_4, ComponentType::unorm>::put;
+            case BlockPacking::p_3_3_2:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_3_3_2, ComponentType::unorm>::put;
+            case BlockPacking::p_2_3_3:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_2_3_3, ComponentType::unorm>::put;
+            case BlockPacking::p_3_2_3:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_3_2_3, ComponentType::unorm>::put;
+            case BlockPacking::p_4_4_4_4:     return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_4_4_4_4, ComponentType::unorm>::put;
+            case BlockPacking::p_1_5_5_5:     return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_1_5_5_5, ComponentType::unorm>::put;
+            case BlockPacking::p_5_5_5_1:     return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_5_5_5_1, ComponentType::unorm>::put;
+            case BlockPacking::p_5_6_5:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_5_6_5, ComponentType::unorm>::put;
+            case BlockPacking::p_8_24:        return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_8_24, ComponentType::unorm>::put;
+            case BlockPacking::p_24_8:        return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_24_8, ComponentType::unorm>::put;
+            case BlockPacking::p_11_11_10:    return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_11_11_10, ComponentType::unorm>::put;
+            case BlockPacking::p_10_11_11:    return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_10_11_11, ComponentType::unorm>::put;
+            case BlockPacking::p_11_10_11:    return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_11_10_11, ComponentType::unorm>::put;
+            case BlockPacking::p_8_8_8_8:     return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_8_8_8_8, ComponentType::unorm>::put;
+            case BlockPacking::p_9_9_9_5:     return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_9_9_9_5, ComponentType::unorm>::put;
+            case BlockPacking::p_5_9_9_9:     return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_5_9_9_9, ComponentType::unorm>::put;
+            case BlockPacking::p_10_10_10_2:  return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_10_10_10_2, ComponentType::unorm>::put;
+            case BlockPacking::p_2_10_10_10:  return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_2_10_10_10, ComponentType::unorm>::put;
+            case BlockPacking::s_32_p_24_8:   return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_32_p_24_8, ComponentType::unorm>::put;
             
             /* ######################### END OF GENERATED CODE ######################### */
          }
-      } else if (component_type == ImageComponentType::uint) {
+      } else if (component_type == ComponentType::uint) {
          switch (image.format().packing()) {
-            /*!! write_template('packing_switch', { pred = not_compressed, pre_params = ', true', post_params = ', ImageComponentType::uint', func_name = 'put' }) !! 39 */
+            /*!! write_template('packing_switch', { pred = not_compressed, pre_params = ', true', post_params = ', ComponentType::uint', func_name = 'put' }) !! 39 */
             /* ################# !! GENERATED CODE -- DO NOT MODIFY !! ################# */
-            case ImageBlockPacking::s_8:           return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::s_8, ImageComponentType::uint>::put;
-            case ImageBlockPacking::s_8_8:         return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::s_8_8, ImageComponentType::uint>::put;
-            case ImageBlockPacking::s_8_8_8:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::s_8_8_8, ImageComponentType::uint>::put;
-            case ImageBlockPacking::s_8_8_8_8:     return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::s_8_8_8_8, ImageComponentType::uint>::put;
-            case ImageBlockPacking::s_16:          return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::s_16, ImageComponentType::uint>::put;
-            case ImageBlockPacking::s_16_16:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::s_16_16, ImageComponentType::uint>::put;
-            case ImageBlockPacking::s_16_16_16:    return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::s_16_16_16, ImageComponentType::uint>::put;
-            case ImageBlockPacking::s_16_16_16_16: return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::s_16_16_16_16, ImageComponentType::uint>::put;
-            case ImageBlockPacking::s_32:          return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::s_32, ImageComponentType::uint>::put;
-            case ImageBlockPacking::s_32_32:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::s_32_32, ImageComponentType::uint>::put;
-            case ImageBlockPacking::s_32_32_32:    return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::s_32_32_32, ImageComponentType::uint>::put;
-            case ImageBlockPacking::s_32_32_32_32: return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::s_32_32_32_32, ImageComponentType::uint>::put;
-            case ImageBlockPacking::s_64:          return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::s_64, ImageComponentType::uint>::put;
-            case ImageBlockPacking::s_64_64:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::s_64_64, ImageComponentType::uint>::put;
-            case ImageBlockPacking::s_64_64_64:    return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::s_64_64_64, ImageComponentType::uint>::put;
-            case ImageBlockPacking::s_64_64_64_64: return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::s_64_64_64_64, ImageComponentType::uint>::put;
-            case ImageBlockPacking::p_4_4:         return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::p_4_4, ImageComponentType::uint>::put;
-            case ImageBlockPacking::p_3_3_2:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::p_3_3_2, ImageComponentType::uint>::put;
-            case ImageBlockPacking::p_2_3_3:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::p_2_3_3, ImageComponentType::uint>::put;
-            case ImageBlockPacking::p_3_2_3:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::p_3_2_3, ImageComponentType::uint>::put;
-            case ImageBlockPacking::p_4_4_4_4:     return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::p_4_4_4_4, ImageComponentType::uint>::put;
-            case ImageBlockPacking::p_1_5_5_5:     return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::p_1_5_5_5, ImageComponentType::uint>::put;
-            case ImageBlockPacking::p_5_5_5_1:     return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::p_5_5_5_1, ImageComponentType::uint>::put;
-            case ImageBlockPacking::p_5_6_5:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::p_5_6_5, ImageComponentType::uint>::put;
-            case ImageBlockPacking::p_8_24:        return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::p_8_24, ImageComponentType::uint>::put;
-            case ImageBlockPacking::p_24_8:        return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::p_24_8, ImageComponentType::uint>::put;
-            case ImageBlockPacking::p_11_11_10:    return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::p_11_11_10, ImageComponentType::uint>::put;
-            case ImageBlockPacking::p_10_11_11:    return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::p_10_11_11, ImageComponentType::uint>::put;
-            case ImageBlockPacking::p_11_10_11:    return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::p_11_10_11, ImageComponentType::uint>::put;
-            case ImageBlockPacking::p_8_8_8_8:     return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::p_8_8_8_8, ImageComponentType::uint>::put;
-            case ImageBlockPacking::p_9_9_9_5:     return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::p_9_9_9_5, ImageComponentType::uint>::put;
-            case ImageBlockPacking::p_5_9_9_9:     return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::p_5_9_9_9, ImageComponentType::uint>::put;
-            case ImageBlockPacking::p_10_10_10_2:  return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::p_10_10_10_2, ImageComponentType::uint>::put;
-            case ImageBlockPacking::p_2_10_10_10:  return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::p_2_10_10_10, ImageComponentType::uint>::put;
-            case ImageBlockPacking::s_32_p_24_8:   return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::s_32_p_24_8, ImageComponentType::uint>::put;
+            case BlockPacking::s_8:           return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_8, ComponentType::uint>::put;
+            case BlockPacking::s_8_8:         return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_8_8, ComponentType::uint>::put;
+            case BlockPacking::s_8_8_8:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_8_8_8, ComponentType::uint>::put;
+            case BlockPacking::s_8_8_8_8:     return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_8_8_8_8, ComponentType::uint>::put;
+            case BlockPacking::s_16:          return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_16, ComponentType::uint>::put;
+            case BlockPacking::s_16_16:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_16_16, ComponentType::uint>::put;
+            case BlockPacking::s_16_16_16:    return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_16_16_16, ComponentType::uint>::put;
+            case BlockPacking::s_16_16_16_16: return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_16_16_16_16, ComponentType::uint>::put;
+            case BlockPacking::s_32:          return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_32, ComponentType::uint>::put;
+            case BlockPacking::s_32_32:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_32_32, ComponentType::uint>::put;
+            case BlockPacking::s_32_32_32:    return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_32_32_32, ComponentType::uint>::put;
+            case BlockPacking::s_32_32_32_32: return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_32_32_32_32, ComponentType::uint>::put;
+            case BlockPacking::s_64:          return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_64, ComponentType::uint>::put;
+            case BlockPacking::s_64_64:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_64_64, ComponentType::uint>::put;
+            case BlockPacking::s_64_64_64:    return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_64_64_64, ComponentType::uint>::put;
+            case BlockPacking::s_64_64_64_64: return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_64_64_64_64, ComponentType::uint>::put;
+            case BlockPacking::p_4_4:         return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_4_4, ComponentType::uint>::put;
+            case BlockPacking::p_3_3_2:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_3_3_2, ComponentType::uint>::put;
+            case BlockPacking::p_2_3_3:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_2_3_3, ComponentType::uint>::put;
+            case BlockPacking::p_3_2_3:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_3_2_3, ComponentType::uint>::put;
+            case BlockPacking::p_4_4_4_4:     return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_4_4_4_4, ComponentType::uint>::put;
+            case BlockPacking::p_1_5_5_5:     return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_1_5_5_5, ComponentType::uint>::put;
+            case BlockPacking::p_5_5_5_1:     return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_5_5_5_1, ComponentType::uint>::put;
+            case BlockPacking::p_5_6_5:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_5_6_5, ComponentType::uint>::put;
+            case BlockPacking::p_8_24:        return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_8_24, ComponentType::uint>::put;
+            case BlockPacking::p_24_8:        return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_24_8, ComponentType::uint>::put;
+            case BlockPacking::p_11_11_10:    return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_11_11_10, ComponentType::uint>::put;
+            case BlockPacking::p_10_11_11:    return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_10_11_11, ComponentType::uint>::put;
+            case BlockPacking::p_11_10_11:    return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_11_10_11, ComponentType::uint>::put;
+            case BlockPacking::p_8_8_8_8:     return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_8_8_8_8, ComponentType::uint>::put;
+            case BlockPacking::p_9_9_9_5:     return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_9_9_9_5, ComponentType::uint>::put;
+            case BlockPacking::p_5_9_9_9:     return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_5_9_9_9, ComponentType::uint>::put;
+            case BlockPacking::p_10_10_10_2:  return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_10_10_10_2, ComponentType::uint>::put;
+            case BlockPacking::p_2_10_10_10:  return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_2_10_10_10, ComponentType::uint>::put;
+            case BlockPacking::s_32_p_24_8:   return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_32_p_24_8, ComponentType::uint>::put;
             
             /* ######################### END OF GENERATED CODE ######################### */
          }
-      } else if (component_type == ImageComponentType::sfloat) {
+      } else if (component_type == ComponentType::sfloat) {
          switch (image.format().packing()) {
-            /*!! write_template('packing_switch', { pred = is_standard, pre_params = ', true', post_params = ', ImageComponentType::sfloat', func_name = 'put' }) !! 20 */
+            /*!! write_template('packing_switch', { pred = is_standard, pre_params = ', true', post_params = ', ComponentType::sfloat', func_name = 'put' }) !! 20 */
             /* ################# !! GENERATED CODE -- DO NOT MODIFY !! ################# */
-            case ImageBlockPacking::s_8:           return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::s_8, ImageComponentType::sfloat>::put;
-            case ImageBlockPacking::s_8_8:         return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::s_8_8, ImageComponentType::sfloat>::put;
-            case ImageBlockPacking::s_8_8_8:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::s_8_8_8, ImageComponentType::sfloat>::put;
-            case ImageBlockPacking::s_8_8_8_8:     return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::s_8_8_8_8, ImageComponentType::sfloat>::put;
-            case ImageBlockPacking::s_16:          return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::s_16, ImageComponentType::sfloat>::put;
-            case ImageBlockPacking::s_16_16:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::s_16_16, ImageComponentType::sfloat>::put;
-            case ImageBlockPacking::s_16_16_16:    return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::s_16_16_16, ImageComponentType::sfloat>::put;
-            case ImageBlockPacking::s_16_16_16_16: return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::s_16_16_16_16, ImageComponentType::sfloat>::put;
-            case ImageBlockPacking::s_32:          return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::s_32, ImageComponentType::sfloat>::put;
-            case ImageBlockPacking::s_32_32:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::s_32_32, ImageComponentType::sfloat>::put;
-            case ImageBlockPacking::s_32_32_32:    return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::s_32_32_32, ImageComponentType::sfloat>::put;
-            case ImageBlockPacking::s_32_32_32_32: return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::s_32_32_32_32, ImageComponentType::sfloat>::put;
-            case ImageBlockPacking::s_64:          return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::s_64, ImageComponentType::sfloat>::put;
-            case ImageBlockPacking::s_64_64:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::s_64_64, ImageComponentType::sfloat>::put;
-            case ImageBlockPacking::s_64_64_64:    return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::s_64_64_64, ImageComponentType::sfloat>::put;
-            case ImageBlockPacking::s_64_64_64_64: return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::s_64_64_64_64, ImageComponentType::sfloat>::put;
+            case BlockPacking::s_8:           return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_8, ComponentType::sfloat>::put;
+            case BlockPacking::s_8_8:         return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_8_8, ComponentType::sfloat>::put;
+            case BlockPacking::s_8_8_8:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_8_8_8, ComponentType::sfloat>::put;
+            case BlockPacking::s_8_8_8_8:     return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_8_8_8_8, ComponentType::sfloat>::put;
+            case BlockPacking::s_16:          return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_16, ComponentType::sfloat>::put;
+            case BlockPacking::s_16_16:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_16_16, ComponentType::sfloat>::put;
+            case BlockPacking::s_16_16_16:    return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_16_16_16, ComponentType::sfloat>::put;
+            case BlockPacking::s_16_16_16_16: return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_16_16_16_16, ComponentType::sfloat>::put;
+            case BlockPacking::s_32:          return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_32, ComponentType::sfloat>::put;
+            case BlockPacking::s_32_32:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_32_32, ComponentType::sfloat>::put;
+            case BlockPacking::s_32_32_32:    return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_32_32_32, ComponentType::sfloat>::put;
+            case BlockPacking::s_32_32_32_32: return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_32_32_32_32, ComponentType::sfloat>::put;
+            case BlockPacking::s_64:          return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_64, ComponentType::sfloat>::put;
+            case BlockPacking::s_64_64:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_64_64, ComponentType::sfloat>::put;
+            case BlockPacking::s_64_64_64:    return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_64_64_64, ComponentType::sfloat>::put;
+            case BlockPacking::s_64_64_64_64: return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_64_64_64_64, ComponentType::sfloat>::put;
             
             /* ######################### END OF GENERATED CODE ######################### */
          }
@@ -1507,41 +1507,41 @@ PutPixelNormFunc<Coord, ImageView> put_pixel_norm_func(const ImageView& image) {
       switch (image.format().packing()) {
          /*!! write_template('packing_switch', { pred = not_compressed, pre_params = ', true', func_name = 'put' }) !! 39 */
          /* ################# !! GENERATED CODE -- DO NOT MODIFY !! ################# */
-         case ImageBlockPacking::s_8:           return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::s_8>::put;
-         case ImageBlockPacking::s_8_8:         return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::s_8_8>::put;
-         case ImageBlockPacking::s_8_8_8:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::s_8_8_8>::put;
-         case ImageBlockPacking::s_8_8_8_8:     return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::s_8_8_8_8>::put;
-         case ImageBlockPacking::s_16:          return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::s_16>::put;
-         case ImageBlockPacking::s_16_16:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::s_16_16>::put;
-         case ImageBlockPacking::s_16_16_16:    return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::s_16_16_16>::put;
-         case ImageBlockPacking::s_16_16_16_16: return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::s_16_16_16_16>::put;
-         case ImageBlockPacking::s_32:          return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::s_32>::put;
-         case ImageBlockPacking::s_32_32:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::s_32_32>::put;
-         case ImageBlockPacking::s_32_32_32:    return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::s_32_32_32>::put;
-         case ImageBlockPacking::s_32_32_32_32: return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::s_32_32_32_32>::put;
-         case ImageBlockPacking::s_64:          return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::s_64>::put;
-         case ImageBlockPacking::s_64_64:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::s_64_64>::put;
-         case ImageBlockPacking::s_64_64_64:    return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::s_64_64_64>::put;
-         case ImageBlockPacking::s_64_64_64_64: return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::s_64_64_64_64>::put;
-         case ImageBlockPacking::p_4_4:         return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::p_4_4>::put;
-         case ImageBlockPacking::p_3_3_2:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::p_3_3_2>::put;
-         case ImageBlockPacking::p_2_3_3:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::p_2_3_3>::put;
-         case ImageBlockPacking::p_3_2_3:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::p_3_2_3>::put;
-         case ImageBlockPacking::p_4_4_4_4:     return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::p_4_4_4_4>::put;
-         case ImageBlockPacking::p_1_5_5_5:     return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::p_1_5_5_5>::put;
-         case ImageBlockPacking::p_5_5_5_1:     return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::p_5_5_5_1>::put;
-         case ImageBlockPacking::p_5_6_5:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::p_5_6_5>::put;
-         case ImageBlockPacking::p_8_24:        return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::p_8_24>::put;
-         case ImageBlockPacking::p_24_8:        return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::p_24_8>::put;
-         case ImageBlockPacking::p_11_11_10:    return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::p_11_11_10>::put;
-         case ImageBlockPacking::p_10_11_11:    return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::p_10_11_11>::put;
-         case ImageBlockPacking::p_11_10_11:    return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::p_11_10_11>::put;
-         case ImageBlockPacking::p_8_8_8_8:     return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::p_8_8_8_8>::put;
-         case ImageBlockPacking::p_9_9_9_5:     return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::p_9_9_9_5>::put;
-         case ImageBlockPacking::p_5_9_9_9:     return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::p_5_9_9_9>::put;
-         case ImageBlockPacking::p_10_10_10_2:  return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::p_10_10_10_2>::put;
-         case ImageBlockPacking::p_2_10_10_10:  return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::p_2_10_10_10>::put;
-         case ImageBlockPacking::s_32_p_24_8:   return detail::PixelNormAccessUncompressed<ImageView, Coord, true, ImageBlockPacking::s_32_p_24_8>::put;
+         case BlockPacking::s_8:           return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_8>::put;
+         case BlockPacking::s_8_8:         return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_8_8>::put;
+         case BlockPacking::s_8_8_8:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_8_8_8>::put;
+         case BlockPacking::s_8_8_8_8:     return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_8_8_8_8>::put;
+         case BlockPacking::s_16:          return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_16>::put;
+         case BlockPacking::s_16_16:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_16_16>::put;
+         case BlockPacking::s_16_16_16:    return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_16_16_16>::put;
+         case BlockPacking::s_16_16_16_16: return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_16_16_16_16>::put;
+         case BlockPacking::s_32:          return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_32>::put;
+         case BlockPacking::s_32_32:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_32_32>::put;
+         case BlockPacking::s_32_32_32:    return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_32_32_32>::put;
+         case BlockPacking::s_32_32_32_32: return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_32_32_32_32>::put;
+         case BlockPacking::s_64:          return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_64>::put;
+         case BlockPacking::s_64_64:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_64_64>::put;
+         case BlockPacking::s_64_64_64:    return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_64_64_64>::put;
+         case BlockPacking::s_64_64_64_64: return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_64_64_64_64>::put;
+         case BlockPacking::p_4_4:         return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_4_4>::put;
+         case BlockPacking::p_3_3_2:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_3_3_2>::put;
+         case BlockPacking::p_2_3_3:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_2_3_3>::put;
+         case BlockPacking::p_3_2_3:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_3_2_3>::put;
+         case BlockPacking::p_4_4_4_4:     return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_4_4_4_4>::put;
+         case BlockPacking::p_1_5_5_5:     return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_1_5_5_5>::put;
+         case BlockPacking::p_5_5_5_1:     return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_5_5_5_1>::put;
+         case BlockPacking::p_5_6_5:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_5_6_5>::put;
+         case BlockPacking::p_8_24:        return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_8_24>::put;
+         case BlockPacking::p_24_8:        return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_24_8>::put;
+         case BlockPacking::p_11_11_10:    return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_11_11_10>::put;
+         case BlockPacking::p_10_11_11:    return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_10_11_11>::put;
+         case BlockPacking::p_11_10_11:    return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_11_10_11>::put;
+         case BlockPacking::p_8_8_8_8:     return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_8_8_8_8>::put;
+         case BlockPacking::p_9_9_9_5:     return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_9_9_9_5>::put;
+         case BlockPacking::p_5_9_9_9:     return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_5_9_9_9>::put;
+         case BlockPacking::p_10_10_10_2:  return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_10_10_10_2>::put;
+         case BlockPacking::p_2_10_10_10:  return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_2_10_10_10>::put;
+         case BlockPacking::s_32_p_24_8:   return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_32_p_24_8>::put;
          
          /* ######################### END OF GENERATED CODE ######################### */
          default:
@@ -1552,41 +1552,41 @@ PutPixelNormFunc<Coord, ImageView> put_pixel_norm_func(const ImageView& image) {
       switch (image.format().packing()) {
          /*!! write_template('packing_switch', { pred = not_compressed, pre_params = ', false', func_name = 'put' }) !! 39 */
          /* ################# !! GENERATED CODE -- DO NOT MODIFY !! ################# */
-         case ImageBlockPacking::s_8:           return detail::PixelNormAccessUncompressed<ImageView, Coord, false, ImageBlockPacking::s_8>::put;
-         case ImageBlockPacking::s_8_8:         return detail::PixelNormAccessUncompressed<ImageView, Coord, false, ImageBlockPacking::s_8_8>::put;
-         case ImageBlockPacking::s_8_8_8:       return detail::PixelNormAccessUncompressed<ImageView, Coord, false, ImageBlockPacking::s_8_8_8>::put;
-         case ImageBlockPacking::s_8_8_8_8:     return detail::PixelNormAccessUncompressed<ImageView, Coord, false, ImageBlockPacking::s_8_8_8_8>::put;
-         case ImageBlockPacking::s_16:          return detail::PixelNormAccessUncompressed<ImageView, Coord, false, ImageBlockPacking::s_16>::put;
-         case ImageBlockPacking::s_16_16:       return detail::PixelNormAccessUncompressed<ImageView, Coord, false, ImageBlockPacking::s_16_16>::put;
-         case ImageBlockPacking::s_16_16_16:    return detail::PixelNormAccessUncompressed<ImageView, Coord, false, ImageBlockPacking::s_16_16_16>::put;
-         case ImageBlockPacking::s_16_16_16_16: return detail::PixelNormAccessUncompressed<ImageView, Coord, false, ImageBlockPacking::s_16_16_16_16>::put;
-         case ImageBlockPacking::s_32:          return detail::PixelNormAccessUncompressed<ImageView, Coord, false, ImageBlockPacking::s_32>::put;
-         case ImageBlockPacking::s_32_32:       return detail::PixelNormAccessUncompressed<ImageView, Coord, false, ImageBlockPacking::s_32_32>::put;
-         case ImageBlockPacking::s_32_32_32:    return detail::PixelNormAccessUncompressed<ImageView, Coord, false, ImageBlockPacking::s_32_32_32>::put;
-         case ImageBlockPacking::s_32_32_32_32: return detail::PixelNormAccessUncompressed<ImageView, Coord, false, ImageBlockPacking::s_32_32_32_32>::put;
-         case ImageBlockPacking::s_64:          return detail::PixelNormAccessUncompressed<ImageView, Coord, false, ImageBlockPacking::s_64>::put;
-         case ImageBlockPacking::s_64_64:       return detail::PixelNormAccessUncompressed<ImageView, Coord, false, ImageBlockPacking::s_64_64>::put;
-         case ImageBlockPacking::s_64_64_64:    return detail::PixelNormAccessUncompressed<ImageView, Coord, false, ImageBlockPacking::s_64_64_64>::put;
-         case ImageBlockPacking::s_64_64_64_64: return detail::PixelNormAccessUncompressed<ImageView, Coord, false, ImageBlockPacking::s_64_64_64_64>::put;
-         case ImageBlockPacking::p_4_4:         return detail::PixelNormAccessUncompressed<ImageView, Coord, false, ImageBlockPacking::p_4_4>::put;
-         case ImageBlockPacking::p_3_3_2:       return detail::PixelNormAccessUncompressed<ImageView, Coord, false, ImageBlockPacking::p_3_3_2>::put;
-         case ImageBlockPacking::p_2_3_3:       return detail::PixelNormAccessUncompressed<ImageView, Coord, false, ImageBlockPacking::p_2_3_3>::put;
-         case ImageBlockPacking::p_3_2_3:       return detail::PixelNormAccessUncompressed<ImageView, Coord, false, ImageBlockPacking::p_3_2_3>::put;
-         case ImageBlockPacking::p_4_4_4_4:     return detail::PixelNormAccessUncompressed<ImageView, Coord, false, ImageBlockPacking::p_4_4_4_4>::put;
-         case ImageBlockPacking::p_1_5_5_5:     return detail::PixelNormAccessUncompressed<ImageView, Coord, false, ImageBlockPacking::p_1_5_5_5>::put;
-         case ImageBlockPacking::p_5_5_5_1:     return detail::PixelNormAccessUncompressed<ImageView, Coord, false, ImageBlockPacking::p_5_5_5_1>::put;
-         case ImageBlockPacking::p_5_6_5:       return detail::PixelNormAccessUncompressed<ImageView, Coord, false, ImageBlockPacking::p_5_6_5>::put;
-         case ImageBlockPacking::p_8_24:        return detail::PixelNormAccessUncompressed<ImageView, Coord, false, ImageBlockPacking::p_8_24>::put;
-         case ImageBlockPacking::p_24_8:        return detail::PixelNormAccessUncompressed<ImageView, Coord, false, ImageBlockPacking::p_24_8>::put;
-         case ImageBlockPacking::p_11_11_10:    return detail::PixelNormAccessUncompressed<ImageView, Coord, false, ImageBlockPacking::p_11_11_10>::put;
-         case ImageBlockPacking::p_10_11_11:    return detail::PixelNormAccessUncompressed<ImageView, Coord, false, ImageBlockPacking::p_10_11_11>::put;
-         case ImageBlockPacking::p_11_10_11:    return detail::PixelNormAccessUncompressed<ImageView, Coord, false, ImageBlockPacking::p_11_10_11>::put;
-         case ImageBlockPacking::p_8_8_8_8:     return detail::PixelNormAccessUncompressed<ImageView, Coord, false, ImageBlockPacking::p_8_8_8_8>::put;
-         case ImageBlockPacking::p_9_9_9_5:     return detail::PixelNormAccessUncompressed<ImageView, Coord, false, ImageBlockPacking::p_9_9_9_5>::put;
-         case ImageBlockPacking::p_5_9_9_9:     return detail::PixelNormAccessUncompressed<ImageView, Coord, false, ImageBlockPacking::p_5_9_9_9>::put;
-         case ImageBlockPacking::p_10_10_10_2:  return detail::PixelNormAccessUncompressed<ImageView, Coord, false, ImageBlockPacking::p_10_10_10_2>::put;
-         case ImageBlockPacking::p_2_10_10_10:  return detail::PixelNormAccessUncompressed<ImageView, Coord, false, ImageBlockPacking::p_2_10_10_10>::put;
-         case ImageBlockPacking::s_32_p_24_8:   return detail::PixelNormAccessUncompressed<ImageView, Coord, false, ImageBlockPacking::s_32_p_24_8>::put;
+         case BlockPacking::s_8:           return detail::PixelNormAccessUncompressed<ImageView, Coord, false, BlockPacking::s_8>::put;
+         case BlockPacking::s_8_8:         return detail::PixelNormAccessUncompressed<ImageView, Coord, false, BlockPacking::s_8_8>::put;
+         case BlockPacking::s_8_8_8:       return detail::PixelNormAccessUncompressed<ImageView, Coord, false, BlockPacking::s_8_8_8>::put;
+         case BlockPacking::s_8_8_8_8:     return detail::PixelNormAccessUncompressed<ImageView, Coord, false, BlockPacking::s_8_8_8_8>::put;
+         case BlockPacking::s_16:          return detail::PixelNormAccessUncompressed<ImageView, Coord, false, BlockPacking::s_16>::put;
+         case BlockPacking::s_16_16:       return detail::PixelNormAccessUncompressed<ImageView, Coord, false, BlockPacking::s_16_16>::put;
+         case BlockPacking::s_16_16_16:    return detail::PixelNormAccessUncompressed<ImageView, Coord, false, BlockPacking::s_16_16_16>::put;
+         case BlockPacking::s_16_16_16_16: return detail::PixelNormAccessUncompressed<ImageView, Coord, false, BlockPacking::s_16_16_16_16>::put;
+         case BlockPacking::s_32:          return detail::PixelNormAccessUncompressed<ImageView, Coord, false, BlockPacking::s_32>::put;
+         case BlockPacking::s_32_32:       return detail::PixelNormAccessUncompressed<ImageView, Coord, false, BlockPacking::s_32_32>::put;
+         case BlockPacking::s_32_32_32:    return detail::PixelNormAccessUncompressed<ImageView, Coord, false, BlockPacking::s_32_32_32>::put;
+         case BlockPacking::s_32_32_32_32: return detail::PixelNormAccessUncompressed<ImageView, Coord, false, BlockPacking::s_32_32_32_32>::put;
+         case BlockPacking::s_64:          return detail::PixelNormAccessUncompressed<ImageView, Coord, false, BlockPacking::s_64>::put;
+         case BlockPacking::s_64_64:       return detail::PixelNormAccessUncompressed<ImageView, Coord, false, BlockPacking::s_64_64>::put;
+         case BlockPacking::s_64_64_64:    return detail::PixelNormAccessUncompressed<ImageView, Coord, false, BlockPacking::s_64_64_64>::put;
+         case BlockPacking::s_64_64_64_64: return detail::PixelNormAccessUncompressed<ImageView, Coord, false, BlockPacking::s_64_64_64_64>::put;
+         case BlockPacking::p_4_4:         return detail::PixelNormAccessUncompressed<ImageView, Coord, false, BlockPacking::p_4_4>::put;
+         case BlockPacking::p_3_3_2:       return detail::PixelNormAccessUncompressed<ImageView, Coord, false, BlockPacking::p_3_3_2>::put;
+         case BlockPacking::p_2_3_3:       return detail::PixelNormAccessUncompressed<ImageView, Coord, false, BlockPacking::p_2_3_3>::put;
+         case BlockPacking::p_3_2_3:       return detail::PixelNormAccessUncompressed<ImageView, Coord, false, BlockPacking::p_3_2_3>::put;
+         case BlockPacking::p_4_4_4_4:     return detail::PixelNormAccessUncompressed<ImageView, Coord, false, BlockPacking::p_4_4_4_4>::put;
+         case BlockPacking::p_1_5_5_5:     return detail::PixelNormAccessUncompressed<ImageView, Coord, false, BlockPacking::p_1_5_5_5>::put;
+         case BlockPacking::p_5_5_5_1:     return detail::PixelNormAccessUncompressed<ImageView, Coord, false, BlockPacking::p_5_5_5_1>::put;
+         case BlockPacking::p_5_6_5:       return detail::PixelNormAccessUncompressed<ImageView, Coord, false, BlockPacking::p_5_6_5>::put;
+         case BlockPacking::p_8_24:        return detail::PixelNormAccessUncompressed<ImageView, Coord, false, BlockPacking::p_8_24>::put;
+         case BlockPacking::p_24_8:        return detail::PixelNormAccessUncompressed<ImageView, Coord, false, BlockPacking::p_24_8>::put;
+         case BlockPacking::p_11_11_10:    return detail::PixelNormAccessUncompressed<ImageView, Coord, false, BlockPacking::p_11_11_10>::put;
+         case BlockPacking::p_10_11_11:    return detail::PixelNormAccessUncompressed<ImageView, Coord, false, BlockPacking::p_10_11_11>::put;
+         case BlockPacking::p_11_10_11:    return detail::PixelNormAccessUncompressed<ImageView, Coord, false, BlockPacking::p_11_10_11>::put;
+         case BlockPacking::p_8_8_8_8:     return detail::PixelNormAccessUncompressed<ImageView, Coord, false, BlockPacking::p_8_8_8_8>::put;
+         case BlockPacking::p_9_9_9_5:     return detail::PixelNormAccessUncompressed<ImageView, Coord, false, BlockPacking::p_9_9_9_5>::put;
+         case BlockPacking::p_5_9_9_9:     return detail::PixelNormAccessUncompressed<ImageView, Coord, false, BlockPacking::p_5_9_9_9>::put;
+         case BlockPacking::p_10_10_10_2:  return detail::PixelNormAccessUncompressed<ImageView, Coord, false, BlockPacking::p_10_10_10_2>::put;
+         case BlockPacking::p_2_10_10_10:  return detail::PixelNormAccessUncompressed<ImageView, Coord, false, BlockPacking::p_2_10_10_10>::put;
+         case BlockPacking::s_32_p_24_8:   return detail::PixelNormAccessUncompressed<ImageView, Coord, false, BlockPacking::s_32_p_24_8>::put;
          
          /* ######################### END OF GENERATED CODE ######################### */
          default:
@@ -1604,6 +1604,6 @@ void put_pixel_norm(ImageView& image, Coord pixel_coord, vec4 pixel) {
 }
 
 
-} // be::gfx
+} // be::gfx::tex
 
 #endif

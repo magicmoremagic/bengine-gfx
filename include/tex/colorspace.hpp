@@ -1,15 +1,15 @@
 #pragma once
-#ifndef BE_GFX_COLORSPACE_HPP_
-#define BE_GFX_COLORSPACE_HPP_
+#ifndef BE_GFX_TEX_COLORSPACE_HPP_
+#define BE_GFX_TEX_COLORSPACE_HPP_
 
 #include <be/core/be.hpp>
 
-namespace be::gfx {
+namespace be::gfx::tex {
 
 // TODO RGBE
 // TODO logLUV, RGBM http://graphicrants.blogspot.fr/2009/04/rgbm-color-encoding.html
 
-/*!! include 'colorspace' !! 195 */
+/*!! include 'tex/colorspace' !! 195 */
 /* ################# !! GENERATED CODE -- DO NOT MODIFY !! ################# */
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -205,6 +205,6 @@ template <> struct ColorspaceFamilyInfo<ColorspaceFamily::cie> {
 
 /* ######################### END OF GENERATED CODE ######################### */
 
-} // be::gfx
+} // be::gfx::tex
 
 #endif

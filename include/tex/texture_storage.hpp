@@ -1,13 +1,13 @@
 #pragma once
-#ifndef BE_GFX_TEXTURE_STORAGE_HPP_
-#define BE_GFX_TEXTURE_STORAGE_HPP_
+#ifndef BE_GFX_TEX_TEXTURE_STORAGE_HPP_
+#define BE_GFX_TEX_TEXTURE_STORAGE_HPP_
 
 #include "image_format.hpp"
 #include "texture_alignment.hpp"
 #include <be/core/buf.hpp>
 #include <glm/vec2.hpp>
 
-namespace be::gfx {
+namespace be::gfx::tex {
 
 ///////////////////////////////////////////////////////////////////////////////
 class TextureStorage final {
@@ -109,6 +109,6 @@ std::size_t calculate_required_texture_storage(std::size_t layers,
                                                TextureStorage::block_size_type block_size,
                                                TextureAlignment alignment = TextureAlignment());
 
-} // be::gfx
+} // be::gfx::tex
 
 #endif

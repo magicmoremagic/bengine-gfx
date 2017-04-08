@@ -1,8 +1,8 @@
-#include "pch.hpp"
-#include "texture_view.hpp"
+#include "tex/pch.hpp"
+#include "tex/texture_view.hpp"
 #include <be/core/alg.hpp>
 
-namespace be::gfx::detail {
+namespace be::gfx::tex::detail {
 
 ///////////////////////////////////////////////////////////////////////////////
 template <typename TextureStorage, typename ImageView>
@@ -27,7 +27,7 @@ TextureView<TextureStorage, ImageView>::TextureView(const ImageFormat& format, T
      base_layer_(static_cast<layer_index_type>(base_layer)),
      layers_(is_array(tex_class) ? static_cast<layer_index_type>(min(layers, storage.layers() - base_layer)) : 1u),
      base_face_(static_cast<face_index_type>(base_face)),
-     faces_(be::gfx::faces(tex_class) == 1u ? 1u : static_cast<face_index_type>(min(faces, storage.faces() - base_face))),
+     faces_(be::gfx::tex::faces(tex_class) == 1u ? 1u : static_cast<face_index_type>(min(faces, storage.faces() - base_face))),
      base_level_(static_cast<level_index_type>(base_level)),
      levels_(static_cast<level_index_type>(min(levels, storage.levels() - base_level))) {
    assert(is_valid(tex_class));
@@ -49,7 +49,7 @@ TextureView<TextureStorage, ImageView>::TextureView(const ImageFormat& format, T
      base_layer_(other.base_layer_),
      layers_(is_array(tex_class) ? other.layers_ : 1u),
      base_face_(other.base_face_),
-     faces_(be::gfx::faces(tex_class) == 1u ? 1u : other.faces_),
+     faces_(be::gfx::tex::faces(tex_class) == 1u ? 1u : other.faces_),
      base_level_(other.base_level_),
      levels_(other.levels_) {
    assert(is_valid(tex_class));
@@ -222,7 +222,7 @@ ivec3 TextureView<TextureStorage, ImageView>::dim_blocks(std::size_t level) cons
    return storage_->dim_blocks(base_level_ + level);
 }
 
-template class TextureView<TextureStorage, be::gfx::ImageView>;
+template class TextureView<TextureStorage, be::gfx::tex::ImageView>;
 template class TextureView<const TextureStorage, ConstImageView>;
 
-} // be::gfx::detail
+} // be::gfx::tex::detail

@@ -1,13 +1,13 @@
 #pragma once
-#ifndef BE_GFX_CONVERTING_PIXEL_BLITTER_HPP_
-#define BE_GFX_CONVERTING_PIXEL_BLITTER_HPP_
+#ifndef BE_GFX_TEX_CONVERTING_PIXEL_BLITTER_HPP_
+#define BE_GFX_TEX_CONVERTING_PIXEL_BLITTER_HPP_
 
-#include "image_pixel_access_norm.hpp"
+#include "pixel_access_norm.hpp"
 #include "convert_colorspace.hpp"
 #include "premultiply_alpha.hpp"
 #include "image_view.hpp"
 
-namespace be::gfx {
+namespace be::gfx::tex {
 
 ///////////////////////////////////////////////////////////////////////////////
 template <typename SourceCoord, typename DestCoord, typename SourceImageView, typename DestImageView>
@@ -43,10 +43,10 @@ private:
    convert_func convert_;
    get_func get_;
    put_func put_;
-   ImagePixelNormTransformFunc conversions_[3];
+   PixelNormTransformFunc conversions_[3];
 };
 
-} // be::gfx
+} // be::gfx::tex
 
 #include "converting_pixel_blitter.inl"
 

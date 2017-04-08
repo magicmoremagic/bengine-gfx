@@ -1,6 +1,6 @@
 include 'common/enum'
 
-component_type = make_enum_class('ImageComponentType', 'U8', {
+component_type = make_enum_class('ComponentType', 'U8', {
    'none',
    'unorm',
    'snorm',

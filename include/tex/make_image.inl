@@ -1,9 +1,9 @@
-#if !defined(BE_GFX_MAKE_IMAGE_HPP_) && !defined(DOXYGEN)
+#if !defined(BE_GFX_TEX_MAKE_IMAGE_HPP_) && !defined(DOXYGEN)
 #include "make_image.hpp"
-#elif !defined(BE_GFX_MAKE_IMAGE_INL_)
-#define BE_GFX_MAKE_IMAGE_INL_
+#elif !defined(BE_GFX_TEX_MAKE_IMAGE_INL_)
+#define BE_GFX_TEX_MAKE_IMAGE_INL_
 
-namespace be::gfx {
+namespace be::gfx::tex {
 namespace detail {
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -34,7 +34,7 @@ struct CoordToVec3<Coord, 3> {
    }
 };
 
-} // be::gfx::detail
+} // be::gfx::tex::detail
 
 ///////////////////////////////////////////////////////////////////////////////
 template <typename Coord>
@@ -61,6 +61,6 @@ std::size_t calculate_required_image_size(const ImageFormat& format, Coord dim, 
    return calculate_required_texture_storage(1, 1, 1, dim3, format.block_dim(), format.block_size(), alignment);
 }
 
-} // be::gfx
+} // be::gfx::tex
 
 #endif

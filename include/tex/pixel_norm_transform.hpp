@@ -1,14 +1,14 @@
 #pragma once
-#ifndef BE_GFX_IMAGE_PIXEL_NORM_HPP_
-#define BE_GFX_IMAGE_PIXEL_NORM_HPP_
+#ifndef BE_GFX_TEX_PIXEL_NORM_TRANSFORM_HPP_
+#define BE_GFX_TEX_PIXEL_NORM_TRANSFORM_HPP_
 
 #include <be/core/glm.hpp>
 
-namespace be::gfx {
+namespace be::gfx::tex {
 
 ///////////////////////////////////////////////////////////////////////////////
-using ImagePixelNormTransformFunc = vec4(*)(vec4);
+using PixelNormTransformFunc = vec4(*)(vec4);
 
-} // be::gfx
+} // be::gfx::tex
 
 #endif

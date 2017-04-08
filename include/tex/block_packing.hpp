@@ -1,16 +1,16 @@
 #pragma once
-#ifndef BE_GFX_IMAGE_BLOCK_PACKING_HPP_
-#define BE_GFX_IMAGE_BLOCK_PACKING_HPP_
+#ifndef BE_GFX_TEX_BLOCK_PACKING_HPP_
+#define BE_GFX_TEX_BLOCK_PACKING_HPP_
 
 #include <be/core/be.hpp>
 
-namespace be::gfx {
+namespace be::gfx::tex {
 
-/*!! include 'image_block_packing' !! 510 */
+/*!! include 'tex/block_packing' !! 510 */
 /* ################# !! GENERATED CODE -- DO NOT MODIFY !! ################# */
 
 ///////////////////////////////////////////////////////////////////////////////
-enum class ImageBlockPacking : U8 {
+enum class BlockPacking : U8 {
    s_8 = 0,
    s_8_8,
    s_8_8_8,
@@ -61,29 +61,29 @@ enum class ImageBlockPacking : U8 {
    c_s3tc5
 };
 
-bool is_valid(ImageBlockPacking constant) noexcept;
-const char* image_block_packing_name(ImageBlockPacking constant) noexcept;
-bool is_compressed(ImageBlockPacking constant) noexcept;
-bool is_packed(ImageBlockPacking constant) noexcept;
-U8 component_count(ImageBlockPacking constant) noexcept;
-U8 image_block_pixel_size(ImageBlockPacking constant) noexcept;
-U8 image_block_word_size(ImageBlockPacking constant) noexcept;
-U8 image_block_word_count(ImageBlockPacking constant) noexcept;
-U8 image_block_word_offset_0(ImageBlockPacking constant) noexcept;
-U8 image_block_word_offset_1(ImageBlockPacking constant) noexcept;
-U8 image_block_word_offset_2(ImageBlockPacking constant) noexcept;
-U8 image_block_word_offset_3(ImageBlockPacking constant) noexcept;
-U8 image_block_bit_offset_0(ImageBlockPacking constant) noexcept;
-U8 image_block_bit_offset_1(ImageBlockPacking constant) noexcept;
-U8 image_block_bit_offset_2(ImageBlockPacking constant) noexcept;
-U8 image_block_bit_offset_3(ImageBlockPacking constant) noexcept;
-U8 image_block_bit_width_0(ImageBlockPacking constant) noexcept;
-U8 image_block_bit_width_1(ImageBlockPacking constant) noexcept;
-U8 image_block_bit_width_2(ImageBlockPacking constant) noexcept;
-U8 image_block_bit_width_3(ImageBlockPacking constant) noexcept;
+bool is_valid(BlockPacking constant) noexcept;
+const char* block_packing_name(BlockPacking constant) noexcept;
+bool is_compressed(BlockPacking constant) noexcept;
+bool is_packed(BlockPacking constant) noexcept;
+U8 component_count(BlockPacking constant) noexcept;
+U8 block_pixel_size(BlockPacking constant) noexcept;
+U8 block_word_size(BlockPacking constant) noexcept;
+U8 block_word_count(BlockPacking constant) noexcept;
+U8 block_word_offset_0(BlockPacking constant) noexcept;
+U8 block_word_offset_1(BlockPacking constant) noexcept;
+U8 block_word_offset_2(BlockPacking constant) noexcept;
+U8 block_word_offset_3(BlockPacking constant) noexcept;
+U8 block_bit_offset_0(BlockPacking constant) noexcept;
+U8 block_bit_offset_1(BlockPacking constant) noexcept;
+U8 block_bit_offset_2(BlockPacking constant) noexcept;
+U8 block_bit_offset_3(BlockPacking constant) noexcept;
+U8 block_bit_width_0(BlockPacking constant) noexcept;
+U8 block_bit_width_1(BlockPacking constant) noexcept;
+U8 block_bit_width_2(BlockPacking constant) noexcept;
+U8 block_bit_width_3(BlockPacking constant) noexcept;
 
-template <ImageBlockPacking>
-struct ImageBlockPackingInfo {
+template <BlockPacking>
+struct BlockPackingInfo {
    using is_compressed = True;
    using is_packed = False;
    using unsigned_word_type = void;
@@ -95,7 +95,7 @@ struct ImageBlockPackingInfo {
    static constexpr U8 component_bit_width[4] = { 0, 0, 0, 0 };
 };
 
-template <> struct ImageBlockPackingInfo<ImageBlockPacking::s_8> {
+template <> struct BlockPackingInfo<BlockPacking::s_8> {
    using is_compressed = False;
    using is_packed = False;
    using unsigned_word_type = U8;
@@ -107,7 +107,7 @@ template <> struct ImageBlockPackingInfo<ImageBlockPacking::s_8> {
    static constexpr U8 component_bit_width[4] = { 8, 0, 0, 0 };
 };
 
-template <> struct ImageBlockPackingInfo<ImageBlockPacking::s_8_8> {
+template <> struct BlockPackingInfo<BlockPacking::s_8_8> {
    using is_compressed = False;
    using is_packed = False;
    using unsigned_word_type = U8;
@@ -119,7 +119,7 @@ template <> struct ImageBlockPackingInfo<ImageBlockPacking::s_8_8> {
    static constexpr U8 component_bit_width[4] = { 8, 8, 0, 0 };
 };
 
-template <> struct ImageBlockPackingInfo<ImageBlockPacking::s_8_8_8> {
+template <> struct BlockPackingInfo<BlockPacking::s_8_8_8> {
    using is_compressed = False;
    using is_packed = False;
    using unsigned_word_type = U8;
@@ -131,7 +131,7 @@ template <> struct ImageBlockPackingInfo<ImageBlockPacking::s_8_8_8> {
    static constexpr U8 component_bit_width[4] = { 8, 8, 8, 0 };
 };
 
-template <> struct ImageBlockPackingInfo<ImageBlockPacking::s_8_8_8_8> {
+template <> struct BlockPackingInfo<BlockPacking::s_8_8_8_8> {
    using is_compressed = False;
    using is_packed = False;
    using unsigned_word_type = U8;
@@ -143,7 +143,7 @@ template <> struct ImageBlockPackingInfo<ImageBlockPacking::s_8_8_8_8> {
    static constexpr U8 component_bit_width[4] = { 8, 8, 8, 8 };
 };
 
-template <> struct ImageBlockPackingInfo<ImageBlockPacking::s_16> {
+template <> struct BlockPackingInfo<BlockPacking::s_16> {
    using is_compressed = False;
    using is_packed = False;
    using unsigned_word_type = U16;
@@ -155,7 +155,7 @@ template <> struct ImageBlockPackingInfo<ImageBlockPacking::s_16> {
    static constexpr U8 component_bit_width[4] = { 16, 0, 0, 0 };
 };
 
-template <> struct ImageBlockPackingInfo<ImageBlockPacking::s_16_16> {
+template <> struct BlockPackingInfo<BlockPacking::s_16_16> {
    using is_compressed = False;
    using is_packed = False;
    using unsigned_word_type = U16;
@@ -167,7 +167,7 @@ template <> struct ImageBlockPackingInfo<ImageBlockPacking::s_16_16> {
    static constexpr U8 component_bit_width[4] = { 16, 16, 0, 0 };
 };
 
-template <> struct ImageBlockPackingInfo<ImageBlockPacking::s_16_16_16> {
+template <> struct BlockPackingInfo<BlockPacking::s_16_16_16> {
    using is_compressed = False;
    using is_packed = False;
    using unsigned_word_type = U16;
@@ -179,7 +179,7 @@ template <> struct ImageBlockPackingInfo<ImageBlockPacking::s_16_16_16> {
    static constexpr U8 component_bit_width[4] = { 16, 16, 16, 0 };
 };
 
-template <> struct ImageBlockPackingInfo<ImageBlockPacking::s_16_16_16_16> {
+template <> struct BlockPackingInfo<BlockPacking::s_16_16_16_16> {
    using is_compressed = False;
    using is_packed = False;
    using unsigned_word_type = U16;
@@ -191,7 +191,7 @@ template <> struct ImageBlockPackingInfo<ImageBlockPacking::s_16_16_16_16> {
    static constexpr U8 component_bit_width[4] = { 16, 16, 16, 16 };
 };
 
-template <> struct ImageBlockPackingInfo<ImageBlockPacking::s_32> {
+template <> struct BlockPackingInfo<BlockPacking::s_32> {
    using is_compressed = False;
    using is_packed = False;
    using unsigned_word_type = U32;
@@ -203,7 +203,7 @@ template <> struct ImageBlockPackingInfo<ImageBlockPacking::s_32> {
    static constexpr U8 component_bit_width[4] = { 32, 0, 0, 0 };
 };
 
-template <> struct ImageBlockPackingInfo<ImageBlockPacking::s_32_32> {
+template <> struct BlockPackingInfo<BlockPacking::s_32_32> {
    using is_compressed = False;
    using is_packed = False;
    using unsigned_word_type = U32;
@@ -215,7 +215,7 @@ template <> struct ImageBlockPackingInfo<ImageBlockPacking::s_32_32> {
    static constexpr U8 component_bit_width[4] = { 32, 32, 0, 0 };
 };
 
-template <> struct ImageBlockPackingInfo<ImageBlockPacking::s_32_32_32> {
+template <> struct BlockPackingInfo<BlockPacking::s_32_32_32> {
    using is_compressed = False;
    using is_packed = False;
    using unsigned_word_type = U32;
@@ -227,7 +227,7 @@ template <> struct ImageBlockPackingInfo<ImageBlockPacking::s_32_32_32> {
    static constexpr U8 component_bit_width[4] = { 32, 32, 32, 0 };
 };
 
-template <> struct ImageBlockPackingInfo<ImageBlockPacking::s_32_32_32_32> {
+template <> struct BlockPackingInfo<BlockPacking::s_32_32_32_32> {
    using is_compressed = False;
    using is_packed = False;
    using unsigned_word_type = U32;
@@ -239,7 +239,7 @@ template <> struct ImageBlockPackingInfo<ImageBlockPacking::s_32_32_32_32> {
    static constexpr U8 component_bit_width[4] = { 32, 32, 32, 32 };
 };
 
-template <> struct ImageBlockPackingInfo<ImageBlockPacking::s_64> {
+template <> struct BlockPackingInfo<BlockPacking::s_64> {
    using is_compressed = False;
    using is_packed = False;
    using unsigned_word_type = U64;
@@ -251,7 +251,7 @@ template <> struct ImageBlockPackingInfo<ImageBlockPacking::s_64> {
    static constexpr U8 component_bit_width[4] = { 64, 0, 0, 0 };
 };
 
-template <> struct ImageBlockPackingInfo<ImageBlockPacking::s_64_64> {
+template <> struct BlockPackingInfo<BlockPacking::s_64_64> {
    using is_compressed = False;
    using is_packed = False;
    using unsigned_word_type = U64;
@@ -263,7 +263,7 @@ template <> struct ImageBlockPackingInfo<ImageBlockPacking::s_64_64> {
    static constexpr U8 component_bit_width[4] = { 64, 64, 0, 0 };
 };
 
-template <> struct ImageBlockPackingInfo<ImageBlockPacking::s_64_64_64> {
+template <> struct BlockPackingInfo<BlockPacking::s_64_64_64> {
    using is_compressed = False;
    using is_packed = False;
    using unsigned_word_type = U64;
@@ -275,7 +275,7 @@ template <> struct ImageBlockPackingInfo<ImageBlockPacking::s_64_64_64> {
    static constexpr U8 component_bit_width[4] = { 64, 64, 64, 0 };
 };
 
-template <> struct ImageBlockPackingInfo<ImageBlockPacking::s_64_64_64_64> {
+template <> struct BlockPackingInfo<BlockPacking::s_64_64_64_64> {
    using is_compressed = False;
    using is_packed = False;
    using unsigned_word_type = U64;
@@ -287,7 +287,7 @@ template <> struct ImageBlockPackingInfo<ImageBlockPacking::s_64_64_64_64> {
    static constexpr U8 component_bit_width[4] = { 64, 64, 64, 64 };
 };
 
-template <> struct ImageBlockPackingInfo<ImageBlockPacking::p_4_4> {
+template <> struct BlockPackingInfo<BlockPacking::p_4_4> {
    using is_compressed = False;
    using is_packed = True;
    using unsigned_word_type = U8;
@@ -299,7 +299,7 @@ template <> struct ImageBlockPackingInfo<ImageBlockPacking::p_4_4> {
    static constexpr U8 component_bit_width[4] = { 4, 4, 0, 0 };
 };
 
-template <> struct ImageBlockPackingInfo<ImageBlockPacking::p_3_3_2> {
+template <> struct BlockPackingInfo<BlockPacking::p_3_3_2> {
    using is_compressed = False;
    using is_packed = True;
    using unsigned_word_type = U8;
@@ -311,7 +311,7 @@ template <> struct ImageBlockPackingInfo<ImageBlockPacking::p_3_3_2> {
    static constexpr U8 component_bit_width[4] = { 3, 3, 2, 0 };
 };
 
-template <> struct ImageBlockPackingInfo<ImageBlockPacking::p_2_3_3> {
+template <> struct BlockPackingInfo<BlockPacking::p_2_3_3> {
    using is_compressed = False;
    using is_packed = True;
    using unsigned_word_type = U8;
@@ -323,7 +323,7 @@ template <> struct ImageBlockPackingInfo<ImageBlockPacking::p_2_3_3> {
    static constexpr U8 component_bit_width[4] = { 2, 3, 3, 0 };
 };
 
-template <> struct ImageBlockPackingInfo<ImageBlockPacking::p_3_2_3> {
+template <> struct BlockPackingInfo<BlockPacking::p_3_2_3> {
    using is_compressed = False;
    using is_packed = True;
    using unsigned_word_type = U8;
@@ -335,7 +335,7 @@ template <> struct ImageBlockPackingInfo<ImageBlockPacking::p_3_2_3> {
    static constexpr U8 component_bit_width[4] = { 3, 2, 3, 0 };
 };
 
-template <> struct ImageBlockPackingInfo<ImageBlockPacking::p_4_4_4_4> {
+template <> struct BlockPackingInfo<BlockPacking::p_4_4_4_4> {
    using is_compressed = False;
    using is_packed = True;
    using unsigned_word_type = U16;
@@ -347,7 +347,7 @@ template <> struct ImageBlockPackingInfo<ImageBlockPacking::p_4_4_4_4> {
    static constexpr U8 component_bit_width[4] = { 4, 4, 4, 4 };
 };
 
-template <> struct ImageBlockPackingInfo<ImageBlockPacking::p_1_5_5_5> {
+template <> struct BlockPackingInfo<BlockPacking::p_1_5_5_5> {
    using is_compressed = False;
    using is_packed = True;
    using unsigned_word_type = U16;
@@ -359,7 +359,7 @@ template <> struct ImageBlockPackingInfo<ImageBlockPacking::p_1_5_5_5> {
    static constexpr U8 component_bit_width[4] = { 1, 5, 5, 5 };
 };
 
-template <> struct ImageBlockPackingInfo<ImageBlockPacking::p_5_5_5_1> {
+template <> struct BlockPackingInfo<BlockPacking::p_5_5_5_1> {
    using is_compressed = False;
    using is_packed = True;
    using unsigned_word_type = U16;
@@ -371,7 +371,7 @@ template <> struct ImageBlockPackingInfo<ImageBlockPacking::p_5_5_5_1> {
    static constexpr U8 component_bit_width[4] = { 5, 5, 5, 1 };
 };
 
-template <> struct ImageBlockPackingInfo<ImageBlockPacking::p_5_6_5> {
+template <> struct BlockPackingInfo<BlockPacking::p_5_6_5> {
    using is_compressed = False;
    using is_packed = True;
    using unsigned_word_type = U16;
@@ -383,7 +383,7 @@ template <> struct ImageBlockPackingInfo<ImageBlockPacking::p_5_6_5> {
    static constexpr U8 component_bit_width[4] = { 5, 6, 5, 0 };
 };
 
-template <> struct ImageBlockPackingInfo<ImageBlockPacking::p_8_24> {
+template <> struct BlockPackingInfo<BlockPacking::p_8_24> {
    using is_compressed = False;
    using is_packed = True;
    using unsigned_word_type = U32;
@@ -395,7 +395,7 @@ template <> struct ImageBlockPackingInfo<ImageBlockPacking::p_8_24> {
    static constexpr U8 component_bit_width[4] = { 8, 24, 0, 0 };
 };
 
-template <> struct ImageBlockPackingInfo<ImageBlockPacking::p_24_8> {
+template <> struct BlockPackingInfo<BlockPacking::p_24_8> {
    using is_compressed = False;
    using is_packed = True;
    using unsigned_word_type = U32;
@@ -407,7 +407,7 @@ template <> struct ImageBlockPackingInfo<ImageBlockPacking::p_24_8> {
    static constexpr U8 component_bit_width[4] = { 24, 8, 0, 0 };
 };
 
-template <> struct ImageBlockPackingInfo<ImageBlockPacking::p_11_11_10> {
+template <> struct BlockPackingInfo<BlockPacking::p_11_11_10> {
    using is_compressed = False;
    using is_packed = True;
    using unsigned_word_type = U32;
@@ -419,7 +419,7 @@ template <> struct ImageBlockPackingInfo<ImageBlockPacking::p_11_11_10> {
    static constexpr U8 component_bit_width[4] = { 11, 11, 10, 0 };
 };
 
-template <> struct ImageBlockPackingInfo<ImageBlockPacking::p_10_11_11> {
+template <> struct BlockPackingInfo<BlockPacking::p_10_11_11> {
    using is_compressed = False;
    using is_packed = True;
    using unsigned_word_type = U32;
@@ -431,7 +431,7 @@ template <> struct ImageBlockPackingInfo<ImageBlockPacking::p_10_11_11> {
    static constexpr U8 component_bit_width[4] = { 10, 11, 11, 0 };
 };
 
-template <> struct ImageBlockPackingInfo<ImageBlockPacking::p_11_10_11> {
+template <> struct BlockPackingInfo<BlockPacking::p_11_10_11> {
    using is_compressed = False;
    using is_packed = True;
    using unsigned_word_type = U32;
@@ -443,7 +443,7 @@ template <> struct ImageBlockPackingInfo<ImageBlockPacking::p_11_10_11> {
    static constexpr U8 component_bit_width[4] = { 11, 10, 11, 0 };
 };
 
-template <> struct ImageBlockPackingInfo<ImageBlockPacking::p_8_8_8_8> {
+template <> struct BlockPackingInfo<BlockPacking::p_8_8_8_8> {
    using is_compressed = False;
    using is_packed = True;
    using unsigned_word_type = U32;
@@ -455,7 +455,7 @@ template <> struct ImageBlockPackingInfo<ImageBlockPacking::p_8_8_8_8> {
    static constexpr U8 component_bit_width[4] = { 8, 8, 8, 8 };
 };
 
-template <> struct ImageBlockPackingInfo<ImageBlockPacking::p_9_9_9_5> {
+template <> struct BlockPackingInfo<BlockPacking::p_9_9_9_5> {
    using is_compressed = False;
    using is_packed = True;
    using unsigned_word_type = U32;
@@ -467,7 +467,7 @@ template <> struct ImageBlockPackingInfo<ImageBlockPacking::p_9_9_9_5> {
    static constexpr U8 component_bit_width[4] = { 9, 9, 9, 5 };
 };
 
-template <> struct ImageBlockPackingInfo<ImageBlockPacking::p_5_9_9_9> {
+template <> struct BlockPackingInfo<BlockPacking::p_5_9_9_9> {
    using is_compressed = False;
    using is_packed = True;
    using unsigned_word_type = U32;
@@ -479,7 +479,7 @@ template <> struct ImageBlockPackingInfo<ImageBlockPacking::p_5_9_9_9> {
    static constexpr U8 component_bit_width[4] = { 5, 9, 9, 9 };
 };
 
-template <> struct ImageBlockPackingInfo<ImageBlockPacking::p_10_10_10_2> {
+template <> struct BlockPackingInfo<BlockPacking::p_10_10_10_2> {
    using is_compressed = False;
    using is_packed = True;
    using unsigned_word_type = U32;
@@ -491,7 +491,7 @@ template <> struct ImageBlockPackingInfo<ImageBlockPacking::p_10_10_10_2> {
    static constexpr U8 component_bit_width[4] = { 10, 10, 10, 2 };
 };
 
-template <> struct ImageBlockPackingInfo<ImageBlockPacking::p_2_10_10_10> {
+template <> struct BlockPackingInfo<BlockPacking::p_2_10_10_10> {
    using is_compressed = False;
    using is_packed = True;
    using unsigned_word_type = U32;
@@ -503,7 +503,7 @@ template <> struct ImageBlockPackingInfo<ImageBlockPacking::p_2_10_10_10> {
    static constexpr U8 component_bit_width[4] = { 2, 10, 10, 10 };
 };
 
-template <> struct ImageBlockPackingInfo<ImageBlockPacking::s_32_p_24_8> {
+template <> struct BlockPackingInfo<BlockPacking::s_32_p_24_8> {
    using is_compressed = False;
    using is_packed = True;
    using unsigned_word_type = U32;
@@ -517,6 +517,6 @@ template <> struct ImageBlockPackingInfo<ImageBlockPacking::s_32_p_24_8> {
 
 /* ######################### END OF GENERATED CODE ######################### */
 
-} // be::gfx
+} // be::gfx::tex
 
 #endif

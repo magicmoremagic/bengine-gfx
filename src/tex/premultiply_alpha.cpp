@@ -1,8 +1,8 @@
-#include "pch.hpp"
-#include "premultiply_alpha.hpp"
+#include "tex/pch.hpp"
+#include "tex/premultiply_alpha.hpp"
 #include <glm/vec4.hpp>
 
-namespace be::gfx {
+namespace be::gfx::tex {
 namespace {
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -10,7 +10,7 @@ vec4 nop(vec4 p) {
    return p;
 }
 
-} // be::gfx::()
+} // be::gfx::tex::()
 
 ///////////////////////////////////////////////////////////////////////////////
 vec4 premultiply_alpha(vec4 unpremultiplied) {
@@ -29,7 +29,7 @@ vec4 unpremultiply_alpha(vec4 premultiplied) {
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-ImagePixelNormTransformFunc convert_premultiplication_func(bool input, bool output) {
+PixelNormTransformFunc convert_premultiplication_func(bool input, bool output) {
    if (input != output) {
       if (output) {
          return premultiply_alpha;
@@ -41,4 +41,4 @@ ImagePixelNormTransformFunc convert_premultiplication_func(bool input, bool outp
    }
 }
 
-} // be::gfx
+} // be::gfx::tex

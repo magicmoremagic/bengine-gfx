@@ -1,9 +1,9 @@
-#if !defined(BE_GFX_BLIT_IMAGE_BLOCKS_HPP_) && !defined(DOXYGEN)
-#include "blit_image_blocks.hpp"
-#elif !defined(BE_GFX_BLIT_IMAGE_BLOCKS_INL_)
-#define BE_GFX_BLIT_IMAGE_BLOCKS_INL_
+#if !defined(BE_GFX_TEX_BLIT_BLOCKS_HPP_) && !defined(DOXYGEN)
+#include "blit_blocks.hpp"
+#elif !defined(BE_GFX_TEX_BLIT_BLOCKS_INL_)
+#define BE_GFX_TEX_BLIT_BLOCKS_INL_
 
-namespace be::gfx {
+namespace be::gfx::tex {
 namespace detail {
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -265,7 +265,7 @@ void memcpy_blit_compatible_blocks(const SourceImageView& src, ibox src_block_ex
    }
 }
 
-} // be::gfx::detail
+} // be::gfx::tex::detail
 
   ///////////////////////////////////////////////////////////////////////////////
 template <typename SourceImageView, typename DestImageView>
@@ -361,6 +361,6 @@ void blit_blocks(const SourceImageView& src, ImageRegion src_block_region, DestI
    }
 }
 
-} // be::gfx
+} // be::gfx::tex
 
 #endif

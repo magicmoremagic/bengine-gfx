@@ -1,10 +1,10 @@
 #pragma once
-#ifndef BE_GFX_DUPLICATE_TEXTURE_HPP_
-#define BE_GFX_DUPLICATE_TEXTURE_HPP_
+#ifndef BE_GFX_TEX_DUPLICATE_TEXTURE_HPP_
+#define BE_GFX_TEX_DUPLICATE_TEXTURE_HPP_
 
 #include "texture.hpp"
 
-namespace be::gfx {
+namespace be::gfx::tex {
 
 ///////////////////////////////////////////////////////////////////////////////
 template <typename TextureView>
@@ -32,6 +32,6 @@ Texture duplicate_texture(const TextureView& source) {
    return texture;
 }
 
-} // be::gfx
+} // be::gfx::tex
 
 #endif

@@ -1,7 +1,7 @@
-#include "pch.hpp"
-#include "image_region.hpp"
+#include "tex/pch.hpp"
+#include "tex/image_region.hpp"
 
-namespace be::gfx {
+namespace be::gfx::tex {
 namespace {
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -45,7 +45,7 @@ bool is_basis_negative(ImageRegion::basis b) {
    return false;
 }
 
-} // be::gfx::()
+} // be::gfx::tex::()
 
 ///////////////////////////////////////////////////////////////////////////////
 ImageRegion::ImageRegion()
@@ -265,4 +265,4 @@ ivec3 image_to_region(ivec3 image_coord, ImageRegion region) {
    return region_coord;
 }
 
-} // be::gfx
+} // be::gfx::tex

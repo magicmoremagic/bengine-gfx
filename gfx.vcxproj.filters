@@ -33,39 +33,6 @@
     <Filter Include="Meta-Source Files\old">
       <UniqueIdentifier>{6b05565d-fe52-4bd6-8691-75cba9ff9f2c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\textures\enums">
-      <UniqueIdentifier>{24933a1e-1c11-4197-b592-94a5da9af7ca}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\textures\data structures">
-      <UniqueIdentifier>{24dee0b2-bf48-43d8-8b10-fdb8afc87f7d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\textures\operations">
-      <UniqueIdentifier>{a20672a9-823c-4de3-8f32-96c9d8032015}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\textures\operations\normalized conversions">
-      <UniqueIdentifier>{bd6532d4-8c55-4739-8320-c9faecded4d6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\textures\operations\block/pixel access">
-      <UniqueIdentifier>{d5142ade-c218-4c2f-8e98-fa26da4da9d7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\textures\operations\visitation">
-      <UniqueIdentifier>{62024480-9676-43d8-abb0-60b258cc9913}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\textures\operations\blitting">
-      <UniqueIdentifier>{735f9633-d9e3-4e2e-9763-c2b064992440}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\textures\enums">
-      <UniqueIdentifier>{cd4a8149-2bee-491f-a544-8216cf6ce192}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\textures\data structures">
-      <UniqueIdentifier>{9f89191a-9ec4-4fd1-aa62-2e0f6a3b2aec}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\textures\operations">
-      <UniqueIdentifier>{93cc23c9-8e8f-470a-9935-247200925e60}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\textures\operations\normalized conversions">
-      <UniqueIdentifier>{4d956a87-3436-45dc-bfe0-f819eb27e122}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\pch.hpp">

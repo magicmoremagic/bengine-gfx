@@ -53,5 +53,6 @@
     <ClCompile Include="test\test_texture_storage.cpp" />
     <ClCompile Include="test\test_texture_view.cpp" />
     <ClCompile Include="test\test_uniform_resample.cpp" />
+    <ClCompile Include="test\version.cpp" />
   </ItemGroup>
 </Project>

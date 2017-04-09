@@ -31,5 +31,6 @@
     <ClCompile Include="test\test_read_write_image.cpp">
       <Filter>Tests\old</Filter>
     </ClCompile>
+    <ClCompile Include="test\version.cpp" />
   </ItemGroup>
 </Project>

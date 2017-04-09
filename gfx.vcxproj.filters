@@ -95,6 +95,9 @@
     <ClInclude Include="include\variable_size_median_kernel.hpp">
       <Filter>Header Files\old</Filter>
     </ClInclude>
+    <ClInclude Include="include\version.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\pch.cpp">

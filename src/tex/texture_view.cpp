@@ -23,6 +23,7 @@ TextureView<TextureStorage, ImageView>::TextureView(const ImageFormat& format, T
                          std::size_t base_face, std::size_t faces,
                          std::size_t base_level, std::size_t levels)
    : storage_(&storage),
+     format_(format),
      tex_class_(tex_class),
      base_layer_(static_cast<layer_index_type>(base_layer)),
      layers_(is_array(tex_class) ? static_cast<layer_index_type>(min(layers, storage.layers() - base_layer)) : 1u),
@@ -45,6 +46,7 @@ TextureView<TextureStorage, ImageView>::TextureView(const ImageFormat& format, T
 template <typename TextureStorage, typename ImageView>
 TextureView<TextureStorage, ImageView>::TextureView(const ImageFormat& format, TextureClass tex_class, TextureView& other)
    : storage_(other.storage_),
+     format_(format),
      tex_class_(tex_class),
      base_layer_(other.base_layer_),
      layers_(is_array(tex_class) ? other.layers_ : 1u),

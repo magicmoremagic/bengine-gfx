@@ -18,9 +18,9 @@ struct VisitTextureImages<TextureView, Coord, Visitor, 1> {
       std::size_t n_layers = texture.layers();
       std::size_t n_faces = texture.faces();
       std::size_t n_levels = texture.levels();
-      for (std::size_t layer = 0; layer < n_layers) {
-         for (std::size_t face = 0; face < n_faces) {
-            for (std::size_t level = 0; level < n_levels) {
+      for (std::size_t layer = 0; layer < n_layers; ++layer) {
+         for (std::size_t face = 0; face < n_faces; ++face) {
+            for (std::size_t level = 0; level < n_levels; ++level) {
                view = texture.image(layer, face, level);
                Coord bc;
                Coord dim = Coord(view.dim_blocks().x);
@@ -37,9 +37,9 @@ struct VisitTextureImages<TextureView, Coord, Visitor, 1> {
       std::size_t n_layers = texture.layers();
       std::size_t n_faces = texture.faces();
       std::size_t n_levels = texture.levels();
-      for (std::size_t layer = 0; layer < n_layers) {
-         for (std::size_t face = 0; face < n_faces) {
-            for (std::size_t level = 0; level < n_levels) {
+      for (std::size_t layer = 0; layer < n_layers; ++layer) {
+         for (std::size_t face = 0; face < n_faces; ++face) {
+            for (std::size_t level = 0; level < n_levels; ++level) {
                view = texture.image(layer, face, level);
                Coord pc;
                Coord dim = Coord(view.dim().x);
@@ -60,9 +60,9 @@ struct VisitTextureImages<TextureView, Coord, Visitor, 2> {
       std::size_t n_layers = texture.layers();
       std::size_t n_faces = texture.faces();
       std::size_t n_levels = texture.levels();
-      for (std::size_t layer = 0; layer < n_layers) {
-         for (std::size_t face = 0; face < n_faces) {
-            for (std::size_t level = 0; level < n_levels) {
+      for (std::size_t layer = 0; layer < n_layers; ++layer) {
+         for (std::size_t face = 0; face < n_faces; ++face) {
+            for (std::size_t level = 0; level < n_levels; ++level) {
                view = texture.image(layer, face, level);
                Coord bc;
                Coord dim = Coord(view.dim_blocks());
@@ -81,9 +81,9 @@ struct VisitTextureImages<TextureView, Coord, Visitor, 2> {
       std::size_t n_layers = texture.layers();
       std::size_t n_faces = texture.faces();
       std::size_t n_levels = texture.levels();
-      for (std::size_t layer = 0; layer < n_layers) {
-         for (std::size_t face = 0; face < n_faces) {
-            for (std::size_t level = 0; level < n_levels) {
+      for (std::size_t layer = 0; layer < n_layers; ++layer) {
+         for (std::size_t face = 0; face < n_faces; ++face) {
+            for (std::size_t level = 0; level < n_levels; ++level) {
                view = texture.image(layer, face, level);
                Coord pc;
                Coord dim = Coord(view.dim());
@@ -106,9 +106,9 @@ struct VisitTextureImages<TextureView, Coord, Visitor, 3> {
       std::size_t n_layers = texture.layers();
       std::size_t n_faces = texture.faces();
       std::size_t n_levels = texture.levels();
-      for (std::size_t layer = 0; layer < n_layers) {
-         for (std::size_t face = 0; face < n_faces) {
-            for (std::size_t level = 0; level < n_levels) {
+      for (std::size_t layer = 0; layer < n_layers; ++layer) {
+         for (std::size_t face = 0; face < n_faces; ++face) {
+            for (std::size_t level = 0; level < n_levels; ++level) {
                view = texture.image(layer, face, level);
                Coord bc;
                Coord dim = Coord(view.dim_blocks());
@@ -129,9 +129,9 @@ struct VisitTextureImages<TextureView, Coord, Visitor, 3> {
       std::size_t n_layers = texture.layers();
       std::size_t n_faces = texture.faces();
       std::size_t n_levels = texture.levels();
-      for (std::size_t layer = 0; layer < n_layers) {
-         for (std::size_t face = 0; face < n_faces) {
-            for (std::size_t level = 0; level < n_levels) {
+      for (std::size_t layer = 0; layer < n_layers; ++layer) {
+         for (std::size_t face = 0; face < n_faces; ++face) {
+            for (std::size_t level = 0; level < n_levels; ++level) {
                view = texture.image(layer, face, level);
                Coord pc;
                Coord dim = Coord(view.dim());
@@ -157,9 +157,9 @@ void visit_texture_images(TextureView& texture, Visitor visitor) {
    std::size_t n_layers = texture.layers();
    std::size_t n_faces = texture.faces();
    std::size_t n_levels = texture.levels();
-   for (std::size_t layer = 0; layer < n_layers) {
-      for (std::size_t face = 0; face < n_faces) {
-         for (std::size_t level = 0; level < n_levels) {
+   for (std::size_t layer = 0; layer < n_layers; ++layer) {
+      for (std::size_t face = 0; face < n_faces; ++face) {
+         for (std::size_t level = 0; level < n_levels; ++level) {
             view = texture.image(layer, face, level);
             visitor(view);
          }

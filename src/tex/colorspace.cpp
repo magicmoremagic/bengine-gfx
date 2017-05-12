@@ -3,7 +3,7 @@
 
 namespace be::gfx::tex {
 
-/*!! include 'tex/colorspace' !! 195 */
+/*!! include 'tex/colorspace' !! 201 */
 /* ################# !! GENERATED CODE -- DO NOT MODIFY !! ################# */
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -12,6 +12,8 @@ bool is_valid(Colorspace constant) noexcept {
       case Colorspace::unknown:
       case Colorspace::linear_other:
       case Colorspace::linear_depth_stencil:
+      case Colorspace::linear_depth:
+      case Colorspace::linear_stencil:
       case Colorspace::bt709_linear_rgb:
       case Colorspace::bt709_linear_hsl:
       case Colorspace::bt709_linear_hsv:
@@ -69,6 +71,8 @@ const char* colorspace_name(Colorspace constant) noexcept {
       case Colorspace::unknown:              return "unknown";
       case Colorspace::linear_other:         return "linear_other";
       case Colorspace::linear_depth_stencil: return "linear_depth_stencil";
+      case Colorspace::linear_depth:         return "linear_depth";
+      case Colorspace::linear_stencil:       return "linear_stencil";
       case Colorspace::bt709_linear_rgb:     return "bt709_linear_rgb";
       case Colorspace::bt709_linear_hsl:     return "bt709_linear_hsl";
       case Colorspace::bt709_linear_hsv:     return "bt709_linear_hsv";
@@ -147,6 +151,8 @@ bool is_linear(Colorspace constant) noexcept {
    switch (constant) {
       case Colorspace::linear_other:         return true;
       case Colorspace::linear_depth_stencil: return true;
+      case Colorspace::linear_depth:         return true;
+      case Colorspace::linear_stencil:       return true;
       case Colorspace::bt709_linear_rgb:     return true;
       case Colorspace::cie_xyz:              return true;
       default:

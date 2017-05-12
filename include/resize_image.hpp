@@ -4,7 +4,7 @@
 
 #include "gfx_autolink.hpp"
 #include "fwd_types.hpp"
-#include <gli/sampler.hpp>
+//#include <gli/sampler.hpp>
 
 namespace be {
 namespace gfx {

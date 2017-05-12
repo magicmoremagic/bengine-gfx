@@ -44,6 +44,7 @@
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
   <PropertyGroup />
+  <ItemDefinitionGroup />
   <ItemGroup>
     <ClCompile Include="test\test_image_format.cpp" />
     <ClCompile Include="test\test_image_region.cpp" />

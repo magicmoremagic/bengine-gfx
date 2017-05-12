@@ -2,6 +2,7 @@
 #ifndef BE_GFX_TEX_COLORSPACE_HPP_
 #define BE_GFX_TEX_COLORSPACE_HPP_
 
+#include "gfx_tex_autolink.hpp"
 #include <be/core/be.hpp>
 
 namespace be::gfx::tex {
@@ -9,7 +10,7 @@ namespace be::gfx::tex {
 // TODO RGBE
 // TODO logLUV, RGBM http://graphicrants.blogspot.fr/2009/04/rgbm-color-encoding.html
 
-/*!! include 'tex/colorspace' !! 195 */
+/*!! include 'tex/colorspace' !! 197 */
 /* ################# !! GENERATED CODE -- DO NOT MODIFY !! ################# */
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -34,6 +35,8 @@ enum class Colorspace : U8 {
    unknown = 0,
    linear_other,
    linear_depth_stencil,
+   linear_depth,
+   linear_stencil,
    bt709_linear_rgb,
    bt709_linear_hsl,
    bt709_linear_hsv,

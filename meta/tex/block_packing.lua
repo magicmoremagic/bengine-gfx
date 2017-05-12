@@ -25,7 +25,7 @@ if not no_write then
    local packing_is_compressed_map = { name = 'is_compressed', enum = packing, predicate = function (constant) return constant.n_comp == 0 end }
    local packing_is_packed_map     = { name = 'is_packed',     enum = packing, predicate = function (constant) return constant.n_comp ~= constant.n_words end }
 
-   local packing_components_map = { name = 'component_count',        enum = packing, type = 'U8', mapper = 'n_comp',    default = 3 }
+   local packing_components_map = { name = 'component_count',  enum = packing, type = 'U8', mapper = 'n_comp',    default = 3 }
    local packing_word_size      = { name = 'block_word_size',  enum = packing, type = 'U8', mapper = 'word_size', default = 4 }
    local packing_n_words        = { name = 'block_word_count', enum = packing, type = 'U8', mapper = 'n_words',   default = 1 }
    local packing_pixel_size     = { name = 'block_pixel_size', enum = packing, type = 'U8', mapper = function (constant) return constant.n_words * constant.word_size end, default = 4 }

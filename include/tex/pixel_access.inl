@@ -122,18 +122,14 @@ GetPixelFunc<T, Coord, ImageView> get_pixel_func(const ImageView& image) {
    if (is_compressed(image.format().packing())) {
       switch (image.format().packing()) {
          case BlockPacking::c_astc:
-         case BlockPacking::c_atc:
          case BlockPacking::c_bptc:
-         case BlockPacking::c_eac:
          case BlockPacking::c_etc1:
          case BlockPacking::c_etc2:
-         case BlockPacking::c_pvrtc1:
-         case BlockPacking::c_pvrtc2:
          case BlockPacking::c_s3tc1:
          case BlockPacking::c_s3tc2:
          case BlockPacking::c_s3tc3:
-         case BlockPacking::c_s3tc4:
-         case BlockPacking::c_s3tc5:
+         case BlockPacking::c_rgtc1:
+         case BlockPacking::c_rgtc2:
             // TODO
             break;
          default:

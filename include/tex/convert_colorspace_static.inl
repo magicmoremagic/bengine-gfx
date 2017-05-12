@@ -572,11 +572,15 @@ struct ConvertColorspace<ColorspaceTag<Colorspace::unknown>, Output, false> : Co
 
 ///////////////////////////////////////////////////////////////////////////////
 template <> struct ConvertColorspace<ColorspaceTag<Colorspace::linear_other>, ColorspaceTag<Colorspace::linear_depth_stencil>> : ConvertColorspaceNop { };
+template <> struct ConvertColorspace<ColorspaceTag<Colorspace::linear_other>, ColorspaceTag<Colorspace::linear_depth>> : ConvertColorspaceNop { };
+template <> struct ConvertColorspace<ColorspaceTag<Colorspace::linear_other>, ColorspaceTag<Colorspace::linear_stencil>> : ConvertColorspaceNop { };
 template <> struct ConvertColorspace<ColorspaceTag<Colorspace::linear_other>, ColorspaceTag<Colorspace::bt709_linear_rgb>> : ConvertColorspaceNop { };
 template <> struct ConvertColorspace<ColorspaceTag<Colorspace::linear_other>, ColorspaceTag<Colorspace::bt709_rgb>> : ConvertColorspace<ColorspaceTag<Colorspace::bt709_linear_rgb>, ColorspaceTag<Colorspace::bt709_rgb>> { };
 template <> struct ConvertColorspace<ColorspaceTag<Colorspace::linear_other>, ColorspaceTag<Colorspace::srgb>> : ConvertColorspace<ColorspaceTag<Colorspace::bt709_linear_rgb>, ColorspaceTag<Colorspace::srgb>> { };
 template <> struct ConvertColorspace<ColorspaceTag<Colorspace::linear_other>, ColorspaceTag<Colorspace::cie_xyz>> : ConvertColorspaceNop { };
 template <> struct ConvertColorspace<ColorspaceTag<Colorspace::linear_depth_stencil>, ColorspaceTag<Colorspace::linear_other>> : ConvertColorspaceNop { };
+template <> struct ConvertColorspace<ColorspaceTag<Colorspace::linear_depth>, ColorspaceTag<Colorspace::linear_other>> : ConvertColorspaceNop { };
+template <> struct ConvertColorspace<ColorspaceTag<Colorspace::linear_stencil>, ColorspaceTag<Colorspace::linear_other>> : ConvertColorspaceNop { };
 template <> struct ConvertColorspace<ColorspaceTag<Colorspace::bt709_linear_rgb>, ColorspaceTag<Colorspace::linear_other>> : ConvertColorspaceNop { };
 template <> struct ConvertColorspace<ColorspaceTag<Colorspace::cie_xyz>, ColorspaceTag<Colorspace::linear_other>> : ConvertColorspaceNop { };
 template <> struct ConvertColorspace<ColorspaceTag<Colorspace::bt709_rgb>, ColorspaceTag<Colorspace::linear_other>> : ConvertColorspace<ColorspaceTag<Colorspace::bt709_rgb>, ColorspaceTag<Colorspace::bt709_linear_rgb>> { };

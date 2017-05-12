@@ -2,11 +2,12 @@
 #ifndef BE_GFX_TEX_BLOCK_PACKING_HPP_
 #define BE_GFX_TEX_BLOCK_PACKING_HPP_
 
+#include "gfx_tex_autolink.hpp"
 #include <be/core/be.hpp>
 
 namespace be::gfx::tex {
 
-/*!! include 'tex/block_packing' !! 510 */
+/*!! include 'tex/block_packing' !! 506 */
 /* ################# !! GENERATED CODE -- DO NOT MODIFY !! ################# */
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -47,18 +48,14 @@ enum class BlockPacking : U8 {
    p_2_10_10_10,
    s_32_p_24_8,
    c_astc,
-   c_atc,
    c_bptc,
-   c_eac,
    c_etc1,
    c_etc2,
-   c_pvrtc1,
-   c_pvrtc2,
    c_s3tc1,
    c_s3tc2,
    c_s3tc3,
-   c_s3tc4,
-   c_s3tc5
+   c_rgtc1,
+   c_rgtc2
 };
 
 bool is_valid(BlockPacking constant) noexcept;

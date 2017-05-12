@@ -2,6 +2,8 @@ name	family	variant	linear
 unknown	none	none	FALSE
 linear_other	none	none	TRUE
 linear_depth_stencil	none	none	TRUE
+linear_depth	none	none	TRUE
+linear_stencil	none	none	TRUE
 bt709_linear_rgb	bt709_linear	none	TRUE
 bt709_linear_hsl	bt709_linear	hsl	FALSE
 bt709_linear_hsv	bt709_linear	hsv	FALSE

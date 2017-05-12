@@ -69,6 +69,7 @@
     <ClInclude Include="include\tex\duplicate_texture.hpp" />
     <ClInclude Include="include\tex\image.hpp" />
     <ClInclude Include="include\tex\image_format.hpp" />
+    <ClInclude Include="include\tex\image_format_gl.hpp" />
     <ClInclude Include="include\tex\image_format_hash.hpp" />
     <ClInclude Include="include\tex\image_region.hpp" />
     <ClInclude Include="include\tex\image_region_hash.hpp" />
@@ -101,13 +102,13 @@
     <ClCompile Include="src\tex\component_type.cpp" />
     <ClCompile Include="src\tex\convert_colorspace.cpp" />
     <ClCompile Include="src\tex\image_format.cpp" />
+    <ClCompile Include="src\tex\image_format_gl.cpp" />
     <ClCompile Include="src\tex\image_region.cpp" />
     <ClCompile Include="src\tex\image_view.cpp" />
     <ClCompile Include="src\tex\make_texture.cpp" />
     <ClCompile Include="src\tex\mipmapping.cpp" />
     <ClCompile Include="src\tex\pch.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='release|x64'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="src\tex\premultiply_alpha.cpp" />
     <ClCompile Include="src\tex\swizzle.cpp" />

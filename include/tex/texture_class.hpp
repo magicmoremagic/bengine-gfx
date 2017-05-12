@@ -2,6 +2,7 @@
 #ifndef BE_GFX_TEX_TEXTURE_CLASS_HPP_
 #define BE_GFX_TEX_TEXTURE_CLASS_HPP_
 
+#include "gfx_tex_autolink.hpp"
 #include <be/core/be.hpp>
 
 namespace be::gfx::tex {

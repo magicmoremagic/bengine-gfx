@@ -55,6 +55,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="include\apply.hpp" />
+    <ClInclude Include="include\glbinding.hpp" />
     <ClInclude Include="include\step_filter.hpp" />
     <ClInclude Include="include\cubic_filter.hpp" />
     <ClInclude Include="include\filter_traits.hpp" />

@@ -3,7 +3,7 @@
 
 namespace be::gfx::tex {
 
-/*!! include 'tex/component_type' !! 37 */
+/*!! include 'tex/component_type' !! 48 */
 /* ################# !! GENERATED CODE -- DO NOT MODIFY !! ################# */
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -36,6 +36,17 @@ const char* component_type_name(ComponentType constant) noexcept {
       case ComponentType::expo:   return "expo";
       default:
          return "?";
+   }
+}
+
+///////////////////////////////////////////////////////////////////////////////
+bool is_unsigned(ComponentType constant) noexcept {
+   switch (constant) {
+      case ComponentType::unorm:  return true;
+      case ComponentType::uint:   return true;
+      case ComponentType::ufloat: return true;
+      default:
+         return false;
    }
 }
 

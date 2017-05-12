@@ -1130,21 +1130,17 @@ GetPixelNormFunc<Coord, ImageView> get_pixel_norm_func(const ImageView& image) {
          function not_compressed (t) return t.n_comp ~= 0 end
          function is_standard (t)    return t.n_comp ~= 0 and t.n_comp == t.n_words end
 
-         write_template('packing_switch', { pred = is_compressed, struct_name = 'PixelNormAccessCompressed', func_name = 'get' }) !! 17 */
+         write_template('packing_switch', { pred = is_compressed, struct_name = 'PixelNormAccessCompressed', func_name = 'get' }) !! 13 */
          /* ################# !! GENERATED CODE -- DO NOT MODIFY !! ################# */
          case BlockPacking::c_astc:        return detail::PixelNormAccessCompressed<ImageView, Coord, BlockPacking::c_astc>::get;
-         case BlockPacking::c_atc:         return detail::PixelNormAccessCompressed<ImageView, Coord, BlockPacking::c_atc>::get;
          case BlockPacking::c_bptc:        return detail::PixelNormAccessCompressed<ImageView, Coord, BlockPacking::c_bptc>::get;
-         case BlockPacking::c_eac:         return detail::PixelNormAccessCompressed<ImageView, Coord, BlockPacking::c_eac>::get;
          case BlockPacking::c_etc1:        return detail::PixelNormAccessCompressed<ImageView, Coord, BlockPacking::c_etc1>::get;
          case BlockPacking::c_etc2:        return detail::PixelNormAccessCompressed<ImageView, Coord, BlockPacking::c_etc2>::get;
-         case BlockPacking::c_pvrtc1:      return detail::PixelNormAccessCompressed<ImageView, Coord, BlockPacking::c_pvrtc1>::get;
-         case BlockPacking::c_pvrtc2:      return detail::PixelNormAccessCompressed<ImageView, Coord, BlockPacking::c_pvrtc2>::get;
          case BlockPacking::c_s3tc1:       return detail::PixelNormAccessCompressed<ImageView, Coord, BlockPacking::c_s3tc1>::get;
          case BlockPacking::c_s3tc2:       return detail::PixelNormAccessCompressed<ImageView, Coord, BlockPacking::c_s3tc2>::get;
          case BlockPacking::c_s3tc3:       return detail::PixelNormAccessCompressed<ImageView, Coord, BlockPacking::c_s3tc3>::get;
-         case BlockPacking::c_s3tc4:       return detail::PixelNormAccessCompressed<ImageView, Coord, BlockPacking::c_s3tc4>::get;
-         case BlockPacking::c_s3tc5:       return detail::PixelNormAccessCompressed<ImageView, Coord, BlockPacking::c_s3tc5>::get;
+         case BlockPacking::c_rgtc1:       return detail::PixelNormAccessCompressed<ImageView, Coord, BlockPacking::c_rgtc1>::get;
+         case BlockPacking::c_rgtc2:       return detail::PixelNormAccessCompressed<ImageView, Coord, BlockPacking::c_rgtc2>::get;
          
          /* ######################### END OF GENERATED CODE ######################### */
          default:

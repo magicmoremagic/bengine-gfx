@@ -161,6 +161,9 @@
     <ClInclude Include="include\tex\pixel_norm_transform.hpp">
       <Filter>Header Files\operations\normalized conversions</Filter>
     </ClInclude>
+    <ClInclude Include="include\tex\image_format_gl.hpp">
+      <Filter>Header Files\data structures</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\tex\pch.cpp">
@@ -207,6 +210,9 @@
     </ClCompile>
     <ClCompile Include="src\tex\swizzle.cpp">
       <Filter>Source Files\enums</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tex\image_format_gl.cpp">
+      <Filter>Source Files\data structures</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

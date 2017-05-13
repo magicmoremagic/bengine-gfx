@@ -107,7 +107,7 @@ ImageFormatGl gl_format_compressed(ImageFormat format) {
             } else if (format.components() == 3) {
                if (format.component_types() == component_types(ComponentType::sfloat, 3)) {
                   f.internal_format = GL_COMPRESSED_RGB_BPTC_SIGNED_FLOAT;
-               } else if (format.component_types() == component_types(ComponentType::sfloat, 3)) {
+               } else if (format.component_types() == component_types(ComponentType::ufloat, 3)) {
                   f.internal_format = GL_COMPRESSED_RGB_BPTC_UNSIGNED_FLOAT;
                }
             }
@@ -130,9 +130,9 @@ ImageFormatGl gl_format_compressed(ImageFormat format) {
 
                case 2:
                   if (format.block_size() == 16) {
-                     if (format.component_types() == component_types(ComponentType::unorm, 1)) {
+                     if (format.component_types() == component_types(ComponentType::unorm, 2)) {
                         f.internal_format = GL_COMPRESSED_RG11_EAC;
-                     } else if (format.component_types() == component_types(ComponentType::snorm, 1)) {
+                     } else if (format.component_types() == component_types(ComponentType::snorm, 2)) {
                         f.internal_format = GL_COMPRESSED_SIGNED_RG11_EAC;
                      }
                   }
@@ -202,9 +202,9 @@ ImageFormatGl gl_format_compressed(ImageFormat format) {
          if (format.block_dim() == ImageFormat::block_dim_type(U8(4), U8(4), U8(1)) && format.block_size() == 16 &&
              format.components() == 4 && format.component_types() == component_types(ComponentType::unorm, 4)) {
             if (format.colorspace() == Colorspace::srgb) {
-               f.internal_format = GL_COMPRESSED_SRGB_ALPHA_S3TC_DXT3_EXT;
+               f.internal_format = GL_COMPRESSED_SRGB_ALPHA_S3TC_DXT5_EXT;
             } else {
-               f.internal_format = GL_COMPRESSED_RGBA_S3TC_DXT3_EXT;
+               f.internal_format = GL_COMPRESSED_RGBA_S3TC_DXT5_EXT;
             }
          }
          break;
@@ -729,6 +729,11 @@ ImageFormatGl gl_format_uncompressed(ImageFormat format) {
             } else {
                f.data_format = GL_RGBA;
             }
+         } else if (format.packing() == BlockPacking::p_5_9_9_9 && format.component_types() == component_types(ComponentType::expo, ComponentType::ufloat, ComponentType::ufloat, ComponentType::ufloat)) {
+            f.data_format = GL_RGB;
+            f.internal_format = GL_RGB9_E5;
+            f.data_type = GL_UNSIGNED_INT_5_9_9_9_REV;
+            reverse_rgba_swizzles(f.swizzle);
          }
          break;
 
@@ -947,11 +952,6 @@ ImageFormatGl gl_format_uncompressed(ImageFormat format) {
                   }
                   break;
             }
-         } else if (format.packing() == BlockPacking::p_5_9_9_9 && format.component_types() == component_types(ComponentType::expo, ComponentType::ufloat, ComponentType::ufloat, ComponentType::ufloat)) {
-            f.data_format = GL_RGB;
-            f.internal_format = GL_RGB9_E5;
-            f.data_type = GL_UNSIGNED_INT_5_9_9_9_REV;
-            reverse_rgba_swizzles(f.swizzle);
          }
          break;
    }
@@ -974,6 +974,161 @@ ImageFormatGl gl_format(ImageFormat format) {
 
       default:
          return is_compressed(format.packing()) ? gl_format_compressed(format) : gl_format_uncompressed(format);
+   }
+}
+
+ImageFormat canonical_format(gl::GLenum internal_format) {
+   using namespace gl;
+   using Dim = ImageFormat::block_dim_type;
+
+   switch (internal_format) {
+      //ImageFormat(block_size_type, block_dim_type, BlockPacking, U8, component_types_type, swizzles_type, Colorspace, bool);
+      case GL_COMPRESSED_SRGB8_ALPHA8_ASTC_4x4_KHR:   return ImageFormat(U8(16), Dim(U8(4),  U8(4),  U8(1)), BlockPacking::c_astc, U8(4), component_types(ComponentType::unorm, 4), swizzles_rgba(), Colorspace::srgb, true);
+      case GL_COMPRESSED_SRGB8_ALPHA8_ASTC_5x4_KHR:   return ImageFormat(U8(16), Dim(U8(5),  U8(4),  U8(1)), BlockPacking::c_astc, U8(4), component_types(ComponentType::unorm, 4), swizzles_rgba(), Colorspace::srgb, true);
+      case GL_COMPRESSED_SRGB8_ALPHA8_ASTC_5x5_KHR:   return ImageFormat(U8(16), Dim(U8(5),  U8(5),  U8(1)), BlockPacking::c_astc, U8(4), component_types(ComponentType::unorm, 4), swizzles_rgba(), Colorspace::srgb, true);
+      case GL_COMPRESSED_SRGB8_ALPHA8_ASTC_6x5_KHR:   return ImageFormat(U8(16), Dim(U8(6),  U8(5),  U8(1)), BlockPacking::c_astc, U8(4), component_types(ComponentType::unorm, 4), swizzles_rgba(), Colorspace::srgb, true);
+      case GL_COMPRESSED_SRGB8_ALPHA8_ASTC_6x6_KHR:   return ImageFormat(U8(16), Dim(U8(6),  U8(6),  U8(1)), BlockPacking::c_astc, U8(4), component_types(ComponentType::unorm, 4), swizzles_rgba(), Colorspace::srgb, true);
+      case GL_COMPRESSED_SRGB8_ALPHA8_ASTC_8x5_KHR:   return ImageFormat(U8(16), Dim(U8(8),  U8(5),  U8(1)), BlockPacking::c_astc, U8(4), component_types(ComponentType::unorm, 4), swizzles_rgba(), Colorspace::srgb, true);
+      case GL_COMPRESSED_SRGB8_ALPHA8_ASTC_8x6_KHR:   return ImageFormat(U8(16), Dim(U8(8),  U8(6),  U8(1)), BlockPacking::c_astc, U8(4), component_types(ComponentType::unorm, 4), swizzles_rgba(), Colorspace::srgb, true);
+      case GL_COMPRESSED_SRGB8_ALPHA8_ASTC_8x8_KHR:   return ImageFormat(U8(16), Dim(U8(8),  U8(8),  U8(1)), BlockPacking::c_astc, U8(4), component_types(ComponentType::unorm, 4), swizzles_rgba(), Colorspace::srgb, true);
+      case GL_COMPRESSED_SRGB8_ALPHA8_ASTC_10x5_KHR:  return ImageFormat(U8(16), Dim(U8(10), U8(5),  U8(1)), BlockPacking::c_astc, U8(4), component_types(ComponentType::unorm, 4), swizzles_rgba(), Colorspace::srgb, true);
+      case GL_COMPRESSED_SRGB8_ALPHA8_ASTC_10x6_KHR:  return ImageFormat(U8(16), Dim(U8(10), U8(6),  U8(1)), BlockPacking::c_astc, U8(4), component_types(ComponentType::unorm, 4), swizzles_rgba(), Colorspace::srgb, true);
+      case GL_COMPRESSED_SRGB8_ALPHA8_ASTC_10x8_KHR:  return ImageFormat(U8(16), Dim(U8(10), U8(8),  U8(1)), BlockPacking::c_astc, U8(4), component_types(ComponentType::unorm, 4), swizzles_rgba(), Colorspace::srgb, true);
+      case GL_COMPRESSED_SRGB8_ALPHA8_ASTC_10x10_KHR: return ImageFormat(U8(16), Dim(U8(10), U8(10), U8(1)), BlockPacking::c_astc, U8(4), component_types(ComponentType::unorm, 4), swizzles_rgba(), Colorspace::srgb, true);
+      case GL_COMPRESSED_SRGB8_ALPHA8_ASTC_12x10_KHR: return ImageFormat(U8(16), Dim(U8(12), U8(10), U8(1)), BlockPacking::c_astc, U8(4), component_types(ComponentType::unorm, 4), swizzles_rgba(), Colorspace::srgb, true);
+      case GL_COMPRESSED_SRGB8_ALPHA8_ASTC_12x12_KHR: return ImageFormat(U8(16), Dim(U8(12), U8(12), U8(1)), BlockPacking::c_astc, U8(4), component_types(ComponentType::unorm, 4), swizzles_rgba(), Colorspace::srgb, true);
+      case GL_COMPRESSED_RGBA_ASTC_4x4_KHR:           return ImageFormat(U8(16), Dim(U8(4),  U8(4),  U8(1)), BlockPacking::c_astc, U8(4), component_types(ComponentType::unorm, 4), swizzles_rgba(), Colorspace::bt709_linear_rgb, true);
+      case GL_COMPRESSED_RGBA_ASTC_5x4_KHR:           return ImageFormat(U8(16), Dim(U8(5),  U8(4),  U8(1)), BlockPacking::c_astc, U8(4), component_types(ComponentType::unorm, 4), swizzles_rgba(), Colorspace::bt709_linear_rgb, true);
+      case GL_COMPRESSED_RGBA_ASTC_5x5_KHR:           return ImageFormat(U8(16), Dim(U8(5),  U8(5),  U8(1)), BlockPacking::c_astc, U8(4), component_types(ComponentType::unorm, 4), swizzles_rgba(), Colorspace::bt709_linear_rgb, true);
+      case GL_COMPRESSED_RGBA_ASTC_6x5_KHR:           return ImageFormat(U8(16), Dim(U8(6),  U8(5),  U8(1)), BlockPacking::c_astc, U8(4), component_types(ComponentType::unorm, 4), swizzles_rgba(), Colorspace::bt709_linear_rgb, true);
+      case GL_COMPRESSED_RGBA_ASTC_6x6_KHR:           return ImageFormat(U8(16), Dim(U8(6),  U8(6),  U8(1)), BlockPacking::c_astc, U8(4), component_types(ComponentType::unorm, 4), swizzles_rgba(), Colorspace::bt709_linear_rgb, true);
+      case GL_COMPRESSED_RGBA_ASTC_8x5_KHR:           return ImageFormat(U8(16), Dim(U8(8),  U8(5),  U8(1)), BlockPacking::c_astc, U8(4), component_types(ComponentType::unorm, 4), swizzles_rgba(), Colorspace::bt709_linear_rgb, true);
+      case GL_COMPRESSED_RGBA_ASTC_8x6_KHR:           return ImageFormat(U8(16), Dim(U8(8),  U8(6),  U8(1)), BlockPacking::c_astc, U8(4), component_types(ComponentType::unorm, 4), swizzles_rgba(), Colorspace::bt709_linear_rgb, true);
+      case GL_COMPRESSED_RGBA_ASTC_8x8_KHR:           return ImageFormat(U8(16), Dim(U8(8),  U8(8),  U8(1)), BlockPacking::c_astc, U8(4), component_types(ComponentType::unorm, 4), swizzles_rgba(), Colorspace::bt709_linear_rgb, true);
+      case GL_COMPRESSED_RGBA_ASTC_10x5_KHR:          return ImageFormat(U8(16), Dim(U8(10), U8(5),  U8(1)), BlockPacking::c_astc, U8(4), component_types(ComponentType::unorm, 4), swizzles_rgba(), Colorspace::bt709_linear_rgb, true);
+      case GL_COMPRESSED_RGBA_ASTC_10x6_KHR:          return ImageFormat(U8(16), Dim(U8(10), U8(6),  U8(1)), BlockPacking::c_astc, U8(4), component_types(ComponentType::unorm, 4), swizzles_rgba(), Colorspace::bt709_linear_rgb, true);
+      case GL_COMPRESSED_RGBA_ASTC_10x8_KHR:          return ImageFormat(U8(16), Dim(U8(10), U8(8),  U8(1)), BlockPacking::c_astc, U8(4), component_types(ComponentType::unorm, 4), swizzles_rgba(), Colorspace::bt709_linear_rgb, true);
+      case GL_COMPRESSED_RGBA_ASTC_10x10_KHR:         return ImageFormat(U8(16), Dim(U8(10), U8(10), U8(1)), BlockPacking::c_astc, U8(4), component_types(ComponentType::unorm, 4), swizzles_rgba(), Colorspace::bt709_linear_rgb, true);
+      case GL_COMPRESSED_RGBA_ASTC_12x10_KHR:         return ImageFormat(U8(16), Dim(U8(12), U8(10), U8(1)), BlockPacking::c_astc, U8(4), component_types(ComponentType::unorm, 4), swizzles_rgba(), Colorspace::bt709_linear_rgb, true);
+      case GL_COMPRESSED_RGBA_ASTC_12x12_KHR:         return ImageFormat(U8(16), Dim(U8(12), U8(12), U8(1)), BlockPacking::c_astc, U8(4), component_types(ComponentType::unorm, 4), swizzles_rgba(), Colorspace::bt709_linear_rgb, true);
+
+      case GL_COMPRESSED_SRGB_ALPHA_BPTC_UNORM:       return ImageFormat(U8(16), Dim(U8(4), U8(4), U8(1)), BlockPacking::c_bptc, U8(4), component_types(ComponentType::unorm, 4), swizzles_rgba(), Colorspace::srgb, true);
+      case GL_COMPRESSED_RGBA_BPTC_UNORM:             return ImageFormat(U8(16), Dim(U8(4), U8(4), U8(1)), BlockPacking::c_bptc, U8(4), component_types(ComponentType::unorm, 4), swizzles_rgba(), Colorspace::bt709_linear_rgb, true);
+      case GL_COMPRESSED_RGB_BPTC_SIGNED_FLOAT:       return ImageFormat(U8(16), Dim(U8(4), U8(4), U8(1)), BlockPacking::c_bptc, U8(3), component_types(ComponentType::sfloat, 3), swizzles_rgb(), Colorspace::bt709_linear_rgb, true);
+      case GL_COMPRESSED_RGB_BPTC_UNSIGNED_FLOAT:     return ImageFormat(U8(16), Dim(U8(4), U8(4), U8(1)), BlockPacking::c_bptc, U8(3), component_types(ComponentType::ufloat, 3), swizzles_rgb(), Colorspace::bt709_linear_rgb, true);
+
+      case GL_COMPRESSED_R11_EAC:                        return ImageFormat(U8(8),  Dim(U8(4), U8(4), U8(1)), BlockPacking::c_etc2, U8(1), component_types(ComponentType::unorm, 1), swizzles_r(), Colorspace::bt709_linear_rgb, true);
+      case GL_COMPRESSED_SIGNED_R11_EAC:                 return ImageFormat(U8(8),  Dim(U8(4), U8(4), U8(1)), BlockPacking::c_etc2, U8(1), component_types(ComponentType::snorm, 1), swizzles_r(), Colorspace::bt709_linear_rgb, true);
+      case GL_COMPRESSED_RG11_EAC:                       return ImageFormat(U8(16), Dim(U8(4), U8(4), U8(1)), BlockPacking::c_etc2, U8(2), component_types(ComponentType::unorm, 2), swizzles_rg(), Colorspace::bt709_linear_rgb, true);
+      case GL_COMPRESSED_SIGNED_RG11_EAC:                return ImageFormat(U8(16), Dim(U8(4), U8(4), U8(1)), BlockPacking::c_etc2, U8(2), component_types(ComponentType::snorm, 2), swizzles_rg(), Colorspace::bt709_linear_rgb, true);
+      case GL_COMPRESSED_SRGB8_ETC2:                     return ImageFormat(U8(8),  Dim(U8(4), U8(4), U8(1)), BlockPacking::c_etc2, U8(3), component_types(ComponentType::unorm, 3), swizzles_rgb(),  Colorspace::srgb, true);
+      case GL_COMPRESSED_RGB8_ETC2:                      return ImageFormat(U8(8),  Dim(U8(4), U8(4), U8(1)), BlockPacking::c_etc2, U8(3), component_types(ComponentType::unorm, 3), swizzles_rgb(),  Colorspace::bt709_linear_rgb, true);
+      case GL_COMPRESSED_SRGB8_PUNCHTHROUGH_ALPHA1_ETC2: return ImageFormat(U8(8),  Dim(U8(4), U8(4), U8(1)), BlockPacking::c_etc2, U8(4), component_types(ComponentType::unorm, 4), swizzles_rgba(), Colorspace::srgb, true);
+      case GL_COMPRESSED_RGB8_PUNCHTHROUGH_ALPHA1_ETC2:  return ImageFormat(U8(8),  Dim(U8(4), U8(4), U8(1)), BlockPacking::c_etc2, U8(4), component_types(ComponentType::unorm, 4), swizzles_rgba(), Colorspace::bt709_linear_rgb, true);
+      case GL_COMPRESSED_SRGB8_ALPHA8_ETC2_EAC:          return ImageFormat(U8(16), Dim(U8(4), U8(4), U8(1)), BlockPacking::c_etc2, U8(4), component_types(ComponentType::unorm, 4), swizzles_rgba(), Colorspace::srgb, true);
+      case GL_COMPRESSED_RGBA8_ETC2_EAC:                 return ImageFormat(U8(16), Dim(U8(4), U8(4), U8(1)), BlockPacking::c_etc2, U8(4), component_types(ComponentType::unorm, 4), swizzles_rgba(), Colorspace::bt709_linear_rgb, true);
+
+      case GL_COMPRESSED_SRGB_S3TC_DXT1_EXT:       return ImageFormat(U8(8),  Dim(U8(4), U8(4), U8(1)), BlockPacking::c_s3tc1, U8(3), component_types(ComponentType::unorm, 3), swizzles_rgb(),  Colorspace::srgb, true);
+      case GL_COMPRESSED_RGB_S3TC_DXT1_EXT:        return ImageFormat(U8(8),  Dim(U8(4), U8(4), U8(1)), BlockPacking::c_s3tc1, U8(3), component_types(ComponentType::unorm, 3), swizzles_rgb(),  Colorspace::bt709_linear_rgb, true);
+      case GL_COMPRESSED_SRGB_ALPHA_S3TC_DXT1_EXT: return ImageFormat(U8(8),  Dim(U8(4), U8(4), U8(1)), BlockPacking::c_s3tc1, U8(4), component_types(ComponentType::unorm, 4), swizzles_rgba(), Colorspace::srgb, true);
+      case GL_COMPRESSED_RGBA_S3TC_DXT1_EXT:       return ImageFormat(U8(8),  Dim(U8(4), U8(4), U8(1)), BlockPacking::c_s3tc1, U8(4), component_types(ComponentType::unorm, 4), swizzles_rgba(), Colorspace::bt709_linear_rgb, true);
+      case GL_COMPRESSED_SRGB_ALPHA_S3TC_DXT3_EXT: return ImageFormat(U8(16), Dim(U8(4), U8(4), U8(1)), BlockPacking::c_s3tc2, U8(4), component_types(ComponentType::unorm, 4), swizzles_rgba(), Colorspace::srgb, true);
+      case GL_COMPRESSED_RGBA_S3TC_DXT3_EXT:       return ImageFormat(U8(16), Dim(U8(4), U8(4), U8(1)), BlockPacking::c_s3tc2, U8(4), component_types(ComponentType::unorm, 4), swizzles_rgba(), Colorspace::bt709_linear_rgb, true);
+      case GL_COMPRESSED_SRGB_ALPHA_S3TC_DXT5_EXT: return ImageFormat(U8(16), Dim(U8(4), U8(4), U8(1)), BlockPacking::c_s3tc3, U8(4), component_types(ComponentType::unorm, 4), swizzles_rgba(), Colorspace::srgb, true);
+      case GL_COMPRESSED_RGBA_S3TC_DXT5_EXT:       return ImageFormat(U8(16), Dim(U8(4), U8(4), U8(1)), BlockPacking::c_s3tc3, U8(4), component_types(ComponentType::unorm, 4), swizzles_rgba(), Colorspace::bt709_linear_rgb, true);
+      case GL_COMPRESSED_RED_RGTC1:                return ImageFormat(U8(8),  Dim(U8(4), U8(4), U8(1)), BlockPacking::c_rgtc1, U8(1), component_types(ComponentType::unorm, 1), swizzles_r(),    Colorspace::bt709_linear_rgb, true);
+      case GL_COMPRESSED_SIGNED_RED_RGTC1:         return ImageFormat(U8(8),  Dim(U8(4), U8(4), U8(1)), BlockPacking::c_rgtc1, U8(1), component_types(ComponentType::snorm, 1), swizzles_r(),    Colorspace::bt709_linear_rgb, true);
+      case GL_COMPRESSED_RG_RGTC2:                 return ImageFormat(U8(16), Dim(U8(4), U8(4), U8(1)), BlockPacking::c_rgtc2, U8(2), component_types(ComponentType::unorm, 2), swizzles_rg(),   Colorspace::bt709_linear_rgb, true);
+      case GL_COMPRESSED_SIGNED_RG_RGTC2:          return ImageFormat(U8(16), Dim(U8(4), U8(4), U8(1)), BlockPacking::c_rgtc2, U8(2), component_types(ComponentType::snorm, 2), swizzles_rg(),   Colorspace::bt709_linear_rgb, true);
+
+      case GL_DEPTH_COMPONENT:
+      case GL_DEPTH_COMPONENT32:    return ImageFormat(U8(4), U8(1), BlockPacking::s_32, U8(1), component_types(ComponentType::unorm, 1), swizzles_rrr(), Colorspace::linear_depth, true);
+      case GL_DEPTH_COMPONENT16:    return ImageFormat(U8(2), U8(1), BlockPacking::s_16, U8(1), component_types(ComponentType::unorm, 1), swizzles_rrr(), Colorspace::linear_depth, true);
+      case GL_DEPTH_COMPONENT32F:   return ImageFormat(U8(4), U8(1), BlockPacking::s_32, U8(1), component_types(ComponentType::sfloat, 1), swizzles_rrr(), Colorspace::linear_depth, true);
+      case GL_DEPTH_COMPONENT24:    return ImageFormat(U8(4), U8(1), BlockPacking::p_8_24, U8(1), component_types(ComponentType::unorm, 1), swizzles_rrr(), Colorspace::linear_depth, true);
+
+      case GL_STENCIL_INDEX:
+      case GL_STENCIL_INDEX8:       return ImageFormat(U8(1), U8(1), BlockPacking::s_8, U8(1), component_types(ComponentType::uint, 1), swizzles_rrr(), Colorspace::linear_stencil, true);
+
+      case GL_DEPTH_STENCIL:
+      case GL_DEPTH24_STENCIL8:     return ImageFormat(U8(4), U8(1), BlockPacking::p_24_8, U8(2), component_types(ComponentType::unorm, ComponentType::uint), swizzles_rg(), Colorspace::linear_depth_stencil, true);
+      case GL_DEPTH32F_STENCIL8:    return ImageFormat(U8(8), U8(1), BlockPacking::s_32_p_24_8, U8(2), component_types(ComponentType::sfloat, ComponentType::none, ComponentType::uint), swizzles(Swizzle::red, Swizzle::blue), Colorspace::linear_depth_stencil, true);
+
+      case GL_RED:
+      case GL_R8:             return ImageFormat(U8(1), U8(1), BlockPacking::s_8,  1, component_types(ComponentType::unorm, 1),  swizzles_rrr(), Colorspace::bt709_linear_rgb, true);
+      case GL_R16:            return ImageFormat(U8(2), U8(1), BlockPacking::s_16, 1, component_types(ComponentType::unorm, 1),  swizzles_rrr(), Colorspace::bt709_linear_rgb, true);
+      case GL_R8_SNORM:       return ImageFormat(U8(1), U8(1), BlockPacking::s_8,  1, component_types(ComponentType::snorm, 1),  swizzles_rrr(), Colorspace::bt709_linear_rgb, true);
+      case GL_R16_SNORM:      return ImageFormat(U8(2), U8(1), BlockPacking::s_16, 1, component_types(ComponentType::snorm, 1),  swizzles_rrr(), Colorspace::bt709_linear_rgb, true);
+      case GL_R8UI:           return ImageFormat(U8(1), U8(1), BlockPacking::s_8,  1, component_types(ComponentType::uint, 1),   swizzles_rrr(), Colorspace::bt709_linear_rgb, true);
+      case GL_R16UI:          return ImageFormat(U8(2), U8(1), BlockPacking::s_16, 1, component_types(ComponentType::uint, 1),   swizzles_rrr(), Colorspace::bt709_linear_rgb, true);
+      case GL_R32UI:          return ImageFormat(U8(4), U8(1), BlockPacking::s_32, 1, component_types(ComponentType::uint, 1),   swizzles_rrr(), Colorspace::bt709_linear_rgb, true);
+      case GL_R8I:            return ImageFormat(U8(1), U8(1), BlockPacking::s_8,  1, component_types(ComponentType::sint, 1),   swizzles_rrr(), Colorspace::bt709_linear_rgb, true);
+      case GL_R16I:           return ImageFormat(U8(2), U8(1), BlockPacking::s_16, 1, component_types(ComponentType::sint, 1),   swizzles_rrr(), Colorspace::bt709_linear_rgb, true);
+      case GL_R32I:           return ImageFormat(U8(4), U8(1), BlockPacking::s_32, 1, component_types(ComponentType::sint, 1),   swizzles_rrr(), Colorspace::bt709_linear_rgb, true);
+      case GL_R16F:           return ImageFormat(U8(2), U8(1), BlockPacking::s_16, 1, component_types(ComponentType::sfloat, 1), swizzles_rrr(), Colorspace::bt709_linear_rgb, true);
+      case GL_R32F:           return ImageFormat(U8(4), U8(1), BlockPacking::s_32, 1, component_types(ComponentType::sfloat, 1), swizzles_rrr(), Colorspace::bt709_linear_rgb, true);
+
+      case GL_RG:
+      case GL_RG8:            return ImageFormat(U8(2), U8(1), BlockPacking::s_8_8,   2, component_types(ComponentType::unorm, 2),  swizzles_rg(), Colorspace::bt709_linear_rgb, true);
+      case GL_RG16:           return ImageFormat(U8(4), U8(1), BlockPacking::s_16_16, 2, component_types(ComponentType::unorm, 2),  swizzles_rg(), Colorspace::bt709_linear_rgb, true);
+      case GL_RG8_SNORM:      return ImageFormat(U8(2), U8(1), BlockPacking::s_8_8,   2, component_types(ComponentType::snorm, 2),  swizzles_rg(), Colorspace::bt709_linear_rgb, true);
+      case GL_RG16_SNORM:     return ImageFormat(U8(4), U8(1), BlockPacking::s_16_16, 2, component_types(ComponentType::snorm, 2),  swizzles_rg(), Colorspace::bt709_linear_rgb, true);
+      case GL_RG8UI:          return ImageFormat(U8(2), U8(1), BlockPacking::s_8_8,   2, component_types(ComponentType::uint, 2),   swizzles_rg(), Colorspace::bt709_linear_rgb, true);
+      case GL_RG16UI:         return ImageFormat(U8(4), U8(1), BlockPacking::s_16_16, 2, component_types(ComponentType::uint, 2),   swizzles_rg(), Colorspace::bt709_linear_rgb, true);
+      case GL_RG32UI:         return ImageFormat(U8(8), U8(1), BlockPacking::s_32_32, 2, component_types(ComponentType::uint, 2),   swizzles_rg(), Colorspace::bt709_linear_rgb, true);
+      case GL_RG8I:           return ImageFormat(U8(2), U8(1), BlockPacking::s_8_8,   2, component_types(ComponentType::sint, 2),   swizzles_rg(), Colorspace::bt709_linear_rgb, true);
+      case GL_RG16I:          return ImageFormat(U8(4), U8(1), BlockPacking::s_16_16, 2, component_types(ComponentType::sint, 2),   swizzles_rg(), Colorspace::bt709_linear_rgb, true);
+      case GL_RG32I:          return ImageFormat(U8(8), U8(1), BlockPacking::s_32_32, 2, component_types(ComponentType::sint, 2),   swizzles_rg(), Colorspace::bt709_linear_rgb, true);
+      case GL_RG16F:          return ImageFormat(U8(4), U8(1), BlockPacking::s_16_16, 2, component_types(ComponentType::sfloat, 2), swizzles_rg(), Colorspace::bt709_linear_rgb, true);
+      case GL_RG32F:          return ImageFormat(U8(8), U8(1), BlockPacking::s_32_32, 2, component_types(ComponentType::sfloat, 2), swizzles_rg(), Colorspace::bt709_linear_rgb, true);
+
+      case GL_SRGB:
+      case GL_SRGB8:          return ImageFormat(U8(3), U8(1), BlockPacking::s_8_8_8, 3, component_types(ComponentType::unorm, 3), swizzles_rgb(), Colorspace::srgb, true);
+      
+      case GL_RGB:
+      case GL_RGB8:           return ImageFormat(U8(3), U8(1), BlockPacking::s_8_8_8, 3, component_types(ComponentType::unorm, 3), swizzles_rgba(), Colorspace::bt709_linear_rgb, true);
+
+      case GL_RGB16:          return ImageFormat(U8(6),  U8(1), BlockPacking::s_16_16_16, 3, component_types(ComponentType::unorm, 3),  swizzles_rgb(), Colorspace::bt709_linear_rgb, true);
+      case GL_R3_G3_B2:       return ImageFormat(U8(1),  U8(1), BlockPacking::p_2_3_3,    3, component_types(ComponentType::unorm, 3),  swizzles_bgr(), Colorspace::bt709_linear_rgb, true);
+      case GL_RGB565:         return ImageFormat(U8(2),  U8(1), BlockPacking::p_5_6_5,    3, component_types(ComponentType::unorm, 3),  swizzles_bgr(), Colorspace::bt709_linear_rgb, true);
+      case GL_RGB4:           return ImageFormat(U8(2),  U8(1), BlockPacking::p_4_4_4_4,  3, component_types(ComponentType::none, ComponentType::unorm, ComponentType::unorm, ComponentType::unorm), swizzles_abg(), Colorspace::bt709_linear_rgb, true);
+      case GL_RGB5:           return ImageFormat(U8(2),  U8(1), BlockPacking::p_1_5_5_5,  3, component_types(ComponentType::none, ComponentType::unorm, ComponentType::unorm, ComponentType::unorm), swizzles_abg(), Colorspace::bt709_linear_rgb, true);
+      case GL_RGB8_SNORM:     return ImageFormat(U8(3),  U8(1), BlockPacking::s_8_8_8,    3, component_types(ComponentType::snorm, 3),  swizzles_rgb(), Colorspace::bt709_linear_rgb, true);
+      case GL_RGB16_SNORM:    return ImageFormat(U8(6),  U8(1), BlockPacking::s_16_16_16, 3, component_types(ComponentType::snorm, 3),  swizzles_rgb(), Colorspace::bt709_linear_rgb, true);
+      case GL_RGB8UI:         return ImageFormat(U8(3),  U8(1), BlockPacking::s_8_8_8,    3, component_types(ComponentType::uint, 3),   swizzles_rgb(), Colorspace::bt709_linear_rgb, true);
+      case GL_RGB16UI:        return ImageFormat(U8(6),  U8(1), BlockPacking::s_16_16_16, 3, component_types(ComponentType::uint, 3),   swizzles_rgb(), Colorspace::bt709_linear_rgb, true);
+      case GL_RGB32UI:        return ImageFormat(U8(12), U8(1), BlockPacking::s_32_32_32, 3, component_types(ComponentType::uint, 3),   swizzles_rgb(), Colorspace::bt709_linear_rgb, true);
+      case GL_RGB8I:          return ImageFormat(U8(3),  U8(1), BlockPacking::s_8_8_8,    3, component_types(ComponentType::sint, 3),   swizzles_rgb(), Colorspace::bt709_linear_rgb, true);
+      case GL_RGB16I:         return ImageFormat(U8(6),  U8(1), BlockPacking::s_16_16_16, 3, component_types(ComponentType::sint, 3),   swizzles_rgb(), Colorspace::bt709_linear_rgb, true);
+      case GL_RGB32I:         return ImageFormat(U8(12), U8(1), BlockPacking::s_32_32_32, 3, component_types(ComponentType::sint, 3),   swizzles_rgb(), Colorspace::bt709_linear_rgb, true);
+      case GL_R11F_G11F_B10F: return ImageFormat(U8(4),  U8(1), BlockPacking::p_10_11_11, 3, component_types(ComponentType::ufloat, 3), swizzles_bgr(), Colorspace::bt709_linear_rgb, true);
+      case GL_RGB16F:         return ImageFormat(U8(6),  U8(1), BlockPacking::s_16_16_16, 3, component_types(ComponentType::sfloat, 3), swizzles_rgb(), Colorspace::bt709_linear_rgb, true);
+      case GL_RGB32F:         return ImageFormat(U8(12), U8(1), BlockPacking::s_32_32_32, 3, component_types(ComponentType::sfloat, 3), swizzles_rgb(), Colorspace::bt709_linear_rgb, true);
+      case GL_RGB9_E5:        return ImageFormat(U8(4),  U8(1), BlockPacking::p_5_9_9_9,  3, component_types(ComponentType::expo, ComponentType::ufloat, ComponentType::ufloat, ComponentType::ufloat), swizzles_abg(), Colorspace::bt709_linear_rgb, true);
+
+      case GL_RGBA16:         return ImageFormat(U8(8),  U8(1), BlockPacking::s_16_16_16_16, 4, component_types(ComponentType::unorm, 4),  swizzles_rgba(), Colorspace::bt709_linear_rgb, true);
+      case GL_RGBA4:          return ImageFormat(U8(2),  U8(1), BlockPacking::p_4_4_4_4,     4, component_types(ComponentType::unorm, 4),  swizzles_abgr(), Colorspace::bt709_linear_rgb, true);
+      case GL_RGB5_A1:        return ImageFormat(U8(2),  U8(1), BlockPacking::p_1_5_5_5,     4, component_types(ComponentType::unorm, 4),  swizzles_abgr(), Colorspace::bt709_linear_rgb, true);
+      case GL_RGB10_A2:       return ImageFormat(U8(4),  U8(1), BlockPacking::p_2_10_10_10,  4, component_types(ComponentType::unorm, 4),  swizzles_abgr(), Colorspace::bt709_linear_rgb, true);
+      case GL_RGBA8_SNORM:    return ImageFormat(U8(4),  U8(1), BlockPacking::s_8_8_8_8,     4, component_types(ComponentType::snorm, 4),  swizzles_rgba(), Colorspace::bt709_linear_rgb, true);
+      case GL_RGBA16_SNORM:   return ImageFormat(U8(8),  U8(1), BlockPacking::s_16_16_16_16, 4, component_types(ComponentType::snorm, 4),  swizzles_rgba(), Colorspace::bt709_linear_rgb, true);
+      case GL_RGBA8UI:        return ImageFormat(U8(4),  U8(1), BlockPacking::s_8_8_8_8,     4, component_types(ComponentType::uint, 4),   swizzles_rgba(), Colorspace::bt709_linear_rgb, true);
+      case GL_RGBA16UI:       return ImageFormat(U8(8),  U8(1), BlockPacking::s_16_16_16_16, 4, component_types(ComponentType::uint, 4),   swizzles_rgba(), Colorspace::bt709_linear_rgb, true);
+      case GL_RGBA32UI:       return ImageFormat(U8(16), U8(1), BlockPacking::s_32_32_32_32, 4, component_types(ComponentType::uint, 4),   swizzles_rgba(), Colorspace::bt709_linear_rgb, true);
+      case GL_RGB10_A2UI:     return ImageFormat(U8(4),  U8(1), BlockPacking::p_2_10_10_10,  4, component_types(ComponentType::uint, 4),   swizzles_abgr(), Colorspace::bt709_linear_rgb, true);
+      case GL_RGBA8I:         return ImageFormat(U8(4),  U8(1), BlockPacking::s_8_8_8_8,     4, component_types(ComponentType::sint, 4),   swizzles_rgba(), Colorspace::bt709_linear_rgb, true);
+      case GL_RGBA16I:        return ImageFormat(U8(8),  U8(1), BlockPacking::s_16_16_16_16, 4, component_types(ComponentType::sint, 4),   swizzles_rgba(), Colorspace::bt709_linear_rgb, true);
+      case GL_RGBA32I:        return ImageFormat(U8(16), U8(1), BlockPacking::s_32_32_32_32, 4, component_types(ComponentType::sint, 4),   swizzles_rgba(), Colorspace::bt709_linear_rgb, true);
+      case GL_RGBA16F:        return ImageFormat(U8(8),  U8(1), BlockPacking::s_16_16_16_16, 4, component_types(ComponentType::sfloat, 4), swizzles_rgba(), Colorspace::bt709_linear_rgb, true);
+      case GL_RGBA32F:        return ImageFormat(U8(18), U8(1), BlockPacking::s_32_32_32_32, 4, component_types(ComponentType::sfloat, 4), swizzles_rgba(), Colorspace::bt709_linear_rgb, true);
+
+      case GL_SRGB_ALPHA:
+      case GL_SRGB8_ALPHA8:   return ImageFormat(U8(4), U8(1), BlockPacking::s_8_8_8_8, 4, component_types(ComponentType::unorm, 4), swizzles_rgba(), Colorspace::srgb, true);
+
+      case GL_RGBA:
+      case GL_RGBA8:
+      default:                return ImageFormat(U8(4), U8(1), BlockPacking::s_8_8_8_8, 4, component_types(ComponentType::unorm, 4), swizzles_rgba(), Colorspace::bt709_linear_rgb, true);
+         
    }
 }
 

@@ -314,11 +314,6 @@ ImageFormat::swizzles_type swizzles_r() {
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-ImageFormat::swizzles_type swizzles_zzzr() {
-   return swizzles(Swizzle::zero, Swizzle::zero, Swizzle::zero, Swizzle::red);
-}
-
-///////////////////////////////////////////////////////////////////////////////
 ImageFormat::swizzles_type swizzles_rrr() {
    return swizzles(Swizzle::red, Swizzle::red, Swizzle::red);
 }
@@ -326,16 +321,6 @@ ImageFormat::swizzles_type swizzles_rrr() {
 ///////////////////////////////////////////////////////////////////////////////
 ImageFormat::swizzles_type swizzles_rg() {
    return swizzles(Swizzle::red, Swizzle::green);
-}
-
-///////////////////////////////////////////////////////////////////////////////
-ImageFormat::swizzles_type swizzles_rzzg() {
-   return swizzles(Swizzle::red, Swizzle::zero, Swizzle::zero, Swizzle::green);
-}
-
-///////////////////////////////////////////////////////////////////////////////
-ImageFormat::swizzles_type swizzles_rrrg() {
-   return swizzles(Swizzle::red, Swizzle::red, Swizzle::red, Swizzle::green);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -349,13 +334,28 @@ ImageFormat::swizzles_type swizzles_bgr() {
 }
 
 ///////////////////////////////////////////////////////////////////////////////
+ImageFormat::swizzles_type swizzles_abg() {
+   return swizzles(Swizzle::alpha, Swizzle::blue, Swizzle::green);
+}
+
+///////////////////////////////////////////////////////////////////////////////
 ImageFormat::swizzles_type swizzles_rgba() {
    return swizzles(Swizzle::red, Swizzle::green, Swizzle::blue, Swizzle::alpha);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 ImageFormat::swizzles_type swizzles_bgra() {
-   return swizzles(Swizzle::red, Swizzle::green, Swizzle::blue, Swizzle::alpha);
+   return swizzles(Swizzle::blue, Swizzle::green, Swizzle::red, Swizzle::alpha);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+ImageFormat::swizzles_type swizzles_abgr() {
+   return swizzles(Swizzle::alpha, Swizzle::blue, Swizzle::green, Swizzle::red);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+ImageFormat::swizzles_type swizzles_argb() {
+   return swizzles(Swizzle::alpha, Swizzle::red, Swizzle::green, Swizzle::blue);
 }
 
 } // be::gfx::tex

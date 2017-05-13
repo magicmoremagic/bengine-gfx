@@ -7,7 +7,7 @@
 
 namespace be::gfx::tex {
 
-/*!! include 'tex/block_packing' !! 506 */
+/*!! include 'tex/block_packing' !! 545 */
 /* ################# !! GENERATED CODE -- DO NOT MODIFY !! ################# */
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -32,9 +32,12 @@ enum class BlockPacking : U8 {
    p_3_3_2,
    p_2_3_3,
    p_3_2_3,
+   p_2_2_2_2,
    p_4_4_4_4,
    p_1_5_5_5,
    p_5_5_5_1,
+   p_6_5_5,
+   p_5_5_6,
    p_5_6_5,
    p_8_24,
    p_24_8,
@@ -332,6 +335,18 @@ template <> struct BlockPackingInfo<BlockPacking::p_3_2_3> {
    static constexpr U8 component_bit_width[4] = { 3, 2, 3, 0 };
 };
 
+template <> struct BlockPackingInfo<BlockPacking::p_2_2_2_2> {
+   using is_compressed = False;
+   using is_packed = True;
+   using unsigned_word_type = U8;
+   static constexpr U8 components = 4;
+   static constexpr U8 word_size = 1;
+   static constexpr U8 words = 1;
+   static constexpr U8 component_word_offset[4] = { 0, 0, 0, 0 };
+   static constexpr U8 component_bit_offset[4] = { 6, 4, 2, 0 };
+   static constexpr U8 component_bit_width[4] = { 2, 2, 2, 2 };
+};
+
 template <> struct BlockPackingInfo<BlockPacking::p_4_4_4_4> {
    using is_compressed = False;
    using is_packed = True;
@@ -366,6 +381,30 @@ template <> struct BlockPackingInfo<BlockPacking::p_5_5_5_1> {
    static constexpr U8 component_word_offset[4] = { 0, 0, 0, 0 };
    static constexpr U8 component_bit_offset[4] = { 11, 6, 1, 0 };
    static constexpr U8 component_bit_width[4] = { 5, 5, 5, 1 };
+};
+
+template <> struct BlockPackingInfo<BlockPacking::p_6_5_5> {
+   using is_compressed = False;
+   using is_packed = True;
+   using unsigned_word_type = U16;
+   static constexpr U8 components = 3;
+   static constexpr U8 word_size = 2;
+   static constexpr U8 words = 1;
+   static constexpr U8 component_word_offset[4] = { 0, 0, 0, 0 };
+   static constexpr U8 component_bit_offset[4] = { 10, 5, 0, 0 };
+   static constexpr U8 component_bit_width[4] = { 6, 5, 5, 0 };
+};
+
+template <> struct BlockPackingInfo<BlockPacking::p_5_5_6> {
+   using is_compressed = False;
+   using is_packed = True;
+   using unsigned_word_type = U16;
+   static constexpr U8 components = 3;
+   static constexpr U8 word_size = 2;
+   static constexpr U8 words = 1;
+   static constexpr U8 component_word_offset[4] = { 0, 0, 0, 0 };
+   static constexpr U8 component_bit_offset[4] = { 11, 6, 0, 0 };
+   static constexpr U8 component_bit_width[4] = { 5, 5, 6, 0 };
 };
 
 template <> struct BlockPackingInfo<BlockPacking::p_5_6_5> {

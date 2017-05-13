@@ -3,7 +3,7 @@
 
 namespace be::gfx::tex {
 
-/*!! include 'tex/block_packing' !! 566 */
+/*!! include 'tex/block_packing' !! 599 */
 /* ################# !! GENERATED CODE -- DO NOT MODIFY !! ################# */
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -29,9 +29,12 @@ bool is_valid(BlockPacking constant) noexcept {
       case BlockPacking::p_3_3_2:
       case BlockPacking::p_2_3_3:
       case BlockPacking::p_3_2_3:
+      case BlockPacking::p_2_2_2_2:
       case BlockPacking::p_4_4_4_4:
       case BlockPacking::p_1_5_5_5:
       case BlockPacking::p_5_5_5_1:
+      case BlockPacking::p_6_5_5:
+      case BlockPacking::p_5_5_6:
       case BlockPacking::p_5_6_5:
       case BlockPacking::p_8_24:
       case BlockPacking::p_24_8:
@@ -82,9 +85,12 @@ const char* block_packing_name(BlockPacking constant) noexcept {
       case BlockPacking::p_3_3_2:       return "p_3_3_2";
       case BlockPacking::p_2_3_3:       return "p_2_3_3";
       case BlockPacking::p_3_2_3:       return "p_3_2_3";
+      case BlockPacking::p_2_2_2_2:     return "p_2_2_2_2";
       case BlockPacking::p_4_4_4_4:     return "p_4_4_4_4";
       case BlockPacking::p_1_5_5_5:     return "p_1_5_5_5";
       case BlockPacking::p_5_5_5_1:     return "p_5_5_5_1";
+      case BlockPacking::p_6_5_5:       return "p_6_5_5";
+      case BlockPacking::p_5_5_6:       return "p_5_5_6";
       case BlockPacking::p_5_6_5:       return "p_5_6_5";
       case BlockPacking::p_8_24:        return "p_8_24";
       case BlockPacking::p_24_8:        return "p_24_8";
@@ -135,9 +141,12 @@ bool is_packed(BlockPacking constant) noexcept {
       case BlockPacking::p_3_3_2:       return true;
       case BlockPacking::p_2_3_3:       return true;
       case BlockPacking::p_3_2_3:       return true;
+      case BlockPacking::p_2_2_2_2:     return true;
       case BlockPacking::p_4_4_4_4:     return true;
       case BlockPacking::p_1_5_5_5:     return true;
       case BlockPacking::p_5_5_5_1:     return true;
+      case BlockPacking::p_6_5_5:       return true;
+      case BlockPacking::p_5_5_6:       return true;
       case BlockPacking::p_5_6_5:       return true;
       case BlockPacking::p_8_24:        return true;
       case BlockPacking::p_24_8:        return true;
@@ -171,6 +180,7 @@ U8 component_count(BlockPacking constant) noexcept {
       case BlockPacking::s_64_64:       return U8(2);
       case BlockPacking::s_64_64_64_64: return U8(4);
       case BlockPacking::p_4_4:         return U8(2);
+      case BlockPacking::p_2_2_2_2:     return U8(4);
       case BlockPacking::p_4_4_4_4:     return U8(4);
       case BlockPacking::p_1_5_5_5:     return U8(4);
       case BlockPacking::p_5_5_5_1:     return U8(4);
@@ -215,9 +225,12 @@ U8 block_pixel_size(BlockPacking constant) noexcept {
       case BlockPacking::p_3_3_2:       return U8(1);
       case BlockPacking::p_2_3_3:       return U8(1);
       case BlockPacking::p_3_2_3:       return U8(1);
+      case BlockPacking::p_2_2_2_2:     return U8(1);
       case BlockPacking::p_4_4_4_4:     return U8(2);
       case BlockPacking::p_1_5_5_5:     return U8(2);
       case BlockPacking::p_5_5_5_1:     return U8(2);
+      case BlockPacking::p_6_5_5:       return U8(2);
+      case BlockPacking::p_5_5_6:       return U8(2);
       case BlockPacking::p_5_6_5:       return U8(2);
       case BlockPacking::s_32_p_24_8:   return U8(8);
       case BlockPacking::c_astc:        return U8(0);
@@ -253,9 +266,12 @@ U8 block_word_size(BlockPacking constant) noexcept {
       case BlockPacking::p_3_3_2:       return U8(1);
       case BlockPacking::p_2_3_3:       return U8(1);
       case BlockPacking::p_3_2_3:       return U8(1);
+      case BlockPacking::p_2_2_2_2:     return U8(1);
       case BlockPacking::p_4_4_4_4:     return U8(2);
       case BlockPacking::p_1_5_5_5:     return U8(2);
       case BlockPacking::p_5_5_5_1:     return U8(2);
+      case BlockPacking::p_6_5_5:       return U8(2);
+      case BlockPacking::p_5_5_6:       return U8(2);
       case BlockPacking::p_5_6_5:       return U8(2);
       case BlockPacking::c_astc:        return U8(0);
       case BlockPacking::c_bptc:        return U8(0);
@@ -366,9 +382,12 @@ U8 block_bit_offset_0(BlockPacking constant) noexcept {
       case BlockPacking::p_3_3_2:       return U8(5);
       case BlockPacking::p_2_3_3:       return U8(6);
       case BlockPacking::p_3_2_3:       return U8(5);
+      case BlockPacking::p_2_2_2_2:     return U8(6);
       case BlockPacking::p_4_4_4_4:     return U8(12);
       case BlockPacking::p_1_5_5_5:     return U8(15);
       case BlockPacking::p_5_5_5_1:     return U8(11);
+      case BlockPacking::p_6_5_5:       return U8(10);
+      case BlockPacking::p_5_5_6:       return U8(11);
       case BlockPacking::p_5_6_5:       return U8(11);
       case BlockPacking::p_8_24:        return U8(24);
       case BlockPacking::p_24_8:        return U8(8);
@@ -392,9 +411,12 @@ U8 block_bit_offset_1(BlockPacking constant) noexcept {
       case BlockPacking::p_3_3_2:       return U8(2);
       case BlockPacking::p_2_3_3:       return U8(3);
       case BlockPacking::p_3_2_3:       return U8(3);
+      case BlockPacking::p_2_2_2_2:     return U8(4);
       case BlockPacking::p_4_4_4_4:     return U8(8);
       case BlockPacking::p_1_5_5_5:     return U8(10);
       case BlockPacking::p_5_5_5_1:     return U8(6);
+      case BlockPacking::p_6_5_5:       return U8(5);
+      case BlockPacking::p_5_5_6:       return U8(6);
       case BlockPacking::p_5_6_5:       return U8(5);
       case BlockPacking::p_11_11_10:    return U8(10);
       case BlockPacking::p_10_11_11:    return U8(11);
@@ -413,6 +435,7 @@ U8 block_bit_offset_1(BlockPacking constant) noexcept {
 ///////////////////////////////////////////////////////////////////////////////
 U8 block_bit_offset_2(BlockPacking constant) noexcept {
    switch (constant) {
+      case BlockPacking::p_2_2_2_2:     return U8(2);
       case BlockPacking::p_4_4_4_4:     return U8(4);
       case BlockPacking::p_1_5_5_5:     return U8(5);
       case BlockPacking::p_5_5_5_1:     return U8(1);
@@ -457,9 +480,12 @@ U8 block_bit_width_0(BlockPacking constant) noexcept {
       case BlockPacking::p_3_3_2:       return U8(3);
       case BlockPacking::p_2_3_3:       return U8(2);
       case BlockPacking::p_3_2_3:       return U8(3);
+      case BlockPacking::p_2_2_2_2:     return U8(2);
       case BlockPacking::p_4_4_4_4:     return U8(4);
       case BlockPacking::p_1_5_5_5:     return U8(1);
       case BlockPacking::p_5_5_5_1:     return U8(5);
+      case BlockPacking::p_6_5_5:       return U8(6);
+      case BlockPacking::p_5_5_6:       return U8(5);
       case BlockPacking::p_5_6_5:       return U8(5);
       case BlockPacking::p_8_24:        return U8(8);
       case BlockPacking::p_24_8:        return U8(24);
@@ -496,9 +522,12 @@ U8 block_bit_width_1(BlockPacking constant) noexcept {
       case BlockPacking::p_3_3_2:       return U8(3);
       case BlockPacking::p_2_3_3:       return U8(3);
       case BlockPacking::p_3_2_3:       return U8(2);
+      case BlockPacking::p_2_2_2_2:     return U8(2);
       case BlockPacking::p_4_4_4_4:     return U8(4);
       case BlockPacking::p_1_5_5_5:     return U8(5);
       case BlockPacking::p_5_5_5_1:     return U8(5);
+      case BlockPacking::p_6_5_5:       return U8(5);
+      case BlockPacking::p_5_5_6:       return U8(5);
       case BlockPacking::p_5_6_5:       return U8(6);
       case BlockPacking::p_8_24:        return U8(24);
       case BlockPacking::p_24_8:        return U8(8);
@@ -530,9 +559,12 @@ U8 block_bit_width_2(BlockPacking constant) noexcept {
       case BlockPacking::p_3_3_2:       return U8(2);
       case BlockPacking::p_2_3_3:       return U8(3);
       case BlockPacking::p_3_2_3:       return U8(3);
+      case BlockPacking::p_2_2_2_2:     return U8(2);
       case BlockPacking::p_4_4_4_4:     return U8(4);
       case BlockPacking::p_1_5_5_5:     return U8(5);
       case BlockPacking::p_5_5_5_1:     return U8(5);
+      case BlockPacking::p_6_5_5:       return U8(5);
+      case BlockPacking::p_5_5_6:       return U8(6);
       case BlockPacking::p_5_6_5:       return U8(5);
       case BlockPacking::p_11_11_10:    return U8(10);
       case BlockPacking::p_10_11_11:    return U8(11);
@@ -555,6 +587,7 @@ U8 block_bit_width_3(BlockPacking constant) noexcept {
       case BlockPacking::s_16_16_16_16: return U8(16);
       case BlockPacking::s_32_32_32_32: return U8(32);
       case BlockPacking::s_64_64_64_64: return U8(64);
+      case BlockPacking::p_2_2_2_2:     return U8(2);
       case BlockPacking::p_4_4_4_4:     return U8(4);
       case BlockPacking::p_1_5_5_5:     return U8(5);
       case BlockPacking::p_5_5_5_1:     return U8(1);

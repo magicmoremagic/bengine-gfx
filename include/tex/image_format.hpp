@@ -87,15 +87,15 @@ ImageFormat::component_types_type component_types(std::initializer_list<Componen
 ImageFormat::swizzles_type swizzles(Swizzle s0 = Swizzle::zero, Swizzle s1 = Swizzle::zero, Swizzle s2 = Swizzle::zero, Swizzle s3 = Swizzle::one);
 ImageFormat::swizzles_type swizzles(std::initializer_list<Swizzle> swizzles);
 ImageFormat::swizzles_type swizzles_r();
-ImageFormat::swizzles_type swizzles_zzzr();
 ImageFormat::swizzles_type swizzles_rrr();
 ImageFormat::swizzles_type swizzles_rg();
-ImageFormat::swizzles_type swizzles_rzzg();
-ImageFormat::swizzles_type swizzles_rrrg();
 ImageFormat::swizzles_type swizzles_rgb();
 ImageFormat::swizzles_type swizzles_bgr();
+ImageFormat::swizzles_type swizzles_abg();
 ImageFormat::swizzles_type swizzles_rgba();
 ImageFormat::swizzles_type swizzles_bgra();
+ImageFormat::swizzles_type swizzles_abgr();
+ImageFormat::swizzles_type swizzles_argb();
 
 } // be::gfx::tex
 

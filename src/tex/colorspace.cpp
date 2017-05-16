@@ -1,10 +1,94 @@
 #include "tex/pch.hpp"
 #include "tex/colorspace.hpp"
 
+/*!! include 'tex/colorspace' !! 253 */
+/* ################# !! GENERATED CODE -- DO NOT MODIFY !! ################# */
+
 namespace be::gfx::tex {
 
-/*!! include 'tex/colorspace' !! 201 */
-/* ################# !! GENERATED CODE -- DO NOT MODIFY !! ################# */
+///////////////////////////////////////////////////////////////////////////////
+bool is_valid(ColorspaceFamily constant) noexcept {
+   switch (constant) {
+      case ColorspaceFamily::none:
+      case ColorspaceFamily::bt709_linear:
+      case ColorspaceFamily::bt709:
+      case ColorspaceFamily::srgb:
+      case ColorspaceFamily::cie:
+         return true;
+      default:
+         return false;
+   }
+}
+
+///////////////////////////////////////////////////////////////////////////////
+const char* colorspace_family_name(ColorspaceFamily constant) noexcept {
+   switch (constant) {
+      case ColorspaceFamily::none:         return "none";
+      case ColorspaceFamily::bt709_linear: return "bt709_linear";
+      case ColorspaceFamily::bt709:        return "bt709";
+      case ColorspaceFamily::srgb:         return "srgb";
+      case ColorspaceFamily::cie:          return "cie";
+      default:
+         return "?";
+   }
+}
+
+///////////////////////////////////////////////////////////////////////////////
+std::array<const ColorspaceFamily, 5> colorspace_family_values() noexcept {
+   return ::be::EnumTraits<ColorspaceFamily>::values<>();
+}
+
+///////////////////////////////////////////////////////////////////////////////
+std::ostream& operator<<(std::ostream& os, ColorspaceFamily constant) {
+   if (is_valid(constant)) {
+      os << colorspace_family_name(constant);
+   } else {
+      os << static_cast<I64>(static_cast<U8>(constant));
+   }
+   return os;
+}
+
+
+///////////////////////////////////////////////////////////////////////////////
+bool is_valid(ColorspaceVariant constant) noexcept {
+   switch (constant) {
+      case ColorspaceVariant::none:
+      case ColorspaceVariant::hsl:
+      case ColorspaceVariant::hsv:
+      case ColorspaceVariant::ycbcr:
+         return true;
+      default:
+         return false;
+   }
+}
+
+///////////////////////////////////////////////////////////////////////////////
+const char* colorspace_variant_name(ColorspaceVariant constant) noexcept {
+   switch (constant) {
+      case ColorspaceVariant::none:  return "none";
+      case ColorspaceVariant::hsl:   return "hsl";
+      case ColorspaceVariant::hsv:   return "hsv";
+      case ColorspaceVariant::ycbcr: return "ycbcr";
+      default:
+         return "?";
+   }
+}
+
+///////////////////////////////////////////////////////////////////////////////
+std::array<const ColorspaceVariant, 4> colorspace_variant_values() noexcept {
+   return ::be::EnumTraits<ColorspaceVariant>::values<>();
+}
+
+///////////////////////////////////////////////////////////////////////////////
+std::ostream& operator<<(std::ostream& os, ColorspaceVariant constant) {
+   if (is_valid(constant)) {
+      os << colorspace_variant_name(constant);
+   } else {
+      os << static_cast<I64>(static_cast<U8>(constant));
+   }
+   return os;
+}
+
 
 ///////////////////////////////////////////////////////////////////////////////
 bool is_valid(Colorspace constant) noexcept {
@@ -32,33 +116,6 @@ bool is_valid(Colorspace constant) noexcept {
       case Colorspace::cie_luv_d65:
       case Colorspace::cie_lchuv_d65:
       case Colorspace::cie_xyy:
-         return true;
-      default:
-         return false;
-   }
-}
-
-///////////////////////////////////////////////////////////////////////////////
-bool is_valid(ColorspaceFamily constant) noexcept {
-   switch (constant) {
-      case ColorspaceFamily::none:
-      case ColorspaceFamily::bt709_linear:
-      case ColorspaceFamily::bt709:
-      case ColorspaceFamily::srgb:
-      case ColorspaceFamily::cie:
-         return true;
-      default:
-         return false;
-   }
-}
-
-///////////////////////////////////////////////////////////////////////////////
-bool is_valid(ColorspaceVariant constant) noexcept {
-   switch (constant) {
-      case ColorspaceVariant::none:
-      case ColorspaceVariant::hsl:
-      case ColorspaceVariant::hsv:
-      case ColorspaceVariant::ycbcr:
          return true;
       default:
          return false;
@@ -97,28 +154,18 @@ const char* colorspace_name(Colorspace constant) noexcept {
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-const char* colorspace_family_name(ColorspaceFamily constant) noexcept {
-   switch (constant) {
-      case ColorspaceFamily::none:         return "none";
-      case ColorspaceFamily::bt709_linear: return "bt709_linear";
-      case ColorspaceFamily::bt709:        return "bt709";
-      case ColorspaceFamily::srgb:         return "srgb";
-      case ColorspaceFamily::cie:          return "cie";
-      default:
-         return "?";
-   }
+std::array<const Colorspace, 23> colorspace_values() noexcept {
+   return ::be::EnumTraits<Colorspace>::values<>();
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-const char* colorspace_variant_name(ColorspaceVariant constant) noexcept {
-   switch (constant) {
-      case ColorspaceVariant::none:  return "none";
-      case ColorspaceVariant::hsl:   return "hsl";
-      case ColorspaceVariant::hsv:   return "hsv";
-      case ColorspaceVariant::ycbcr: return "ycbcr";
-      default:
-         return "?";
+std::ostream& operator<<(std::ostream& os, Colorspace constant) {
+   if (is_valid(constant)) {
+      os << colorspace_name(constant);
+   } else {
+      os << static_cast<I64>(static_cast<U8>(constant));
    }
+   return os;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -203,6 +250,7 @@ ColorspaceVariant colorspace_variant(Colorspace constant) noexcept {
    }
 }
 
-/* ######################### END OF GENERATED CODE ######################### */
-
 } // be::gfx::tex
+
+
+/* ######################### END OF GENERATED CODE ######################### */

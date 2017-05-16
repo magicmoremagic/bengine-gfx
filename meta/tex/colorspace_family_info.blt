@@ -1,5 +1,4 @@
 
-
 template <`name`>
 struct `name`Info {
    static constexpr Colorspace base = Colorspace::unknown;
@@ -21,4 +20,4 @@ template <> struct `enum_name`Info<`enum_name`::`name`> {
 };
 `
    }
-}
+}`

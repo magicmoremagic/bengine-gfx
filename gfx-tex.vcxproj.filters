@@ -45,6 +45,12 @@
     <Filter Include="Header Files\operations\blitting">
       <UniqueIdentifier>{735f9633-d9e3-4e2e-9763-c2b064992440}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\operations\read/write">
+      <UniqueIdentifier>{a828ad12-e61f-41b8-9a97-539c96d1b0d3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\operations\read/write">
+      <UniqueIdentifier>{fb56c7fd-7127-44cf-ab66-8d3ce7acf82d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\tex\pch.hpp">
@@ -164,6 +170,63 @@
     <ClInclude Include="include\tex\image_format_gl.hpp">
       <Filter>Header Files\data structures</Filter>
     </ClInclude>
+    <ClInclude Include="include\tex\read.hpp">
+      <Filter>Header Files\operations\read/write</Filter>
+    </ClInclude>
+    <ClInclude Include="include\tex\write.hpp">
+      <Filter>Header Files\operations\read/write</Filter>
+    </ClInclude>
+    <ClInclude Include="include\tex\texture_file_format.hpp">
+      <Filter>Header Files\enums</Filter>
+    </ClInclude>
+    <ClInclude Include="include\tex\texture_file_info.hpp">
+      <Filter>Header Files\data structures</Filter>
+    </ClInclude>
+    <ClInclude Include="include\tex\texture_file_format_png.hpp">
+      <Filter>Header Files\operations\read/write</Filter>
+    </ClInclude>
+    <ClInclude Include="include\tex\texture_file_format_betx.hpp">
+      <Filter>Header Files\operations\read/write</Filter>
+    </ClInclude>
+    <ClInclude Include="include\tex\texture_file_format_glraw.hpp">
+      <Filter>Header Files\operations\read/write</Filter>
+    </ClInclude>
+    <ClInclude Include="include\tex\texture_file_format_ktx.hpp">
+      <Filter>Header Files\operations\read/write</Filter>
+    </ClInclude>
+    <ClInclude Include="include\tex\texture_file_format_kmg.hpp">
+      <Filter>Header Files\operations\read/write</Filter>
+    </ClInclude>
+    <ClInclude Include="include\tex\texture_file_format_dds.hpp">
+      <Filter>Header Files\operations\read/write</Filter>
+    </ClInclude>
+    <ClInclude Include="include\tex\texture_file_format_etc.hpp">
+      <Filter>Header Files\operations\read/write</Filter>
+    </ClInclude>
+    <ClInclude Include="include\tex\texture_file_format_tga.hpp">
+      <Filter>Header Files\operations\read/write</Filter>
+    </ClInclude>
+    <ClInclude Include="include\tex\texture_file_format_bmp.hpp">
+      <Filter>Header Files\operations\read/write</Filter>
+    </ClInclude>
+    <ClInclude Include="include\tex\texture_file_format_jpeg.hpp">
+      <Filter>Header Files\operations\read/write</Filter>
+    </ClInclude>
+    <ClInclude Include="include\tex\texture_file_format_hdr.hpp">
+      <Filter>Header Files\operations\read/write</Filter>
+    </ClInclude>
+    <ClInclude Include="include\tex\texture_file_format_pic.hpp">
+      <Filter>Header Files\operations\read/write</Filter>
+    </ClInclude>
+    <ClInclude Include="include\tex\texture_file_format_pnm.hpp">
+      <Filter>Header Files\operations\read/write</Filter>
+    </ClInclude>
+    <ClInclude Include="include\tex\texture_file_format_gif.hpp">
+      <Filter>Header Files\operations\read/write</Filter>
+    </ClInclude>
+    <ClInclude Include="include\tex\texture_file_format_psd.hpp">
+      <Filter>Header Files\operations\read/write</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\tex\pch.cpp">
@@ -213,6 +276,57 @@
     </ClCompile>
     <ClCompile Include="src\tex\image_format_gl.cpp">
       <Filter>Source Files\data structures</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tex\read.cpp">
+      <Filter>Source Files\operations\read/write</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tex\texture_file_format.cpp">
+      <Filter>Source Files\enums</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tex\texture_file_format_png.cpp">
+      <Filter>Source Files\operations\read/write</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tex\texture_file_format_psd.cpp">
+      <Filter>Source Files\operations\read/write</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tex\texture_file_format_tga.cpp">
+      <Filter>Source Files\operations\read/write</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tex\texture_file_format_betx.cpp">
+      <Filter>Source Files\operations\read/write</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tex\texture_file_format_bmp.cpp">
+      <Filter>Source Files\operations\read/write</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tex\texture_file_format_dds.cpp">
+      <Filter>Source Files\operations\read/write</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tex\texture_file_format_etc.cpp">
+      <Filter>Source Files\operations\read/write</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tex\texture_file_format_gif.cpp">
+      <Filter>Source Files\operations\read/write</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tex\texture_file_format_glraw.cpp">
+      <Filter>Source Files\operations\read/write</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tex\texture_file_format_hdr.cpp">
+      <Filter>Source Files\operations\read/write</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tex\texture_file_format_jpeg.cpp">
+      <Filter>Source Files\operations\read/write</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tex\texture_file_format_kmg.cpp">
+      <Filter>Source Files\operations\read/write</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tex\texture_file_format_ktx.cpp">
+      <Filter>Source Files\operations\read/write</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tex\texture_file_format_pic.cpp">
+      <Filter>Source Files\operations\read/write</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tex\texture_file_format_pnm.cpp">
+      <Filter>Source Files\operations\read/write</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -284,6 +398,9 @@
     </None>
     <None Include="include\tex\visit_image.inl">
       <Filter>Header Files\operations\visitation</Filter>
+    </None>
+    <None Include="meta\tex\texture_file_format.lua">
+      <Filter>Meta-Source Files</Filter>
     </None>
   </ItemGroup>
 </Project>

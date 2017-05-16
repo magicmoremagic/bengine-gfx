@@ -1,10 +1,10 @@
 #include "tex/pch.hpp"
 #include "tex/block_packing.hpp"
 
-namespace be::gfx::tex {
-
-/*!! include 'tex/block_packing' !! 599 */
+/*!! include 'tex/block_packing' !! 619 */
 /* ################# !! GENERATED CODE -- DO NOT MODIFY !! ################# */
+
+namespace be::gfx::tex {
 
 ///////////////////////////////////////////////////////////////////////////////
 bool is_valid(BlockPacking constant) noexcept {
@@ -115,6 +115,21 @@ const char* block_packing_name(BlockPacking constant) noexcept {
       default:
          return "?";
    }
+}
+
+///////////////////////////////////////////////////////////////////////////////
+std::array<const BlockPacking, 47> block_packing_values() noexcept {
+   return ::be::EnumTraits<BlockPacking>::values<>();
+}
+
+///////////////////////////////////////////////////////////////////////////////
+std::ostream& operator<<(std::ostream& os, BlockPacking constant) {
+   if (is_valid(constant)) {
+      os << block_packing_name(constant);
+   } else {
+      os << static_cast<I64>(static_cast<U8>(constant));
+   }
+   return os;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -601,6 +616,7 @@ U8 block_bit_width_3(BlockPacking constant) noexcept {
    }
 }
 
-/* ######################### END OF GENERATED CODE ######################### */
-
 } // be::gfx::tex
+
+
+/* ######################### END OF GENERATED CODE ######################### */

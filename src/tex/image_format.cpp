@@ -54,7 +54,6 @@ ImageFormat::ImageFormat(block_size_type block_size,
    assert(is_valid(static_cast<Swizzle>(swizzles.b)));
    assert(is_valid(static_cast<Swizzle>(swizzles.a)));
    assert(is_valid(colorspace));
-   assert(!premultiplied || components == 4);
    assert(block_size >= block_dim.x * block_dim.y * block_dim.z * block_pixel_size(packing));
 }
 

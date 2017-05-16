@@ -3,12 +3,12 @@
 #define BE_GFX_TEX_BLOCK_PACKING_HPP_
 
 #include "gfx_tex_autolink.hpp"
-#include <be/core/be.hpp>
+#include <be/core/enum_traits.hpp>
+
+/*!! include 'tex/block_packing' !! 625 */
+/* ################# !! GENERATED CODE -- DO NOT MODIFY !! ################# */
 
 namespace be::gfx::tex {
-
-/*!! include 'tex/block_packing' !! 545 */
-/* ################# !! GENERATED CODE -- DO NOT MODIFY !! ################# */
 
 ///////////////////////////////////////////////////////////////////////////////
 enum class BlockPacking : U8 {
@@ -63,6 +63,8 @@ enum class BlockPacking : U8 {
 
 bool is_valid(BlockPacking constant) noexcept;
 const char* block_packing_name(BlockPacking constant) noexcept;
+std::array<const BlockPacking, 47> block_packing_values() noexcept;
+std::ostream& operator<<(std::ostream& os, BlockPacking constant);
 bool is_compressed(BlockPacking constant) noexcept;
 bool is_packed(BlockPacking constant) noexcept;
 U8 component_count(BlockPacking constant) noexcept;
@@ -551,8 +553,82 @@ template <> struct BlockPackingInfo<BlockPacking::s_32_p_24_8> {
    static constexpr U8 component_bit_width[4] = { 32, 24, 8, 0 };
 };
 
-/* ######################### END OF GENERATED CODE ######################### */
-
 } // be::gfx::tex
+
+namespace be {
+
+///////////////////////////////////////////////////////////////////////////////
+template <>
+struct EnumTraits<::be::gfx::tex::BlockPacking> {
+   using type = ::be::gfx::tex::BlockPacking;
+   using underlying_type = typename std::underlying_type<type>::type;
+
+   static constexpr std::size_t count = 47;
+
+   static bool is_valid(type value) {
+      return ::be::gfx::tex::is_valid(value);
+   }
+
+   static const char* name(type value) {
+      return ::be::gfx::tex::block_packing_name(value);
+   }
+
+   template <typename C = std::array<const type, count>>
+   static C values() {
+      return {
+         ::be::gfx::tex::BlockPacking::s_8,
+         ::be::gfx::tex::BlockPacking::s_8_8,
+         ::be::gfx::tex::BlockPacking::s_8_8_8,
+         ::be::gfx::tex::BlockPacking::s_8_8_8_8,
+         ::be::gfx::tex::BlockPacking::s_16,
+         ::be::gfx::tex::BlockPacking::s_16_16,
+         ::be::gfx::tex::BlockPacking::s_16_16_16,
+         ::be::gfx::tex::BlockPacking::s_16_16_16_16,
+         ::be::gfx::tex::BlockPacking::s_32,
+         ::be::gfx::tex::BlockPacking::s_32_32,
+         ::be::gfx::tex::BlockPacking::s_32_32_32,
+         ::be::gfx::tex::BlockPacking::s_32_32_32_32,
+         ::be::gfx::tex::BlockPacking::s_64,
+         ::be::gfx::tex::BlockPacking::s_64_64,
+         ::be::gfx::tex::BlockPacking::s_64_64_64,
+         ::be::gfx::tex::BlockPacking::s_64_64_64_64,
+         ::be::gfx::tex::BlockPacking::p_4_4,
+         ::be::gfx::tex::BlockPacking::p_3_3_2,
+         ::be::gfx::tex::BlockPacking::p_2_3_3,
+         ::be::gfx::tex::BlockPacking::p_3_2_3,
+         ::be::gfx::tex::BlockPacking::p_2_2_2_2,
+         ::be::gfx::tex::BlockPacking::p_4_4_4_4,
+         ::be::gfx::tex::BlockPacking::p_1_5_5_5,
+         ::be::gfx::tex::BlockPacking::p_5_5_5_1,
+         ::be::gfx::tex::BlockPacking::p_6_5_5,
+         ::be::gfx::tex::BlockPacking::p_5_5_6,
+         ::be::gfx::tex::BlockPacking::p_5_6_5,
+         ::be::gfx::tex::BlockPacking::p_8_24,
+         ::be::gfx::tex::BlockPacking::p_24_8,
+         ::be::gfx::tex::BlockPacking::p_11_11_10,
+         ::be::gfx::tex::BlockPacking::p_10_11_11,
+         ::be::gfx::tex::BlockPacking::p_11_10_11,
+         ::be::gfx::tex::BlockPacking::p_8_8_8_8,
+         ::be::gfx::tex::BlockPacking::p_9_9_9_5,
+         ::be::gfx::tex::BlockPacking::p_5_9_9_9,
+         ::be::gfx::tex::BlockPacking::p_10_10_10_2,
+         ::be::gfx::tex::BlockPacking::p_2_10_10_10,
+         ::be::gfx::tex::BlockPacking::s_32_p_24_8,
+         ::be::gfx::tex::BlockPacking::c_astc,
+         ::be::gfx::tex::BlockPacking::c_bptc,
+         ::be::gfx::tex::BlockPacking::c_etc1,
+         ::be::gfx::tex::BlockPacking::c_etc2,
+         ::be::gfx::tex::BlockPacking::c_s3tc1,
+         ::be::gfx::tex::BlockPacking::c_s3tc2,
+         ::be::gfx::tex::BlockPacking::c_s3tc3,
+         ::be::gfx::tex::BlockPacking::c_rgtc1,
+         ::be::gfx::tex::BlockPacking::c_rgtc2,
+      };
+   }
+};
+
+} // be
+
+/* ######################### END OF GENERATED CODE ######################### */
 
 #endif

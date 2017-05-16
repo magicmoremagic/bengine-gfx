@@ -6,8 +6,8 @@
 #include <be/core/alg.hpp>
 #include <functional>
 
-/*!! write_template('common/std_hash', 'be::gfx::tex::TextureView')
-write_template('common/std_hash', 'be::gfx::tex::ConstTextureView') !! 20 */
+/*!! write_template('common/templates/std_hash', 'be::gfx::tex::TextureView')
+write_template('common/templates/std_hash', 'be::gfx::tex::ConstTextureView') !! 20 */
 /* ################# !! GENERATED CODE -- DO NOT MODIFY !! ################# */
 
 template <>

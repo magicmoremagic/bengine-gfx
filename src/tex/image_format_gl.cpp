@@ -8,6 +8,17 @@ namespace be::gfx::tex {
 namespace {
 
 ///////////////////////////////////////////////////////////////////////////////
+void swap_rg_swizzles(gl::GLenum* swizzles) {
+   using namespace gl;
+   for (std::size_t i = 0; i < 4; ++i) {
+      switch (swizzles[i]) {
+         case GL_RED: swizzles[i] = GL_GREEN;
+         case GL_GREEN: swizzles[i] = GL_RED;
+      }
+   }
+}
+
+///////////////////////////////////////////////////////////////////////////////
 void swap_rb_swizzles(gl::GLenum* swizzles) {
    using namespace gl;
    for (std::size_t i = 0; i < 4; ++i) {
@@ -271,6 +282,7 @@ ImageFormatGl gl_format_depth(ImageFormat format) {
                f.internal_format = GL_DEPTH_COMPONENT24;
                f.data_format = GL_DEPTH_COMPONENT;
                f.data_type = GL_UNSIGNED_INT;
+               swap_rg_swizzles(f.swizzle);
             }
             break;
       }
@@ -1045,7 +1057,7 @@ ImageFormat canonical_format(gl::GLenum internal_format) {
       case GL_DEPTH_COMPONENT32:    return ImageFormat(U8(4), U8(1), BlockPacking::s_32, U8(1), component_types(ComponentType::unorm, 1), swizzles_rrr(), Colorspace::linear_depth, true);
       case GL_DEPTH_COMPONENT16:    return ImageFormat(U8(2), U8(1), BlockPacking::s_16, U8(1), component_types(ComponentType::unorm, 1), swizzles_rrr(), Colorspace::linear_depth, true);
       case GL_DEPTH_COMPONENT32F:   return ImageFormat(U8(4), U8(1), BlockPacking::s_32, U8(1), component_types(ComponentType::sfloat, 1), swizzles_rrr(), Colorspace::linear_depth, true);
-      case GL_DEPTH_COMPONENT24:    return ImageFormat(U8(4), U8(1), BlockPacking::p_8_24, U8(1), component_types(ComponentType::unorm, 1), swizzles_rrr(), Colorspace::linear_depth, true);
+      case GL_DEPTH_COMPONENT24:    return ImageFormat(U8(4), U8(1), BlockPacking::p_8_24, U8(1), component_types(ComponentType::none, ComponentType::unorm), swizzles(Swizzle::green, Swizzle::green, Swizzle::green), Colorspace::linear_depth, true);
 
       case GL_STENCIL_INDEX:
       case GL_STENCIL_INDEX8:       return ImageFormat(U8(1), U8(1), BlockPacking::s_8, U8(1), component_types(ComponentType::uint, 1), swizzles_rrr(), Colorspace::linear_stencil, true);

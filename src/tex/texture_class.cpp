@@ -1,10 +1,10 @@
 #include "tex/pch.hpp"
 #include "tex/texture_class.hpp"
 
-namespace be::gfx::tex {
-
-/*!! include 'tex/texture_class' !! 79 */
+/*!! include 'tex/texture_class' !! 99 */
 /* ################# !! GENERATED CODE -- DO NOT MODIFY !! ################# */
+
+namespace be::gfx::tex {
 
 ///////////////////////////////////////////////////////////////////////////////
 bool is_valid(TextureClass constant) noexcept {
@@ -35,6 +35,21 @@ const char* texture_class_name(TextureClass constant) noexcept {
       default:
          return "?";
    }
+}
+
+///////////////////////////////////////////////////////////////////////////////
+std::array<const TextureClass, 7> texture_class_values() noexcept {
+   return ::be::EnumTraits<TextureClass>::values<>();
+}
+
+///////////////////////////////////////////////////////////////////////////////
+std::ostream& operator<<(std::ostream& os, TextureClass constant) {
+   if (is_valid(constant)) {
+      os << texture_class_name(constant);
+   } else {
+      os << static_cast<I64>(static_cast<U8>(constant));
+   }
+   return os;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -81,6 +96,7 @@ U8 faces(TextureClass constant) noexcept {
    }
 }
 
-/* ######################### END OF GENERATED CODE ######################### */
-
 } // be::gfx::tex
+
+
+/* ######################### END OF GENERATED CODE ######################### */

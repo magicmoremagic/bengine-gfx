@@ -1,10 +1,10 @@
 #include "tex/pch.hpp"
 #include "tex/component_type.hpp"
 
-namespace be::gfx::tex {
-
-/*!! include 'tex/component_type' !! 48 */
+/*!! include 'tex/component_type' !! 68 */
 /* ################# !! GENERATED CODE -- DO NOT MODIFY !! ################# */
+
+namespace be::gfx::tex {
 
 ///////////////////////////////////////////////////////////////////////////////
 bool is_valid(ComponentType constant) noexcept {
@@ -40,6 +40,21 @@ const char* component_type_name(ComponentType constant) noexcept {
 }
 
 ///////////////////////////////////////////////////////////////////////////////
+std::array<const ComponentType, 8> component_type_values() noexcept {
+   return ::be::EnumTraits<ComponentType>::values<>();
+}
+
+///////////////////////////////////////////////////////////////////////////////
+std::ostream& operator<<(std::ostream& os, ComponentType constant) {
+   if (is_valid(constant)) {
+      os << component_type_name(constant);
+   } else {
+      os << static_cast<I64>(static_cast<U8>(constant));
+   }
+   return os;
+}
+
+///////////////////////////////////////////////////////////////////////////////
 bool is_unsigned(ComponentType constant) noexcept {
    switch (constant) {
       case ComponentType::unorm:  return true;
@@ -50,6 +65,8 @@ bool is_unsigned(ComponentType constant) noexcept {
    }
 }
 
+} // be::gfx::tex
+
+
 /* ######################### END OF GENERATED CODE ######################### */
 
-} // be::gfx::tex

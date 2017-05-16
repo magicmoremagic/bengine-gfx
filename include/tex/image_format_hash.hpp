@@ -6,7 +6,7 @@
 #include <be/core/alg.hpp>
 #include <functional>
 
-/*!! write_template('common/std_hash', 'be::gfx::tex::ImageFormat') !! 12 */
+/*!! write_template('common/templates/std_hash', 'be::gfx::tex::ImageFormat') !! 12 */
 /* ################# !! GENERATED CODE -- DO NOT MODIFY !! ################# */
 
 template <>

@@ -6,9 +6,10 @@ namespace be::gfx::tex::detail {
 
 ///////////////////////////////////////////////////////////////////////////////
 bool is_gif(const Buf<const UC>& buf) {
-   // TODO
-   constexpr UC signature[] = { 0x89, 'P', 'N', 'G', '\r', '\n', 0x1a, '\n' };
-   return util::file_signature_matches(buf, signature);
+   constexpr UC signature1[] = { 'G', 'I', 'F', '8', '9', 'a' };
+   constexpr UC signature2[] = { 'G', 'I', 'F', '8', '7', 'a' };
+   return util::file_signature_matches(buf, signature1) ||
+      util::file_signature_matches(buf, signature2);
 }
 
 } // be::gfx::tex::detail

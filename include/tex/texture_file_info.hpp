@@ -10,18 +10,15 @@ namespace be::gfx::tex {
 
 ///////////////////////////////////////////////////////////////////////////////
 struct TextureFileInfo {
-   TextureFileFormat file_format;
+   TextureFileFormat file_format = TextureFileFormat::unknown;
    ImageFormat format;
-   TextureClass tex_class;
+   TextureClass tex_class = TextureClass::planar;
    ivec3 dim;
    ImageFormat::block_dim_type block_dim;
-   ImageFormat::block_size_type block_size;
-   TextureStorage::layer_index_type layers;
-   TextureStorage::face_index_type faces;
-   TextureStorage::level_index_type levels;
-   TextureStorage::layer_index_type base_layer;
-   TextureStorage::face_index_type base_face;
-   TextureStorage::level_index_type base_level;
+   ImageFormat::block_size_type block_size = 0;
+   TextureStorage::layer_index_type layers = 0;
+   TextureStorage::face_index_type faces = 0;
+   TextureStorage::level_index_type levels = 0;
 };
 
 } // be::gfx::tex

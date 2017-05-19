@@ -10,6 +10,9 @@
 
 namespace be::gfx::tex {
 
+TextureFileFormat read_format(const Buf<const UC>& buf);
+TextureFileFormat read_format(Path path);
+
 TextureFileInfo read_info(const Buf<const UC>& buf);
 TextureFileInfo read_info(Path path);
 

@@ -6,8 +6,7 @@ namespace be::gfx::tex::detail {
 
 ///////////////////////////////////////////////////////////////////////////////
 bool is_psd(const Buf<const UC>& buf) {
-   // TODO
-   constexpr UC signature[] = { 0x89, 'P', 'N', 'G', '\r', '\n', 0x1a, '\n' };
+   constexpr UC signature[] = { '8', 'B', 'P', 'S' };
    return util::file_signature_matches(buf, signature);
 }
 

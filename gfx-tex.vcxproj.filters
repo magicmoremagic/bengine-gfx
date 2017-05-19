@@ -51,6 +51,9 @@
     <Filter Include="Source Files\operations\read/write">
       <UniqueIdentifier>{fb56c7fd-7127-44cf-ab66-8d3ce7acf82d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\operations\read/write\betx">
+      <UniqueIdentifier>{264adbb8-590a-404d-ae06-d3a7e84f9f11}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\tex\pch.hpp">
@@ -194,13 +197,7 @@
     <ClInclude Include="include\tex\texture_file_format_ktx.hpp">
       <Filter>Header Files\operations\read/write</Filter>
     </ClInclude>
-    <ClInclude Include="include\tex\texture_file_format_kmg.hpp">
-      <Filter>Header Files\operations\read/write</Filter>
-    </ClInclude>
     <ClInclude Include="include\tex\texture_file_format_dds.hpp">
-      <Filter>Header Files\operations\read/write</Filter>
-    </ClInclude>
-    <ClInclude Include="include\tex\texture_file_format_etc.hpp">
       <Filter>Header Files\operations\read/write</Filter>
     </ClInclude>
     <ClInclude Include="include\tex\texture_file_format_tga.hpp">
@@ -226,6 +223,9 @@
     </ClInclude>
     <ClInclude Include="include\tex\texture_file_format_psd.hpp">
       <Filter>Header Files\operations\read/write</Filter>
+    </ClInclude>
+    <ClInclude Include="src\tex\betx_header_01.hpp">
+      <Filter>Source Files\operations\read/write\betx</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -292,16 +292,10 @@
     <ClCompile Include="src\tex\texture_file_format_tga.cpp">
       <Filter>Source Files\operations\read/write</Filter>
     </ClCompile>
-    <ClCompile Include="src\tex\texture_file_format_betx.cpp">
-      <Filter>Source Files\operations\read/write</Filter>
-    </ClCompile>
     <ClCompile Include="src\tex\texture_file_format_bmp.cpp">
       <Filter>Source Files\operations\read/write</Filter>
     </ClCompile>
     <ClCompile Include="src\tex\texture_file_format_dds.cpp">
-      <Filter>Source Files\operations\read/write</Filter>
-    </ClCompile>
-    <ClCompile Include="src\tex\texture_file_format_etc.cpp">
       <Filter>Source Files\operations\read/write</Filter>
     </ClCompile>
     <ClCompile Include="src\tex\texture_file_format_gif.cpp">
@@ -316,9 +310,6 @@
     <ClCompile Include="src\tex\texture_file_format_jpeg.cpp">
       <Filter>Source Files\operations\read/write</Filter>
     </ClCompile>
-    <ClCompile Include="src\tex\texture_file_format_kmg.cpp">
-      <Filter>Source Files\operations\read/write</Filter>
-    </ClCompile>
     <ClCompile Include="src\tex\texture_file_format_ktx.cpp">
       <Filter>Source Files\operations\read/write</Filter>
     </ClCompile>
@@ -327,6 +318,9 @@
     </ClCompile>
     <ClCompile Include="src\tex\texture_file_format_pnm.cpp">
       <Filter>Source Files\operations\read/write</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tex\texture_file_format_betx.cpp">
+      <Filter>Source Files\operations\read/write\betx</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

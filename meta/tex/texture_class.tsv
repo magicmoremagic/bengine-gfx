@@ -4,5 +4,6 @@ lineal_array	1	2	TRUE	1
 planar	2	2	FALSE	1
 planar_array	2	3	TRUE	1
 volumetric	3	3	FALSE	1
+volumetric_array	3	4	TRUE	1
 directional	2	2	FALSE	6
 directional_array	2	3	TRUE	6

@@ -6,9 +6,10 @@ namespace be::gfx::tex::detail {
 
 ///////////////////////////////////////////////////////////////////////////////
 bool is_hdr(const Buf<const UC>& buf) {
-   // TODO
-   constexpr UC signature[] = { 0x89, 'P', 'N', 'G', '\r', '\n', 0x1a, '\n' };
-   return util::file_signature_matches(buf, signature);
+   constexpr UC signature1[] = { '#', '?', 'R', 'A', 'D', 'I', 'A', 'N', 'C', 'E', '\n' };
+   constexpr UC signature2[] = { '#', '?', 'R', 'G', 'B', 'E', '\n' };
+   return util::file_signature_matches(buf, signature1) ||
+      util::file_signature_matches(buf, signature2);
 }
 
 } // be::gfx::tex::detail

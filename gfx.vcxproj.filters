@@ -12,9 +12,6 @@
     <Filter Include="Meta-Source Files">
       <UniqueIdentifier>{810e6e8f-7a80-4074-ad5b-e4a2f615dcb1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\textures">
-      <UniqueIdentifier>{0a777fe2-9844-4c92-95b9-3a593767deb4}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\textures">
       <UniqueIdentifier>{48ee0916-d10f-45a3-ae79-58476da27d63}</UniqueIdentifier>
     </Filter>

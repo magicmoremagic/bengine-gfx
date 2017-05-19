@@ -6,8 +6,7 @@ namespace be::gfx::tex::detail {
 
 ///////////////////////////////////////////////////////////////////////////////
 bool is_dds(const Buf<const UC>& buf) {
-   // TODO
-   constexpr UC signature[] = { 0x89, 'P', 'N', 'G', '\r', '\n', 0x1a, '\n' };
+   constexpr UC signature[] = { 'D', 'D', 'S', ' ' };
    return util::file_signature_matches(buf, signature);
 }
 

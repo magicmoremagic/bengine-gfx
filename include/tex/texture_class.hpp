@@ -5,7 +5,7 @@
 #include "gfx_tex_autolink.hpp"
 #include <be/core/enum_traits.hpp>
 
-/*!! include 'tex/texture_class' !! 62 */
+/*!! include 'tex/texture_class' !! 64 */
 /* ################# !! GENERATED CODE -- DO NOT MODIFY !! ################# */
 
 namespace be::gfx::tex {
@@ -17,13 +17,14 @@ enum class TextureClass : U8 {
    planar,
    planar_array,
    volumetric,
+   volumetric_array,
    directional,
    directional_array
 };
 
 bool is_valid(TextureClass constant) noexcept;
 const char* texture_class_name(TextureClass constant) noexcept;
-std::array<const TextureClass, 7> texture_class_values() noexcept;
+std::array<const TextureClass, 8> texture_class_values() noexcept;
 std::ostream& operator<<(std::ostream& os, TextureClass constant);
 bool is_array(TextureClass constant) noexcept;
 U8 dimensionality(TextureClass constant) noexcept;
@@ -40,7 +41,7 @@ struct EnumTraits<::be::gfx::tex::TextureClass> {
    using type = ::be::gfx::tex::TextureClass;
    using underlying_type = typename std::underlying_type<type>::type;
 
-   static constexpr std::size_t count = 7;
+   static constexpr std::size_t count = 8;
 
    static bool is_valid(type value) {
       return ::be::gfx::tex::is_valid(value);
@@ -58,6 +59,7 @@ struct EnumTraits<::be::gfx::tex::TextureClass> {
          ::be::gfx::tex::TextureClass::planar,
          ::be::gfx::tex::TextureClass::planar_array,
          ::be::gfx::tex::TextureClass::volumetric,
+         ::be::gfx::tex::TextureClass::volumetric_array,
          ::be::gfx::tex::TextureClass::directional,
          ::be::gfx::tex::TextureClass::directional_array,
       };

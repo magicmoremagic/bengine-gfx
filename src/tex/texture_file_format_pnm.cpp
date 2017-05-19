@@ -6,9 +6,10 @@ namespace be::gfx::tex::detail {
 
 ///////////////////////////////////////////////////////////////////////////////
 bool is_pnm(const Buf<const UC>& buf) {
-   // TODO
-   constexpr UC signature[] = { 0x89, 'P', 'N', 'G', '\r', '\n', 0x1a, '\n' };
-   return util::file_signature_matches(buf, signature);
+   constexpr UC signature1[] = { 'P', '5' };
+   constexpr UC signature2[] = { 'P', '6' };
+   return util::file_signature_matches(buf, signature1) ||
+      util::file_signature_matches(buf, signature2);
 }
 
 } // be::gfx::tex::detail

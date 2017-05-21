@@ -32,6 +32,7 @@ TextureFileFormat read_format(const Buf<const UC>& buf) {
    else if (detail::is_bmp(buf)) return TextureFileFormat::bmp;
    else if (detail::is_pnm(buf)) return TextureFileFormat::pnm;
    else if (detail::is_tga(buf)) return TextureFileFormat::tga;
+   else return TextureFileFormat::unknown;
 }
 
 ///////////////////////////////////////////////////////////////////////////////

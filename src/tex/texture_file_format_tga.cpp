@@ -32,7 +32,7 @@ bool is_tga(const Buf<const UC>& buf) {
       return false;
    }
 
-   return static_cast<U8>(buf[17]) & 0xC0 == 0;
+   return (static_cast<U8>(buf[17]) & 0xC0) == 0;
 }
 
 } // be::gfx::tex::detail

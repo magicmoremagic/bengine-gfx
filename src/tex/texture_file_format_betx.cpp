@@ -82,7 +82,34 @@ struct BeTxHeader01 {
    U8 reserved_b[6];
 };
 
-static const std::size_t header_size = sizeof(BeTxHeader01);
+} // be::gfx::tex::detail
+
+namespace be::bo {
+
+template <>
+struct Converter<be::gfx::tex::detail::BeTxHeader01> : ConvertBase<be::gfx::tex::detail::BeTxHeader01> {
+   using base::in_place;
+   static void in_place(type& v, Little, Big) {
+      Converter<U64>::in_place(v.endianness, Little(), Big());
+      Converter<U64>::in_place(v.image_buffer_size, Little(), Big());
+      Converter<I32>::in_place(v.dim[0], Little(), Big());
+      Converter<I32>::in_place(v.dim[1], Little(), Big());
+      Converter<I32>::in_place(v.dim[2], Little(), Big());
+      Converter<U16>::in_place(v.layers, Little(), Big());
+   }
+   static void in_place(type& v, Big, Little) {
+      Converter<U64>::in_place(v.endianness, Big(), Little());
+      Converter<U64>::in_place(v.image_buffer_size, Big(), Little());
+      Converter<I32>::in_place(v.dim[0], Big(), Little());
+      Converter<I32>::in_place(v.dim[1], Big(), Little());
+      Converter<I32>::in_place(v.dim[2], Big(), Little());
+      Converter<U16>::in_place(v.layers, Big(), Little());
+   }
+};
+
+} // be::bo
+
+namespace be::gfx::tex::detail {
 
 ///////////////////////////////////////////////////////////////////////////////
 bool is_betx(const Buf<const UC>& buf) {
@@ -100,12 +127,33 @@ TextureFileInfo load_betx_info(const Buf<const UC>& buf) {
          memcpy(&header, buf.get() + 16, sizeof(BeTxHeader01));
 
          if (header.endianness == 0x1122334455667788ull) {
-            bo::t
+            bo::static_to_little<bo::Big::value>(header);
          } else if (header.endianness != 0x8877665544332211ull) {
             return info;
          }
 
+         info.format = ImageFormat(header.block_size,
+                                   ImageFormat::block_dim_type(header.block_dim[0],
+                                                               header.block_dim[1],
+                                                               header.block_dim[2]),
+                                   static_cast<BlockPacking>(header.packing),
+                                   header.components,
+                                   ImageFormat::component_types_type(header.component_types[0],
+                                                                     header.component_types[1],
+                                                                     header.component_types[2],
+                                                                     header.component_types[3]),
+                                   ImageFormat::swizzles_type(header.swizzle[0],
+                                                              header.swizzle[1],
+                                                              header.swizzle[2],
+                                                              header.swizzle[3]),
+                                   static_cast<Colorspace>(header.colorspace),
+                                   header.flags != 0);
 
+         info.tex_class = static_cast<TextureClass>(header.texture_class);
+         info.dim = ivec3(header.dim[0], header.dim[1], header.dim[2]);
+         info.layers = header.layers;
+         info.faces = header.faces;
+         info.levels = header.levels;
 
       }
    }

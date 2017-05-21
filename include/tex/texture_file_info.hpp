@@ -14,8 +14,6 @@ struct TextureFileInfo {
    ImageFormat format;
    TextureClass tex_class = TextureClass::planar;
    ivec3 dim;
-   ImageFormat::block_dim_type block_dim;
-   ImageFormat::block_size_type block_size = 0;
    TextureStorage::layer_index_type layers = 0;
    TextureStorage::face_index_type faces = 0;
    TextureStorage::level_index_type levels = 0;

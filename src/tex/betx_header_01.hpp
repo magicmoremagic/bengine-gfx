@@ -39,17 +39,19 @@ template <>
 struct Converter<be::gfx::tex::detail::BeTxHeader01> : ConvertBase<be::gfx::tex::detail::BeTxHeader01> {
    using base::in_place;
 
-   
    static void in_place(type& v, Little, Big) {
-      
+      static_to_big<Little::value>(v.endianness);
+      static_to_big<Little::value>(v.image_buffer_size);
+      static_to_big<Little::value>(v.dim);
+      static_to_big<Little::value>(v.layers);
    }
 
    static void in_place(type& v, Big, Little) {
-      static_to_v.endianness
+      static_to_little<Big::value>(v.endianness);
+      static_to_little<Big::value>(v.image_buffer_size);
+      static_to_little<Big::value>(v.dim);
+      static_to_little<Big::value>(v.layers);
    }
-
-   static T convert(T v, Little, Big) { return static_cast<T>(BE_BSWAP_U16(v)); }
-   static T convert(T v, Big, Little) { return static_cast<T>(BE_BSWAP_U16(v)); }
 };
 
 } // be::bo

@@ -131,6 +131,7 @@
     <ClCompile Include="src\tex\premultiply_alpha.cpp" />
     <ClCompile Include="src\tex\read.cpp" />
     <ClCompile Include="src\tex\swizzle.cpp" />
+    <ClCompile Include="src\tex\texture_alignment.cpp" />
     <ClCompile Include="src\tex\texture_class.cpp" />
     <ClCompile Include="src\tex\texture_file_format.cpp" />
     <ClCompile Include="src\tex\texture_file_format_betx.cpp" />

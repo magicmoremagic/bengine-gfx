@@ -14,16 +14,14 @@ class TextureStorage final {
 public:
    static TextureStorage nil;
 
-   using alignment_type = TextureAlignment::alignment_type;
-
    using layer_index_type = U16;
    using face_index_type = U8;
    using level_index_type = U8;
    using block_size_type = typename ImageFormat::block_size_type;
    using block_dim_type = typename ImageFormat::block_dim_type;
 
-   static constexpr std::size_t max_layers = std::size_t(layer_index_type(-1)) + 1u;
-   static constexpr std::size_t max_faces = std::size_t(face_index_type(-1)) + 1u;
+   static constexpr std::size_t max_layers = std::size_t(layer_index_type(-1));
+   static constexpr std::size_t max_faces = std::size_t(face_index_type(-1));
    static constexpr std::size_t max_levels = 16;
    static constexpr std::size_t max_dim = 1 << (max_levels - 1);
    static constexpr std::size_t max_block_size = ImageFormat::max_block_size;
@@ -71,11 +69,11 @@ public:
    ivec3 dim_blocks(std::size_t level) const; ///< The dimensions of the block array covering a single face image at the specified mipmapping level.
 
    TextureAlignment alignment() const;
-   alignment_type line_alignment() const;
-   alignment_type plane_alignment() const;
-   alignment_type level_alignment() const;
-   alignment_type face_alignment() const;
-   alignment_type layer_alignment() const;
+   std::size_t line_alignment() const;
+   std::size_t plane_alignment() const;
+   std::size_t level_alignment() const;
+   std::size_t face_alignment() const;
+   std::size_t layer_alignment() const;
 
    bool operator==(const TextureStorage& other) const;
    bool operator!=(const TextureStorage& other) const;

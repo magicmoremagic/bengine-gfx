@@ -322,6 +322,9 @@
     <ClCompile Include="src\tex\texture_file_format_betx.cpp">
       <Filter>Source Files\operations\read/write\betx</Filter>
     </ClCompile>
+    <ClCompile Include="src\tex\texture_alignment.cpp">
+      <Filter>Source Files\data structures</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="meta\tex\block_packing.lua">

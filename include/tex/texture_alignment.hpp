@@ -7,33 +7,38 @@
 
 namespace be::gfx::tex {
 
-struct TextureAlignment {
-   using alignment_type = U8;
+///////////////////////////////////////////////////////////////////////////////
+class TextureAlignment {
+public:
+   TextureAlignment(U8 line_bits = 3u, U8 plane_bits = 0, U8 level_bits = 0, U8 face_bits = 0, U8 layer_bits = 0);
 
-   TextureAlignment(alignment_type line = 8u,
-                    alignment_type plane = 0u,
-                    alignment_type level = 0u,
-                    alignment_type face = 0u,
-                    alignment_type layer = 0u)
-      : line(line),
-        plane(plane),
-        level(level),
-        face(face),
-        layer(layer) { }
+   std::size_t line() const  { return 1ull << line_bits_; }
+   std::size_t plane() const { return 1ull << plane_bits_; }
+   std::size_t level() const { return 1ull << level_bits_; }
+   std::size_t face() const  { return 1ull << face_bits_; }
+   std::size_t layer() const { return 1ull << layer_bits_; }
 
-   alignment_type line;
-   alignment_type plane;
-   alignment_type level;
-   alignment_type face;
-   alignment_type layer;
+   U8 line_bits() const  { return line_bits_; }
+   U8 plane_bits() const { return plane_bits_; }
+   U8 level_bits() const { return level_bits_; }
+   U8 face_bits() const  { return face_bits_; }
+   U8 layer_bits() const { return layer_bits_; }
 
-   bool operator==(const TextureAlignment& other) const {
-      return line == other.line && plane == other.plane && level == other.level && face == other.face && layer == other.layer;
-   }
+   void line_bits(U8 bits);
+   void plane_bits(U8 bits);   
+   void level_bits(U8 bits);
+   void face_bits(U8 bits);
+   void layer_bits(U8 bits);
 
-   bool operator!=(const TextureAlignment& other) const {
-      return !(*this == other);
-   }
+   bool operator==(const TextureAlignment& other) const;
+   bool operator!=(const TextureAlignment& other) const;
+
+private:
+   U8 line_bits_;
+   U8 plane_bits_;
+   U8 level_bits_;
+   U8 face_bits_;
+   U8 layer_bits_;
 };
 
 } // be::gfx::tex

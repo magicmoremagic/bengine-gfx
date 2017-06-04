@@ -38,7 +38,7 @@ TextureStorage::TextureStorage(std::size_t layers,
      block_dim_(block_dim),
      alignment_(alignment) {
    init_(levels, base_dim);
-   data_ = make_aligned_buf<UC>(size_, alignment_.layer);
+   data_ = make_aligned_buf<UC>(size_, alignment_.layer());
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -57,7 +57,7 @@ TextureStorage::TextureStorage(std::size_t layers,
      alignment_(alignment) {
    init_(levels, base_dim);
    assert(data.size() >= size_);
-   assert(glm::ceilMultiple((uintptr_t)data.get(), (uintptr_t)alignment_.layer) == (uintptr_t)data.get());
+   assert(aligned_size((uintptr_t)data.get(), (uintptr_t)alignment_.layer()) == (uintptr_t)data.get());
    data_ = std::move(data);
 }  
 
@@ -167,28 +167,28 @@ TextureAlignment TextureStorage::alignment() const {
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-TextureStorage::alignment_type TextureStorage::line_alignment() const {
-   return alignment_.line;
+std::size_t TextureStorage::line_alignment() const {
+   return alignment_.line();
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-TextureStorage::alignment_type TextureStorage::plane_alignment() const {
-   return alignment_.plane;
+std::size_t TextureStorage::plane_alignment() const {
+   return alignment_.plane();
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-TextureStorage::alignment_type TextureStorage::level_alignment() const {
-   return alignment_.level;
+std::size_t TextureStorage::level_alignment() const {
+   return alignment_.level();
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-TextureStorage::alignment_type TextureStorage::face_alignment() const {
-   return alignment_.face;
+std::size_t TextureStorage::face_alignment() const {
+   return alignment_.face();
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-TextureStorage::alignment_type TextureStorage::layer_alignment() const {
-   return alignment_.layer;
+std::size_t TextureStorage::layer_alignment() const {
+   return alignment_.layer();
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -235,34 +235,35 @@ void TextureStorage::init_(std::size_t levels, ivec3 dim) {
    assert(std::size_t(dim.y) <= max_dim);
    assert(std::size_t(dim.z) <= max_dim);
 
-   alignment_.line = max((TextureStorage::alignment_type)1, alignment_.line);
-   alignment_.plane = max(alignment_.line, alignment_.plane);
-   alignment_.level = max(alignment_.plane, alignment_.level);
-   alignment_.face = max(alignment_.level, alignment_.face);
-   alignment_.layer = max(alignment_.face, alignment_.level);
+   assert(alignment_.plane() <= std::numeric_limits<U32>::max());
 
-   assert(glm::ceilPowerOfTwo(alignment_.line) == alignment_.line);
-   assert(glm::ceilPowerOfTwo(alignment_.plane) == alignment_.plane);
-   assert(glm::ceilPowerOfTwo(alignment_.level) == alignment_.level);
-   assert(glm::ceilPowerOfTwo(alignment_.face) == alignment_.face);
-   assert(glm::ceilPowerOfTwo(alignment_.layer) == alignment_.layer);
+   const std::size_t line_alignment = alignment_.line();
+   const std::size_t plane_alignment = alignment_.plane();
+   const std::size_t level_alignment = alignment_.level();
+
+   const ivec3 block_dim_ivec3 = ivec3(block_dim_);
+   const ivec3 block_dim_offset = block_dim_ivec3 - 1;
 
    std::size_t face_span = 0;
    std::size_t level = 0;
-   ivec3 block_dim_ivec3 = ivec3(block_dim_);
+
    if (glm::all(glm::greaterThan(dim, ivec3(0)))) {
       while (level < levels) {
          level_offset_[level] = face_span;
          dim_[level] = dim;
 
-         ivec3 dim_blocks = glm::ceilMultiple(dim, block_dim_ivec3) / block_dim_ivec3;
+         const ivec3 dim_blocks = (dim + block_dim_offset) / block_dim_ivec3;
          dim_blocks_[level] = dim_blocks;
 
-         U32 line_span = glm::ceilMultiple(U32(dim_blocks.x) * block_size_, (U32)alignment_.line);
-         U32 plane_span = glm::ceilMultiple(U32(dim_blocks.y) * line_span, (U32)alignment_.plane);
-         line_plane_span_[level] = uvec2(line_span, plane_span);
+         const std::size_t line_span = aligned_size(std::size_t(dim_blocks.x) * block_size_, line_alignment);
+         const std::size_t plane_span = aligned_size(std::size_t(dim_blocks.y) * line_span, plane_alignment);
 
-         face_span += glm::ceilMultiple(std::size_t(dim_blocks.z) * plane_span, std::size_t(alignment_.level));
+         assert(line_span <= std::numeric_limits<U32>::max());
+         assert(plane_span <= std::numeric_limits<U32>::max());
+
+         line_plane_span_[level] = uvec2((U32)line_span, (U32)plane_span);
+
+         face_span += aligned_size(std::size_t(dim_blocks.z) * plane_span, level_alignment);
 
          if (dim == ivec3(1)) {
             ++level;
@@ -285,8 +286,8 @@ void TextureStorage::init_(std::size_t levels, ivec3 dim) {
 
    levels_ = level_index_type(levels);
 
-   face_span_ = glm::ceilMultiple(face_span, std::size_t(alignment_.face));
-   layer_span_ = glm::ceilMultiple(face_span_ * faces_, std::size_t(alignment_.layer));
+   face_span_ = aligned_size(face_span, alignment_.face());
+   layer_span_ = aligned_size(face_span_ * faces_, alignment_.layer());
    size_ = layer_span_ * layers_;
 }
 
@@ -305,11 +306,11 @@ std::size_t TextureStorage::hash_() const {
    h = std_hash(h, dim_blocks_);
    h = std_hash(h, line_plane_span_);
    h = std_hash(h, level_offset_);
-   h = std_hash(h, alignment_.line);
-   h = std_hash(h, alignment_.plane);
-   h = std_hash(h, alignment_.level);
-   h = std_hash(h, alignment_.face);
-   h = std_hash(h, alignment_.layer);
+   h = std_hash(h, alignment_.line_bits());
+   h = std_hash(h, alignment_.plane_bits());
+   h = std_hash(h, alignment_.level_bits());
+   h = std_hash(h, alignment_.face_bits());
+   h = std_hash(h, alignment_.layer_bits());
    h = std_hash_raw(h, data_.get(), data_.size());
    return h;
 }
@@ -338,32 +339,33 @@ std::size_t calculate_required_texture_storage(std::size_t layers,
       return 0;
    }
 
-   alignment.line = max((TextureStorage::alignment_type)1, alignment.line);
-   alignment.plane = max(alignment.line, alignment.plane);
-   alignment.level = max(alignment.plane,alignment.level);
-   alignment.face = max(alignment.level, alignment.face);
-   alignment.layer = max(alignment.face, alignment.level);
+   const std::size_t line_alignment = alignment.line();
+   const std::size_t plane_alignment = alignment.plane();
+   const std::size_t level_alignment = alignment.level();
+
+   const ivec3 block_dim_ivec3 = ivec3(block_dim);
+   const ivec3 block_dim_offset = block_dim_ivec3 - 1;
 
    std::size_t face_span = 0;
-   
-   ivec3 block_dim_ivec3 = ivec3(block_dim);
+   ivec3 dim = base_dim;
+
    for (std::size_t level = 0; level < levels; ++level) {
-      ivec3 dim_blocks = glm::ceilMultiple(base_dim, block_dim_ivec3) / block_dim_ivec3;
-      std::size_t line_span = glm::ceilMultiple(std::size_t(dim_blocks.x) * block_size, std::size_t(alignment.line));
-      std::size_t plane_span = glm::ceilMultiple(std::size_t(dim_blocks.y) * line_span, std::size_t(alignment.plane));
-      std::size_t level_span = glm::ceilMultiple(std::size_t(dim_blocks.z) * plane_span, std::size_t(alignment.level));
+      const ivec3 dim_blocks = (dim + block_dim_offset) / block_dim_ivec3;
+      const std::size_t line_span  = aligned_size(std::size_t(dim_blocks.x) * block_size, line_alignment);
+      const std::size_t plane_span = aligned_size(std::size_t(dim_blocks.y) * line_span, plane_alignment);
+      const std::size_t level_span = aligned_size(std::size_t(dim_blocks.z) * plane_span, level_alignment);
 
       face_span += level_span;
 
-      if (base_dim == ivec3(1)) {
+      if (dim == ivec3(1)) {
          break;
       }
 
-      base_dim = glm::max(base_dim >> 1, ivec3(1));
+      dim = glm::max(dim >> 1, ivec3(1));
    }
 
-   face_span = glm::ceilMultiple(face_span, std::size_t(alignment.face));
-   std::size_t layer_span = glm::ceilMultiple(faces * face_span, std::size_t(alignment.layer));
+   face_span = aligned_size(face_span, alignment.face());
+   const std::size_t layer_span = aligned_size(faces * face_span, alignment.layer());
 
    return layer_span * layers;
 }

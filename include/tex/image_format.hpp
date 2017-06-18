@@ -22,8 +22,8 @@ public:
    using component_types_type = glm::vec<4, U8>;
    using swizzles_type = glm::vec<4, U8>;
    
-   static constexpr std::size_t max_block_size = std::size_t(block_size_type(-1)) + 1u;
-   static constexpr std::size_t max_block_dim = std::size_t(block_size_type(-1)) + 1u;
+   static constexpr std::size_t max_block_size = std::size_t(block_size_type(-1));
+   static constexpr std::size_t max_block_dim = std::size_t(block_size_type(-1));
 
    ImageFormat();
    ImageFormat(block_size_type block_size, block_size_type block_dim, BlockPacking packing, U8 components, component_types_type component_types, swizzles_type swizzles, Colorspace colorspace, bool premultiplied);

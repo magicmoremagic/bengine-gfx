@@ -1,12 +1,15 @@
 module 'gfx' {
    lib '-tex' {
-      src {
-         'src/tex/*.cpp',
-         pch_src 'src/tex/pch.cpp',
-         pch 'tex/pch.hpp'
+      limp_src {
+         'src-tex/*.hpp',
+         'src-tex/*.inl'
       },
       src {
-         'src/tex/*.c',
+         'src-tex/*.cpp',
+         pch_src 'src-tex/pch.cpp'
+      },
+      src {
+         'src-tex/*.c',
       },
       define 'BE_GFX_TEX_IMPL',
       link_project 'core'
@@ -17,7 +20,6 @@ module 'gfx' {
          'src/*.cpp',
          pch_src 'src/pch.cpp'
       },
-      
       define 'BE_GFX_IMPL',
       link_project {
          'core',

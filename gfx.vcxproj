@@ -64,10 +64,9 @@
     <ClInclude Include="include\gaussian_filter.hpp" />
     <ClInclude Include="include\ignore_wrap.hpp" />
     <ClInclude Include="include\memoized_filter.hpp" />
-    <ClInclude Include="include\pch.hpp" />
+    <ClInclude Include="src\pch.hpp" />
     <ClInclude Include="include\read_image.hpp" />
     <ClInclude Include="include\resize_image.hpp" />
-    <ClInclude Include="include\stbi_util_detail.hpp" />
     <ClInclude Include="include\gfx_autolink.hpp" />
     <ClInclude Include="include\linear_filter.hpp" />
     <ClInclude Include="include\uniform_resample.hpp" />
@@ -75,7 +74,6 @@
     <ClInclude Include="include\version.hpp" />
     <ClInclude Include="include\write_image.hpp" />
     <ClInclude Include="include\stbiw_detail.h" />
-    <ClInclude Include="include\stbi_detail.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\pch.cpp">
@@ -83,12 +81,8 @@
     </ClCompile>
     <ClCompile Include="src\read_image.cpp" />
     <ClCompile Include="src\resize_image.cpp" />
-    <ClCompile Include="src\stbi_util_detail.cpp" />
     <ClCompile Include="src\write_image.cpp" />
     <ClCompile Include="src\stbiw_detail.c">
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
-    </ClCompile>
-    <ClCompile Include="src\stbi_detail.c">
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
   </ItemGroup>

@@ -5,34 +5,29 @@
 #include "texture.hpp"
 #include "image.hpp"
 #include "texture_file_info.hpp"
+#include "texture_file_read_error.hpp"
 #include <be/core/buf.hpp>
 #include <be/core/filesystem.hpp>
+#include <be/util/file_read_error.hpp>
 
 namespace be::gfx::tex {
 
 TextureFileFormat read_format(const Buf<const UC>& buf);
-TextureFileFormat read_format(Path path);
 
-TextureFileInfo read_info(const Buf<const UC>& buf);
-TextureFileInfo read_info(Path path);
+std::pair<TextureFileInfo, TextureFileReadError> read_info(const Buf<const UC>& buf);
+std::pair<TextureFileInfo, TextureFileReadError> read_info(Path path);
+std::pair<TextureFileInfo, TextureFileReadError> read_info(TextureFileFormat type, const Buf<const UC>& buf);
+std::pair<TextureFileInfo, TextureFileReadError> read_info(TextureFileFormat type, Path path);
 
-Texture read_texture(const Buf<const UC>& buf);
-bool read_texture(const Buf<const UC>& buf, TextureView& dest);
-Texture read_texture(Path path);
-bool read_texture(Path path, TextureView& dest);
-Texture read_texture(TextureFileFormat type, const Buf<const UC>& buf);
-bool read_texture(TextureFileFormat type, const Buf<const UC>& buf, TextureView& dest);
-Texture read_texture(TextureFileFormat type, Path path);
-bool read_texture(TextureFileFormat type, Path path, TextureView& dest);
+std::pair<Texture, TextureFileReadError> read_texture(const Buf<const UC>& buf);
+std::pair<Texture, TextureFileReadError> read_texture(Path path);
+std::pair<Texture, TextureFileReadError> read_texture(TextureFileFormat type, const Buf<const UC>& buf);
+std::pair<Texture, TextureFileReadError> read_texture(TextureFileFormat type, Path path);
 
-Image read_image(const Buf<const UC>& buf);
-bool read_image(const Buf<const UC>& buf, ImageView& dest);
-Image read_image(Path path);
-bool read_image(Path path, ImageView& dest);
-Image read_image(TextureFileFormat type, const Buf<const UC>& buf);
-bool read_image(TextureFileFormat type, const Buf<const UC>& buf, ImageView& dest);
-Image read_image(TextureFileFormat type, Path path);
-bool read_image(TextureFileFormat type, Path path, ImageView& dest);
+std::pair<Image, TextureFileReadError> read_image(const Buf<const UC>& buf);
+std::pair<Image, TextureFileReadError> read_image(Path path);
+std::pair<Image, TextureFileReadError> read_image(TextureFileFormat type, const Buf<const UC>& buf);
+std::pair<Image, TextureFileReadError> read_image(TextureFileFormat type, Path path);
 
 } // be::gfx::tex
 

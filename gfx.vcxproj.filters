@@ -12,9 +12,6 @@
     <Filter Include="Meta-Source Files">
       <UniqueIdentifier>{810e6e8f-7a80-4074-ad5b-e4a2f615dcb1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\textures">
-      <UniqueIdentifier>{48ee0916-d10f-45a3-ae79-58476da27d63}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\old">
       <UniqueIdentifier>{ef5bee63-1540-42bb-822c-12cfb582a47d}</UniqueIdentifier>
     </Filter>
@@ -32,8 +29,8 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\pch.hpp">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="src\pch.hpp">
+      <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="include\gfx_autolink.hpp">
       <Filter>Header Files</Filter>
@@ -77,12 +74,6 @@
     <ClInclude Include="include\resize_image.hpp">
       <Filter>Header Files\old</Filter>
     </ClInclude>
-    <ClInclude Include="include\stbi_detail.h">
-      <Filter>Header Files\old</Filter>
-    </ClInclude>
-    <ClInclude Include="include\stbi_util_detail.hpp">
-      <Filter>Header Files\old</Filter>
-    </ClInclude>
     <ClInclude Include="include\stbiw_detail.h">
       <Filter>Header Files\old</Filter>
     </ClInclude>
@@ -110,12 +101,6 @@
       <Filter>Source Files\old</Filter>
     </ClCompile>
     <ClCompile Include="src\resize_image.cpp">
-      <Filter>Source Files\old</Filter>
-    </ClCompile>
-    <ClCompile Include="src\stbi_detail.c">
-      <Filter>Source Files\old</Filter>
-    </ClCompile>
-    <ClCompile Include="src\stbi_util_detail.cpp">
       <Filter>Source Files\old</Filter>
     </ClCompile>
     <ClCompile Include="src\stbiw_detail.c">

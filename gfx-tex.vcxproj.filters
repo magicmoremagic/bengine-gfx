@@ -45,19 +45,97 @@
     <Filter Include="Header Files\operations\blitting">
       <UniqueIdentifier>{735f9633-d9e3-4e2e-9763-c2b064992440}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\operations\read/write">
-      <UniqueIdentifier>{a828ad12-e61f-41b8-9a97-539c96d1b0d3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\operations\read/write">
+    <Filter Include="Source Files\operations\files">
       <UniqueIdentifier>{fb56c7fd-7127-44cf-ab66-8d3ce7acf82d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\operations\read/write\betx">
+    <Filter Include="Source Files\operations\files\betx">
       <UniqueIdentifier>{264adbb8-590a-404d-ae06-d3a7e84f9f11}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\operations\files">
+      <UniqueIdentifier>{a828ad12-e61f-41b8-9a97-539c96d1b0d3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\operations\files\betx">
+      <UniqueIdentifier>{6d30ee91-d6da-4f9b-9a0c-2c036346bc02}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\operations\files\bmp">
+      <UniqueIdentifier>{a8be02ba-9c79-4d0e-ba5a-ed4f9b9e9e2e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\operations\files\dds">
+      <UniqueIdentifier>{9ed92937-0304-49f0-95de-4d10ece9af41}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\operations\files\gif">
+      <UniqueIdentifier>{7f1bafb5-0cff-44e1-aa88-f986d96c56b8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\operations\files\glraw">
+      <UniqueIdentifier>{1706ca7c-efc2-4e89-b79f-4621f37c5a72}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\operations\files\hdr">
+      <UniqueIdentifier>{77c82477-1fc6-4635-ae25-af2992e92eef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\operations\files\jpeg">
+      <UniqueIdentifier>{46cd2c4c-5734-4424-afbb-0a6642471756}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\operations\files\ktx">
+      <UniqueIdentifier>{537281d9-558c-4623-b801-2394a2534b07}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\operations\files\pic">
+      <UniqueIdentifier>{3d1580a4-7cea-4d9b-8861-12c0f1b8f1fb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\operations\files\png">
+      <UniqueIdentifier>{fe721144-1144-4e44-a8af-44c12c54dbab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\operations\files\pnm">
+      <UniqueIdentifier>{59a4ff1c-fffb-4b89-8bd2-7d1ee869bd32}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\operations\files\psd">
+      <UniqueIdentifier>{ffb3368d-c4b4-478e-b617-aaf57c213f5d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\operations\files\tga">
+      <UniqueIdentifier>{4455147a-03e9-4d63-affd-26eef6f2d28e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\operations\files\bmp">
+      <UniqueIdentifier>{3a3abe36-78cd-4502-87e6-e4e1c7b1954d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\operations\files\dds">
+      <UniqueIdentifier>{3d214e3d-552b-4980-ad74-0d8f17b44bbd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\operations\files\gif">
+      <UniqueIdentifier>{b4480413-84a7-4d9a-b123-db53dc05948d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\operations\files\glraw">
+      <UniqueIdentifier>{4c2717b6-8c01-405c-a6d9-3fd57cc9e57b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\operations\files\hdr">
+      <UniqueIdentifier>{d3dd0b47-9209-44f9-a3b3-3b083215c333}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\operations\files\jpeg">
+      <UniqueIdentifier>{7aa5e92c-b420-4abd-a531-85d47199b9d4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\operations\files\ktx">
+      <UniqueIdentifier>{fbe20c2e-f41f-4cea-9108-909e7a96c2e2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\operations\files\pic">
+      <UniqueIdentifier>{7fbf3725-882d-4090-8f89-a7ee34c7fb49}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\operations\files\pnm">
+      <UniqueIdentifier>{7b500141-331f-4b71-805c-5149aee3256f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\operations\files\png">
+      <UniqueIdentifier>{e9633c94-5504-4e2c-8e30-04f8c67f9277}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\operations\files\tga">
+      <UniqueIdentifier>{df89b4f4-43dc-4c91-98c7-ce23e751afca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\operations\files\psd">
+      <UniqueIdentifier>{62a8ef09-be98-4e7f-a4f0-7d6cb0049aaa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\operations\files\stbi_">
+      <UniqueIdentifier>{566dcbcd-c9d8-4ac3-9962-9b3deae0fed6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\tex\pch.hpp">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="src-tex\pch.hpp">
+      <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="include\tex\gfx_tex_autolink.hpp">
       <Filter>Header Files</Filter>
@@ -174,10 +252,10 @@
       <Filter>Header Files\data structures</Filter>
     </ClInclude>
     <ClInclude Include="include\tex\read.hpp">
-      <Filter>Header Files\operations\read/write</Filter>
+      <Filter>Header Files\operations\files</Filter>
     </ClInclude>
     <ClInclude Include="include\tex\write.hpp">
-      <Filter>Header Files\operations\read/write</Filter>
+      <Filter>Header Files\operations\files</Filter>
     </ClInclude>
     <ClInclude Include="include\tex\texture_file_format.hpp">
       <Filter>Header Files\enums</Filter>
@@ -185,145 +263,184 @@
     <ClInclude Include="include\tex\texture_file_info.hpp">
       <Filter>Header Files\data structures</Filter>
     </ClInclude>
-    <ClInclude Include="include\tex\texture_file_format_png.hpp">
-      <Filter>Header Files\operations\read/write</Filter>
+    <ClInclude Include="include\tex\texture_file_read_error.hpp">
+      <Filter>Header Files\enums</Filter>
     </ClInclude>
-    <ClInclude Include="include\tex\texture_file_format_betx.hpp">
-      <Filter>Header Files\operations\read/write</Filter>
+    <ClInclude Include="include\tex\texture_file_write_error.hpp">
+      <Filter>Header Files\enums</Filter>
     </ClInclude>
-    <ClInclude Include="include\tex\texture_file_format_glraw.hpp">
-      <Filter>Header Files\operations\read/write</Filter>
+    <ClInclude Include="src-tex\betx_header_.hpp">
+      <Filter>Source Files\operations\files\betx</Filter>
     </ClInclude>
-    <ClInclude Include="include\tex\texture_file_format_ktx.hpp">
-      <Filter>Header Files\operations\read/write</Filter>
+    <ClInclude Include="include\tex\read_dds.hpp">
+      <Filter>Header Files\operations\files\dds</Filter>
     </ClInclude>
-    <ClInclude Include="include\tex\texture_file_format_dds.hpp">
-      <Filter>Header Files\operations\read/write</Filter>
+    <ClInclude Include="include\tex\read_bmp.hpp">
+      <Filter>Header Files\operations\files\bmp</Filter>
     </ClInclude>
-    <ClInclude Include="include\tex\texture_file_format_tga.hpp">
-      <Filter>Header Files\operations\read/write</Filter>
+    <ClInclude Include="include\tex\read_betx.hpp">
+      <Filter>Header Files\operations\files\betx</Filter>
     </ClInclude>
-    <ClInclude Include="include\tex\texture_file_format_bmp.hpp">
-      <Filter>Header Files\operations\read/write</Filter>
+    <ClInclude Include="include\tex\read_ktx.hpp">
+      <Filter>Header Files\operations\files\ktx</Filter>
     </ClInclude>
-    <ClInclude Include="include\tex\texture_file_format_jpeg.hpp">
-      <Filter>Header Files\operations\read/write</Filter>
+    <ClInclude Include="include\tex\read_hdr.hpp">
+      <Filter>Header Files\operations\files\hdr</Filter>
     </ClInclude>
-    <ClInclude Include="include\tex\texture_file_format_hdr.hpp">
-      <Filter>Header Files\operations\read/write</Filter>
+    <ClInclude Include="include\tex\read_jpeg.hpp">
+      <Filter>Header Files\operations\files\jpeg</Filter>
     </ClInclude>
-    <ClInclude Include="include\tex\texture_file_format_pic.hpp">
-      <Filter>Header Files\operations\read/write</Filter>
+    <ClInclude Include="include\tex\read_glraw.hpp">
+      <Filter>Header Files\operations\files\glraw</Filter>
     </ClInclude>
-    <ClInclude Include="include\tex\texture_file_format_pnm.hpp">
-      <Filter>Header Files\operations\read/write</Filter>
+    <ClInclude Include="include\tex\read_gif.hpp">
+      <Filter>Header Files\operations\files\gif</Filter>
     </ClInclude>
-    <ClInclude Include="include\tex\texture_file_format_gif.hpp">
-      <Filter>Header Files\operations\read/write</Filter>
+    <ClInclude Include="include\tex\read_tga.hpp">
+      <Filter>Header Files\operations\files\tga</Filter>
     </ClInclude>
-    <ClInclude Include="include\tex\texture_file_format_psd.hpp">
-      <Filter>Header Files\operations\read/write</Filter>
+    <ClInclude Include="include\tex\read_psd.hpp">
+      <Filter>Header Files\operations\files\psd</Filter>
     </ClInclude>
-    <ClInclude Include="src\tex\betx_header_01.hpp">
-      <Filter>Source Files\operations\read/write\betx</Filter>
+    <ClInclude Include="include\tex\read_pnm.hpp">
+      <Filter>Header Files\operations\files\pnm</Filter>
+    </ClInclude>
+    <ClInclude Include="include\tex\read_png.hpp">
+      <Filter>Header Files\operations\files\png</Filter>
+    </ClInclude>
+    <ClInclude Include="include\tex\read_pic.hpp">
+      <Filter>Header Files\operations\files\pic</Filter>
+    </ClInclude>
+    <ClInclude Include="src-tex\betx_v1_.hpp">
+      <Filter>Source Files\operations\files\betx</Filter>
+    </ClInclude>
+    <ClInclude Include="src-tex\betx_payload_compression_mode_.hpp">
+      <Filter>Source Files\operations\files\betx</Filter>
+    </ClInclude>
+    <ClInclude Include="src-tex\stbi_.h">
+      <Filter>Source Files\operations\files\stbi_</Filter>
+    </ClInclude>
+    <ClInclude Include="src-tex\stbi_util_.hpp">
+      <Filter>Source Files\operations\files\stbi_</Filter>
+    </ClInclude>
+    <ClInclude Include="src-tex\ktx_header_.hpp">
+      <Filter>Source Files\operations\files\ktx</Filter>
+    </ClInclude>
+    <ClInclude Include="src-tex\ktx_11_.hpp">
+      <Filter>Source Files\operations\files\ktx</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\tex\pch.cpp">
+    <ClCompile Include="src-tex\pch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\tex\block_packing.cpp">
+    <ClCompile Include="src-tex\block_packing.cpp">
       <Filter>Source Files\enums</Filter>
     </ClCompile>
-    <ClCompile Include="src\tex\colorspace.cpp">
+    <ClCompile Include="src-tex\colorspace.cpp">
       <Filter>Source Files\enums</Filter>
     </ClCompile>
-    <ClCompile Include="src\tex\component_type.cpp">
+    <ClCompile Include="src-tex\component_type.cpp">
       <Filter>Source Files\enums</Filter>
     </ClCompile>
-    <ClCompile Include="src\tex\convert_colorspace.cpp">
+    <ClCompile Include="src-tex\convert_colorspace.cpp">
       <Filter>Source Files\operations\normalized conversions</Filter>
     </ClCompile>
-    <ClCompile Include="src\tex\image_format.cpp">
+    <ClCompile Include="src-tex\image_format.cpp">
       <Filter>Source Files\data structures</Filter>
     </ClCompile>
-    <ClCompile Include="src\tex\image_region.cpp">
+    <ClCompile Include="src-tex\image_region.cpp">
       <Filter>Source Files\data structures</Filter>
     </ClCompile>
-    <ClCompile Include="src\tex\image_view.cpp">
+    <ClCompile Include="src-tex\image_view.cpp">
       <Filter>Source Files\data structures</Filter>
     </ClCompile>
-    <ClCompile Include="src\tex\make_texture.cpp">
+    <ClCompile Include="src-tex\make_texture.cpp">
       <Filter>Source Files\operations</Filter>
     </ClCompile>
-    <ClCompile Include="src\tex\mipmapping.cpp">
+    <ClCompile Include="src-tex\mipmapping.cpp">
       <Filter>Source Files\operations</Filter>
     </ClCompile>
-    <ClCompile Include="src\tex\premultiply_alpha.cpp">
+    <ClCompile Include="src-tex\premultiply_alpha.cpp">
       <Filter>Source Files\operations\normalized conversions</Filter>
     </ClCompile>
-    <ClCompile Include="src\tex\texture_view.cpp">
+    <ClCompile Include="src-tex\texture_view.cpp">
       <Filter>Source Files\data structures</Filter>
     </ClCompile>
-    <ClCompile Include="src\tex\texture_storage.cpp">
+    <ClCompile Include="src-tex\texture_storage.cpp">
       <Filter>Source Files\data structures</Filter>
     </ClCompile>
-    <ClCompile Include="src\tex\texture_class.cpp">
+    <ClCompile Include="src-tex\texture_class.cpp">
       <Filter>Source Files\enums</Filter>
     </ClCompile>
-    <ClCompile Include="src\tex\swizzle.cpp">
+    <ClCompile Include="src-tex\swizzle.cpp">
       <Filter>Source Files\enums</Filter>
     </ClCompile>
-    <ClCompile Include="src\tex\image_format_gl.cpp">
+    <ClCompile Include="src-tex\image_format_gl.cpp">
       <Filter>Source Files\data structures</Filter>
     </ClCompile>
-    <ClCompile Include="src\tex\read.cpp">
-      <Filter>Source Files\operations\read/write</Filter>
+    <ClCompile Include="src-tex\read.cpp">
+      <Filter>Source Files\operations\files</Filter>
     </ClCompile>
-    <ClCompile Include="src\tex\texture_file_format.cpp">
+    <ClCompile Include="src-tex\texture_file_format.cpp">
       <Filter>Source Files\enums</Filter>
     </ClCompile>
-    <ClCompile Include="src\tex\texture_file_format_png.cpp">
-      <Filter>Source Files\operations\read/write</Filter>
-    </ClCompile>
-    <ClCompile Include="src\tex\texture_file_format_psd.cpp">
-      <Filter>Source Files\operations\read/write</Filter>
-    </ClCompile>
-    <ClCompile Include="src\tex\texture_file_format_tga.cpp">
-      <Filter>Source Files\operations\read/write</Filter>
-    </ClCompile>
-    <ClCompile Include="src\tex\texture_file_format_bmp.cpp">
-      <Filter>Source Files\operations\read/write</Filter>
-    </ClCompile>
-    <ClCompile Include="src\tex\texture_file_format_dds.cpp">
-      <Filter>Source Files\operations\read/write</Filter>
-    </ClCompile>
-    <ClCompile Include="src\tex\texture_file_format_gif.cpp">
-      <Filter>Source Files\operations\read/write</Filter>
-    </ClCompile>
-    <ClCompile Include="src\tex\texture_file_format_glraw.cpp">
-      <Filter>Source Files\operations\read/write</Filter>
-    </ClCompile>
-    <ClCompile Include="src\tex\texture_file_format_hdr.cpp">
-      <Filter>Source Files\operations\read/write</Filter>
-    </ClCompile>
-    <ClCompile Include="src\tex\texture_file_format_jpeg.cpp">
-      <Filter>Source Files\operations\read/write</Filter>
-    </ClCompile>
-    <ClCompile Include="src\tex\texture_file_format_ktx.cpp">
-      <Filter>Source Files\operations\read/write</Filter>
-    </ClCompile>
-    <ClCompile Include="src\tex\texture_file_format_pic.cpp">
-      <Filter>Source Files\operations\read/write</Filter>
-    </ClCompile>
-    <ClCompile Include="src\tex\texture_file_format_pnm.cpp">
-      <Filter>Source Files\operations\read/write</Filter>
-    </ClCompile>
-    <ClCompile Include="src\tex\texture_file_format_betx.cpp">
-      <Filter>Source Files\operations\read/write\betx</Filter>
-    </ClCompile>
-    <ClCompile Include="src\tex\texture_alignment.cpp">
+    <ClCompile Include="src-tex\texture_alignment.cpp">
       <Filter>Source Files\data structures</Filter>
+    </ClCompile>
+    <ClCompile Include="src-tex\texture_file_write_error.cpp">
+      <Filter>Source Files\enums</Filter>
+    </ClCompile>
+    <ClCompile Include="src-tex\texture_file_read_error.cpp">
+      <Filter>Source Files\enums</Filter>
+    </ClCompile>
+    <ClCompile Include="src-tex\read_betx.cpp">
+      <Filter>Source Files\operations\files\betx</Filter>
+    </ClCompile>
+    <ClCompile Include="src-tex\read_png.cpp">
+      <Filter>Source Files\operations\files\png</Filter>
+    </ClCompile>
+    <ClCompile Include="src-tex\read_pic.cpp">
+      <Filter>Source Files\operations\files\pic</Filter>
+    </ClCompile>
+    <ClCompile Include="src-tex\read_ktx.cpp">
+      <Filter>Source Files\operations\files\ktx</Filter>
+    </ClCompile>
+    <ClCompile Include="src-tex\read_jpeg.cpp">
+      <Filter>Source Files\operations\files\jpeg</Filter>
+    </ClCompile>
+    <ClCompile Include="src-tex\read_bmp.cpp">
+      <Filter>Source Files\operations\files\bmp</Filter>
+    </ClCompile>
+    <ClCompile Include="src-tex\read_dds.cpp">
+      <Filter>Source Files\operations\files\dds</Filter>
+    </ClCompile>
+    <ClCompile Include="src-tex\read_gif.cpp">
+      <Filter>Source Files\operations\files\gif</Filter>
+    </ClCompile>
+    <ClCompile Include="src-tex\read_glraw.cpp">
+      <Filter>Source Files\operations\files\glraw</Filter>
+    </ClCompile>
+    <ClCompile Include="src-tex\read_hdr.cpp">
+      <Filter>Source Files\operations\files\hdr</Filter>
+    </ClCompile>
+    <ClCompile Include="src-tex\read_pnm.cpp">
+      <Filter>Source Files\operations\files\pnm</Filter>
+    </ClCompile>
+    <ClCompile Include="src-tex\read_psd.cpp">
+      <Filter>Source Files\operations\files\psd</Filter>
+    </ClCompile>
+    <ClCompile Include="src-tex\read_tga.cpp">
+      <Filter>Source Files\operations\files\tga</Filter>
+    </ClCompile>
+    <ClCompile Include="src-tex\betx_payload_compression_mode_.cpp">
+      <Filter>Source Files\operations\files\betx</Filter>
+    </ClCompile>
+    <ClCompile Include="src-tex\stbi_.c">
+      <Filter>Source Files\operations\files\stbi_</Filter>
+    </ClCompile>
+    <ClCompile Include="src-tex\stbi_util_.cpp">
+      <Filter>Source Files\operations\files\stbi_</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -397,6 +514,12 @@
       <Filter>Header Files\operations\visitation</Filter>
     </None>
     <None Include="meta\tex\texture_file_format.lua">
+      <Filter>Meta-Source Files</Filter>
+    </None>
+    <None Include="meta\tex\texture_file_read_error.lua">
+      <Filter>Meta-Source Files</Filter>
+    </None>
+    <None Include="meta\tex\texture_file_write_error.lua">
       <Filter>Meta-Source Files</Filter>
     </None>
   </ItemGroup>

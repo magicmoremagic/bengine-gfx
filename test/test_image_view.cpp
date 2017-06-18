@@ -523,8 +523,8 @@ TEST_CASE("ImageView blit_blocks(ImageView, ImageView)", BE_CATCH_TAGS) {
 
    SECTION("Same format, different block size") {
       Image img2;
-      img2.data = std::make_unique<TextureStorage>(1, 1, 1, dim, format.block_dim(), U8(format.block_size() * 2));
-      img2.view = ImageView(format, *img2.data, 0, 0, 0);
+      img2.storage = std::make_unique<TextureStorage>(1, 1, 1, dim, format.block_dim(), U8(format.block_size() * 2));
+      img2.view = ImageView(format, *img2.storage, 0, 0, 0);
 
       blit_blocks(img.view, img2.view);
 
@@ -537,8 +537,8 @@ TEST_CASE("ImageView blit_blocks(ImageView, ImageView)", BE_CATCH_TAGS) {
 
    SECTION("Same format, different line alignment") {
       Image img2;
-      img2.data = std::make_unique<TextureStorage>(1, 1, 1, dim, format.block_dim(), format.block_size(), TextureAlignment((U8)128));
-      img2.view = ImageView(format, *img2.data, 0, 0, 0);
+      img2.storage = std::make_unique<TextureStorage>(1, 1, 1, dim, format.block_dim(), format.block_size(), TextureAlignment((U8)128));
+      img2.view = ImageView(format, *img2.storage, 0, 0, 0);
 
       blit_blocks(img.view, img2.view);
 
@@ -551,8 +551,8 @@ TEST_CASE("ImageView blit_blocks(ImageView, ImageView)", BE_CATCH_TAGS) {
 
    SECTION("Same format, different plane alignment") {
       Image img2;
-      img2.data = std::make_unique<TextureStorage>(1, 1, 1, dim, format.block_dim(), format.block_size(), TextureAlignment((U8)8, (U8)128));
-      img2.view = ImageView(format, *img2.data, 0, 0, 0);
+      img2.storage = std::make_unique<TextureStorage>(1, 1, 1, dim, format.block_dim(), format.block_size(), TextureAlignment((U8)8, (U8)128));
+      img2.view = ImageView(format, *img2.storage, 0, 0, 0);
 
       blit_blocks(img.view, img2.view);
 
@@ -618,8 +618,8 @@ TEST_CASE("ImageView blit_blocks(ImageView, ImageRegion, ImageView, ImageRegion)
 
    SECTION("Same format, different block size") {
       Image img2;
-      img2.data = std::make_unique<TextureStorage>(1, 1, 1, dim, format.block_dim(), U8(format.block_size() * 2));
-      img2.view = ImageView(format, *img2.data, 0, 0, 0);
+      img2.storage = std::make_unique<TextureStorage>(1, 1, 1, dim, format.block_dim(), U8(format.block_size() * 2));
+      img2.view = ImageView(format, *img2.storage, 0, 0, 0);
 
       blit_blocks(img.view, region, img2.view, block_region(img2.view));
 
@@ -672,8 +672,8 @@ TEST_CASE("ImageView blit_pixels(ImageView, ImageView)", BE_CATCH_TAGS) {
 
    SECTION("Same format, different block size") {
       Image img2;
-      img2.data = std::make_unique<TextureStorage>(1, 1, 1, dim, format.block_dim(), U8(format.block_size() * 2));
-      img2.view = ImageView(format, *img2.data, 0, 0, 0);
+      img2.storage = std::make_unique<TextureStorage>(1, 1, 1, dim, format.block_dim(), U8(format.block_size() * 2));
+      img2.view = ImageView(format, *img2.storage, 0, 0, 0);
 
       blit_pixels(img.view, img2.view);
 
@@ -686,8 +686,8 @@ TEST_CASE("ImageView blit_pixels(ImageView, ImageView)", BE_CATCH_TAGS) {
 
    SECTION("Same format, different line alignment") {
       Image img2;
-      img2.data = std::make_unique<TextureStorage>(1, 1, 1, dim, format.block_dim(), format.block_size(), TextureAlignment((U8)128));
-      img2.view = ImageView(format, *img2.data, 0, 0, 0);
+      img2.storage = std::make_unique<TextureStorage>(1, 1, 1, dim, format.block_dim(), format.block_size(), TextureAlignment((U8)128));
+      img2.view = ImageView(format, *img2.storage, 0, 0, 0);
 
       blit_pixels(img.view, img2.view);
 
@@ -700,8 +700,8 @@ TEST_CASE("ImageView blit_pixels(ImageView, ImageView)", BE_CATCH_TAGS) {
 
    SECTION("Same format, different plane alignment") {
       Image img2;
-      img2.data = std::make_unique<TextureStorage>(1, 1, 1, dim, format.block_dim(), format.block_size(), TextureAlignment((U8)8, (U8)128));
-      img2.view = ImageView(format, *img2.data, 0, 0, 0);
+      img2.storage = std::make_unique<TextureStorage>(1, 1, 1, dim, format.block_dim(), format.block_size(), TextureAlignment((U8)8, (U8)128));
+      img2.view = ImageView(format, *img2.storage, 0, 0, 0);
 
       blit_pixels(img.view, img2.view);
 
@@ -767,8 +767,8 @@ TEST_CASE("ImageView blit_pixels(ImageView, ImageRegion, ImageView, ImageRegion)
 
    SECTION("Same format, different block size") {
       Image img2;
-      img2.data = std::make_unique<TextureStorage>(1, 1, 1, dim, format.block_dim(), U8(format.block_size() * 2));
-      img2.view = ImageView(format, *img2.data, 0, 0, 0);
+      img2.storage = std::make_unique<TextureStorage>(1, 1, 1, dim, format.block_dim(), U8(format.block_size() * 2));
+      img2.view = ImageView(format, *img2.storage, 0, 0, 0);
 
       blit_blocks(img.view, region, img2.view, pixel_region(img2.view));
 

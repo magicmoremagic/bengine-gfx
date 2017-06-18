@@ -44,12 +44,12 @@ Image make_image(const ImageFormat& format, Coord dim, Buf<UC> buf, TextureAlign
    ivec3 dim3 = detail::CoordToVec3<Coord>::convert(dim);
 
    if (buf) {
-      img.data = std::make_unique<TextureStorage>(1, 1, 1, dim3, format.block_dim(), format.block_size(), std::move(buf), alignment);
+      img.storage = std::make_unique<TextureStorage>(1, 1, 1, dim3, format.block_dim(), format.block_size(), std::move(buf), alignment);
    } else {
-      img.data = std::make_unique<TextureStorage>(1, 1, 1, dim3, format.block_dim(), format.block_size(), alignment);
+      img.storage = std::make_unique<TextureStorage>(1, 1, 1, dim3, format.block_dim(), format.block_size(), alignment);
    }
 
-   img.view = ImageView(format, *img.data, 0, 0, 0);
+   img.view = ImageView(format, *img.storage, 0, 0, 0);
 
    return img;
 }

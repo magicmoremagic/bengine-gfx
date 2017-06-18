@@ -8,7 +8,7 @@
 namespace be::gfx::tex {
 
 struct Texture final {
-   std::unique_ptr<TextureStorage> data;
+   std::unique_ptr<TextureStorage> storage;
    TextureView view;
 };
 

@@ -10,6 +10,8 @@ namespace be::gfx::tex {
 ///////////////////////////////////////////////////////////////////////////////
 class TextureAlignment {
 public:
+   static constexpr U8 max_alignment_bits = 20;
+
    TextureAlignment(U8 line_bits = 3u, U8 plane_bits = 0, U8 level_bits = 0, U8 face_bits = 0, U8 layer_bits = 0);
 
    std::size_t line() const  { return 1ull << line_bits_; }

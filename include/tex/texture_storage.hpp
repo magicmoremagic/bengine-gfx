@@ -99,13 +99,18 @@ private:
    TextureAlignment alignment_;
 };
 
-std::size_t calculate_required_texture_storage(std::size_t layers,
-                                               std::size_t faces,
-                                               std::size_t levels,
-                                               ivec3 base_dim,
+std::size_t calculate_required_texture_storage(std::size_t layers, std::size_t faces, std::size_t levels, ivec3 base_dim,
                                                TextureStorage::block_dim_type block_dim,
                                                TextureStorage::block_size_type block_size,
-                                               TextureAlignment alignment = TextureAlignment());
+                                               std::error_code& ec,
+                                               TextureAlignment alignment = TextureAlignment()) noexcept;
+
+std::size_t calculate_image_offset(std::size_t image_layer, std::size_t image_face, std::size_t image_level,
+                                   std::size_t layers, std::size_t faces, std::size_t levels, ivec3 base_dim,
+                                   TextureStorage::block_dim_type block_dim,
+                                   TextureStorage::block_size_type block_size,
+                                   std::error_code& ec,
+                                   TextureAlignment alignment = TextureAlignment()) noexcept;
 
 } // be::gfx::tex
 

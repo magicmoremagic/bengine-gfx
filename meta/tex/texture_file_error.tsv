@@ -1,0 +1,5 @@
+name	value	msg
+corrupted	1	Texture file data invalid or corrupted
+unsupported		Texture file unsupported
+image_unavailable		The requested layer, face, or mipmap level is not present in the texture
+fatal_error		A fatal error occurred preventing the texture from being loaded

@@ -2,11 +2,13 @@
 #ifndef BE_GFX_TEX_BETX_HEADER_HPP_
 #define BE_GFX_TEX_BETX_HEADER_HPP_
 
+#include "tex/texture_file_info.hpp"
 #include <be/core/byte_order.hpp>
 
-namespace be::gfx::tex::betx::detail {
+namespace be::gfx::tex::detail {
 
-struct BeTxHeader {
+///////////////////////////////////////////////////////////////////////////////
+struct BetxHeader {
    U8 signature[16];
    U8 version;
    U8 endianness;
@@ -36,11 +38,12 @@ struct BeTxHeader {
    U8 payload_compression;
 };
 
-} // be::gfx::tex::betx::detail
+} // be::gfx::tex::detail
 namespace be::bo {
 
+///////////////////////////////////////////////////////////////////////////////
 template <>
-struct Converter<be::gfx::tex::betx::detail::BeTxHeader> : ConvertBase<be::gfx::tex::betx::detail::BeTxHeader> {
+struct Converter<be::gfx::tex::detail::BetxHeader> : ConvertBase<be::gfx::tex::detail::BetxHeader> {
    using base::in_place;
 
    static void in_place(type& v, Little, Big) {

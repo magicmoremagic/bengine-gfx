@@ -1160,7 +1160,7 @@ GetPixelNormFunc<Coord, ImageView> get_pixel_norm_func(const ImageView& image) {
 
       if (component_type == ComponentType::unorm) {
          switch (image.format().packing()) {
-            /*!! write_template('packing_switch', { pred = not_compressed, pre_params = ', true', post_params = ', ComponentType::unorm', func_name = 'get' }) !! 42 */
+            /*!! write_template('packing_switch', { pred = not_compressed, pre_params = ', true', post_params = ', ComponentType::unorm', func_name = 'get' }) !! 45 */
             /* ################# !! GENERATED CODE -- DO NOT MODIFY !! ################# */
             case BlockPacking::s_8:           return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_8, ComponentType::unorm>::get;
             case BlockPacking::s_8_8:         return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_8_8, ComponentType::unorm>::get;
@@ -1182,6 +1182,9 @@ GetPixelNormFunc<Coord, ImageView> get_pixel_norm_func(const ImageView& image) {
             case BlockPacking::p_3_3_2:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_3_3_2, ComponentType::unorm>::get;
             case BlockPacking::p_2_3_3:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_2_3_3, ComponentType::unorm>::get;
             case BlockPacking::p_3_2_3:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_3_2_3, ComponentType::unorm>::get;
+            case BlockPacking::p_4_2_2:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_4_2_2, ComponentType::unorm>::get;
+            case BlockPacking::p_2_2_4:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_2_2_4, ComponentType::unorm>::get;
+            case BlockPacking::p_2_4_2:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_2_4_2, ComponentType::unorm>::get;
             case BlockPacking::p_2_2_2_2:     return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_2_2_2_2, ComponentType::unorm>::get;
             case BlockPacking::p_4_4_4_4:     return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_4_4_4_4, ComponentType::unorm>::get;
             case BlockPacking::p_1_5_5_5:     return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_1_5_5_5, ComponentType::unorm>::get;
@@ -1207,7 +1210,7 @@ GetPixelNormFunc<Coord, ImageView> get_pixel_norm_func(const ImageView& image) {
          }
       } else if (component_type == ComponentType::uint) {
          switch (image.format().packing()) {
-            /*!! write_template('packing_switch', { pred = not_compressed, pre_params = ', true', post_params = ', ComponentType::uint', func_name = 'get' }) !! 42 */
+            /*!! write_template('packing_switch', { pred = not_compressed, pre_params = ', true', post_params = ', ComponentType::uint', func_name = 'get' }) !! 45 */
             /* ################# !! GENERATED CODE -- DO NOT MODIFY !! ################# */
             case BlockPacking::s_8:           return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_8, ComponentType::uint>::get;
             case BlockPacking::s_8_8:         return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_8_8, ComponentType::uint>::get;
@@ -1229,6 +1232,9 @@ GetPixelNormFunc<Coord, ImageView> get_pixel_norm_func(const ImageView& image) {
             case BlockPacking::p_3_3_2:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_3_3_2, ComponentType::uint>::get;
             case BlockPacking::p_2_3_3:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_2_3_3, ComponentType::uint>::get;
             case BlockPacking::p_3_2_3:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_3_2_3, ComponentType::uint>::get;
+            case BlockPacking::p_4_2_2:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_4_2_2, ComponentType::uint>::get;
+            case BlockPacking::p_2_2_4:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_2_2_4, ComponentType::uint>::get;
+            case BlockPacking::p_2_4_2:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_2_4_2, ComponentType::uint>::get;
             case BlockPacking::p_2_2_2_2:     return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_2_2_2_2, ComponentType::uint>::get;
             case BlockPacking::p_4_4_4_4:     return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_4_4_4_4, ComponentType::uint>::get;
             case BlockPacking::p_1_5_5_5:     return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_1_5_5_5, ComponentType::uint>::get;
@@ -1279,7 +1285,7 @@ GetPixelNormFunc<Coord, ImageView> get_pixel_norm_func(const ImageView& image) {
          }
       }
       switch (image.format().packing()) {
-         /*!! write_template('packing_switch', { pred = not_compressed, pre_params = ', true', func_name = 'get' }) !! 42 */
+         /*!! write_template('packing_switch', { pred = not_compressed, pre_params = ', true', func_name = 'get' }) !! 45 */
          /* ################# !! GENERATED CODE -- DO NOT MODIFY !! ################# */
          case BlockPacking::s_8:           return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_8>::get;
          case BlockPacking::s_8_8:         return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_8_8>::get;
@@ -1301,6 +1307,9 @@ GetPixelNormFunc<Coord, ImageView> get_pixel_norm_func(const ImageView& image) {
          case BlockPacking::p_3_3_2:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_3_3_2>::get;
          case BlockPacking::p_2_3_3:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_2_3_3>::get;
          case BlockPacking::p_3_2_3:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_3_2_3>::get;
+         case BlockPacking::p_4_2_2:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_4_2_2>::get;
+         case BlockPacking::p_2_2_4:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_2_2_4>::get;
+         case BlockPacking::p_2_4_2:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_2_4_2>::get;
          case BlockPacking::p_2_2_2_2:     return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_2_2_2_2>::get;
          case BlockPacking::p_4_4_4_4:     return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_4_4_4_4>::get;
          case BlockPacking::p_1_5_5_5:     return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_1_5_5_5>::get;
@@ -1329,7 +1338,7 @@ GetPixelNormFunc<Coord, ImageView> get_pixel_norm_func(const ImageView& image) {
       }
    } else {
       switch (image.format().packing()) {
-         /*!! write_template('packing_switch', { pred = not_compressed, pre_params = ', false', func_name = 'get' }) !! 42 */
+         /*!! write_template('packing_switch', { pred = not_compressed, pre_params = ', false', func_name = 'get' }) !! 45 */
          /* ################# !! GENERATED CODE -- DO NOT MODIFY !! ################# */
          case BlockPacking::s_8:           return detail::PixelNormAccessUncompressed<ImageView, Coord, false, BlockPacking::s_8>::get;
          case BlockPacking::s_8_8:         return detail::PixelNormAccessUncompressed<ImageView, Coord, false, BlockPacking::s_8_8>::get;
@@ -1351,6 +1360,9 @@ GetPixelNormFunc<Coord, ImageView> get_pixel_norm_func(const ImageView& image) {
          case BlockPacking::p_3_3_2:       return detail::PixelNormAccessUncompressed<ImageView, Coord, false, BlockPacking::p_3_3_2>::get;
          case BlockPacking::p_2_3_3:       return detail::PixelNormAccessUncompressed<ImageView, Coord, false, BlockPacking::p_2_3_3>::get;
          case BlockPacking::p_3_2_3:       return detail::PixelNormAccessUncompressed<ImageView, Coord, false, BlockPacking::p_3_2_3>::get;
+         case BlockPacking::p_4_2_2:       return detail::PixelNormAccessUncompressed<ImageView, Coord, false, BlockPacking::p_4_2_2>::get;
+         case BlockPacking::p_2_2_4:       return detail::PixelNormAccessUncompressed<ImageView, Coord, false, BlockPacking::p_2_2_4>::get;
+         case BlockPacking::p_2_4_2:       return detail::PixelNormAccessUncompressed<ImageView, Coord, false, BlockPacking::p_2_4_2>::get;
          case BlockPacking::p_2_2_2_2:     return detail::PixelNormAccessUncompressed<ImageView, Coord, false, BlockPacking::p_2_2_2_2>::get;
          case BlockPacking::p_4_4_4_4:     return detail::PixelNormAccessUncompressed<ImageView, Coord, false, BlockPacking::p_4_4_4_4>::get;
          case BlockPacking::p_1_5_5_5:     return detail::PixelNormAccessUncompressed<ImageView, Coord, false, BlockPacking::p_1_5_5_5>::get;
@@ -1406,7 +1418,7 @@ PutPixelNormFunc<Coord, ImageView> put_pixel_norm_func(const ImageView& image) {
 
       if (component_type == ComponentType::unorm) {
          switch (image.format().packing()) {
-            /*!! write_template('packing_switch', { pred = not_compressed, pre_params = ', true', post_params = ', ComponentType::unorm', func_name = 'put' }) !! 42 */
+            /*!! write_template('packing_switch', { pred = not_compressed, pre_params = ', true', post_params = ', ComponentType::unorm', func_name = 'put' }) !! 45 */
             /* ################# !! GENERATED CODE -- DO NOT MODIFY !! ################# */
             case BlockPacking::s_8:           return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_8, ComponentType::unorm>::put;
             case BlockPacking::s_8_8:         return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_8_8, ComponentType::unorm>::put;
@@ -1428,6 +1440,9 @@ PutPixelNormFunc<Coord, ImageView> put_pixel_norm_func(const ImageView& image) {
             case BlockPacking::p_3_3_2:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_3_3_2, ComponentType::unorm>::put;
             case BlockPacking::p_2_3_3:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_2_3_3, ComponentType::unorm>::put;
             case BlockPacking::p_3_2_3:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_3_2_3, ComponentType::unorm>::put;
+            case BlockPacking::p_4_2_2:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_4_2_2, ComponentType::unorm>::put;
+            case BlockPacking::p_2_2_4:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_2_2_4, ComponentType::unorm>::put;
+            case BlockPacking::p_2_4_2:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_2_4_2, ComponentType::unorm>::put;
             case BlockPacking::p_2_2_2_2:     return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_2_2_2_2, ComponentType::unorm>::put;
             case BlockPacking::p_4_4_4_4:     return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_4_4_4_4, ComponentType::unorm>::put;
             case BlockPacking::p_1_5_5_5:     return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_1_5_5_5, ComponentType::unorm>::put;
@@ -1451,7 +1466,7 @@ PutPixelNormFunc<Coord, ImageView> put_pixel_norm_func(const ImageView& image) {
          }
       } else if (component_type == ComponentType::uint) {
          switch (image.format().packing()) {
-            /*!! write_template('packing_switch', { pred = not_compressed, pre_params = ', true', post_params = ', ComponentType::uint', func_name = 'put' }) !! 42 */
+            /*!! write_template('packing_switch', { pred = not_compressed, pre_params = ', true', post_params = ', ComponentType::uint', func_name = 'put' }) !! 45 */
             /* ################# !! GENERATED CODE -- DO NOT MODIFY !! ################# */
             case BlockPacking::s_8:           return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_8, ComponentType::uint>::put;
             case BlockPacking::s_8_8:         return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_8_8, ComponentType::uint>::put;
@@ -1473,6 +1488,9 @@ PutPixelNormFunc<Coord, ImageView> put_pixel_norm_func(const ImageView& image) {
             case BlockPacking::p_3_3_2:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_3_3_2, ComponentType::uint>::put;
             case BlockPacking::p_2_3_3:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_2_3_3, ComponentType::uint>::put;
             case BlockPacking::p_3_2_3:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_3_2_3, ComponentType::uint>::put;
+            case BlockPacking::p_4_2_2:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_4_2_2, ComponentType::uint>::put;
+            case BlockPacking::p_2_2_4:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_2_2_4, ComponentType::uint>::put;
+            case BlockPacking::p_2_4_2:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_2_4_2, ComponentType::uint>::put;
             case BlockPacking::p_2_2_2_2:     return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_2_2_2_2, ComponentType::uint>::put;
             case BlockPacking::p_4_4_4_4:     return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_4_4_4_4, ComponentType::uint>::put;
             case BlockPacking::p_1_5_5_5:     return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_1_5_5_5, ComponentType::uint>::put;
@@ -1519,7 +1537,7 @@ PutPixelNormFunc<Coord, ImageView> put_pixel_norm_func(const ImageView& image) {
          }
       }
       switch (image.format().packing()) {
-         /*!! write_template('packing_switch', { pred = not_compressed, pre_params = ', true', func_name = 'put' }) !! 42 */
+         /*!! write_template('packing_switch', { pred = not_compressed, pre_params = ', true', func_name = 'put' }) !! 45 */
          /* ################# !! GENERATED CODE -- DO NOT MODIFY !! ################# */
          case BlockPacking::s_8:           return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_8>::put;
          case BlockPacking::s_8_8:         return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_8_8>::put;
@@ -1541,6 +1559,9 @@ PutPixelNormFunc<Coord, ImageView> put_pixel_norm_func(const ImageView& image) {
          case BlockPacking::p_3_3_2:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_3_3_2>::put;
          case BlockPacking::p_2_3_3:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_2_3_3>::put;
          case BlockPacking::p_3_2_3:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_3_2_3>::put;
+         case BlockPacking::p_4_2_2:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_4_2_2>::put;
+         case BlockPacking::p_2_2_4:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_2_2_4>::put;
+         case BlockPacking::p_2_4_2:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_2_4_2>::put;
          case BlockPacking::p_2_2_2_2:     return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_2_2_2_2>::put;
          case BlockPacking::p_4_4_4_4:     return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_4_4_4_4>::put;
          case BlockPacking::p_1_5_5_5:     return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_1_5_5_5>::put;
@@ -1567,7 +1588,7 @@ PutPixelNormFunc<Coord, ImageView> put_pixel_norm_func(const ImageView& image) {
       }
    } else {
       switch (image.format().packing()) {
-         /*!! write_template('packing_switch', { pred = not_compressed, pre_params = ', false', func_name = 'put' }) !! 42 */
+         /*!! write_template('packing_switch', { pred = not_compressed, pre_params = ', false', func_name = 'put' }) !! 45 */
          /* ################# !! GENERATED CODE -- DO NOT MODIFY !! ################# */
          case BlockPacking::s_8:           return detail::PixelNormAccessUncompressed<ImageView, Coord, false, BlockPacking::s_8>::put;
          case BlockPacking::s_8_8:         return detail::PixelNormAccessUncompressed<ImageView, Coord, false, BlockPacking::s_8_8>::put;
@@ -1589,6 +1610,9 @@ PutPixelNormFunc<Coord, ImageView> put_pixel_norm_func(const ImageView& image) {
          case BlockPacking::p_3_3_2:       return detail::PixelNormAccessUncompressed<ImageView, Coord, false, BlockPacking::p_3_3_2>::put;
          case BlockPacking::p_2_3_3:       return detail::PixelNormAccessUncompressed<ImageView, Coord, false, BlockPacking::p_2_3_3>::put;
          case BlockPacking::p_3_2_3:       return detail::PixelNormAccessUncompressed<ImageView, Coord, false, BlockPacking::p_3_2_3>::put;
+         case BlockPacking::p_4_2_2:       return detail::PixelNormAccessUncompressed<ImageView, Coord, false, BlockPacking::p_4_2_2>::put;
+         case BlockPacking::p_2_2_4:       return detail::PixelNormAccessUncompressed<ImageView, Coord, false, BlockPacking::p_2_2_4>::put;
+         case BlockPacking::p_2_4_2:       return detail::PixelNormAccessUncompressed<ImageView, Coord, false, BlockPacking::p_2_4_2>::put;
          case BlockPacking::p_2_2_2_2:     return detail::PixelNormAccessUncompressed<ImageView, Coord, false, BlockPacking::p_2_2_2_2>::put;
          case BlockPacking::p_4_4_4_4:     return detail::PixelNormAccessUncompressed<ImageView, Coord, false, BlockPacking::p_4_4_4_4>::put;
          case BlockPacking::p_1_5_5_5:     return detail::PixelNormAccessUncompressed<ImageView, Coord, false, BlockPacking::p_1_5_5_5>::put;

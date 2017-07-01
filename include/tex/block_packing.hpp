@@ -5,7 +5,7 @@
 #include "gfx_tex_autolink.hpp"
 #include <be/core/enum_traits.hpp>
 
-/*!! include 'tex/block_packing' !! 625 */
+/*!! include 'tex/block_packing' !! 667 */
 /* ################# !! GENERATED CODE -- DO NOT MODIFY !! ################# */
 
 namespace be::gfx::tex {
@@ -32,6 +32,9 @@ enum class BlockPacking : U8 {
    p_3_3_2,
    p_2_3_3,
    p_3_2_3,
+   p_4_2_2,
+   p_2_2_4,
+   p_2_4_2,
    p_2_2_2_2,
    p_4_4_4_4,
    p_1_5_5_5,
@@ -63,7 +66,7 @@ enum class BlockPacking : U8 {
 
 bool is_valid(BlockPacking constant) noexcept;
 const char* block_packing_name(BlockPacking constant) noexcept;
-std::array<const BlockPacking, 47> block_packing_values() noexcept;
+std::array<const BlockPacking, 50> block_packing_values() noexcept;
 std::ostream& operator<<(std::ostream& os, BlockPacking constant);
 bool is_compressed(BlockPacking constant) noexcept;
 bool is_packed(BlockPacking constant) noexcept;
@@ -337,6 +340,42 @@ template <> struct BlockPackingInfo<BlockPacking::p_3_2_3> {
    static constexpr U8 component_bit_width[4] = { 3, 2, 3, 0 };
 };
 
+template <> struct BlockPackingInfo<BlockPacking::p_4_2_2> {
+   using is_compressed = False;
+   using is_packed = True;
+   using unsigned_word_type = U8;
+   static constexpr U8 components = 3;
+   static constexpr U8 word_size = 1;
+   static constexpr U8 words = 1;
+   static constexpr U8 component_word_offset[4] = { 0, 0, 0, 0 };
+   static constexpr U8 component_bit_offset[4] = { 4, 2, 0, 0 };
+   static constexpr U8 component_bit_width[4] = { 4, 2, 2, 0 };
+};
+
+template <> struct BlockPackingInfo<BlockPacking::p_2_2_4> {
+   using is_compressed = False;
+   using is_packed = True;
+   using unsigned_word_type = U8;
+   static constexpr U8 components = 3;
+   static constexpr U8 word_size = 1;
+   static constexpr U8 words = 1;
+   static constexpr U8 component_word_offset[4] = { 0, 0, 0, 0 };
+   static constexpr U8 component_bit_offset[4] = { 6, 4, 0, 0 };
+   static constexpr U8 component_bit_width[4] = { 2, 2, 4, 0 };
+};
+
+template <> struct BlockPackingInfo<BlockPacking::p_2_4_2> {
+   using is_compressed = False;
+   using is_packed = True;
+   using unsigned_word_type = U8;
+   static constexpr U8 components = 3;
+   static constexpr U8 word_size = 1;
+   static constexpr U8 words = 1;
+   static constexpr U8 component_word_offset[4] = { 0, 0, 0, 0 };
+   static constexpr U8 component_bit_offset[4] = { 6, 2, 0, 0 };
+   static constexpr U8 component_bit_width[4] = { 2, 4, 2, 0 };
+};
+
 template <> struct BlockPackingInfo<BlockPacking::p_2_2_2_2> {
    using is_compressed = False;
    using is_packed = True;
@@ -563,7 +602,7 @@ struct EnumTraits<::be::gfx::tex::BlockPacking> {
    using type = ::be::gfx::tex::BlockPacking;
    using underlying_type = typename std::underlying_type<type>::type;
 
-   static constexpr std::size_t count = 47;
+   static constexpr std::size_t count = 50;
 
    static bool is_valid(type value) {
       return ::be::gfx::tex::is_valid(value);
@@ -596,6 +635,9 @@ struct EnumTraits<::be::gfx::tex::BlockPacking> {
          ::be::gfx::tex::BlockPacking::p_3_3_2,
          ::be::gfx::tex::BlockPacking::p_2_3_3,
          ::be::gfx::tex::BlockPacking::p_3_2_3,
+         ::be::gfx::tex::BlockPacking::p_4_2_2,
+         ::be::gfx::tex::BlockPacking::p_2_2_4,
+         ::be::gfx::tex::BlockPacking::p_2_4_2,
          ::be::gfx::tex::BlockPacking::p_2_2_2_2,
          ::be::gfx::tex::BlockPacking::p_4_4_4_4,
          ::be::gfx::tex::BlockPacking::p_1_5_5_5,

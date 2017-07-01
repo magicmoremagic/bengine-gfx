@@ -1,6 +1,6 @@
 include 'common/enum'
 
-texture_file_format = make_enum_class('be::gfx::tex::betx::detail::PayloadCompressionMode', 'U8', {
+texture_file_format = make_enum_class('be::gfx::tex::detail::BetxPayloadCompressionMode', 'U8', {
    'none', 'zlib',
 })
 

@@ -1,18 +1,21 @@
 #include "pch.hpp"
 #include "stbi_util_.hpp"
+#include "tex/texture_file_error.hpp"
 #include <be/core/glm.hpp>
 #include <glm/vector_relational.hpp>
 
-namespace be::gfx::tex::stbi::detail {
+namespace be::gfx::tex::detail {
 namespace {
 
 ///////////////////////////////////////////////////////////////////////////////
-void stbi_deleter(void* ptr, std::size_t size) {
+void stbi_deleter(void* ptr, std::size_t size) noexcept {
    stbi_image_free(ptr);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-void get_stbi_texture_file_info(int w, int h, int components, int bpc, TextureFileInfo& info, TextureFileReadError& err) {
+std::size_t get_stbi_texture_file_info(int w, int h, int components, int bpc, TextureFileInfo& info, std::error_code& ec) noexcept {
+   std::size_t texture_size = 0;
+
    info.dim = ivec3(w, h, 1);
    info.faces = 1;
    info.layers = 1;
@@ -26,7 +29,7 @@ void get_stbi_texture_file_info(int w, int h, int components, int bpc, TextureFi
          case 3: info.format = ImageFormat(3, 1, BlockPacking::s_8_8_8, 3, component_types(ComponentType::unorm, 3), swizzles_rgb(), Colorspace::unknown, false); break;
          case 4: info.format = ImageFormat(4, 1, BlockPacking::s_8_8_8_8, 4, component_types(ComponentType::unorm, 4), swizzles_rgba(), Colorspace::unknown, false); break;
          default:
-            err = TextureFileReadError::unsupported_texture;
+            ec = make_error_code(TextureFileError::unsupported);
             break;
       }
    } else if (bpc == 16) {
@@ -36,7 +39,7 @@ void get_stbi_texture_file_info(int w, int h, int components, int bpc, TextureFi
          case 3: info.format = ImageFormat(6, 1, BlockPacking::s_16_16_16, 3, component_types(ComponentType::unorm, 3), swizzles_rgb(), Colorspace::unknown, false); break;
          case 4: info.format = ImageFormat(8, 1, BlockPacking::s_16_16_16_16, 4, component_types(ComponentType::unorm, 4), swizzles_rgba(), Colorspace::unknown, false); break;
          default:
-            err = TextureFileReadError::unsupported_texture;
+            ec = make_error_code(TextureFileError::unsupported);
             break;
       }
    } else if (bpc == 32) {
@@ -46,112 +49,99 @@ void get_stbi_texture_file_info(int w, int h, int components, int bpc, TextureFi
          case 3: info.format = ImageFormat(12, 1, BlockPacking::s_32_32_32, 3, component_types(ComponentType::sfloat, 3), swizzles_rgb(), Colorspace::linear_other, false); break;
          case 4: info.format = ImageFormat(16, 1, BlockPacking::s_32_32_32_32, 4, component_types(ComponentType::sfloat, 4), swizzles_rgba(), Colorspace::linear_other, false); break;
          default:
-            err = TextureFileReadError::unsupported_texture;
+            ec = make_error_code(TextureFileError::unsupported);
             break;
       }
    } else {
-      err = TextureFileReadError::unsupported_texture;
+      ec = make_error_code(TextureFileError::unsupported);
    }
 
-   if (err == TextureFileReadError::none) {
+   if (!ec) {
       if (glm::any(glm::lessThanEqual(info.dim, ivec3()))) {
-         err = TextureFileReadError::file_corruption;
+         ec = make_error_code(TextureFileError::unsupported);
       } else if (glm::any(glm::greaterThan(info.dim, ivec3(TextureStorage::max_dim)))) {
-         err = TextureFileReadError::unsupported_texture_size;
+         ec = make_error_code(TextureFileError::unsupported);
       } else {
-         std::size_t texture_size = calculate_required_texture_storage(info.layers, info.faces, info.levels, info.dim,
-                                                                       info.format.block_dim(), info.format.block_size(),
-                                                                       TextureAlignment(0, 0, 0, 0, 0));
-         if (texture_size == 0) {
-            err = TextureFileReadError::unsupported_texture_size;
+         std::error_code ec2;
+         texture_size = calculate_required_texture_storage(info.layers, info.faces, info.levels, info.dim,
+                                                           info.format.block_dim(), info.format.block_size(), ec2,
+                                                           TextureAlignment(0, 0, 0, 0, 0));
+         if (texture_size == 0 || ec2) {
+            ec = make_error_code(TextureFileError::unsupported);
          }
       }
    }
+
+   return texture_size;
 }
 
-} // be::gfx::tex::stbi::detail::()
+} // be::gfx::tex::detail::()
 
 ///////////////////////////////////////////////////////////////////////////////
-std::pair<TextureFileInfo, TextureFileReadError> read_stbi_info(const Buf<const UC>& buf, TextureFileFormat format, be_stbi_info_func info_func) {
-   std::pair<TextureFileInfo, TextureFileReadError> result;
+std::pair<TextureFileInfo, std::size_t> read_stbi_info(const Buf<const UC>& buf, TextureFileFormat format, be_stbi_info_func info_func, std::error_code& ec) noexcept {
+   std::pair<TextureFileInfo, std::size_t> result;
    result.first.file_format = format;
-   result.second = TextureFileReadError::none;
+   result.second = 0;
 
    if (buf.size() > std::numeric_limits<int>::max()) {
-      result.second = TextureFileReadError::unsupported_texture_size;
+      ec = make_error_code(TextureFileError::unsupported);
    } else {
       int w, h, components, bpc;
       if (0 == info_func(buf.get(), (int)buf.size(), &w, &h, &components, &bpc)) {
-         result.second = TextureFileReadError::unsupported_texture;
+         ec = make_error_code(TextureFileError::unsupported);
       } else {
-         get_stbi_texture_file_info(w, h, components, bpc, result.first, result.second);
+         result.second = get_stbi_texture_file_info(w, h, components, bpc, result.first, ec);
       }
    }
    return result;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-std::pair<Texture, TextureFileReadError> read_stbi_texture(const Buf<const UC>& buf, be_stbi_load_func load_func) {
-   std::pair<Texture, TextureFileReadError> result;
-   result.second = TextureFileReadError::none;
+Texture read_stbi_texture(const Buf<const UC>& buf, const TextureFileInfo& info, std::size_t texture_size, be_stbi_load_func load_func, std::error_code& ec) noexcept {
+   Texture tex;
 
    if (buf.size() > std::numeric_limits<int>::max()) {
-      result.second = TextureFileReadError::unsupported_texture_size;
+      ec = make_error_code(TextureFileError::unsupported);
    } else {
       int w, h, components, bpc;
       auto stbi_image_data = load_func(buf.get(), (int)buf.size(), &w, &h, &components, &bpc);
       if (stbi_image_data) {
-         TextureFileInfo info;
-         get_stbi_texture_file_info(w, h, components, bpc, info, result.second);
-
-         std::size_t size = calculate_required_texture_storage(info.layers, info.faces, info.levels, info.dim,
-                                            info.format.block_dim(), info.format.block_size(),
-                                            TextureAlignment(0, 0, 0, 0, 0));
-
-         Buf<UC> data((UC*)stbi_image_data, size, stbi_deleter);
+         Buf<UC> data((UC*)stbi_image_data, texture_size, stbi_deleter);
          
-         if (result.second == TextureFileReadError::none) {
-            result.first.storage = std::make_unique<TextureStorage>(info.layers, info.faces, info.levels, info.dim, info.format.block_dim(), info.format.block_size(), std::move(data), TextureAlignment(0, 0, 0, 0, 0));
-            result.first.view = TextureView(info.format, info.tex_class, *result.first.storage, 0, info.layers, 0, info.faces, 0, info.levels);
+         if (!ec) {
+            tex.storage = std::make_unique<TextureStorage>(info.layers, info.faces, info.levels, info.dim, info.format.block_dim(), info.format.block_size(), std::move(data), TextureAlignment(0, 0, 0, 0, 0));
+            tex.view = tex::TextureView(info.format, info.tex_class, *tex.storage, 0, info.layers, 0, info.faces, 0, info.levels);
          }
       } else {
-         result.second = TextureFileReadError::unsupported_texture;
+         ec = make_error_code(TextureFileError::unsupported);
       }
    }
 
-   return result;
+   return tex;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-std::pair<Image, TextureFileReadError> read_stbi_image(const Buf<const UC>& buf, be_stbi_load_func load_func) {
-   std::pair<Image, TextureFileReadError> result;
-   result.second = TextureFileReadError::none;
+Image read_stbi_image(const Buf<const UC>& buf, const TextureFileInfo& info, std::size_t texture_size, be_stbi_load_func load_func, std::error_code& ec) noexcept {
+   Image img;
 
    if (buf.size() > std::numeric_limits<int>::max()) {
-      result.second = TextureFileReadError::unsupported_texture_size;
+      ec = make_error_code(TextureFileError::unsupported);
    } else {
       int w, h, components, bpc;
       auto stbi_image_data = load_func(buf.get(), (int)buf.size(), &w, &h, &components, &bpc);
       if (stbi_image_data) {
-         TextureFileInfo info;
-         get_stbi_texture_file_info(w, h, components, bpc, info, result.second);
+         Buf<UC> data((UC*)stbi_image_data, texture_size, stbi_deleter);
 
-         std::size_t size = calculate_required_texture_storage(info.layers, info.faces, info.levels, info.dim,
-                                                               info.format.block_dim(), info.format.block_size(),
-                                                               TextureAlignment(0, 0, 0, 0, 0));
-
-         Buf<UC> data((UC*)stbi_image_data, size, stbi_deleter);
-
-         if (result.second == TextureFileReadError::none) {
-            result.first.storage = std::make_unique<TextureStorage>(info.layers, info.faces, info.levels, info.dim, info.format.block_dim(), info.format.block_size(), std::move(data), TextureAlignment(0, 0, 0, 0, 0));
-            result.first.view = ImageView(info.format, *result.first.storage, 0, 0, 0);
+         if (!ec) {
+            img.storage = std::make_unique<TextureStorage>(info.layers, info.faces, info.levels, info.dim, info.format.block_dim(), info.format.block_size(), std::move(data), TextureAlignment(0, 0, 0, 0, 0));
+            img.view = tex::ImageView(info.format, *img.storage, 0, 0, 0);
          }
       } else {
-         result.second = TextureFileReadError::unsupported_texture;
+         ec = make_error_code(TextureFileError::unsupported);
       }
    }
 
-   return result;
+   return img;
 }
 
 } // be::gfx::tex::detail

@@ -316,26 +316,27 @@ std::size_t TextureStorage::hash_() const {
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-std::size_t calculate_required_texture_storage(std::size_t layers,
-                                               std::size_t faces,
-                                               std::size_t levels,
-                                               ivec3 base_dim,
+std::size_t calculate_required_texture_storage(std::size_t layers, std::size_t faces, std::size_t levels, ivec3 base_dim,
                                                TextureStorage::block_dim_type block_dim,
                                                TextureStorage::block_size_type block_size,
-                                               TextureAlignment alignment) {
+                                               std::error_code& ec,
+                                               TextureAlignment alignment) noexcept {
    if (layers == 0 || layers > TextureStorage::max_layers ||
        faces == 0 || faces > TextureStorage::max_faces ||
        block_size == 0 || block_size > TextureStorage::max_block_size) {
+      ec = std::make_error_code(std::errc::invalid_argument);
       return 0;
    }
 
    if (glm::any(glm::equal(block_dim, TextureStorage::block_dim_type())) ||
-       glm::any(glm::greaterThan(ivec3(block_dim), ivec3(TextureStorage::max_block_dim)))) {
+       glm::any(glm::greaterThan(ivec3(block_dim), ivec3(ivec3::value_type(TextureStorage::max_block_dim))))) {
+      ec = std::make_error_code(std::errc::invalid_argument);
       return 0;
    }
 
    if (glm::any(glm::lessThanEqual(base_dim, ivec3())) ||
        glm::any(glm::greaterThan(base_dim, ivec3(TextureStorage::max_dim)))) {
+      ec = std::make_error_code(std::errc::invalid_argument);
       return 0;
    }
 
@@ -344,6 +345,7 @@ std::size_t calculate_required_texture_storage(std::size_t layers,
    const std::size_t level_alignment = alignment.level();
 
    if (plane_alignment > std::numeric_limits<U32>::max()) {
+      ec = std::make_error_code(std::errc::invalid_argument);
       return 0;
    }
 
@@ -360,6 +362,7 @@ std::size_t calculate_required_texture_storage(std::size_t layers,
       const std::size_t level_span = aligned_size(std::size_t(dim_blocks.z) * plane_span, level_alignment);
 
       if (line_span > std::numeric_limits<U32>::max() || plane_span > std::numeric_limits<U32>::max()) {
+         ec = std::make_error_code(std::errc::value_too_large);
          return 0;
       }
 
@@ -376,6 +379,86 @@ std::size_t calculate_required_texture_storage(std::size_t layers,
    const std::size_t layer_span = aligned_size(faces * face_span, alignment.layer());
 
    return layer_span * layers;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+std::size_t calculate_image_offset(std::size_t image_layer, std::size_t image_face, std::size_t image_level,
+                                   std::size_t layers, std::size_t faces, std::size_t levels, ivec3 base_dim,
+                                   TextureStorage::block_dim_type block_dim,
+                                   TextureStorage::block_size_type block_size,
+                                   std::error_code& ec,
+                                   TextureAlignment alignment) noexcept {
+   if (layers == 0 || layers > TextureStorage::max_layers ||
+       faces == 0 || faces > TextureStorage::max_faces ||
+       block_size == 0 || block_size > TextureStorage::max_block_size) {
+      ec = std::make_error_code(std::errc::invalid_argument);
+      return 0;
+   }
+
+   if (image_layer >= layers ||
+       image_face >= faces ||
+       image_level >= levels) {
+      ec = std::make_error_code(std::errc::invalid_argument);
+      return 0;
+   }
+
+   if (glm::any(glm::equal(block_dim, TextureStorage::block_dim_type())) ||
+       glm::any(glm::greaterThan(ivec3(block_dim), ivec3(ivec3::value_type(TextureStorage::max_block_dim))))) {
+      ec = std::make_error_code(std::errc::invalid_argument);
+      return 0;
+   }
+
+   if (glm::any(glm::lessThanEqual(base_dim, ivec3())) ||
+       glm::any(glm::greaterThan(base_dim, ivec3(TextureStorage::max_dim)))) {
+      ec = std::make_error_code(std::errc::invalid_argument);
+      return 0;
+   }
+
+   const std::size_t line_alignment = alignment.line();
+   const std::size_t plane_alignment = alignment.plane();
+   const std::size_t level_alignment = alignment.level();
+
+   if (plane_alignment > std::numeric_limits<U32>::max()) {
+      ec = std::make_error_code(std::errc::invalid_argument);
+      return 0;
+   }
+
+   const ivec3 block_dim_ivec3 = ivec3(block_dim);
+   const ivec3 block_dim_offset = block_dim_ivec3 - 1;
+
+   std::size_t face_span = 0;
+   ivec3 dim = base_dim;
+
+   std::size_t level_offset = 0;
+
+   for (std::size_t level = 0; level < levels; ++level) {
+      if (level == image_level) {
+         level_offset = face_span;
+      }
+
+      const ivec3 dim_blocks = (dim + block_dim_offset) / block_dim_ivec3;
+      const std::size_t line_span  = aligned_size(std::size_t(dim_blocks.x) * block_size, line_alignment);
+      const std::size_t plane_span = aligned_size(std::size_t(dim_blocks.y) * line_span, plane_alignment);
+      const std::size_t level_span = aligned_size(std::size_t(dim_blocks.z) * plane_span, level_alignment);
+
+      if (line_span > std::numeric_limits<U32>::max() || plane_span > std::numeric_limits<U32>::max()) {
+         ec = std::make_error_code(std::errc::value_too_large);
+         return 0;
+      }
+
+      face_span += level_span;
+
+      if (dim == ivec3(1)) {
+         break;
+      }
+
+      dim = glm::max(dim >> 1, ivec3(1));
+   }
+
+   face_span = aligned_size(face_span, alignment.face());
+   const std::size_t layer_span = aligned_size(faces * face_span, alignment.layer());
+
+   return layer_span * image_layer + face_span * image_face + level_offset;
 }
 
 } // be::gfx::tex

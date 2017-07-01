@@ -1,0 +1,47 @@
+name	fatal	texture_file_error	errc	msg	value
+not_a_mmm_binary_file	true	corrupted	illegal_byte_sequence	Magic/More Magic binary file header not present	1
+not_a_betx_file	true	corrupted	illegal_byte_sequence	Not a bengine texture file
+crlf_corruption		corrupted	illegal_byte_sequence	CR-LF sequences may have been converted to LF
+lf_corruption		corrupted	illegal_byte_sequence	LF bytes may have been converted to CR-LF
+header_missing	true	corrupted	illegal_byte_sequence	beTx header not present; file may have been truncated
+footer_missing		corrupted	illegal_byte_sequence	beTx footer not present; file may have been truncated or appended to
+invalid_endianness	true	corrupted	illegal_byte_sequence	Endianness not recognized
+unsupported_file_version		unsupported	not_supported	beTx file version is invalid or unsupported
+invalid_texture_class		corrupted	illegal_byte_sequence	Texture class not recognized
+invalid_dimensions		corrupted	illegal_byte_sequence	All texture dimensions must be >= 1
+unsupported_dimensions	true	unsupported	not_supported	Texture dimensions too large to load
+invalid_layer_count		corrupted	illegal_byte_sequence	Layer count must be >= 1
+unsupported_layer_count		unsupported	not_supported	Layer count too large to load
+invalid_face_count		corrupted	illegal_byte_sequence	Face count must be >= 1
+unsupported_face_count		unsupported	not_supported	Face count too large to load
+invalid_level_count		corrupted	illegal_byte_sequence	Mipmap level count must be >= 1
+unsupported_level_count		unsupported	not_supported	Mipmap level count too large to load
+unnecessary_levels				More mipmap levels specified than necessary
+unsupported_span_granularity		unsupported	not_supported	Texture data alignment is too strict
+noncanonical_span_granularity				Line, plane, level, face, or layer span granularity is too large or smaller than a previous granularity
+invalid_block_packing	true	corrupted	illegal_byte_sequence	Block packing not recognized
+invalid_block_dimensions		corrupted	illegal_byte_sequence	All block dimensions must be >= 1
+unsupported_block_dimensions	true	unsupported	not_supported	Block dimensions too large to load
+invalid_block_size		corrupted	illegal_byte_sequence	Block size must be >= 1
+unsupported_block_size		unsupported	not_supported	Block size too large to load
+invalid_component_type		corrupted	illegal_byte_sequence	Component type not recognized
+invalid_component_count		corrupted	illegal_byte_sequence	Component count must be >= 1
+too_many_components		corrupted	illegal_byte_sequence	Only 4 components per texel can be accessed
+invalid_swizzle		corrupted	illegal_byte_sequence	Swizzle not recognized
+invalid_colorspace		corrupted	illegal_byte_sequence	Colorspace not recognized
+invalid_format_flag		corrupted	illegal_byte_sequence	Unrecognized format flag bit set
+invalid_block_span		corrupted	illegal_byte_sequence	Block span must be >= 1
+negative_block_padding	true	corrupted	illegal_byte_sequence	Block span must be >= block size
+invalid_payload_compression	true	corrupted	illegal_byte_sequence	Payload compression mode not recognized
+empty_texture	true	unsupported	not_supported	Texture format and dimensions have zero size
+invalid_payload_offset		corrupted	illegal_byte_sequence	Payload cannot overlap header or metadata
+invalid_metadata_location		corrupted	illegal_byte_sequence	Unrecognized metadata location
+metadata_missing		corrupted	illegal_byte_sequence	Metadata not present; file may have been truncated
+file_too_small		corrupted	illegal_byte_sequence	File is too small to fit header, metadata, payload, and footer; possible truncation, overlap, or corruption
+not_enough_texture_data		corrupted	illegal_byte_sequence	Calculated texture size is greater than the uncompressed payload data size
+image_unavailable		image_unavailable		The requested layer, face, or mipmap level is not present in the texture
+layered_non_array				Multiple layers specified, but not using an array texture class
+not_enough_faces				Fewer faces specified than expected for this texture class
+too_many_faces				More faces specified than expected for this texture class
+nonzero_reserved		corrupted	illegal_byte_sequence	Reserved header field is not zero
+not_enough_memory	true		not_enough_memory	Could not allocate enough memory for texture storage

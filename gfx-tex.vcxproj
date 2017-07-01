@@ -54,15 +54,18 @@
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="include\tex\betx_payload_compression_mode.hpp" />
     <ClInclude Include="include\tex\blit_blocks.hpp" />
     <ClInclude Include="include\tex\blit_pixels.hpp" />
     <ClInclude Include="include\tex\block_access.hpp" />
     <ClInclude Include="include\tex\block_packing.hpp" />
+    <ClInclude Include="include\tex\byte_order.hpp" />
     <ClInclude Include="include\tex\colorspace.hpp" />
     <ClInclude Include="include\tex\component_type.hpp" />
     <ClInclude Include="include\tex\converting_pixel_blitter.hpp" />
     <ClInclude Include="include\tex\convert_colorspace.hpp" />
     <ClInclude Include="include\tex\convert_colorspace_static.hpp" />
+    <ClInclude Include="include\tex\default_texture_reader.hpp" />
     <ClInclude Include="include\tex\duplicate_image.hpp" />
     <ClInclude Include="include\tex\duplicate_texture.hpp" />
     <ClInclude Include="include\tex\image.hpp" />
@@ -76,6 +79,8 @@
     <ClInclude Include="include\tex\make_image.hpp" />
     <ClInclude Include="include\tex\make_texture.hpp" />
     <ClInclude Include="include\tex\mipmapping.hpp" />
+    <ClInclude Include="include\tex\texture_file_error.hpp" />
+    <ClInclude Include="include\tex\texture_reader_base.hpp" />
     <ClInclude Include="src-tex\pch.hpp" />
     <ClInclude Include="include\tex\gfx_tex_autolink.hpp" />
     <ClInclude Include="include\tex\pixel_access.hpp" />
@@ -83,49 +88,49 @@
     <ClInclude Include="include\tex\pixel_norm_transform.hpp" />
     <ClInclude Include="include\tex\premultiply_alpha.hpp" />
     <ClInclude Include="include\tex\premultiply_alpha_static.hpp" />
-    <ClInclude Include="include\tex\read.hpp" />
+    <ClInclude Include="include\tex\texture_reader.hpp" />
     <ClInclude Include="include\tex\swizzle.hpp" />
     <ClInclude Include="include\tex\texture.hpp" />
     <ClInclude Include="include\tex\texture_alignment.hpp" />
     <ClInclude Include="include\tex\texture_class.hpp" />
     <ClInclude Include="include\tex\texture_file_format.hpp" />
-    <ClInclude Include="include\tex\read_betx.hpp" />
-    <ClInclude Include="include\tex\read_bmp.hpp" />
-    <ClInclude Include="include\tex\read_dds.hpp" />
-    <ClInclude Include="include\tex\read_gif.hpp" />
-    <ClInclude Include="include\tex\read_glraw.hpp" />
-    <ClInclude Include="include\tex\read_hdr.hpp" />
-    <ClInclude Include="include\tex\read_jpeg.hpp" />
-    <ClInclude Include="include\tex\read_ktx.hpp" />
-    <ClInclude Include="include\tex\read_pic.hpp" />
-    <ClInclude Include="include\tex\read_png.hpp" />
-    <ClInclude Include="include\tex\read_pnm.hpp" />
-    <ClInclude Include="include\tex\read_psd.hpp" />
-    <ClInclude Include="include\tex\read_tga.hpp" />
+    <ClInclude Include="include\tex\betx_reader.hpp" />
+    <ClInclude Include="include\tex\bmp_reader.hpp" />
+    <ClInclude Include="include\tex\dds_reader.hpp" />
+    <ClInclude Include="include\tex\gif_reader.hpp" />
+    <ClInclude Include="include\tex\glraw_reader.hpp" />
+    <ClInclude Include="include\tex\hdr_reader.hpp" />
+    <ClInclude Include="include\tex\jpeg_reader.hpp" />
+    <ClInclude Include="include\tex\ktx_reader.hpp" />
+    <ClInclude Include="include\tex\pic_reader.hpp" />
+    <ClInclude Include="include\tex\png_reader.hpp" />
+    <ClInclude Include="include\tex\pnm_reader.hpp" />
+    <ClInclude Include="include\tex\psd_reader.hpp" />
+    <ClInclude Include="include\tex\tga_reader.hpp" />
     <ClInclude Include="include\tex\texture_file_info.hpp" />
-    <ClInclude Include="include\tex\texture_file_read_error.hpp" />
-    <ClInclude Include="include\tex\texture_file_write_error.hpp" />
     <ClInclude Include="include\tex\texture_storage.hpp" />
     <ClInclude Include="include\tex\texture_storage_hash.hpp" />
     <ClInclude Include="include\tex\texture_view.hpp" />
     <ClInclude Include="include\tex\texture_view_hash.hpp" />
     <ClInclude Include="include\tex\visit_image.hpp" />
     <ClInclude Include="include\tex\visit_texture.hpp" />
-    <ClInclude Include="include\tex\write.hpp" />
+    <ClInclude Include="include\tex\texture_writer.hpp" />
     <ClInclude Include="src-tex\betx_header_.hpp" />
-    <ClInclude Include="src-tex\betx_payload_compression_mode_.hpp" />
-    <ClInclude Include="src-tex\betx_v1_.hpp" />
     <ClInclude Include="src-tex\ktx_11_.hpp" />
     <ClInclude Include="src-tex\ktx_header_.hpp" />
+    <ClInclude Include="src-tex\betx_read_error_.hpp" />
     <ClInclude Include="src-tex\stbi_.h" />
     <ClInclude Include="src-tex\stbi_util_.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src-tex\betx_payload_compression_mode_.cpp" />
+    <ClCompile Include="src-tex\betx_payload_compression_mode.cpp" />
+    <ClCompile Include="src-tex\betx_v1_.cpp" />
     <ClCompile Include="src-tex\block_packing.cpp" />
+    <ClCompile Include="src-tex\byte_order.cpp" />
     <ClCompile Include="src-tex\colorspace.cpp" />
     <ClCompile Include="src-tex\component_type.cpp" />
     <ClCompile Include="src-tex\convert_colorspace.cpp" />
+    <ClCompile Include="src-tex\default_texture_reader.cpp" />
     <ClCompile Include="src-tex\image_format.cpp" />
     <ClCompile Include="src-tex\image_format_gl.cpp" />
     <ClCompile Include="src-tex\image_region.cpp" />
@@ -136,7 +141,9 @@
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="src-tex\premultiply_alpha.cpp" />
-    <ClCompile Include="src-tex\read.cpp" />
+    <ClCompile Include="src-tex\texture_reader.cpp" />
+    <ClCompile Include="src-tex\texture_reader_base.cpp" />
+    <ClCompile Include="src-tex\betx_read_error_.cpp" />
     <ClCompile Include="src-tex\stbi_.c">
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
@@ -144,22 +151,21 @@
     <ClCompile Include="src-tex\swizzle.cpp" />
     <ClCompile Include="src-tex\texture_alignment.cpp" />
     <ClCompile Include="src-tex\texture_class.cpp" />
+    <ClCompile Include="src-tex\texture_file_error.cpp" />
     <ClCompile Include="src-tex\texture_file_format.cpp" />
-    <ClCompile Include="src-tex\read_betx.cpp" />
-    <ClCompile Include="src-tex\read_bmp.cpp" />
-    <ClCompile Include="src-tex\read_dds.cpp" />
-    <ClCompile Include="src-tex\read_gif.cpp" />
-    <ClCompile Include="src-tex\read_glraw.cpp" />
-    <ClCompile Include="src-tex\read_hdr.cpp" />
-    <ClCompile Include="src-tex\read_jpeg.cpp" />
-    <ClCompile Include="src-tex\read_ktx.cpp" />
-    <ClCompile Include="src-tex\read_pic.cpp" />
-    <ClCompile Include="src-tex\read_png.cpp" />
-    <ClCompile Include="src-tex\read_pnm.cpp" />
-    <ClCompile Include="src-tex\read_psd.cpp" />
-    <ClCompile Include="src-tex\read_tga.cpp" />
-    <ClCompile Include="src-tex\texture_file_read_error.cpp" />
-    <ClCompile Include="src-tex\texture_file_write_error.cpp" />
+    <ClCompile Include="src-tex\betx_reader.cpp" />
+    <ClCompile Include="src-tex\bmp_reader.cpp" />
+    <ClCompile Include="src-tex\dds_reader.cpp" />
+    <ClCompile Include="src-tex\gif_reader.cpp" />
+    <ClCompile Include="src-tex\glraw_reader.cpp" />
+    <ClCompile Include="src-tex\hdr_reader.cpp" />
+    <ClCompile Include="src-tex\jpeg_reader.cpp" />
+    <ClCompile Include="src-tex\ktx_reader.cpp" />
+    <ClCompile Include="src-tex\pic_reader.cpp" />
+    <ClCompile Include="src-tex\png_reader.cpp" />
+    <ClCompile Include="src-tex\pnm_reader.cpp" />
+    <ClCompile Include="src-tex\psd_reader.cpp" />
+    <ClCompile Include="src-tex\tga_reader.cpp" />
     <ClCompile Include="src-tex\texture_storage.cpp" />
     <ClCompile Include="src-tex\texture_view.cpp" />
   </ItemGroup>
@@ -184,12 +190,14 @@
     <None Include="meta\tex\colorspace_family_info.blt" />
     <None Include="meta\tex\colorspace_info.blt" />
     <None Include="meta\tex\component_type.lua" />
+    <None Include="meta\tex\betx_read_error.lua" />
+    <None Include="meta\tex\betx_read_error.tsv" />
     <None Include="meta\tex\swizzle.lua" />
     <None Include="meta\tex\texture_class.lua" />
     <None Include="meta\tex\texture_class.tsv" />
+    <None Include="meta\tex\texture_file_error.lua" />
+    <None Include="meta\tex\texture_file_error.tsv" />
     <None Include="meta\tex\texture_file_format.lua" />
-    <None Include="meta\tex\texture_file_read_error.lua" />
-    <None Include="meta\tex\texture_file_write_error.lua" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

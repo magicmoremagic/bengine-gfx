@@ -4,8 +4,16 @@
 
 #include "gfx_tex_autolink.hpp"
 #include <be/core/glm.hpp>
+#include <glm/vec2.hpp>
+#include <glm/common.hpp>
 
 namespace be::gfx::tex {
+
+///////////////////////////////////////////////////////////////////////////////
+template <typename C>
+C mipmap_dim(C base_dim, U8 level) {
+   return glm::max(C(static_cast<C::value_type>(1)), base_dim >> static_cast<C::value_type>(level));
+}
 
 ///////////////////////////////////////////////////////////////////////////////
 U8 mipmap_levels(std::size_t dim);

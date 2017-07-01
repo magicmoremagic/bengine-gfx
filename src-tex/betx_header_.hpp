@@ -8,8 +8,20 @@
 namespace be::gfx::tex::detail {
 
 ///////////////////////////////////////////////////////////////////////////////
+struct BetxSignature {
+   static constexpr UC full[] = { 0x57, 0xC0, 'M', 'M', 'b', 'e', 'T', 'x', '\r', '\n', 0x1a, '\n', 0x4F, 0xE9, 0x39, 0xFD };
+   static constexpr UC mmm[] =  { 0x57, 0xC0, 'M', 'M' };
+   static constexpr UC betx_a[] =                     { 'b', 'e', 'T', 'x' };
+   static constexpr UC check[] =                                          { '\r', '\n', 0x1a, '\n' };
+   static constexpr UC lflf[] =                                           { '\n', 0x1a, '\n' };
+   static constexpr UC crcr[] =                                           { '\r', '\n', 0x1a, '\r', '\n' };
+   static constexpr UC betx_b[] =                                                                 { 0x4F, 0xE9, 0x39, 0xFD };
+   static constexpr UC footer[] = { 'b', 'e', 'T', 'x' };
+};
+
+///////////////////////////////////////////////////////////////////////////////
 struct BetxHeader {
-   U8 signature[16];
+   U8 signature[sizeof(BetxSignature::full)];
    U8 version;
    U8 endianness;
    U8 texture_class;

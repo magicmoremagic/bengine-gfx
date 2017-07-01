@@ -1,0 +1,13 @@
+name	texture_file_error	errc	msg	value
+invalid_endianness	unsupported	invalid_argument	Endianness not recognized	1
+empty_texture	unsupported	invalid_argument	Texture format and dimensions have zero size
+invalid_texture_class	unsupported	invalid_argument	Texture class not recognized
+invalid_block_packing	unsupported	invalid_argument	Block packing not recognized
+invalid_colorspace	unsupported	invalid_argument	Colorspace not recognized
+invalid_layer_count	unsupported	invalid_argument	Layer count must be in the range [ 1, 65535 ]
+invalid_face_count	unsupported	invalid_argument	Face count must be in the range [ 1, 255 ]
+invalid_level_count	unsupported	invalid_argument	Mipmap level count must be in the range [ 1, 255 ]
+invalid_component_type	unsupported	invalid_argument	Component type not recognized
+invalid_swizzle	unsupported	invalid_argument	Swizzle not recognized
+invalid_payload_compression	unsupported	invalid_argument	Payload compression mode not recognized
+not_enough_memory		not_enough_memory	Could not allocate enough memory

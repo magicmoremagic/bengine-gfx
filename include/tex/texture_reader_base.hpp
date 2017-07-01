@@ -8,6 +8,7 @@
 #include <be/core/buf.hpp>
 #include <be/core/filesystem.hpp>
 #include <be/core/log.hpp>
+#include <be/util/util_fs_autolink.hpp>
 
 namespace be::gfx::tex {
 
@@ -34,6 +35,8 @@ public:
 
    Image image(std::size_t layer = 0, std::size_t face = 0, std::size_t level = 0);
    Image image(std::error_code& ec, std::size_t layer = 0, std::size_t face = 0, std::size_t level = 0) noexcept;
+
+   // TODO metadata
 
 protected:
    TextureReaderBase(bool strict, Log& log);

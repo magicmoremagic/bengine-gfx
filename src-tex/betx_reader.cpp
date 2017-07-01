@@ -9,23 +9,12 @@
 #include <numeric>
 
 namespace be::gfx::tex {
-namespace {
-
-constexpr UC signature[] =     { 0x57, 0xC0, 'M', 'M', 'b', 'e', 'T', 'x', '\r', '\n', 0x1a, '\n', 0x4F, 0xE9, 0x39, 0xFD };
-constexpr UC mmm_signature[] = { 0x57, 0xC0, 'M', 'M' };
-constexpr UC betx_signature_a[] =                    { 'b', 'e', 'T', 'x' };
-constexpr UC check_signature[] =                                         { '\r', '\n', 0x1a, '\n' };
-constexpr UC crlf_corruption_signature[] =                               { '\n', 0x1a, '\n' };
-constexpr UC lf_corruption_signature[] =                                 { '\r', '\n', 0x1a, '\r', '\n' };
-constexpr UC betx_signature_b[] =                                                                { 0x4F, 0xE9, 0x39, 0xFD };
-constexpr UC footer[] = { 'b', 'e', 'T', 'x' };
-
-} // be::gfx::tex::()
 
 ///////////////////////////////////////////////////////////////////////////////
 bool is_betx(const Buf<const UC>& buf) noexcept {
-   return util::file_signature_matches(buf, signature) &&
-      util::file_signature_matches(buf, buf.size() - sizeof(footer), footer);
+   using sig = detail::BetxSignature;
+   return util::file_signature_matches(buf, sig::full) &&
+      util::file_signature_matches(buf, buf.size() - sizeof(sig::footer), sig::footer);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -55,6 +44,7 @@ TextureFileFormat BetxReader::format_impl_() noexcept {
 ///////////////////////////////////////////////////////////////////////////////
 TextureFileInfo BetxReader::info_impl_(std::error_code& ec) noexcept {
    using err = detail::BetxReadError;
+   using sig = detail::BetxSignature;
 
    TextureFileInfo info;
    info.file_format = TextureFileFormat::betx;
@@ -63,26 +53,26 @@ TextureFileInfo BetxReader::info_impl_(std::error_code& ec) noexcept {
       & attr(ids::log_attr_path) << path().string()
       | log();
 
-   if (buf_.size() < sizeof(signature) || !util::file_signature_matches(buf_, mmm_signature) &&
+   if (buf_.size() < sizeof(sig::full) || !util::file_signature_matches(buf_, sig::mmm) &&
        !should_continue_(err::not_a_mmm_binary_file, ec)) {
       return info;
    }
    
-   if (!util::file_signature_matches(buf_, sizeof(mmm_signature), betx_signature_a) &&
+   if (!util::file_signature_matches(buf_, sizeof(sig::mmm), sig::betx_a) &&
        !should_continue_(err::not_a_betx_file, ec)) {
       return info;
    }
 
-   constexpr auto check_signature_offset = sizeof(mmm_signature) + sizeof(betx_signature_a);
+   constexpr auto check_signature_offset = sizeof(sig::mmm) + sizeof(sig::betx_a);
 
-   if (!util::file_signature_matches(buf_, check_signature_offset, check_signature)) {
-      if (util::file_signature_matches(buf_, check_signature_offset, crlf_corruption_signature)) {
+   if (!util::file_signature_matches(buf_, check_signature_offset, sig::check)) {
+      if (util::file_signature_matches(buf_, check_signature_offset, sig::lflf)) {
          if (should_continue_(err::crlf_corruption, ec)) {
             try_fix_crlf_corruption_(ec);
          } else {
             return info;
          }
-      } else if (util::file_signature_matches(buf_, check_signature_offset, lf_corruption_signature)) {
+      } else if (util::file_signature_matches(buf_, check_signature_offset, sig::crcr)) {
          if (should_continue_(err::lf_corruption, ec)) {
             try_fix_lf_corruption_(ec);
          } else {
@@ -95,12 +85,12 @@ TextureFileInfo BetxReader::info_impl_(std::error_code& ec) noexcept {
       }
    }
    
-   if (!util::file_signature_matches(buf_, check_signature_offset + sizeof(check_signature), betx_signature_b) &&
+   if (!util::file_signature_matches(buf_, check_signature_offset + sizeof(sig::check), sig::betx_b) &&
        !should_continue_(err::not_a_betx_file, ec)) {
       return info;
    }
    
-   if (!util::file_signature_matches(buf_, buf_.size() - sizeof(footer), footer) &&
+   if (!util::file_signature_matches(buf_, buf_.size() - sizeof(sig::footer), sig::footer) &&
        !should_continue_(err::footer_missing, ec)) {
       return info;
    }
@@ -380,12 +370,14 @@ bool BetxReader::should_continue_(std::error_code new_error, std::error_code& ec
 
 ///////////////////////////////////////////////////////////////////////////////
 void BetxReader::try_fix_crlf_corruption_(std::error_code& ec) noexcept {
+   using sig = detail::BetxSignature;
+
    // replace all LFs (except the one at byte 10) with CR-LFs
    be_warn() << "Attempting to fix CR-LF corruption in beTx file"
       & attr(ids::log_attr_path) << path().string()
       | log();
    
-   std::size_t offset = sizeof(mmm_signature) + sizeof(betx_signature_a) + sizeof(crlf_corruption_signature);
+   std::size_t offset = sizeof(sig::mmm) + sizeof(sig::betx_a) + sizeof(sig::lflf);
 
    const UC* src = buf_.get() + offset;
    const UC* src_end = buf_.get() + buf_.size();
@@ -401,16 +393,16 @@ void BetxReader::try_fix_crlf_corruption_(std::error_code& ec) noexcept {
    }
 
    try {
-      Buf<UC> new_buf = make_buf<UC>(buf_.size() - offset + sizeof(mmm_signature) + sizeof(betx_signature_a) + sizeof(check_signature) + count);
+      Buf<UC> new_buf = make_buf<UC>(buf_.size() - offset + sizeof(sig::mmm) + sizeof(sig::betx_a) + sizeof(sig::check) + count);
 
       src = buf_.get() + offset;
       src_end = buf_.get() + buf_.size();
 
       UC* dest = new_buf.get();
       UC* dest_end = new_buf.get() + new_buf.size();
-      std::memcpy(dest, mmm_signature, sizeof(mmm_signature)); dest += sizeof(mmm_signature);
-      std::memcpy(dest, betx_signature_a, sizeof(betx_signature_a)); dest += sizeof(betx_signature_a);
-      std::memcpy(dest, check_signature, sizeof(check_signature)); dest += sizeof(check_signature);
+      std::memcpy(dest, sig::mmm, sizeof(sig::mmm)); dest += sizeof(sig::mmm);
+      std::memcpy(dest, sig::betx_a, sizeof(sig::betx_a)); dest += sizeof(sig::betx_a);
+      std::memcpy(dest, sig::check, sizeof(sig::check)); dest += sizeof(sig::check);
 
       prev = 0;
       while (src < src_end && dest < dest_end) {
@@ -436,12 +428,13 @@ void BetxReader::try_fix_crlf_corruption_(std::error_code& ec) noexcept {
 
 ///////////////////////////////////////////////////////////////////////////////
 void BetxReader::try_fix_lf_corruption_(std::error_code& ec) noexcept {
+   using sig = detail::BetxSignature;
    // replace all CR-LFs with LFs (except the one at byte 11)
    be_warn() << "Attempting to fix LF corruption in beTx file"
       & attr(ids::log_attr_path) << path().string()
       | log();
 
-   std::size_t offset = sizeof(mmm_signature) + sizeof(betx_signature_a) + sizeof(lf_corruption_signature);
+   std::size_t offset = sizeof(sig::mmm) + sizeof(sig::betx_a) + sizeof(sig::crcr);
 
    const UC* src = buf_.get() + offset;
    const UC* src_end = buf_.get() + buf_.size();
@@ -457,16 +450,16 @@ void BetxReader::try_fix_lf_corruption_(std::error_code& ec) noexcept {
    }
 
    try {
-      Buf<UC> new_buf = make_buf<UC>(buf_.size() - offset + sizeof(mmm_signature) + sizeof(betx_signature_a) + sizeof(check_signature) - count);
+      Buf<UC> new_buf = make_buf<UC>(buf_.size() - offset + sizeof(sig::mmm) + sizeof(sig::betx_a) + sizeof(sig::check) - count);
 
       src = buf_.get() + offset;
       src_end = buf_.get() + buf_.size();
 
       UC* dest = new_buf.get();
       UC* dest_end = new_buf.get() + new_buf.size();
-      std::memcpy(dest, mmm_signature, sizeof(mmm_signature)); dest += sizeof(mmm_signature);
-      std::memcpy(dest, betx_signature_a, sizeof(betx_signature_a)); dest += sizeof(betx_signature_a);
-      std::memcpy(dest, check_signature, sizeof(check_signature)); dest += sizeof(check_signature);
+      std::memcpy(dest, sig::mmm, sizeof(sig::mmm)); dest += sizeof(sig::mmm);
+      std::memcpy(dest, sig::betx_a, sizeof(sig::betx_a)); dest += sizeof(sig::betx_a);
+      std::memcpy(dest, sig::check, sizeof(sig::check)); dest += sizeof(sig::check);
 
       prev = 0;
       while (src < src_end && dest < dest_end) {

@@ -54,9 +54,6 @@
     <Filter Include="Header Files\operations\files">
       <UniqueIdentifier>{a828ad12-e61f-41b8-9a97-539c96d1b0d3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\operations\files\betx">
-      <UniqueIdentifier>{6d30ee91-d6da-4f9b-9a0c-2c036346bc02}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\operations\files\bmp">
       <UniqueIdentifier>{a8be02ba-9c79-4d0e-ba5a-ed4f9b9e9e2e}</UniqueIdentifier>
     </Filter>
@@ -137,6 +134,9 @@
     </Filter>
     <Filter Include="Source Files\operations\bo">
       <UniqueIdentifier>{61b5580f-0565-49c9-b683-9d05fe48048b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\operations\files\betx">
+      <UniqueIdentifier>{6d30ee91-d6da-4f9b-9a0c-2c036346bc02}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -284,9 +284,6 @@
     <ClInclude Include="include\tex\texture_reader.hpp">
       <Filter>Header Files\operations\files</Filter>
     </ClInclude>
-    <ClInclude Include="include\tex\texture_writer.hpp">
-      <Filter>Header Files\operations\files</Filter>
-    </ClInclude>
     <ClInclude Include="include\tex\texture_reader_base.hpp">
       <Filter>Header Files\operations\files</Filter>
     </ClInclude>
@@ -340,6 +337,12 @@
     </ClInclude>
     <ClInclude Include="include\tex\tga_reader.hpp">
       <Filter>Header Files\operations\files\tga</Filter>
+    </ClInclude>
+    <ClInclude Include="include\tex\betx_writer.hpp">
+      <Filter>Header Files\operations\files\betx</Filter>
+    </ClInclude>
+    <ClInclude Include="src-tex\betx_write_error_.hpp">
+      <Filter>Source Files\operations\files\betx</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -465,6 +468,12 @@
     </ClCompile>
     <ClCompile Include="src-tex\tga_reader.cpp">
       <Filter>Source Files\operations\files\tga</Filter>
+    </ClCompile>
+    <ClCompile Include="src-tex\betx_writer.cpp">
+      <Filter>Source Files\operations\files\betx</Filter>
+    </ClCompile>
+    <ClCompile Include="src-tex\betx_write_error_.cpp">
+      <Filter>Source Files\operations\files\betx</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

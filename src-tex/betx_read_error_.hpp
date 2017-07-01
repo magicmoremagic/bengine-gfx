@@ -1,8 +1,7 @@
 #pragma once
-#ifndef BE_GFX_TEX_READ_BETX_ERROR_HPP_
-#define BE_GFX_TEX_READ_BETX_ERROR_HPP_
+#ifndef BE_GFX_TEX_BETX_READ_ERROR_HPP_
+#define BE_GFX_TEX_BETX_READ_ERROR_HPP_
 
-#include "tex/gfx_tex_autolink.hpp"
 #include "tex/texture_file_error.hpp"
 #include <be/core/enum_traits.hpp>
 

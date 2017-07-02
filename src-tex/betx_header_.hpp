@@ -66,10 +66,10 @@ struct Converter<be::gfx::tex::detail::BetxHeader> : ConvertBase<be::gfx::tex::d
    }
 
    static void in_place(type& v, Big, Little) {
-      static_to_big<Little::value>(v.layers);
-      static_to_big<Little::value>(v.dim);
-      static_to_big<Little::value>(v.payload_offset);
-      static_to_big<Little::value>(v.payload_size);
+      static_to_little<Big::value>(v.layers);
+      static_to_little<Big::value>(v.dim);
+      static_to_little<Big::value>(v.payload_offset);
+      static_to_little<Big::value>(v.payload_size);
    }
 };
 

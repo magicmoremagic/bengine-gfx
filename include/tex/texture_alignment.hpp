@@ -12,7 +12,7 @@ class TextureAlignment {
 public:
    static constexpr U8 max_alignment_bits = 20;
 
-   TextureAlignment(U8 line_bits = 3u, U8 plane_bits = 0, U8 level_bits = 0, U8 face_bits = 0, U8 layer_bits = 0) noexcept;
+   TextureAlignment(U8 line_bits = 2u, U8 plane_bits = 0, U8 level_bits = 0, U8 face_bits = 0, U8 layer_bits = 0) noexcept;
 
    std::size_t line() const noexcept  { return 1ull << line_bits_; }
    std::size_t plane() const noexcept { return 1ull << plane_bits_; }

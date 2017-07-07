@@ -32,7 +32,7 @@ void reverse_endianness_impl(TextureStorage& storage, BlockPacking packing) {
                         std::memcpy(word_ptr, &tmp, sizeof(T));
                         word_ptr += sizeof(T);
                      }
-                     block_ptr += storage.block_size();
+                     block_ptr += storage.block_span();
                   }
                   line_ptr += line_span;
                }

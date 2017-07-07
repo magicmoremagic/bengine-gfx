@@ -17,7 +17,7 @@ public:
    using layer_index_type = typename TextureStorage::layer_index_type;
    using face_index_type = typename TextureStorage::face_index_type;
    using level_index_type = typename TextureStorage::level_index_type;
-   using block_size_type = typename ImageFormat::block_size_type;
+   using block_span_type = typename TextureStorage::block_span_type;
    using block_dim_type = typename ImageFormat::block_dim_type;
    using char_type = UC;
 
@@ -46,7 +46,7 @@ public:
    std::size_t face() const; ///< The face index of the portion of the texture this view represents.
    std::size_t level() const; ///< The mipmapping level of the portion of the texture this view represents.
 
-   block_size_type block_size() const; ///< The displacement in bytes between a block and the next one in the x direction.
+   block_span_type block_span() const; ///< The displacement in bytes between a block and the next one in the x direction.
    std::size_t line_span() const; ///< The displacement in bytes between a block and the next one in the y direction.
    std::size_t plane_span() const; ///< The displacement in bytes between a block and the next one in the z direction.
 

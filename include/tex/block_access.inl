@@ -17,7 +17,7 @@ struct BlockOffset<ImageView, Coord, 1> {
       assert(image);
       assert((I32)block_coord >= 0);
       assert((I32)block_coord < image.dim_blocks().x);
-      return (std::size_t)block_coord * image.block_size();
+      return (std::size_t)block_coord * image.block_span();
    }
 };
 
@@ -31,7 +31,7 @@ struct BlockOffset<ImageView, Coord, 2> {
       assert((I32)block_coord.x < image.dim_blocks().x);
       assert((I32)block_coord.y < image.dim_blocks().y);
       return (std::size_t)block_coord.y * image.line_span() +
-         (std::size_t)block_coord.x * image.block_size();
+         (std::size_t)block_coord.x * image.block_span();
    }
 };
 
@@ -48,7 +48,7 @@ struct BlockOffset<ImageView, Coord, 3> {
       assert((I32)block_coord.z < image.dim_blocks().z);
       return (std::size_t)block_coord.z * image.plane_span() +
          (std::size_t)block_coord.y * image.line_span() +
-         (std::size_t)block_coord.x * image.block_size();
+         (std::size_t)block_coord.x * image.block_span();
    }
 };
 
@@ -64,7 +64,7 @@ std::size_t block_offset(const ImageView& image, Coord block_coord) {
 template <typename T, typename Coord, typename ImageView>
 T get_block(const ImageView& image, Coord block_coord) {
    T block;
-   assert(sizeof(T) <= image.block_size());
+   assert(sizeof(T) <= image.format().block_size());
    std::memcpy(&block, image.data() + block_offset<Coord, ImageView>(image, block_coord), sizeof(T));
    return block;
 }
@@ -72,7 +72,7 @@ T get_block(const ImageView& image, Coord block_coord) {
 ///////////////////////////////////////////////////////////////////////////////
 template <typename T, typename Coord, typename ImageView>
 void put_block(ImageView& image, Coord block_coord, const T& block) {
-   assert(sizeof(T) <= image.block_size());
+   assert(sizeof(T) <= image.format().block_size());
    std::memcpy(image.data() + block_offset<Coord, ImageView>(image, block_coord), &block, sizeof(T));
 }
 

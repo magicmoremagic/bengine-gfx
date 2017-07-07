@@ -15,7 +15,7 @@ Texture duplicate_texture(const TextureView& source) {
       std::size_t n_faces = source.faces();
       std::size_t n_levels = source.levels();
 
-      texture.storage = std::make_unique<TextureStorage>(n_layers, n_faces, n_levels, source.image().dim(), source.block_dim(), source.block_size(), source.storage().alignment());
+      texture.storage = std::make_unique<TextureStorage>(n_layers, n_faces, n_levels, source.image().dim(), source.block_dim(), source.block_span(), source.storage().alignment());
       texture.view = be::gfx::tex::TextureView(source.format(), source.texture_class(), *texture.storage, 0, n_layers, 0, n_faces, 0, n_levels);
 
       for (std::size_t layer = 0; layer < n_layers; ++layer) {

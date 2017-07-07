@@ -33,7 +33,7 @@ ImageView<TextureStorage, UC>::ImageView(const ImageFormat& format, TextureStora
    assert(face >= 0 && face < storage.faces());
    assert(level >= 0 && level < storage.levels());
    assert(format.block_dim() == storage.block_dim());
-   assert(format.block_size() <= storage.block_size());
+   assert(format.block_size() <= storage.block_span());
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -50,7 +50,7 @@ ImageView<TextureStorage, UC>::ImageView(const ImageFormat& format, ImageView& o
      dim_blocks_(other.dim_blocks_),
      line_plane_span_(other.line_plane_span_) {
    assert(format.block_dim() == storage_->block_dim());
-   assert(format.block_size() <= storage_->block_size());
+   assert(format.block_size() <= storage_->block_span());
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -138,8 +138,8 @@ std::size_t ImageView<TextureStorage, UC>::level() const {
 
 ///////////////////////////////////////////////////////////////////////////////
 template <typename TextureStorage, typename UC>
-typename ImageView<TextureStorage, UC>::block_size_type ImageView<TextureStorage, UC>::block_size() const {
-   return storage_->block_size();
+typename ImageView<TextureStorage, UC>::block_span_type ImageView<TextureStorage, UC>::block_span() const {
+   return storage_->block_span();
 }
 
 ///////////////////////////////////////////////////////////////////////////////

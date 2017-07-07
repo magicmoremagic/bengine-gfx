@@ -14,8 +14,8 @@ void memcpy_blit_by_pixels(const SourceImageView& src, DestImageView& dest) {
    const std::size_t dest_plane_span = dest.plane_span();
    const std::size_t src_line_span = src.line_span();
    const std::size_t dest_line_span = dest.line_span();
-   const std::size_t src_block_size = src.block_size();
-   const std::size_t dest_block_size = dest.block_size();
+   const std::size_t src_block_span = src.block_span();
+   const std::size_t dest_block_span = dest.block_span();
 
    const ivec3 src_block_dim = src.block_dim();
    ivec3 src_block_coord;
@@ -44,13 +44,13 @@ void memcpy_blit_by_pixels(const SourceImageView& src, DestImageView& dest) {
 
             ++src_block_coord.x;
             if (src_block_coord.x >= src_block_dim.x) {
-               src_block_ptr += src_block_size;
+               src_block_ptr += src_block_span;
                src_block_coord.x = 0;
             }
 
             ++dest_block_coord.x;
             if (dest_block_coord.x >= dest_block_dim.x) {
-               dest_block_ptr += dest_block_size;
+               dest_block_ptr += dest_block_span;
                dest_block_coord.x = 0;
             }
          }
@@ -108,7 +108,7 @@ void blit_pixels(const SourceImageView& src, DestImageView& dest) {
           sf.component_types() == df.component_types() &&
           sf.components() == df.components() &&
           sf.packing() == df.packing()) {
-         // formats are the same, with possible exception of block_dim and block_size
+         // formats are the same, with possible exception of block_dim and block_span
          // so we can memcpy pixels (or better) and don't need ConvertingPixelBlitter
          if (sf.block_dim() == df.block_dim() && (sf.block_dim() == ImageFormat::block_dim_type(1u) ||
              (src.dim().x == dest.dim().x || src.dim().x % sf.block_dim().x == 0) &&

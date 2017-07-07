@@ -17,14 +17,14 @@ public:
    using layer_index_type = U16;
    using face_index_type = U8;
    using level_index_type = U8;
-   using block_size_type = typename ImageFormat::block_size_type;
+   using block_span_type = U8;
    using block_dim_type = typename ImageFormat::block_dim_type;
 
    static constexpr std::size_t max_layers = std::size_t(layer_index_type(-1));
    static constexpr std::size_t max_faces = std::size_t(face_index_type(-1));
    static constexpr std::size_t max_levels = 16;
    static constexpr std::size_t max_dim = 1 << (max_levels - 1);
-   static constexpr std::size_t max_block_size = ImageFormat::max_block_size;
+   static constexpr std::size_t max_block_span = std::size_t(block_span_type(-1));;
    static constexpr std::size_t max_block_dim = ImageFormat::max_block_dim;
 
    TextureStorage();
@@ -33,14 +33,14 @@ public:
                   std::size_t levels,
                   ivec3 base_dim,
                   block_dim_type block_dim,
-                  block_size_type block_size,
+                  block_span_type block_span,
                   TextureAlignment alignment = TextureAlignment());
    TextureStorage(std::size_t layers,
                   std::size_t faces,
                   std::size_t levels,
                   ivec3 base_dim,
                   block_dim_type block_dim,
-                  block_size_type block_size,
+                  block_span_type block_span,
                   Buf<UC> data,
                   TextureAlignment alignment = TextureAlignment());
 
@@ -57,7 +57,7 @@ public:
    std::size_t layers() const; ///< The number of texture array layers.  0 for an empty TextureStorage, and at least 1 for any other case.
    std::size_t faces() const; ///< The number of faces.  0 for an empty TextureStorage, at least 1 for cubemap textures, and exactly 1 in any other case.
    std::size_t levels() const; ///< The number of mipmapping levels.  0 for an empty TextureStorage, and at least 1 for any other case.  This may be less than the value specified in the constructor if the dimensions are too small.
-   block_size_type block_size() const; ///< The displacement in bytes between a block and the next one in the x direction.
+   block_span_type block_span() const; ///< The displacement in bytes between a block and the next one in the x direction.
    std::size_t line_span(std::size_t level) const; ///< The displacement in bytes between a block and the next one in the y direction.
    std::size_t plane_span(std::size_t level) const; ///< The displacement in bytes between a block and the next one in the z direction.
    std::size_t level_offset(std::size_t level) const;
@@ -86,7 +86,7 @@ private:
    const layer_index_type layers_;
    const face_index_type faces_;
    level_index_type levels_;
-   const block_size_type block_size_;
+   const block_span_type block_span_;
    const block_dim_type block_dim_;
    std::size_t face_span_;
    std::size_t layer_span_;
@@ -101,14 +101,14 @@ private:
 
 std::size_t calculate_required_texture_storage(std::size_t layers, std::size_t faces, std::size_t levels, ivec3 base_dim,
                                                TextureStorage::block_dim_type block_dim,
-                                               TextureStorage::block_size_type block_size,
+                                               TextureStorage::block_span_type block_span,
                                                std::error_code& ec,
                                                TextureAlignment alignment = TextureAlignment()) noexcept;
 
 std::size_t calculate_image_offset(std::size_t image_layer, std::size_t image_face, std::size_t image_level,
                                    std::size_t layers, std::size_t faces, std::size_t levels, ivec3 base_dim,
                                    TextureStorage::block_dim_type block_dim,
-                                   TextureStorage::block_size_type block_size,
+                                   TextureStorage::block_span_type block_span,
                                    std::error_code& ec,
                                    TextureAlignment alignment = TextureAlignment()) noexcept;
 

@@ -28,7 +28,7 @@ struct PixelOffset<ImageView, Coord, false, DimensionTag<1>> {
       assert((I32)block_coord >= 0);
       assert((I32)block_coord < image.dim_blocks().x);
       assert((I32)pixel_coord >= 0);
-      return (std::size_t)block_coord * image.block_size() +
+      return (std::size_t)block_coord * image.block_span() +
          (std::size_t)pixel_coord * block_pixel_size(image.format().packing());
    }
 };
@@ -47,7 +47,7 @@ struct PixelOffset<ImageView, Coord, false, DimensionTag<2>> {
       assert((I32)pixel_coord.x >= 0);
       assert((I32)pixel_coord.y >= 0);
       return (std::size_t)block_coord.y * image.line_span() +
-         (std::size_t)block_coord.x * image.block_size() +
+         (std::size_t)block_coord.x * image.block_span() +
          (std::size_t)(pixel_coord.y * block_dim.x + pixel_coord.x) *
          block_pixel_size(image.format().packing());
    }
@@ -71,7 +71,7 @@ struct PixelOffset<ImageView, Coord, false, DimensionTag<3>> {
       assert((I32)pixel_coord.z >= 0);
       return (std::size_t)block_coord.z * image.plane_span() +
          (std::size_t)block_coord.y * image.line_span() +
-         (std::size_t)block_coord.x * image.block_size() +
+         (std::size_t)block_coord.x * image.block_span() +
          (std::size_t)((pixel_coord.z * block_dim.y + pixel_coord.y) * block_dim.x + pixel_coord.x) *
          block_pixel_size(image.format().packing());
    }

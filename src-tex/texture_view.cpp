@@ -36,7 +36,7 @@ TextureView<TextureStorage, ImageView>::TextureView(const ImageFormat& format, T
    assert(base_face < storage.faces());
    assert(base_level < storage.levels());
    assert(format.block_dim() == storage.block_dim());
-   assert(format.block_size() <= storage.block_size());
+   assert(format.block_size() <= storage.block_span());
    for (glm::length_t c = dimensionality(tex_class); c < 3; ++c) {
       assert(storage.dim(base_level)[c] == 1);
    }
@@ -56,7 +56,7 @@ TextureView<TextureStorage, ImageView>::TextureView(const ImageFormat& format, T
      levels_(other.levels_) {
    assert(is_valid(tex_class));
    assert(format.block_dim() == storage_->block_dim());
-   assert(format.block_size() <= storage_->block_size());
+   assert(format.block_size() <= storage_->block_span());
    for (glm::length_t c = dimensionality(tex_class); c < 3; ++c) {
       assert(storage_->dim(base_level_)[c] == 1);
    }
@@ -172,8 +172,8 @@ std::size_t TextureView<TextureStorage, ImageView>::max_level() const {
 
 ///////////////////////////////////////////////////////////////////////////////
 template <typename TextureStorage, typename ImageView>
-typename TextureView<TextureStorage, ImageView>::block_size_type TextureView<TextureStorage, ImageView>::block_size() const {
-   return storage_->block_size();
+typename TextureView<TextureStorage, ImageView>::block_span_type TextureView<TextureStorage, ImageView>::block_span() const {
+   return storage_->block_span();
 }
 
 ///////////////////////////////////////////////////////////////////////////////

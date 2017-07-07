@@ -153,7 +153,7 @@ Buf<UC> BetxWriter::write(std::error_code& ec) noexcept {
    header.components = format.components();
    header.block_packing = static_cast<U8>(format.packing());
    header.colorspace = static_cast<U8>(format.colorspace());
-   header.block_span = t.block_size();
+   header.block_span = t.block_span();
    header.line_alignment = alignment.line_bits();
    header.plane_alignment = alignment.plane_bits();
    header.level_alignment = alignment.level_bits();

@@ -15,7 +15,7 @@ TextureStorage::TextureStorage()
    : layers_(0),
      faces_(0),
      levels_(0),
-     block_size_(0),
+     block_span_(0),
      face_span_(0),
      layer_span_(0),
      size_(0),
@@ -30,11 +30,11 @@ TextureStorage::TextureStorage(std::size_t layers,
                                std::size_t levels,
                                ivec3 base_dim,
                                block_dim_type block_dim,
-                               block_size_type block_size,
+                               block_span_type block_span,
                                TextureAlignment alignment)
    : layers_(layer_index_type(layers)),
      faces_(face_index_type(faces)),
-     block_size_(block_size),
+     block_span_(block_span),
      block_dim_(block_dim),
      alignment_(alignment) {
    init_(levels, base_dim);
@@ -47,12 +47,12 @@ TextureStorage::TextureStorage(std::size_t layers,
                                std::size_t levels,
                                ivec3 base_dim,
                                block_dim_type block_dim,
-                               block_size_type block_size,
+                               block_span_type block_span,
                                Buf<UC> data,
                                TextureAlignment alignment)
    : layers_(layer_index_type(layers)),
      faces_(face_index_type(faces)),
-     block_size_(block_size),
+     block_span_(block_span),
      block_dim_(block_dim),
      alignment_(alignment) {
    init_(levels, base_dim);
@@ -112,8 +112,8 @@ std::size_t TextureStorage::levels() const {
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-TextureStorage::block_size_type TextureStorage::block_size() const {
-   return block_size_;
+TextureStorage::block_span_type TextureStorage::block_span() const {
+   return block_span_;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -199,7 +199,7 @@ bool TextureStorage::operator==(const TextureStorage& other) const {
    if (layers_ != other.layers_) return false;
    if (levels_ != other.levels_) return false;
    if (faces_ != other.faces_) return false;
-   if (block_size_ != other.block_size_) return false;
+   if (block_span_ != other.block_span_) return false;
    if (block_dim_ != other.block_dim_) return false;
    if (dim_ != other.dim_) return false;
    if (dim_blocks_ != other.dim_blocks_) return false;
@@ -219,13 +219,13 @@ void TextureStorage::init_(std::size_t levels, ivec3 dim) {
    assert(layers_ <= max_layers);
    assert(faces_ <= max_faces);
    assert(levels <= max_levels);
-   assert(block_size_ <= max_block_size);
+   assert(block_span_ <= max_block_span);
 
    assert(block_dim_.x > 0);
    assert(block_dim_.y > 0);
    assert(block_dim_.z > 0);
 
-   assert(block_size_ > 0);
+   assert(block_span_ > 0);
 
    assert(dim.x > 0);
    assert(dim.y > 0);
@@ -255,7 +255,7 @@ void TextureStorage::init_(std::size_t levels, ivec3 dim) {
          const ivec3 dim_blocks = (dim + block_dim_offset) / block_dim_ivec3;
          dim_blocks_[level] = dim_blocks;
 
-         const std::size_t line_span = aligned_size(std::size_t(dim_blocks.x) * block_size_, line_alignment);
+         const std::size_t line_span = aligned_size(std::size_t(dim_blocks.x) * block_span_, line_alignment);
          const std::size_t plane_span = aligned_size(std::size_t(dim_blocks.y) * line_span, plane_alignment);
 
          assert(line_span <= std::numeric_limits<U32>::max());
@@ -297,7 +297,7 @@ std::size_t TextureStorage::hash_() const {
    std::size_t h = std_hash(layers_);
    h = std_hash(h, faces_);
    h = std_hash(h, levels_);
-   h = std_hash(h, block_size_);
+   h = std_hash(h, block_span_);
    h = std_hash(h, block_dim_);
    h = std_hash(h, face_span_);
    h = std_hash(h, layer_span_);
@@ -318,12 +318,12 @@ std::size_t TextureStorage::hash_() const {
 ///////////////////////////////////////////////////////////////////////////////
 std::size_t calculate_required_texture_storage(std::size_t layers, std::size_t faces, std::size_t levels, ivec3 base_dim,
                                                TextureStorage::block_dim_type block_dim,
-                                               TextureStorage::block_size_type block_size,
+                                               TextureStorage::block_span_type block_span,
                                                std::error_code& ec,
                                                TextureAlignment alignment) noexcept {
    if (layers == 0 || layers > TextureStorage::max_layers ||
        faces == 0 || faces > TextureStorage::max_faces ||
-       block_size == 0 || block_size > TextureStorage::max_block_size) {
+       block_span == 0 || block_span > TextureStorage::max_block_span) {
       ec = std::make_error_code(std::errc::invalid_argument);
       return 0;
    }
@@ -357,7 +357,7 @@ std::size_t calculate_required_texture_storage(std::size_t layers, std::size_t f
 
    for (std::size_t level = 0; level < levels; ++level) {
       const ivec3 dim_blocks = (dim + block_dim_offset) / block_dim_ivec3;
-      const std::size_t line_span  = aligned_size(std::size_t(dim_blocks.x) * block_size, line_alignment);
+      const std::size_t line_span  = aligned_size(std::size_t(dim_blocks.x) * block_span, line_alignment);
       const std::size_t plane_span = aligned_size(std::size_t(dim_blocks.y) * line_span, plane_alignment);
       const std::size_t level_span = aligned_size(std::size_t(dim_blocks.z) * plane_span, level_alignment);
 
@@ -385,12 +385,12 @@ std::size_t calculate_required_texture_storage(std::size_t layers, std::size_t f
 std::size_t calculate_image_offset(std::size_t image_layer, std::size_t image_face, std::size_t image_level,
                                    std::size_t layers, std::size_t faces, std::size_t levels, ivec3 base_dim,
                                    TextureStorage::block_dim_type block_dim,
-                                   TextureStorage::block_size_type block_size,
+                                   TextureStorage::block_span_type block_span,
                                    std::error_code& ec,
                                    TextureAlignment alignment) noexcept {
    if (layers == 0 || layers > TextureStorage::max_layers ||
        faces == 0 || faces > TextureStorage::max_faces ||
-       block_size == 0 || block_size > TextureStorage::max_block_size) {
+       block_span == 0 || block_span > TextureStorage::max_block_span) {
       ec = std::make_error_code(std::errc::invalid_argument);
       return 0;
    }
@@ -437,7 +437,7 @@ std::size_t calculate_image_offset(std::size_t image_layer, std::size_t image_fa
       }
 
       const ivec3 dim_blocks = (dim + block_dim_offset) / block_dim_ivec3;
-      const std::size_t line_span  = aligned_size(std::size_t(dim_blocks.x) * block_size, line_alignment);
+      const std::size_t line_span  = aligned_size(std::size_t(dim_blocks.x) * block_span, line_alignment);
       const std::size_t plane_span = aligned_size(std::size_t(dim_blocks.y) * line_span, plane_alignment);
       const std::size_t level_span = aligned_size(std::size_t(dim_blocks.z) * plane_span, level_alignment);
 

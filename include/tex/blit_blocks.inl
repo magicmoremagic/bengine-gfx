@@ -78,7 +78,7 @@ void memcpy_blit_by_plane_segments(const SourceImageView& src, ibox src_block_ex
 ///////////////////////////////////////////////////////////////////////////////
 template <typename SourceImageView, typename DestImageView>
 void memcpy_blit_by_lines(const SourceImageView& src, DestImageView& dest) {
-   const std::size_t size = src.block_size() * (std::size_t)src.dim_blocks().x;
+   const std::size_t size = src.block_span() * (std::size_t)src.dim_blocks().x;
    const std::size_t src_plane_span = src.plane_span();
    const std::size_t dest_plane_span = dest.plane_span();
    const std::size_t src_line_span = src.line_span();
@@ -106,13 +106,13 @@ void memcpy_blit_by_lines(const SourceImageView& src, DestImageView& dest) {
 ///////////////////////////////////////////////////////////////////////////////
 template <typename SourceImageView, typename DestImageView>
 void memcpy_blit_by_line_segments(const SourceImageView& src, ibox src_block_extents, DestImageView& dest, ibox dest_block_extents) {
-   const std::size_t size = src.block_size() * (std::size_t)src_block_extents.dim.x;
+   const std::size_t size = src.block_span() * (std::size_t)src_block_extents.dim.x;
    const std::size_t src_plane_span = src.plane_span();
    const std::size_t dest_plane_span = dest.plane_span();
    const std::size_t src_line_span = src.line_span();
    const std::size_t dest_line_span = dest.line_span();
-   const std::size_t src_block_offset = src.block_size() * (std::size_t)src_block_extents.offset.x;
-   const std::size_t dest_block_offset = dest.block_size() * (std::size_t)dest_block_extents.offset.x;
+   const std::size_t src_block_offset = src.block_span() * (std::size_t)src_block_extents.offset.x;
+   const std::size_t dest_block_offset = dest.block_span() * (std::size_t)dest_block_extents.offset.x;
    assert(src_line_span >= src_block_offset + size);
    assert(dest_line_span >= dest_block_offset + size);
 
@@ -146,10 +146,10 @@ void memcpy_blit_by_blocks(const SourceImageView& src, DestImageView& dest) {
    const std::size_t dest_plane_span = dest.plane_span();
    const std::size_t src_line_span = src.line_span();
    const std::size_t dest_line_span = dest.line_span();
-   const std::size_t src_block_size = src.block_size();
-   const std::size_t dest_block_size = dest.block_size();
-   assert(src_block_size >= size);
-   assert(dest_block_size >= size);
+   const std::size_t src_block_span = src.block_span();
+   const std::size_t dest_block_span = dest.block_span();
+   assert(src_block_span >= size);
+   assert(dest_block_span >= size);
 
    const UC* src_plane_ptr = src.data();
    UC* dest_plane_ptr = dest.data();
@@ -163,8 +163,8 @@ void memcpy_blit_by_blocks(const SourceImageView& src, DestImageView& dest) {
          UC* dest_ptr = dest_line_ptr;
          for (I32 x = 0; x < dim.x; ++x) {
             std::memcpy(dest_ptr, src_ptr, size);
-            src_ptr += src_block_size;
-            dest_ptr += dest_block_size;
+            src_ptr += src_block_span;
+            dest_ptr += dest_block_span;
          }
          src_line_ptr += src_line_span;
          dest_line_ptr += dest_line_span;
@@ -182,17 +182,17 @@ void memcpy_blit_by_blocks(const SourceImageView& src, ibox src_block_extents, D
    const std::size_t dest_plane_span = dest.plane_span();
    const std::size_t src_line_span = src.line_span();
    const std::size_t dest_line_span = dest.line_span();
-   const std::size_t src_block_size = src.block_size();
-   const std::size_t dest_block_size = dest.block_size();
-   assert(src_block_size >= size);
-   assert(dest_block_size >= size);
+   const std::size_t src_block_span = src.block_span();
+   const std::size_t dest_block_span = dest.block_span();
+   assert(src_block_span >= size);
+   assert(dest_block_span >= size);
 
-   const std::size_t src_block_offset = src.block_size() * (std::size_t)src_block_extents.offset.x;
-   const std::size_t dest_block_offset = dest.block_size() * (std::size_t)dest_block_extents.offset.x;
-   const std::size_t src_line_offset = src.line_span() * (std::size_t)src_block_extents.offset.y;
-   const std::size_t dest_line_offset = dest.line_span() * (std::size_t)dest_block_extents.offset.y;
-   const std::size_t src_plane_offset = src.plane_span() * (std::size_t)src_block_extents.offset.z;
-   const std::size_t dest_plane_offset = dest.plane_span() * (std::size_t)dest_block_extents.offset.z;
+   const std::size_t src_block_offset = src_block_span * (std::size_t)src_block_extents.offset.x;
+   const std::size_t dest_block_offset = dest_block_span * (std::size_t)dest_block_extents.offset.x;
+   const std::size_t src_line_offset = src_line_span * (std::size_t)src_block_extents.offset.y;
+   const std::size_t dest_line_offset = dest_line_span * (std::size_t)dest_block_extents.offset.y;
+   const std::size_t src_plane_offset = src_plane_span * (std::size_t)src_block_extents.offset.z;
+   const std::size_t dest_plane_offset = dest_plane_span * (std::size_t)dest_block_extents.offset.z;
 
    const UC* src_plane_ptr = src.data() + src_plane_offset + src_line_offset + src_block_offset;
    UC* dest_plane_ptr = dest.data() + dest_plane_offset + dest_line_offset + dest_block_offset;
@@ -206,8 +206,8 @@ void memcpy_blit_by_blocks(const SourceImageView& src, ibox src_block_extents, D
          UC* dest_ptr = dest_line_ptr;
          for (I32 x = 0; x < dim.x; ++x) {
             std::memcpy(dest_ptr, src_ptr, size);
-            src_ptr += src_block_size;
-            dest_ptr += dest_block_size;
+            src_ptr += src_block_span;
+            dest_ptr += dest_block_span;
          }
          src_line_ptr += src_line_span;
          dest_line_ptr += dest_line_span;
@@ -220,7 +220,7 @@ void memcpy_blit_by_blocks(const SourceImageView& src, ibox src_block_extents, D
 ///////////////////////////////////////////////////////////////////////////////
 template <typename SourceImageView, typename DestImageView>
 void memcpy_blit_compatible_blocks(const SourceImageView& src, DestImageView& dest) {
-   if (src.block_size() == dest.block_size()) {
+   if (src.block_span() == dest.block_span()) {
       if (src.dim_blocks().x == dest.dim_blocks().x && src.line_span() == dest.line_span()) {
          if (src.dim_blocks().y == dest.dim_blocks().y && src.plane_span() == dest.plane_span()) {
             detail::memcpy_blit_level(src, dest);
@@ -238,7 +238,7 @@ void memcpy_blit_compatible_blocks(const SourceImageView& src, DestImageView& de
 ///////////////////////////////////////////////////////////////////////////////
 template <typename SourceImageView, typename DestImageView>
 void memcpy_blit_compatible_blocks(const SourceImageView& src, ibox src_block_extents, DestImageView& dest, ibox dest_block_extents) {
-   if (src.block_size() == dest.block_size()) {
+   if (src.block_span() == dest.block_span()) {
 
       if (src.line_span() == dest.line_span() &&
           src_block_extents.offset.x == 0 && src_block_extents.dim.x == src.dim_blocks().x &&

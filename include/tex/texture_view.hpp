@@ -17,7 +17,7 @@ public:
    using layer_index_type = typename TextureStorage::layer_index_type;
    using face_index_type = typename TextureStorage::face_index_type;
    using level_index_type = typename TextureStorage::level_index_type;
-   using block_size_type = typename ImageFormat::block_size_type;
+   using block_span_type = typename TextureStorage::block_span_type;
    using block_dim_type = typename ImageFormat::block_dim_type;
 
    TextureView();
@@ -54,7 +54,7 @@ public:
    std::size_t base_level() const;
    std::size_t max_level() const;
 
-   block_size_type block_size() const;
+   block_span_type block_span() const;
    std::size_t line_span(std::size_t level) const;
    std::size_t plane_span(std::size_t level) const;
    std::size_t level_offset(std::size_t level) const;

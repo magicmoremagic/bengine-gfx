@@ -4,6 +4,7 @@
 
 #include "texture_reader_base.hpp"
 #include <be/core/logging.hpp>
+#include <be/util/util_compression_autolink.hpp>
 
 namespace be::gfx::tex {
 

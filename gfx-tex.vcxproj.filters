@@ -344,6 +344,9 @@
     <ClInclude Include="src-tex\betx_write_error_.hpp">
       <Filter>Source Files\operations\files\betx</Filter>
     </ClInclude>
+    <ClInclude Include="include\tex\log_texture_info.hpp">
+      <Filter>Header Files\operations</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src-tex\pch.cpp">
@@ -474,6 +477,9 @@
     </ClCompile>
     <ClCompile Include="src-tex\betx_write_error_.cpp">
       <Filter>Source Files\operations\files\betx</Filter>
+    </ClCompile>
+    <ClCompile Include="src-tex\log_texture_info.cpp">
+      <Filter>Source Files\operations</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

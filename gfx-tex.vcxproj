@@ -77,6 +77,7 @@
     <ClInclude Include="include\tex\image_region_hash.hpp" />
     <ClInclude Include="include\tex\image_view.hpp" />
     <ClInclude Include="include\tex\image_view_hash.hpp" />
+    <ClInclude Include="include\tex\log_texture_info.hpp" />
     <ClInclude Include="include\tex\make_image.hpp" />
     <ClInclude Include="include\tex\make_texture.hpp" />
     <ClInclude Include="include\tex\mipmapping.hpp" />
@@ -138,6 +139,7 @@
     <ClCompile Include="src-tex\image_format_gl.cpp" />
     <ClCompile Include="src-tex\image_region.cpp" />
     <ClCompile Include="src-tex\image_view.cpp" />
+    <ClCompile Include="src-tex\log_texture_info.cpp" />
     <ClCompile Include="src-tex\make_texture.cpp" />
     <ClCompile Include="src-tex\mipmapping.cpp" />
     <ClCompile Include="src-tex\pch.cpp">

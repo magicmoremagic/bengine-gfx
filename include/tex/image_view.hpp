@@ -42,9 +42,9 @@ public:
    explicit operator Buf<UC>(); ///< Constructs a non-owning Buf holding this image's data.
    explicit operator Buf<const UC>() const; ///< Constructs a non-owning Buf holding this image's const data.
 
-   std::size_t layer() const; ///< The layer index of the portion of the texture this view represents.
-   std::size_t face() const; ///< The face index of the portion of the texture this view represents.
-   std::size_t level() const; ///< The mipmapping level of the portion of the texture this view represents.
+   layer_index_type layer() const; ///< The layer index of the portion of the texture this view represents.
+   face_index_type face() const; ///< The face index of the portion of the texture this view represents.
+   level_index_type level() const; ///< The mipmapping level of the portion of the texture this view represents.
 
    block_span_type block_span() const; ///< The displacement in bytes between a block and the next one in the x direction.
    std::size_t line_span() const; ///< The displacement in bytes between a block and the next one in the y direction.

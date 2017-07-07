@@ -120,19 +120,19 @@ ImageView<TextureStorage, UC>::operator Buf<const UC>() const {
 
 ///////////////////////////////////////////////////////////////////////////////
 template <typename TextureStorage, typename UC>
-std::size_t ImageView<TextureStorage, UC>::layer() const {
+typename ImageView<TextureStorage, UC>::layer_index_type ImageView<TextureStorage, UC>::layer() const {
    return layer_;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 template <typename TextureStorage, typename UC>
-std::size_t ImageView<TextureStorage, UC>::face() const {
+typename ImageView<TextureStorage, UC>::face_index_type ImageView<TextureStorage, UC>::face() const {
    return face_;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 template <typename TextureStorage, typename UC>
-std::size_t ImageView<TextureStorage, UC>::level() const {
+typename ImageView<TextureStorage, UC>::level_index_type ImageView<TextureStorage, UC>::level() const {
    return level_;
 }
 

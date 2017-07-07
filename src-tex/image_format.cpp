@@ -12,39 +12,46 @@ ImageFormat::ImageFormat()
      premultiplied_(false) { }
 
 ///////////////////////////////////////////////////////////////////////////////
-ImageFormat::ImageFormat(block_size_type block_size,
-                         block_size_type block_dim,
+ImageFormat::ImageFormat(std::size_t block_size,
+                         std::size_t block_dim,
                          BlockPacking packing,
-                         U8 components,
+                         glm::length_t components,
                          component_types_type component_types,
                          swizzles_type swizzles,
                          Colorspace colorspace,
                          bool premultiplied)
-   : ImageFormat(block_size, block_dim_type(block_dim), packing, components, component_types, swizzles, colorspace, premultiplied) { }
+   : ImageFormat(block_size, block_dim_type(static_cast<block_size_type>(block_dim)), packing, components, component_types, swizzles, colorspace, premultiplied) {
+   assert(block_dim <= max_block_dim);
+}
 
 ///////////////////////////////////////////////////////////////////////////////
-ImageFormat::ImageFormat(block_size_type block_size,
+ImageFormat::ImageFormat(std::size_t block_size,
                          block_dim_type block_dim,
                          BlockPacking packing,
-                         U8 components,
+                         glm::length_t components,
                          component_types_type component_types,
                          swizzles_type swizzles,
                          Colorspace colorspace,
                          bool premultiplied)
-   : block_size_(block_size),
+   : block_size_(static_cast<block_size_type>(block_size)),
      block_dim_(block_dim),
      packing_(packing),
-     components_(components),
+     components_(static_cast<component_count_type>(components)),
      component_types_(component_types),
      swizzle_(swizzles),
      colorspace_(colorspace),
      premultiplied_(premultiplied) {
    assert(block_size > 0);
+   assert(block_size <= max_block_size);
    assert(block_dim.x > 0);
    assert(block_dim.y > 0);
    assert(block_dim.z > 0);
+   assert(block_dim.x <= max_block_dim);
+   assert(block_dim.y <= max_block_dim);
+   assert(block_dim.z <= max_block_dim);
    assert(is_valid(packing));
    assert(components > 0);
+   assert(components <= max_components);
    assert(is_valid(static_cast<ComponentType>(component_types.r)));
    assert(is_valid(static_cast<ComponentType>(component_types.g)));
    assert(is_valid(static_cast<ComponentType>(component_types.b)));
@@ -63,9 +70,10 @@ ImageFormat::operator bool() const {
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-ImageFormat& ImageFormat::block_size(block_size_type size) {
+ImageFormat& ImageFormat::block_size(std::size_t size) {
    assert(size > 0);
-   block_size_ = size;
+   assert(size <= max_block_size);
+   block_size_ = static_cast<block_size_type>(size);
    return *this;
 }
 
@@ -75,11 +83,12 @@ ImageFormat::block_size_type ImageFormat::block_size() const {
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-ImageFormat& ImageFormat::block_dim(block_size_type block_dim) {
+ImageFormat& ImageFormat::block_dim(std::size_t block_dim) {
    assert(block_dim > 0);
-   block_dim_.x = block_dim;
-   block_dim_.y = block_dim;
-   block_dim_.z = block_dim;
+   assert(block_dim <= max_block_dim);
+   block_dim_.x = static_cast<block_size_type>(block_dim);
+   block_dim_.y = static_cast<block_size_type>(block_dim);
+   block_dim_.z = static_cast<block_size_type>(block_dim);
    return *this;
 }
 
@@ -98,14 +107,15 @@ ImageFormat::block_dim_type ImageFormat::block_dim() const {
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-ImageFormat& ImageFormat::components(U8 n_comps) {
+ImageFormat& ImageFormat::components(glm::length_t n_comps) {
    assert(n_comps > 0);
-   components_ = n_comps;
+   assert(n_comps <= max_components);
+   components_ = static_cast<component_count_type>(n_comps);
    return *this;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-U8 ImageFormat::components() const {
+ImageFormat::component_count_type ImageFormat::components() const {
    return components_;
 }
 
@@ -139,12 +149,14 @@ ImageFormat::component_types_type ImageFormat::component_types() const {
 ///////////////////////////////////////////////////////////////////////////////
 ImageFormat& ImageFormat::component_type(glm::length_t component, ComponentType type) {
    assert(is_valid(static_cast<ComponentType>(type)));
+   assert(component <= max_typed_components);
    component_types_[component] = static_cast<component_types_type::value_type>(type);
    return *this;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 ComponentType ImageFormat::component_type(glm::length_t component) const {
+   assert(component <= max_typed_components);
    return static_cast<ComponentType>(component_types_[component]);
 }
 
@@ -166,12 +178,14 @@ ImageFormat::swizzles_type ImageFormat::swizzles() const {
 ///////////////////////////////////////////////////////////////////////////////
 ImageFormat& ImageFormat::swizzle(glm::length_t component, Swizzle swizzle) {
    assert(is_valid(static_cast<Swizzle>(swizzle)));
+   assert(component <= max_typed_components);
    swizzle_[component] = static_cast<component_types_type::value_type>(swizzle);
    return *this;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 Swizzle ImageFormat::swizzle(glm::length_t component) const {
+   assert(component <= max_typed_components);
    return static_cast<Swizzle>(swizzle_[component]);
 }
 

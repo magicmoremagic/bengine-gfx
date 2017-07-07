@@ -18,28 +18,31 @@ class ImageFormat final {
 public:
    using block_size_type = U8;
    using block_dim_type = glm::vec<3, block_size_type>;
+   using component_count_type = U8;
 
-   using component_types_type = glm::vec<4, U8>;
-   using swizzles_type = glm::vec<4, U8>;
-   
-   static constexpr std::size_t max_block_size = std::size_t(block_size_type(-1));
-   static constexpr std::size_t max_block_dim = std::size_t(block_size_type(-1));
+   static constexpr block_size_type max_block_size = block_size_type(-1);
+   static constexpr block_size_type max_block_dim = block_size_type(-1);
+   static constexpr component_count_type max_components = component_count_type(-1);
+   static constexpr component_count_type max_typed_components = component_count_type(4);
+
+   using component_types_type = glm::vec<max_typed_components, std::underlying_type_t<ComponentType>>;
+   using swizzles_type = glm::vec<max_typed_components, std::underlying_type_t<Swizzle>>;
 
    ImageFormat();
-   ImageFormat(block_size_type block_size, block_size_type block_dim, BlockPacking packing, U8 components, component_types_type component_types, swizzles_type swizzles, Colorspace colorspace, bool premultiplied);
-   ImageFormat(block_size_type block_size, block_dim_type block_dim, BlockPacking packing, U8 components, component_types_type component_types, swizzles_type swizzles, Colorspace colorspace, bool premultiplied);
+   ImageFormat(std::size_t block_size, std::size_t block_dim, BlockPacking packing, glm::length_t components, component_types_type component_types, swizzles_type swizzles, Colorspace colorspace, bool premultiplied);
+   ImageFormat(std::size_t block_size, block_dim_type block_dim, BlockPacking packing, glm::length_t components, component_types_type component_types, swizzles_type swizzles, Colorspace colorspace, bool premultiplied);
 
    explicit operator bool() const;
 
-   ImageFormat& block_size(block_size_type size);
+   ImageFormat& block_size(std::size_t size);
    block_size_type block_size() const;
    
-   ImageFormat& block_dim(block_size_type block_dim);
+   ImageFormat& block_dim(std::size_t block_dim);
    ImageFormat& block_dim(block_dim_type block_dim);
    block_dim_type block_dim() const;
 
-   ImageFormat& components(U8 n_comps);
-   U8 components() const;
+   ImageFormat& components(glm::length_t n_comps);
+   component_count_type components() const;
 
    ImageFormat& packing(BlockPacking value);
    BlockPacking packing() const;
@@ -69,7 +72,7 @@ private:
    block_size_type block_size_;
    block_dim_type block_dim_;
    BlockPacking packing_;
-   U8 components_;
+   component_count_type components_;
    component_types_type component_types_;
    swizzles_type swizzle_;
    Colorspace colorspace_;

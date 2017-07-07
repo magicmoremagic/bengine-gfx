@@ -118,55 +118,55 @@ ConstImageView TextureView<TextureStorage, ImageView>::image(std::size_t layer, 
 
 ///////////////////////////////////////////////////////////////////////////////
 template <typename TextureStorage, typename ImageView>
-std::size_t TextureView<TextureStorage, ImageView>::layers() const {
+typename TextureView<TextureStorage, ImageView>::layer_index_type TextureView<TextureStorage, ImageView>::layers() const {
    return layers_;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 template <typename TextureStorage, typename ImageView>
-std::size_t TextureView<TextureStorage, ImageView>::base_layer() const {
+typename TextureView<TextureStorage, ImageView>::layer_index_type TextureView<TextureStorage, ImageView>::base_layer() const {
    return base_layer_;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 template <typename TextureStorage, typename ImageView>
-std::size_t TextureView<TextureStorage, ImageView>::max_layer() const {
+typename TextureView<TextureStorage, ImageView>::layer_index_type TextureView<TextureStorage, ImageView>::max_layer() const {
    return base_layer_ + layers_ - 1;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 template <typename TextureStorage, typename ImageView>
-std::size_t TextureView<TextureStorage, ImageView>::faces() const {
+typename TextureView<TextureStorage, ImageView>::face_index_type TextureView<TextureStorage, ImageView>::faces() const {
    return faces_;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 template <typename TextureStorage, typename ImageView>
-std::size_t TextureView<TextureStorage, ImageView>::base_face() const {
+typename TextureView<TextureStorage, ImageView>::face_index_type TextureView<TextureStorage, ImageView>::base_face() const {
    return base_face_;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 template <typename TextureStorage, typename ImageView>
-std::size_t TextureView<TextureStorage, ImageView>::max_face() const {
+typename TextureView<TextureStorage, ImageView>::face_index_type TextureView<TextureStorage, ImageView>::max_face() const {
    return base_face_ + faces_ - 1;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 template <typename TextureStorage, typename ImageView>
-std::size_t TextureView<TextureStorage, ImageView>::levels() const {
+typename TextureView<TextureStorage, ImageView>::level_index_type TextureView<TextureStorage, ImageView>::levels() const {
    return levels_;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 template <typename TextureStorage, typename ImageView>
-std::size_t TextureView<TextureStorage, ImageView>::base_level() const {
+typename TextureView<TextureStorage, ImageView>::level_index_type TextureView<TextureStorage, ImageView>::base_level() const {
    return base_level_;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 template <typename TextureStorage, typename ImageView>
-std::size_t TextureView<TextureStorage, ImageView>::max_level() const {
+typename TextureView<TextureStorage, ImageView>::level_index_type TextureView<TextureStorage, ImageView>::max_level() const {
    return base_level_ + levels_ - 1;
 }
 

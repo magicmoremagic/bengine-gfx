@@ -42,17 +42,17 @@ public:
    ImageView image(std::size_t layer = 0, std::size_t face = 0, std::size_t level = 0);
    ConstImageView image(std::size_t layer = 0, std::size_t face = 0, std::size_t level = 0) const;
 
-   std::size_t layers() const;
-   std::size_t base_layer() const;
-   std::size_t max_layer() const;
+   layer_index_type layers() const;
+   layer_index_type base_layer() const;
+   layer_index_type max_layer() const;
 
-   std::size_t faces() const; 
-   std::size_t base_face() const;
-   std::size_t max_face() const;
+   face_index_type faces() const; 
+   face_index_type base_face() const;
+   face_index_type max_face() const;
 
-   std::size_t levels() const;
-   std::size_t base_level() const;
-   std::size_t max_level() const;
+   level_index_type levels() const;
+   level_index_type base_level() const;
+   level_index_type max_level() const;
 
    block_span_type block_span() const;
    std::size_t line_span(std::size_t level) const;

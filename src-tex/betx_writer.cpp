@@ -154,11 +154,11 @@ Buf<UC> BetxWriter::write(std::error_code& ec) noexcept {
    header.block_packing = static_cast<U8>(format.packing());
    header.colorspace = static_cast<U8>(format.colorspace());
    header.block_span = t.block_size();
-   header.line_span_granularity = alignment.line_bits();
-   header.plane_span_granularity = alignment.plane_bits();
-   header.level_span_granularity = alignment.level_bits();
-   header.face_span_granularity = alignment.face_bits();
-   header.layer_span_granularity = alignment.layer_bits();
+   header.line_alignment = alignment.line_bits();
+   header.plane_alignment = alignment.plane_bits();
+   header.level_alignment = alignment.level_bits();
+   header.face_alignment = alignment.face_bits();
+   header.layer_alignment = alignment.layer_bits();
 
    for (glm::length_t c = 0; c < 4; ++c) {
       if (!is_valid(format.component_type(c))) {
@@ -194,14 +194,14 @@ Buf<UC> BetxWriter::write(std::error_code& ec) noexcept {
          }
 
          try {
-            result = make_buf<UC>(sizeof(header) + header.payload_size + sizeof(sig::footer));
+            result = make_buf<UC>(sizeof(header) + t.storage().size() + sizeof(sig::footer));
          } catch (const std::bad_alloc&) {
             ec = err::not_enough_memory;
             return result;
          }
          std::memcpy(result.get(), &header, sizeof(header));
          std::memcpy(result.get() + result.size() - sizeof(sig::footer), sig::footer, sizeof(sig::footer));
-         std::memcpy(result.get() + sizeof(header), t.storage().data(), header.payload_size);
+         std::memcpy(result.get() + sizeof(header), t.storage().data(), t.storage().size());
          break;
 
       case PayloadCompressionMode::zlib:
@@ -221,14 +221,14 @@ Buf<UC> BetxWriter::write(std::error_code& ec) noexcept {
          }
 
          try {
-            result = make_buf<UC>(sizeof(header) + header.payload_size + sizeof(sig::footer));
+            result = make_buf<UC>(sizeof(header) + compressed.size() + sizeof(sig::footer));
          } catch (const std::bad_alloc&) {
             ec = err::not_enough_memory;
             return result;
          }
          std::memcpy(result.get(), &header, sizeof(header));
          std::memcpy(result.get() + result.size() - sizeof(sig::footer), sig::footer, sizeof(sig::footer));
-         std::memcpy(result.get() + sizeof(header), compressed.get(), header.payload_size);
+         std::memcpy(result.get() + sizeof(header), compressed.get(), compressed.size());
          break;
       }
 

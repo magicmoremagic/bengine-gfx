@@ -41,11 +41,11 @@ struct BetxHeader {
    U32 payload_offset;
    U64 payload_size;
    U8 block_span;
-   U8 line_span_granularity;
-   U8 plane_span_granularity;
-   U8 level_span_granularity;
-   U8 face_span_granularity;
-   U8 layer_span_granularity;
+   U8 line_alignment;
+   U8 plane_alignment;
+   U8 level_alignment;
+   U8 face_alignment;
+   U8 layer_alignment;
    U8 reserved;
    U8 payload_compression;
 };

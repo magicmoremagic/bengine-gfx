@@ -103,25 +103,25 @@ TextureFileInfo BetxReader::info_v1_(const detail::BetxHeader& header, std::erro
    }
    
    // alignment_
-   alignment_ = TextureAlignment(header.line_span_granularity,
-                                 header.plane_span_granularity,
-                                 header.level_span_granularity,
-                                 header.face_span_granularity,
-                                 header.layer_span_granularity);
+   alignment_ = TextureAlignment(header.line_alignment,
+                                 header.plane_alignment,
+                                 header.level_alignment,
+                                 header.face_alignment,
+                                 header.layer_alignment);
    constexpr auto max_align_bits = TextureAlignment::max_alignment_bits;
-   if ((header.line_span_granularity > max_align_bits ||
-       header.plane_span_granularity > max_align_bits ||
-       header.level_span_granularity > max_align_bits ||
-       header.face_span_granularity > max_align_bits ||
-       header.layer_span_granularity > max_align_bits) &&
-       !should_continue_(err::unsupported_span_granularity, ec)) {
+   if ((header.line_alignment > max_align_bits ||
+       header.plane_alignment > max_align_bits ||
+       header.level_alignment > max_align_bits ||
+       header.face_alignment > max_align_bits ||
+       header.layer_alignment > max_align_bits) &&
+       !should_continue_(err::unsupported_alignment, ec)) {
       return info;
    }
-   if ((header.plane_span_granularity < header.line_span_granularity ||
-       header.level_span_granularity < header.plane_span_granularity ||
-       header.face_span_granularity < header.level_span_granularity ||
-       header.layer_span_granularity < header.face_span_granularity) &&
-       !should_continue_(err::noncanonical_span_granularity, ec)) {
+   if ((header.plane_alignment < header.line_alignment ||
+       header.level_alignment < header.plane_alignment ||
+       header.face_alignment < header.level_alignment ||
+       header.layer_alignment < header.face_alignment) &&
+       !should_continue_(err::noncanonical_alignment, ec)) {
       return info;
    }
    
@@ -190,7 +190,7 @@ TextureFileInfo BetxReader::info_v1_(const detail::BetxHeader& header, std::erro
    }
 
    // info.format.block_dim
-   block_dim_type block_dim = block_dim_type(header.block_dim[0], header.block_dim[1], header.block_dim[3]);
+   block_dim_type block_dim = block_dim_type(header.block_dim[0], header.block_dim[1], header.block_dim[2]);
    if (glm::any(glm::equal(block_dim, block_dim_type()))) {
       format.block_dim(glm::max(block_dim, block_dim_type(1)));
       if (!should_continue_(err::invalid_block_dimensions, ec)) {
@@ -220,6 +220,8 @@ TextureFileInfo BetxReader::info_v1_(const detail::BetxHeader& header, std::erro
       if (!should_continue_(err::unsupported_block_size, ec)) {
          return info;
       }
+   } else {
+      format.block_size(header.block_size);
    }
 
    // info.format.component_type
@@ -352,7 +354,7 @@ TextureFileInfo BetxReader::info_v1_(const detail::BetxHeader& header, std::erro
    std::error_code ec2;
    texture_size_ = calculate_required_texture_storage(info.layers, info.faces, info.levels, info.dim, info.format.block_dim(), block_span_, ec2, alignment_);
    if (ec2 == std::errc::value_too_large) {
-      if (!should_continue_(err::unsupported_span_granularity, ec)) {
+      if (!should_continue_(err::unsupported_alignment, ec)) {
          return info;
       }
    } else if (ec2 && !should_continue_(err::empty_texture, ec)) {

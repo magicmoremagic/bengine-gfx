@@ -254,7 +254,7 @@ Image BetxReader::image_(std::error_code& ec, std::size_t layer, std::size_t fac
    std::error_code ec2;
    calculate_required_texture_storage(1, 1, 1, image_dim, i.format.block_dim(), block_span_, ec2, image_alignment);
    if (ec2 == std::errc::value_too_large) {
-      if (!should_continue_(err::unsupported_span_granularity, ec)) {
+      if (!should_continue_(err::unsupported_alignment, ec)) {
          return img;
       }
    } else if (ec2 && !should_continue_(err::empty_texture, ec)) {
@@ -264,7 +264,7 @@ Image BetxReader::image_(std::error_code& ec, std::size_t layer, std::size_t fac
    ec2 = std::error_code();
    std::size_t image_offset = calculate_image_offset(layer, face, level, i.layers, i.faces, i.levels, i.dim, i.format.block_dim(), block_span_, ec2, alignment_);
    if (ec2 == std::errc::value_too_large) {
-      if (!should_continue_(err::unsupported_span_granularity, ec)) {
+      if (!should_continue_(err::unsupported_alignment, ec)) {
          return img;
       }
    } else if (ec2 && !should_continue_(err::image_unavailable, ec)) {

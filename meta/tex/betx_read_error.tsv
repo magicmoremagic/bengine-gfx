@@ -17,8 +17,8 @@ unsupported_face_count		unsupported	not_supported	Face count too large to load
 invalid_level_count		corrupted	illegal_byte_sequence	Mipmap level count must be >= 1
 unsupported_level_count		unsupported	not_supported	Mipmap level count too large to load
 unnecessary_levels				More mipmap levels specified than necessary
-unsupported_span_granularity		unsupported	not_supported	Texture data alignment is too strict
-noncanonical_span_granularity				Line, plane, level, face, or layer span granularity is too large or smaller than a previous granularity
+unsupported_alignment		unsupported	not_supported	Texture data alignment is too large
+noncanonical_alignment				Line, plane, level, face, or layer alignment is smaller than a previous alignment
 invalid_block_packing	true	corrupted	illegal_byte_sequence	Block packing not recognized
 invalid_block_dimensions		corrupted	illegal_byte_sequence	All block dimensions must be >= 1
 unsupported_block_dimensions	true	unsupported	not_supported	Block dimensions too large to load

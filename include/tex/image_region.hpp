@@ -25,7 +25,7 @@ public:
    ImageRegion();
    ImageRegion(ibox extents);
    ImageRegion(ibox extents, basis x_basis, basis y_basis, basis z_basis);
-   
+
    ibox extents() const;
 
    basis_vec_type basis_vec() const;

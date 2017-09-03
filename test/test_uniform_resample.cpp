@@ -75,7 +75,7 @@
 //   seconds = perf_delta_to_seconds(perf_now() - start);
 //   be_info() << "gaussian " << std::to_string(1000.f * seconds) << " ms" | default_log();
 //   gfx::write_png_texture(resampled, "test-gaussian.png");
-//   
+//
 //   start = perf_now();
 //   gfx::uniform_resample_2d<vec4, gfx::BSplineFilter>(resampled[0], texf[0], scl);
 //   seconds = perf_delta_to_seconds(perf_now() - start);

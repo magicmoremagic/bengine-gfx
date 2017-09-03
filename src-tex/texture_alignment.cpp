@@ -71,7 +71,7 @@ void TextureAlignment::level_bits(U8 bits) noexcept {
          line_bits_ = plane_bits_;
       }
    }
-   
+
    if (level_bits_ > face_bits_) {
       face_bits_ = level_bits_;
       if (face_bits_ > layer_bits_) {
@@ -93,7 +93,7 @@ void TextureAlignment::face_bits(U8 bits) noexcept {
          }
       }
    }
-   
+
    if (face_bits_ > layer_bits_) {
       layer_bits_ = face_bits_;
    }

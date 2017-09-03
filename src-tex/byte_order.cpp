@@ -55,5 +55,5 @@ void reverse_endianness(TextureStorage& storage, BlockPacking packing) {
       case 8: reverse_endianness_impl<U64>(storage, packing); break;
    }
 }
- 
+
 } // be::gfx::tex

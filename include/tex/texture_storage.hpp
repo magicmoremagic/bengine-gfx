@@ -50,7 +50,7 @@ public:
    std::size_t size() const; ///< The total size of the storage required for the texture, in bytes
    UC* data(); ///< A pointer to the beginning of the texture data.
    const UC* data() const; ///< A pointer to the beginning of the (const) texture data.
-   
+
    explicit operator Buf<UC>(); ///< Constructs a non-owning Buf holding this texture storage's data.
    explicit operator Buf<const UC>() const; ///< Constructs a non-owning Buf holding this texture storage's const data.
 

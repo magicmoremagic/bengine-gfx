@@ -422,7 +422,7 @@ struct ConvertColorspace<ColorspaceTag<Colorspace::cie_lab_d65>, ColorspaceTag<C
       // D65 white point compensation
       x *= 0.95047f;
       z *= 1.08883f;
-      
+
       return vec4(x, y, z, lab.a);
    }
 };

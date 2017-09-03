@@ -276,7 +276,7 @@ void blit_blocks(const SourceImageView& src, DestImageView& dest) {
    assert(dest.dim_blocks().x >= src.dim_blocks().x);
    assert(dest.dim_blocks().y >= src.dim_blocks().y);
    assert(dest.dim_blocks().z >= src.dim_blocks().z);
-   
+
    detail::memcpy_blit_compatible_blocks(src, dest);
 }
 

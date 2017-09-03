@@ -36,7 +36,7 @@ public:
 
    ImageFormat& block_size(std::size_t size);
    block_size_type block_size() const;
-   
+
    ImageFormat& block_dim(std::size_t block_dim);
    ImageFormat& block_dim(block_dim_type block_dim);
    block_dim_type block_dim() const;

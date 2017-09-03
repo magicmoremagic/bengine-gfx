@@ -4,7 +4,7 @@
 namespace be::gfx::tex {
 
 ///////////////////////////////////////////////////////////////////////////////
-ImageFormat::ImageFormat() 
+ImageFormat::ImageFormat()
    : block_size_(0),
      packing_(BlockPacking::s_8),
      components_(0),

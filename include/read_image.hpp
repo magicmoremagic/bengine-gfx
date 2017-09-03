@@ -11,7 +11,7 @@
 //namespace be {
 //namespace gfx {
 //
-///*! ! 
+///*! !
 //local texture_formats = { 'dds', 'kmg', 'ktx' }
 //
 //local image_formats = { 'png', 'jpeg',
@@ -417,7 +417,7 @@
 //
 /////////////////////////////////////////////////////////////////////////////////
 //inline bool read_simple_image(const Buf<const UC>& buf, gli::image& dest) {
-//   return 
+//   return
 //      read_png_image(buf, dest) ||
 //      read_jpeg_image(buf, dest) ||
 //      read_hdr_image(buf, dest) ||

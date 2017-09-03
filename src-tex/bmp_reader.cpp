@@ -12,7 +12,7 @@ bool is_bmp(const Buf<const UC>& buf) noexcept {
    if (buf.size() < 26) {
       return false;
    }
-   
+
    constexpr UC signature[] = { 'B', 'M' };
    if (!util::file_signature_matches(buf, signature)) {
       return false;

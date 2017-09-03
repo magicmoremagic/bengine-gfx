@@ -17,7 +17,7 @@ namespace gfx {
 //                                   void *output_pixels, int output_w, int output_h, int output_stride_in_bytes,
 //                                   stbir_datatype datatype,
 //                                   int num_channels, int alpha_channel, int flags,
-//                                   stbir_edge edge_mode_horizontal, stbir_edge edge_mode_vertical, 
+//                                   stbir_edge edge_mode_horizontal, stbir_edge edge_mode_vertical,
 //                                   stbir_filter filter_horizontal,  stbir_filter filter_vertical,
 //                                   stbir_colorspace space, void *alloc_context,
 //                                   float x_scale, float y_scale,
@@ -27,7 +27,7 @@ namespace gfx {
 //                                 void *output_pixels, int output_w, int output_h, int output_stride_in_bytes,
 //                                 stbir_datatype datatype,
 //                                 int num_channels, int alpha_channel, int flags,
-//                                 stbir_edge edge_mode_horizontal, stbir_edge edge_mode_vertical, 
+//                                 stbir_edge edge_mode_horizontal, stbir_edge edge_mode_vertical,
 //                                 stbir_filter filter_horizontal,  stbir_filter filter_vertical,
 //                                 stbir_colorspace space, void *alloc_context,
 //                                 float s0, float t0, float s1, float t1);

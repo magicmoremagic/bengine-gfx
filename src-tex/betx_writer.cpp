@@ -84,7 +84,7 @@ Buf<UC> BetxWriter::write(std::error_code& ec) noexcept {
    detail::BetxHeader header;
    static_assert(sizeof(header.signature) == sizeof(detail::BetxSignature::full));
    std::memcpy(header.signature, detail::BetxSignature::full, sizeof(header.signature));
-   
+
    if (endianness_ == bo::Big::value) {
       header.endianness = 0xFF;
    } else if (endianness_ == bo::Little::value) {
@@ -172,7 +172,7 @@ Buf<UC> BetxWriter::write(std::error_code& ec) noexcept {
       header.component_types[c] = static_cast<U8>(format.component_type(c));
       header.swizzle[c] = static_cast<U8>(format.swizzle(c));
    }
-   
+
    header.format_flags = 0;
    if (format.premultiplied()) {
       header.format_flags |= 1u;
@@ -236,7 +236,7 @@ Buf<UC> BetxWriter::write(std::error_code& ec) noexcept {
          ec = err::invalid_payload_compression;
          return result;
    }
-   
+
    return result;
 }
 

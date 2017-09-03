@@ -40,7 +40,7 @@ public:
 
 protected:
    TextureReaderBase(bool strict, Log& log);
-   
+
    bool strict() const;
    Log& log() const;
 

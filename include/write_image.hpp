@@ -10,7 +10,7 @@
 //namespace be {
 //namespace gfx {
 //
-///*! ! 
+///*! !
 //local texture_formats = { 'dds', 'kmg', 'ktx' }
 //local image_formats = { 'png', 'bmp', 'tga', 'hdr' }
 //

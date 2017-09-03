@@ -101,7 +101,7 @@ TextureFileInfo BetxReader::info_v1_(const detail::BetxHeader& header, std::erro
    } else if (info.levels > mipmap_levels(info.dim) && !should_continue_(err::unnecessary_levels, ec)) {
       return info;
    }
-   
+
    // alignment_
    alignment_ = TextureAlignment(header.line_alignment,
                                  header.plane_alignment,
@@ -124,7 +124,7 @@ TextureFileInfo BetxReader::info_v1_(const detail::BetxHeader& header, std::erro
        !should_continue_(err::noncanonical_alignment, ec)) {
       return info;
    }
-   
+
    // info.format
    ImageFormat& format = info.format;
 
@@ -208,7 +208,7 @@ TextureFileInfo BetxReader::info_v1_(const detail::BetxHeader& header, std::erro
    // info.format.block_size
    if (header.block_size == 0) {
       format.block_size(std::max(static_cast<U8>(1),
-                                 static_cast<U8>(block_pixel_size(format.packing()) * 
+                                 static_cast<U8>(block_pixel_size(format.packing()) *
                                                  format.block_dim().x *
                                                  format.block_dim().y *
                                                  format.block_dim().z)));
@@ -431,7 +431,7 @@ TextureFileInfo BetxReader::info_v1_(const detail::BetxHeader& header, std::erro
    } else if (info.faces > faces(info.tex_class) && !should_continue_(err::too_many_faces, ec)) {
       return info;
    }
-   
+
    // header.reserved
    if (header.reserved != 0x0 && !should_continue_(err::nonzero_reserved, ec)) {
       return info;

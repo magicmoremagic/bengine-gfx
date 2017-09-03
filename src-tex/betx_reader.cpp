@@ -57,7 +57,7 @@ TextureFileInfo BetxReader::info_impl_(std::error_code& ec) noexcept {
        !should_continue_(err::not_a_mmm_binary_file, ec)) {
       return info;
    }
-   
+
    if (!util::file_signature_matches(buf_, sizeof(sig::mmm), sig::betx_a) &&
        !should_continue_(err::not_a_betx_file, ec)) {
       return info;
@@ -84,12 +84,12 @@ TextureFileInfo BetxReader::info_impl_(std::error_code& ec) noexcept {
          }
       }
    }
-   
+
    if (!util::file_signature_matches(buf_, check_signature_offset + sizeof(sig::check), sig::betx_b) &&
        !should_continue_(err::not_a_betx_file, ec)) {
       return info;
    }
-   
+
    if (!util::file_signature_matches(buf_, buf_.size() - sizeof(sig::footer), sig::footer) &&
        !should_continue_(err::footer_missing, ec)) {
       return info;
@@ -376,7 +376,7 @@ void BetxReader::try_fix_crlf_corruption_(std::error_code& ec) noexcept {
    be_warn() << "Attempting to fix CR-LF corruption in beTx file"
       & attr(ids::log_attr_path) << path().string()
       | log();
-   
+
    std::size_t offset = sizeof(sig::mmm) + sizeof(sig::betx_a) + sizeof(sig::lflf);
 
    const UC* src = buf_.get() + offset;

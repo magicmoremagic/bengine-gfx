@@ -60,7 +60,7 @@ namespace be::gfx::tex::ktx::detail {
 //      case 0x1907:   components = 3; result.internal_format = GL_RGB; break;
 //      case 0x80E1: //GL_BGRA // TODO log warning
 //      case 0x1908:   components = 4; result.internal_format = GL_RGBA; break;
-//      
+//
 //      case 0x8229:   components = 1; result.internal_format = GL_R8; break;
 //      case 0x822B:   components = 2; result.internal_format = GL_RG8; break;
 //      case 0x8051:   components = 3; result.internal_format = GL_RGB8; break;

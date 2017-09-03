@@ -917,7 +917,7 @@ struct PixelRawNormAccessUncompressedPacked<ImageView, Coord, IsSimple, BlockPac
          } else {
             assert(max_multiplied <= f14_mantissa_mask);
          }
-         
+
          uvec3 components(color * mult + 0.5f);
 
          assert(components[0] >= 0);
@@ -1206,13 +1206,13 @@ inline BptcUnormFields decode_bptc_unorm_fields(BptcBlock block) {
          U8((block.data[10] << 1) & 0x8u)
       };
       f.color_index_data = U64((
-         (U64(block.data[10]) >> 3) | 
-         (U64(block.data[11]) << 5) | 
-         (U64(block.data[12]) << 13) | 
-         (U64(block.data[13]) << 21) | 
-         (U64(block.data[14]) << 29) | 
+         (U64(block.data[10]) >> 3) |
+         (U64(block.data[11]) << 5) |
+         (U64(block.data[12]) << 13) |
+         (U64(block.data[13]) << 21) |
+         (U64(block.data[14]) << 29) |
          (U64(block.data[15]) << 37)) & 0x1fffffffffffull);
-      
+
       /* ######################### END OF GENERATED CODE ######################### */
 
       for (glm::length_t e = 0; e < 6; ++e) {
@@ -1278,13 +1278,13 @@ inline BptcUnormFields decode_bptc_unorm_fields(BptcBlock block) {
       p[2] = p[0];
       p[3] = p[1];
       f.color_index_data = U64((
-         (U64(block.data[10]) >> 2) | 
-         (U64(block.data[11]) << 6) | 
-         (U64(block.data[12]) << 14) | 
-         (U64(block.data[13]) << 22) | 
-         (U64(block.data[14]) << 30) | 
+         (U64(block.data[10]) >> 2) |
+         (U64(block.data[11]) << 6) |
+         (U64(block.data[12]) << 14) |
+         (U64(block.data[13]) << 22) |
+         (U64(block.data[14]) << 30) |
          (U64(block.data[15]) << 38)) & 0x3fffffffffffull);
-      
+
       /* ######################### END OF GENERATED CODE ######################### */
 
       for (glm::length_t e = 0; e < 4; ++e) {
@@ -1346,11 +1346,11 @@ inline BptcUnormFields decode_bptc_unorm_fields(BptcBlock block) {
          U8(((block.data[11] >> 6) | (block.data[12] << 2)) & 0x1fu)
       };
       f.color_index_data = U64((
-         (block.data[12] >> 3) | 
-         (block.data[13] << 5) | 
-         (block.data[14] << 13) | 
+         (block.data[12] >> 3) |
+         (block.data[13] << 5) |
+         (block.data[14] << 13) |
          (block.data[15] << 21)) & 0x1fffffffu);
-      
+
       /* ######################### END OF GENERATED CODE ######################### */
 
       for (glm::length_t e = 0; e < 6; ++e) {
@@ -1382,7 +1382,7 @@ inline BptcUnormFields decode_bptc_unorm_fields(BptcBlock block) {
       /////////////////////////////////////////////////////////////////////////
       // Mode 3
       f.n_subsets = 2;
-      
+
       /*!!
       decode_bptc_u8  { bits = 6, begin = 4, dest = 'f.partition' }
       decode_bptc_rgb { bits = 7, count = 4 }
@@ -1416,11 +1416,11 @@ inline BptcUnormFields decode_bptc_unorm_fields(BptcBlock block) {
          U8((block.data[12] >> 1) & 0x1u)
       };
       f.color_index_data = U64((
-         (block.data[12] >> 2) | 
-         (block.data[13] << 6) | 
-         (block.data[14] << 14) | 
+         (block.data[12] >> 2) |
+         (block.data[13] << 6) |
+         (block.data[14] << 14) |
          (block.data[15] << 22)) & 0x3fffffffu);
-      
+
       /* ######################### END OF GENERATED CODE ######################### */
 
       for (glm::length_t e = 0; e < 4; ++e) {
@@ -1478,19 +1478,19 @@ inline BptcUnormFields decode_bptc_unorm_fields(BptcBlock block) {
          U8(((block.data[5] >> 4) | (block.data[6] << 4)) & 0x3fu)
       };
       U64 primary_index_data = U64((
-         (block.data[6] >> 2) | 
-         (block.data[7] << 6) | 
-         (block.data[8] << 14) | 
-         (block.data[9] << 22) | 
+         (block.data[6] >> 2) |
+         (block.data[7] << 6) |
+         (block.data[8] << 14) |
+         (block.data[9] << 22) |
          (block.data[10] << 30)) & 0x7fffffffu);
       U64 secondary_index_data = U64((
-         (U64(block.data[10]) >> 1) | 
-         (U64(block.data[11]) << 7) | 
-         (U64(block.data[12]) << 15) | 
-         (U64(block.data[13]) << 23) | 
-         (U64(block.data[14]) << 31) | 
+         (U64(block.data[10]) >> 1) |
+         (U64(block.data[11]) << 7) |
+         (U64(block.data[12]) << 15) |
+         (U64(block.data[13]) << 23) |
+         (U64(block.data[14]) << 31) |
          (U64(block.data[15]) << 39)) & 0x7fffffffffffull);
-      
+
       /* ######################### END OF GENERATED CODE ######################### */
 
       for (glm::length_t e = 0; e < 2; ++e) {
@@ -1556,17 +1556,17 @@ inline BptcUnormFields decode_bptc_unorm_fields(BptcBlock block) {
          U8(((block.data[7] >> 2) | (block.data[8] << 6)) & 0xffu)
       };
       U64 primary_index_data = U64((
-         (block.data[8] >> 2) | 
-         (block.data[9] << 6) | 
-         (block.data[10] << 14) | 
-         (block.data[11] << 22) | 
+         (block.data[8] >> 2) |
+         (block.data[9] << 6) |
+         (block.data[10] << 14) |
+         (block.data[11] << 22) |
          (block.data[12] << 30)) & 0x7fffffffu);
       U64 secondary_index_data = U64((
-         (block.data[12] >> 1) | 
-         (block.data[13] << 7) | 
-         (block.data[14] << 15) | 
+         (block.data[12] >> 1) |
+         (block.data[13] << 7) |
+         (block.data[14] << 15) |
          (block.data[15] << 23)) & 0x7fffffffu);
-      
+
       /* ######################### END OF GENERATED CODE ######################### */
 
       for (glm::length_t e = 0; e < 2; ++e) {
@@ -1593,7 +1593,7 @@ inline BptcUnormFields decode_bptc_unorm_fields(BptcBlock block) {
       f.color_index_bpp = primary_bpi;
       f.alpha_index_data = secondary_index_data;
       f.alpha_index_bpp = secondary_bpi;
-      
+
    } else if (0 != (block.data[0] & 0x40)) {
       /////////////////////////////////////////////////////////////////////////
       // Mode 6
@@ -1626,15 +1626,15 @@ inline BptcUnormFields decode_bptc_unorm_fields(BptcBlock block) {
          U8(block.data[8] & 0x1u)
       };
       f.color_index_data = U64((
-         (U64(block.data[8]) >> 1) | 
-         (U64(block.data[9]) << 7) | 
-         (U64(block.data[10]) << 15) | 
-         (U64(block.data[11]) << 23) | 
-         (U64(block.data[12]) << 31) | 
-         (U64(block.data[13]) << 39) | 
-         (U64(block.data[14]) << 47) | 
+         (U64(block.data[8]) >> 1) |
+         (U64(block.data[9]) << 7) |
+         (U64(block.data[10]) << 15) |
+         (U64(block.data[11]) << 23) |
+         (U64(block.data[12]) << 31) |
+         (U64(block.data[13]) << 39) |
+         (U64(block.data[14]) << 47) |
          (U64(block.data[15]) << 55)) & 0x7fffffffffffffffull);
-      
+
       /* ######################### END OF GENERATED CODE ######################### */
 
       for (glm::length_t e = 0; e < 2; ++e) {
@@ -1701,11 +1701,11 @@ inline BptcUnormFields decode_bptc_unorm_fields(BptcBlock block) {
          U8((block.data[12] << 1) & 0x4u)
       };
       f.color_index_data = U64((
-         (block.data[12] >> 2) | 
-         (block.data[13] << 6) | 
-         (block.data[14] << 14) | 
+         (block.data[12] >> 2) |
+         (block.data[13] << 6) |
+         (block.data[14] << 14) |
          (block.data[15] << 22)) & 0x3fffffffu);
-      
+
       /* ######################### END OF GENERATED CODE ######################### */
 
       for (glm::length_t e = 0; e < 4; ++e) {
@@ -1755,7 +1755,7 @@ inline U16 bptc_unquantize_signed(U16 value, U8 epb) {
       if (value == sign_mask) {
          return 0x8001;
       }
-      
+
       if (0 != (value & sign_mask)) {
          value = ((~value) + 1) & ((1 << epb) - 1);
          value = ((value << 15) + 0x4000) >> (epb - 1);
@@ -1837,7 +1837,7 @@ inline BptcFloatFields decode_bptc_float_fields(BptcBlock block, bool is_signed)
          f.r3 = (f.r0 + f.r3) & 0x3ffu;
          f.g3 = (f.g0 + f.g3) & 0x3ffu;
          f.b3 = (f.b0 + f.b3) & 0x3ffu;
-         
+
          /* ######################### END OF GENERATED CODE ######################### */
          epb = 10;
          break;
@@ -1910,7 +1910,7 @@ inline BptcFloatFields decode_bptc_float_fields(BptcBlock block, bool is_signed)
          f.r3 = (f.r0 + f.r3) & 0x7fu;
          f.g3 = (f.g0 + f.g3) & 0x7fu;
          f.b3 = (f.b0 + f.b3) & 0x7fu;
-         
+
          /* ######################### END OF GENERATED CODE ######################### */
          epb = 7;
          break;
@@ -1975,12 +1975,12 @@ inline BptcFloatFields decode_bptc_float_fields(BptcBlock block, bool is_signed)
          f.r3 = (f.r0 + f.r3) & 0x7ffu;
          f.g3 = (f.g0 + f.g3) & 0x7ffu;
          f.b3 = (f.b0 + f.b3) & 0x7ffu;
-         
+
          /* ######################### END OF GENERATED CODE ######################### */
          epb = 11;
          break;
       }
-      
+
       case 6:
       {
          /*!! bits_used = 5
@@ -2044,7 +2044,7 @@ inline BptcFloatFields decode_bptc_float_fields(BptcBlock block, bool is_signed)
          f.r3 = (f.r0 + f.r3) & 0x7ffu;
          f.g3 = (f.g0 + f.g3) & 0x7ffu;
          f.b3 = (f.b0 + f.b3) & 0x7ffu;
-         
+
          /* ######################### END OF GENERATED CODE ######################### */
          epb = 11;
          break;
@@ -2111,7 +2111,7 @@ inline BptcFloatFields decode_bptc_float_fields(BptcBlock block, bool is_signed)
          f.r3 = (f.r0 + f.r3) & 0x7ffu;
          f.g3 = (f.g0 + f.g3) & 0x7ffu;
          f.b3 = (f.b0 + f.b3) & 0x7ffu;
-         
+
          /* ######################### END OF GENERATED CODE ######################### */
          epb = 11;
          break;
@@ -2180,7 +2180,7 @@ inline BptcFloatFields decode_bptc_float_fields(BptcBlock block, bool is_signed)
          f.r3 = (f.r0 + f.r3) & 0x1ffu;
          f.g3 = (f.g0 + f.g3) & 0x1ffu;
          f.b3 = (f.b0 + f.b3) & 0x1ffu;
-         
+
          /* ######################### END OF GENERATED CODE ######################### */
          epb = 9;
          break;
@@ -2247,7 +2247,7 @@ inline BptcFloatFields decode_bptc_float_fields(BptcBlock block, bool is_signed)
          f.r3 = (f.r0 + f.r3) & 0xffu;
          f.g3 = (f.g0 + f.g3) & 0xffu;
          f.b3 = (f.b0 + f.b3) & 0xffu;
-         
+
          /* ######################### END OF GENERATED CODE ######################### */
          epb = 8;
          break;
@@ -2320,7 +2320,7 @@ inline BptcFloatFields decode_bptc_float_fields(BptcBlock block, bool is_signed)
          f.r3 = (f.r0 + f.r3) & 0xffu;
          f.g3 = (f.g0 + f.g3) & 0xffu;
          f.b3 = (f.b0 + f.b3) & 0xffu;
-         
+
          /* ######################### END OF GENERATED CODE ######################### */
          epb = 8;
          break;
@@ -2393,7 +2393,7 @@ inline BptcFloatFields decode_bptc_float_fields(BptcBlock block, bool is_signed)
          f.r3 = (f.r0 + f.r3) & 0xffu;
          f.g3 = (f.g0 + f.g3) & 0xffu;
          f.b3 = (f.b0 + f.b3) & 0xffu;
-         
+
          /* ######################### END OF GENERATED CODE ######################### */
          epb = 8;
          break;
@@ -2448,7 +2448,7 @@ inline BptcFloatFields decode_bptc_float_fields(BptcBlock block, bool is_signed)
          f.b2 |= U16(((block.data[7] >> 5) | (block.data[8] << 3)) & 0xfu);
          f.r2 = U16((block.data[8] >> 1) & 0x3fu);
          f.r3 = U16(((block.data[8] >> 7) | (block.data[9] << 1)) & 0x3fu);
-         
+
          /* ######################### END OF GENERATED CODE ######################### */
          epb = 6;
          break;
@@ -2466,7 +2466,7 @@ inline BptcFloatFields decode_bptc_float_fields(BptcBlock block, bool is_signed)
          f.r1 = U16(((block.data[4] >> 3) | (block.data[5] << 5)) & 0x3ffu);
          f.g1 = U16(((block.data[5] >> 5) | (block.data[6] << 3)) & 0x3ffu);
          f.b1 = U16(((block.data[6] >> 7) | (block.data[7] << 1) | (block.data[8] << 9)) & 0x3ffu);
-         
+
          /* ######################### END OF GENERATED CODE ######################### */
          epb = 10;
          break;
@@ -2501,7 +2501,7 @@ inline BptcFloatFields decode_bptc_float_fields(BptcBlock block, bool is_signed)
          f.r1 = (f.r0 + f.r1) & 0x7ffu;
          f.g1 = (f.g0 + f.g1) & 0x7ffu;
          f.b1 = (f.b0 + f.b1) & 0x7ffu;
-         
+
          /* ######################### END OF GENERATED CODE ######################### */
          epb = 11;
          break;
@@ -2542,7 +2542,7 @@ inline BptcFloatFields decode_bptc_float_fields(BptcBlock block, bool is_signed)
          f.r1 = (f.r0 + f.r1) & 0xfffu;
          f.g1 = (f.g0 + f.g1) & 0xfffu;
          f.b1 = (f.b0 + f.b1) & 0xfffu;
-         
+
          /* ######################### END OF GENERATED CODE ######################### */
          epb = 12;
          break;
@@ -2607,7 +2607,7 @@ inline BptcFloatFields decode_bptc_float_fields(BptcBlock block, bool is_signed)
          f.r1 = (f.r0 + f.r1) & 0xffffu;
          f.g1 = (f.g0 + f.g1) & 0xffffu;
          f.b1 = (f.b0 + f.b1) & 0xffffu;
-         
+
          /* ######################### END OF GENERATED CODE ######################### */
          epb = 16;
          break;
@@ -2658,13 +2658,13 @@ inline BptcFloatFields decode_bptc_float_fields(BptcBlock block, bool is_signed)
       /* ################# !! GENERATED CODE -- DO NOT MODIFY !! ################# */
       f.partition = U8(((block.data[9] >> 5) | (block.data[10] << 3)) & 0x1fu);
       f.index_data = U64((
-         (U64(block.data[10]) >> 2) | 
-         (U64(block.data[11]) << 6) | 
-         (U64(block.data[12]) << 14) | 
-         (U64(block.data[13]) << 22) | 
-         (U64(block.data[14]) << 30) | 
+         (U64(block.data[10]) >> 2) |
+         (U64(block.data[11]) << 6) |
+         (U64(block.data[12]) << 14) |
+         (U64(block.data[13]) << 22) |
+         (U64(block.data[14]) << 30) |
          (U64(block.data[15]) << 38)) & 0x3fffffffffffull);
-      
+
       /* ######################### END OF GENERATED CODE ######################### */
 
       constexpr U8 bpi = 3;
@@ -2685,17 +2685,17 @@ inline BptcFloatFields decode_bptc_float_fields(BptcBlock block, bool is_signed)
       /*!! decode_bptc_u64 { bits = 63, begin = 65, dest = 'f.index_data' } !! 13 */
       /* ################# !! GENERATED CODE -- DO NOT MODIFY !! ################# */
       f.index_data = U64((
-         (U64(block.data[8]) >> 1) | 
-         (U64(block.data[9]) << 7) | 
-         (U64(block.data[10]) << 15) | 
-         (U64(block.data[11]) << 23) | 
-         (U64(block.data[12]) << 31) | 
-         (U64(block.data[13]) << 39) | 
-         (U64(block.data[14]) << 47) | 
+         (U64(block.data[8]) >> 1) |
+         (U64(block.data[9]) << 7) |
+         (U64(block.data[10]) << 15) |
+         (U64(block.data[11]) << 23) |
+         (U64(block.data[12]) << 31) |
+         (U64(block.data[13]) << 39) |
+         (U64(block.data[14]) << 47) |
          (U64(block.data[15]) << 55)) & 0x7fffffffffffffffull);
-      
+
       /* ######################### END OF GENERATED CODE ######################### */
-      
+
       constexpr U8 bpi = 4;
       const U8 anchor = 0;
 
@@ -2936,7 +2936,7 @@ inline vec4 decode_bptc_unorm_srgb(BptcBlock block, uvec2 local) {
       case 3:  subset = bptc_pixel_subset_3(f.partition, pixel_num); break;
       default: subset = 0; break;
    }
-   
+
    vec4 first = f.endpoints[subset * 2];
    vec4 second = f.endpoints[subset * 2 + 1];
 
@@ -2956,7 +2956,7 @@ inline vec4 decode_bptc_unorm_srgb(BptcBlock block, uvec2 local) {
             pixel = vec4(linear_to_srgb((lin_first * inv + lin_second * factor) / 64.f), 1.f);
          }
          break;
-      }   
+      }
       case 3:
       {
          U8 code = (f.color_index_data >> (3 * pixel_num)) & 0x7;
@@ -3022,7 +3022,7 @@ inline vec4 decode_bptc_float(BptcBlock block, uvec2 local, bool is_signed) {
    U32 pixel_num = 4 * local.y + local.x;
 
    U8 subset = f.n_subsets == 1 ? 0 : bptc_pixel_subset_2(f.partition, pixel_num);
-   
+
    cvec first, second;
    if (subset == 0) {
       first = cvec(f.r0, f.g0, f.b0);
@@ -3043,7 +3043,7 @@ inline vec4 decode_bptc_float(BptcBlock block, uvec2 local, bool is_signed) {
    for (glm::length_t c = 0; c < 3; ++c) {
       interpolated[c] = U16((first[c] * inv_factor + second[c] * factor) / 64);
    }
-   
+
    if (is_signed) {
       cvec sign = interpolated & (U16)0x8000;
       interpolated ^= sign;
@@ -3530,7 +3530,7 @@ GetPixelNormFunc<Coord, ImageView> get_pixel_norm_func(const ImageView& image) {
          case BlockPacking::c_s3tc3:       return detail::PixelNormAccessCompressed<ImageView, Coord, BlockPacking::c_s3tc3>::get;
          case BlockPacking::c_rgtc1:       return detail::PixelNormAccessCompressed<ImageView, Coord, BlockPacking::c_rgtc1>::get;
          case BlockPacking::c_rgtc2:       return detail::PixelNormAccessCompressed<ImageView, Coord, BlockPacking::c_rgtc2>::get;
-         
+
          /* ######################### END OF GENERATED CODE ######################### */
          default:
             assert(false);
@@ -3592,7 +3592,7 @@ GetPixelNormFunc<Coord, ImageView> get_pixel_norm_func(const ImageView& image) {
             case BlockPacking::p_10_10_10_2:  return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_10_10_10_2, ComponentType::unorm>::get;
             case BlockPacking::p_2_10_10_10:  return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_2_10_10_10, ComponentType::unorm>::get;
             case BlockPacking::s_32_p_24_8:   return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_32_p_24_8, ComponentType::unorm>::get;
-            
+
             /* ######################### END OF GENERATED CODE ######################### */
          }
       } else if (component_type == ComponentType::uint) {
@@ -3640,7 +3640,7 @@ GetPixelNormFunc<Coord, ImageView> get_pixel_norm_func(const ImageView& image) {
             case BlockPacking::p_10_10_10_2:  return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_10_10_10_2, ComponentType::uint>::get;
             case BlockPacking::p_2_10_10_10:  return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_2_10_10_10, ComponentType::uint>::get;
             case BlockPacking::s_32_p_24_8:   return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_32_p_24_8, ComponentType::uint>::get;
-            
+
             /* ######################### END OF GENERATED CODE ######################### */
          }
       } else if (component_type == ComponentType::sfloat) {
@@ -3663,7 +3663,7 @@ GetPixelNormFunc<Coord, ImageView> get_pixel_norm_func(const ImageView& image) {
             case BlockPacking::s_64_64:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_64_64, ComponentType::sfloat>::get;
             case BlockPacking::s_64_64_64:    return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_64_64_64, ComponentType::sfloat>::get;
             case BlockPacking::s_64_64_64_64: return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_64_64_64_64, ComponentType::sfloat>::get;
-            
+
             /* ######################### END OF GENERATED CODE ######################### */
          }
       }
@@ -3711,7 +3711,7 @@ GetPixelNormFunc<Coord, ImageView> get_pixel_norm_func(const ImageView& image) {
          case BlockPacking::p_10_10_10_2:  return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_10_10_10_2>::get;
          case BlockPacking::p_2_10_10_10:  return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_2_10_10_10>::get;
          case BlockPacking::s_32_p_24_8:   return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_32_p_24_8>::get;
-         
+
          /* ######################### END OF GENERATED CODE ######################### */
          default:
             assert(false);
@@ -3762,7 +3762,7 @@ GetPixelNormFunc<Coord, ImageView> get_pixel_norm_func(const ImageView& image) {
          case BlockPacking::p_10_10_10_2:  return detail::PixelNormAccessUncompressed<ImageView, Coord, false, BlockPacking::p_10_10_10_2>::get;
          case BlockPacking::p_2_10_10_10:  return detail::PixelNormAccessUncompressed<ImageView, Coord, false, BlockPacking::p_2_10_10_10>::get;
          case BlockPacking::s_32_p_24_8:   return detail::PixelNormAccessUncompressed<ImageView, Coord, false, BlockPacking::s_32_p_24_8>::get;
-         
+
          /* ######################### END OF GENERATED CODE ######################### */
          default:
             assert(false);
@@ -3840,7 +3840,7 @@ PutPixelNormFunc<Coord, ImageView> put_pixel_norm_func(const ImageView& image) {
             case BlockPacking::p_10_10_10_2:  return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_10_10_10_2, ComponentType::unorm>::put;
             case BlockPacking::p_2_10_10_10:  return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_2_10_10_10, ComponentType::unorm>::put;
             case BlockPacking::s_32_p_24_8:   return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_32_p_24_8, ComponentType::unorm>::put;
-            
+
             /* ######################### END OF GENERATED CODE ######################### */
          }
       } else if (component_type == ComponentType::uint) {
@@ -3888,7 +3888,7 @@ PutPixelNormFunc<Coord, ImageView> put_pixel_norm_func(const ImageView& image) {
             case BlockPacking::p_10_10_10_2:  return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_10_10_10_2, ComponentType::uint>::put;
             case BlockPacking::p_2_10_10_10:  return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_2_10_10_10, ComponentType::uint>::put;
             case BlockPacking::s_32_p_24_8:   return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_32_p_24_8, ComponentType::uint>::put;
-            
+
             /* ######################### END OF GENERATED CODE ######################### */
          }
       } else if (component_type == ComponentType::sfloat) {
@@ -3911,7 +3911,7 @@ PutPixelNormFunc<Coord, ImageView> put_pixel_norm_func(const ImageView& image) {
             case BlockPacking::s_64_64:       return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_64_64, ComponentType::sfloat>::put;
             case BlockPacking::s_64_64_64:    return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_64_64_64, ComponentType::sfloat>::put;
             case BlockPacking::s_64_64_64_64: return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_64_64_64_64, ComponentType::sfloat>::put;
-            
+
             /* ######################### END OF GENERATED CODE ######################### */
          }
       }
@@ -3959,7 +3959,7 @@ PutPixelNormFunc<Coord, ImageView> put_pixel_norm_func(const ImageView& image) {
          case BlockPacking::p_10_10_10_2:  return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_10_10_10_2>::put;
          case BlockPacking::p_2_10_10_10:  return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::p_2_10_10_10>::put;
          case BlockPacking::s_32_p_24_8:   return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_32_p_24_8>::put;
-         
+
          /* ######################### END OF GENERATED CODE ######################### */
          default:
             assert(false);
@@ -4010,7 +4010,7 @@ PutPixelNormFunc<Coord, ImageView> put_pixel_norm_func(const ImageView& image) {
          case BlockPacking::p_10_10_10_2:  return detail::PixelNormAccessUncompressed<ImageView, Coord, false, BlockPacking::p_10_10_10_2>::put;
          case BlockPacking::p_2_10_10_10:  return detail::PixelNormAccessUncompressed<ImageView, Coord, false, BlockPacking::p_2_10_10_10>::put;
          case BlockPacking::s_32_p_24_8:   return detail::PixelNormAccessUncompressed<ImageView, Coord, false, BlockPacking::s_32_p_24_8>::put;
-         
+
          /* ######################### END OF GENERATED CODE ######################### */
          default:
             assert(false);

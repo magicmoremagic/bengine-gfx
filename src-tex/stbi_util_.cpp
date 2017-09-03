@@ -107,7 +107,7 @@ Texture read_stbi_texture(const Buf<const UC>& buf, const TextureFileInfo& info,
       auto stbi_image_data = load_func(buf.get(), (int)buf.size(), &w, &h, &components, &bpc);
       if (stbi_image_data) {
          Buf<UC> data((UC*)stbi_image_data, texture_size, stbi_deleter);
-         
+
          if (!ec) {
             tex.storage = std::make_unique<TextureStorage>(info.layers, info.faces, info.levels, info.dim, info.format.block_dim(), info.format.block_size(), std::move(data), TextureAlignment(0, 0, 0, 0, 0));
             tex.view = tex::TextureView(info.format, info.tex_class, *tex.storage, 0, info.layers, 0, info.faces, 0, info.levels);

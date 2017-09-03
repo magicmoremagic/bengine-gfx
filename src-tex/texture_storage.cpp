@@ -59,7 +59,7 @@ TextureStorage::TextureStorage(std::size_t layers,
    assert(data.size() >= size_);
    assert(aligned_size((uintptr_t)data.get(), (uintptr_t)alignment_.layer()) == (uintptr_t)data.get());
    data_ = std::move(data);
-}  
+}
 
 ///////////////////////////////////////////////////////////////////////////////
 TextureStorage::operator bool() const {

@@ -117,7 +117,7 @@ ImageRegion subregion(ImageRegion parent, ibox extents, ImageRegion::basis x_bas
    using basis_vec_type = ImageRegion::basis_vec_type;
 
    basis_vec_type parent_basis = parent.basis_vec();
-   
+
    basis x = (basis)parent_basis[pos_basis(x_basis)];
    basis y = (basis)parent_basis[pos_basis(y_basis)];
    basis z = (basis)parent_basis[pos_basis(z_basis)];

@@ -106,7 +106,7 @@ ImageFormatGl gl_format_compressed(ImageFormat format) {
             }
          }
          break;
-      
+
       case BlockPacking::c_bptc:
          if (format.block_dim() == ImageFormat::block_dim_type(U8(4), U8(4), U8(1)) && format.block_size() == 16) {
             if (format.components() == 4 && format.component_types() == component_types(ComponentType::unorm, 4)) {
@@ -778,7 +778,7 @@ ImageFormatGl gl_format_uncompressed(ImageFormat format) {
                         } else {
                            f.data_format = GL_RGBA;
                         }
-                        
+
                         break;
 
                      case BlockPacking::p_4_4_4_4:
@@ -806,7 +806,7 @@ ImageFormatGl gl_format_uncompressed(ImageFormat format) {
                         } else {
                            f.data_format = GL_RGBA;
                         }
-                        
+
                         break;
 
                      case BlockPacking::p_1_5_5_5:
@@ -1096,7 +1096,7 @@ ImageFormat canonical_format(gl::GLenum internal_format) {
 
       case GL_SRGB:
       case GL_SRGB8:          return ImageFormat(U8(3), U8(1), BlockPacking::s_8_8_8, 3, component_types(ComponentType::unorm, 3), swizzles_rgb(), Colorspace::srgb, true);
-      
+
       case GL_RGB:
       case GL_RGB8:           return ImageFormat(U8(3), U8(1), BlockPacking::s_8_8_8, 3, component_types(ComponentType::unorm, 3), swizzles_rgba(), Colorspace::bt709_linear_rgb, true);
 
@@ -1140,7 +1140,7 @@ ImageFormat canonical_format(gl::GLenum internal_format) {
       case GL_RGBA:
       case GL_RGBA8:
       default:                return ImageFormat(U8(4), U8(1), BlockPacking::s_8_8_8_8, 4, component_types(ComponentType::unorm, 4), swizzles_rgba(), Colorspace::bt709_linear_rgb, true);
-         
+
    }
 }
 

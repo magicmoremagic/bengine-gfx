@@ -278,7 +278,7 @@ TEST_CASE("detail::ComponentRawNorm<U16, 11, ufloat>", BE_CATCH_TAGS) {
       REQUIRE(std::isinf(clazz::decode(clazz::f11_exponent_mask)));
       REQUIRE(std::isnan(clazz::decode(clazz::f11_exponent_mask | 1)));
    }
-   
+
    SECTION("encode") {
       REQUIRE(clazz::encode(0.f) == 0u);
       REQUIRE(clazz::encode(-0.f) == 0u);
@@ -313,7 +313,7 @@ TEST_CASE("detail::ComponentRawNorm<U16, 10, ufloat>", BE_CATCH_TAGS) {
       REQUIRE(std::isinf(clazz::decode(clazz::f10_exponent_mask)));
       REQUIRE(std::isnan(clazz::decode(clazz::f10_exponent_mask | 1)));
    }
-   
+
    SECTION("encode") {
       REQUIRE(clazz::encode(0.f) == 0u);
       REQUIRE(clazz::encode(-0.f) == 0u);

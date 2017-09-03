@@ -26,7 +26,7 @@ public:
                std::size_t base_face = 0, std::size_t faces = TextureStorage::max_faces,
                std::size_t base_level = 0, std::size_t levels = TextureStorage::max_levels);
    TextureView(const ImageFormat& format, TextureClass tex_class, TextureView& other);
-   
+
    operator TextureView<const TextureStorage, ConstImageView>() const;
 
    TextureStorage& storage();
@@ -46,7 +46,7 @@ public:
    layer_index_type base_layer() const;
    layer_index_type max_layer() const;
 
-   face_index_type faces() const; 
+   face_index_type faces() const;
    face_index_type base_face() const;
    face_index_type max_face() const;
 

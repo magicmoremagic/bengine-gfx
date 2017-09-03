@@ -59,6 +59,8 @@
     <ClInclude Include="include\tex\blit_blocks.hpp" />
     <ClInclude Include="include\tex\blit_pixels.hpp" />
     <ClInclude Include="include\tex\block_access.hpp" />
+    <ClInclude Include="include\tex\convert_colorspace_srgb.hpp" />
+    <ClInclude Include="include\tex\coords.hpp" />
     <ClInclude Include="include\tex\block_packing.hpp" />
     <ClInclude Include="include\tex\byte_order.hpp" />
     <ClInclude Include="include\tex\colorspace.hpp" />
@@ -67,6 +69,7 @@
     <ClInclude Include="include\tex\convert_colorspace.hpp" />
     <ClInclude Include="include\tex\convert_colorspace_static.hpp" />
     <ClInclude Include="include\tex\default_texture_reader.hpp" />
+    <ClInclude Include="include\tex\dimension_tag.hpp" />
     <ClInclude Include="include\tex\duplicate_image.hpp" />
     <ClInclude Include="include\tex\duplicate_texture.hpp" />
     <ClInclude Include="include\tex\image.hpp" />
@@ -178,6 +181,7 @@
     <None Include="include\tex\blit_blocks.inl" />
     <None Include="include\tex\blit_pixels.inl" />
     <None Include="include\tex\block_access.inl" />
+    <None Include="include\tex\coords.inl" />
     <None Include="include\tex\converting_pixel_blitter.inl" />
     <None Include="include\tex\convert_colorspace_static.inl" />
     <None Include="include\tex\image_region.inl" />

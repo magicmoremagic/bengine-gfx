@@ -12,7 +12,7 @@ namespace be::gfx::tex {
 ///////////////////////////////////////////////////////////////////////////////
 template <typename C>
 C mipmap_dim(C base_dim, U8 level) {
-   return glm::max(C(static_cast<C::value_type>(1)), base_dim >> static_cast<C::value_type>(level));
+   return glm::max(C(static_cast<typename C::value_type>(1)), base_dim >> static_cast<typename C::value_type>(level));
 }
 
 ///////////////////////////////////////////////////////////////////////////////

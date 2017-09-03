@@ -1093,15 +1093,2404 @@ struct PixelNormAccessUncompressed {
 };
 
 #pragma endregion
+#pragma region ASTC
+
+// TODO
+
+#pragma endregion
+#pragma region BPTC
+
+///////////////////////////////////////////////////////////////////////////////
+struct BptcBlock {
+   U8 data[16];
+};
+
+enum class BptcRotation {
+   none = 0,
+   swap_ra = 1,
+   swap_ga = 2,
+   swap_ba = 3
+};
+
+///////////////////////////////////////////////////////////////////////////////
+struct BptcUnormFields {
+   U8 n_subsets = 1;
+   U8 partition = 0;
+   BptcRotation rotation = BptcRotation::none;
+   vec4 endpoints[6] = {
+      vec4(0, 0, 0, 1),
+      vec4(0, 0, 0, 1),
+      vec4(0, 0, 0, 1),
+      vec4(0, 0, 0, 1),
+      vec4(0, 0, 0, 1),
+      vec4(0, 0, 0, 1),
+   };
+   U64 color_index_data = 0;
+   U64 alpha_index_data = 0;
+   U8 color_index_bpp = 2;
+   U8 alpha_index_bpp = 2;
+};
+
+///////////////////////////////////////////////////////////////////////////////
+struct BptcFloatFields {
+   U8 n_subsets = 1;
+   U8 partition = 0;
+   U16 r0 = 0, g0 = 0, b0 = 0;
+   U16 r1 = 0, g1 = 0, b1 = 0;
+   U16 r2 = 0, g2 = 0, b2 = 0;
+   U16 r3 = 0, g3 = 0, b3 = 0;
+   U64 index_data = 0;
+   U8 index_bpp = 3;
+};
+
+///////////////////////////////////////////////////////////////////////////////
+template <typename Coord, typename ImageView>
+BptcBlock get_bptc_block(const ImageView& image, Coord block_coord) {
+   BptcBlock block;
+   const void* ptr = image.data() + BlockOffset<ImageView, Coord>::offset(image, block_coord);
+   std::memcpy(&block, ptr, sizeof(block));
+   return block;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+inline BptcUnormFields decode_bptc_unorm_fields(BptcBlock block) {
+   BptcUnormFields f;
+
+   constexpr U8 anchor2_1[64] = {15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15, 2, 8, 2, 2, 8, 8,15, 2, 8, 2, 2, 8, 8, 2, 2,15,15, 6, 8, 2, 8,15,15, 2, 8, 2, 2, 2,15,15, 6, 6, 2, 6, 8,15,15, 2, 2,15,15,15,15,15, 2, 2,15 };
+   constexpr U8 anchor3_1[64] = { 3, 3, 8, 3, 8, 3, 3, 8, 8, 8, 6, 6, 6, 5, 3, 3, 3, 3, 8, 3, 3, 3, 6, 8, 3, 8, 6, 6, 8, 5,10, 8, 8, 3, 3, 5, 6, 8, 8,10, 6, 3, 8, 5, 3, 6, 6, 8, 3, 3, 5, 5, 5, 8, 5,10, 5,10, 8,13, 3,12, 3, 3 };
+   constexpr U8 anchor3_2[64] = {15, 8,15,15,15,15,15,15,15,15,15,15,15,15,15, 8,15, 8,15,15,15, 8,15,10, 5,15, 8,10,15,15,15,15,15,15,15,10,10,10, 9,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15, 8 };
+
+   if (0 != (block.data[0] & 0x01)) {
+      /////////////////////////////////////////////////////////////////////////
+      // Mode 0
+      f.n_subsets = 3;
+
+      /*!! include 'tex/bptc'
+      decode_bptc_u8  { bits = 4, begin = 1, dest = 'f.partition' }
+      decode_bptc_rgb { bits = 4, count = 6 }
+      decode_bptc_p   { pad_bits = 3, count = 6 }
+      decode_bptc_u64 { bits = 45, dest = 'f.color_index_data' }
+      !! 44 */
+      /* ################# !! GENERATED CODE -- DO NOT MODIFY !! ################# */
+      f.partition = U8((block.data[0] >> 1) & 0xfu);
+      U8 r[6] = {
+         U8(((block.data[0] >> 5) | (block.data[1] << 3)) & 0xfu),
+         U8((block.data[1] >> 1) & 0xfu),
+         U8(((block.data[1] >> 5) | (block.data[2] << 3)) & 0xfu),
+         U8((block.data[2] >> 1) & 0xfu),
+         U8(((block.data[2] >> 5) | (block.data[3] << 3)) & 0xfu),
+         U8((block.data[3] >> 1) & 0xfu)
+      };
+      U8 g[6] = {
+         U8(((block.data[3] >> 5) | (block.data[4] << 3)) & 0xfu),
+         U8((block.data[4] >> 1) & 0xfu),
+         U8(((block.data[4] >> 5) | (block.data[5] << 3)) & 0xfu),
+         U8((block.data[5] >> 1) & 0xfu),
+         U8(((block.data[5] >> 5) | (block.data[6] << 3)) & 0xfu),
+         U8((block.data[6] >> 1) & 0xfu)
+      };
+      U8 b[6] = {
+         U8(((block.data[6] >> 5) | (block.data[7] << 3)) & 0xfu),
+         U8((block.data[7] >> 1) & 0xfu),
+         U8(((block.data[7] >> 5) | (block.data[8] << 3)) & 0xfu),
+         U8((block.data[8] >> 1) & 0xfu),
+         U8(((block.data[8] >> 5) | (block.data[9] << 3)) & 0xfu),
+         U8((block.data[9] >> 1) & 0xfu)
+      };
+      U8 p[6] = {
+         U8((block.data[9] >> 2) & 0x8u),
+         U8((block.data[9] >> 3) & 0x8u),
+         U8((block.data[9] >> 4) & 0x8u),
+         U8((block.data[10] << 3) & 0x8u),
+         U8((block.data[10] << 2) & 0x8u),
+         U8((block.data[10] << 1) & 0x8u)
+      };
+      f.color_index_data = U64((
+         (U64(block.data[10]) >> 3) | 
+         (U64(block.data[11]) << 5) | 
+         (U64(block.data[12]) << 13) | 
+         (U64(block.data[13]) << 21) | 
+         (U64(block.data[14]) << 29) | 
+         (U64(block.data[15]) << 37)) & 0x1fffffffffffull);
+      
+      /* ######################### END OF GENERATED CODE ######################### */
+
+      for (glm::length_t e = 0; e < 6; ++e) {
+         f.endpoints[e].r = ComponentRawNorm<U8, 8, ComponentType::unorm>::decode(U8((r[e] << 4) | p[e] | (r[e] >> 1)));
+         f.endpoints[e].g = ComponentRawNorm<U8, 8, ComponentType::unorm>::decode(U8((g[e] << 4) | p[e] | (g[e] >> 1)));
+         f.endpoints[e].b = ComponentRawNorm<U8, 8, ComponentType::unorm>::decode(U8((b[e] << 4) | p[e] | (b[e] >> 1)));
+      }
+
+      constexpr U8 bpi = 3;
+      const U8 anchor0 = 0;
+      const U8 anchor1 = anchor3_1[f.partition];
+      const U8 anchor2 = anchor3_2[f.partition];
+
+      const U64 mask0 = (1ull << ((anchor0 + 1) * bpi - 1)) - 1;
+      const U64 mask1 = (1ull << ((anchor1 + 1) * bpi - 2)) - 1;
+      const U64 mask2 = (1ull << ((anchor2 + 1) * bpi - 3)) - 1;
+
+      f.color_index_data = (f.color_index_data & mask0) |
+         ((f.color_index_data & (mask1 & ~mask0)) << 1) |
+         ((f.color_index_data & (mask2 & ~mask1)) << 2) |
+         ((f.color_index_data & ~mask2) << 3);
+
+      f.alpha_index_data = f.color_index_data;
+
+      f.color_index_bpp = bpi;
+      f.alpha_index_bpp = bpi;
+
+   } else if (0 != (block.data[0] & 0x02)) {
+      /////////////////////////////////////////////////////////////////////////
+      // Mode 1
+      f.n_subsets = 2;
+
+      /*!!
+      decode_bptc_u8  { bits = 6, begin = 2, dest = 'f.partition' }
+      decode_bptc_rgb { bits = 6, count = 4 }
+      decode_bptc_p   { pad_bits = 1, count = 2, array_size = 4 }
+      decode_bptc_u64 { bits = 46, dest = 'f.color_index_data' }
+      !! 36 */
+      /* ################# !! GENERATED CODE -- DO NOT MODIFY !! ################# */
+      f.partition = U8((block.data[0] >> 2) & 0x3fu);
+      U8 r[4] = {
+         U8(block.data[1] & 0x3fu),
+         U8(((block.data[1] >> 6) | (block.data[2] << 2)) & 0x3fu),
+         U8(((block.data[2] >> 4) | (block.data[3] << 4)) & 0x3fu),
+         U8((block.data[3] >> 2) & 0x3fu)
+      };
+      U8 g[4] = {
+         U8(block.data[4] & 0x3fu),
+         U8(((block.data[4] >> 6) | (block.data[5] << 2)) & 0x3fu),
+         U8(((block.data[5] >> 4) | (block.data[6] << 4)) & 0x3fu),
+         U8((block.data[6] >> 2) & 0x3fu)
+      };
+      U8 b[4] = {
+         U8(block.data[7] & 0x3fu),
+         U8(((block.data[7] >> 6) | (block.data[8] << 2)) & 0x3fu),
+         U8(((block.data[8] >> 4) | (block.data[9] << 4)) & 0x3fu),
+         U8((block.data[9] >> 2) & 0x3fu)
+      };
+      U8 p[4] = {
+         U8((block.data[10] << 1) & 0x2u),
+         U8(block.data[10] & 0x2u)
+      };
+      p[2] = p[0];
+      p[3] = p[1];
+      f.color_index_data = U64((
+         (U64(block.data[10]) >> 2) | 
+         (U64(block.data[11]) << 6) | 
+         (U64(block.data[12]) << 14) | 
+         (U64(block.data[13]) << 22) | 
+         (U64(block.data[14]) << 30) | 
+         (U64(block.data[15]) << 38)) & 0x3fffffffffffull);
+      
+      /* ######################### END OF GENERATED CODE ######################### */
+
+      for (glm::length_t e = 0; e < 4; ++e) {
+         f.endpoints[e].r = ComponentRawNorm<U8, 8, ComponentType::unorm>::decode(U8((r[e] << 2) | p[e] | (r[e] >> 5)));
+         f.endpoints[e].g = ComponentRawNorm<U8, 8, ComponentType::unorm>::decode(U8((g[e] << 2) | p[e] | (g[e] >> 5)));
+         f.endpoints[e].b = ComponentRawNorm<U8, 8, ComponentType::unorm>::decode(U8((b[e] << 2) | p[e] | (b[e] >> 5)));
+      }
+
+      constexpr U8 bpi = 3;
+      const U8 anchor0 = 0;
+      const U8 anchor1 = anchor2_1[f.partition];
+
+      const U64 mask0 = (1ull << ((anchor0 + 1) * bpi - 1)) - 1;
+      const U64 mask1 = (1ull << ((anchor1 + 1) * bpi - 2)) - 1;
+
+      f.color_index_data = (f.color_index_data & mask0) |
+         ((f.color_index_data & (mask1 & ~mask0)) << 1) |
+         ((f.color_index_data & ~mask1) << 2);
+
+      f.alpha_index_data = f.color_index_data;
+
+      f.color_index_bpp = bpi;
+      f.alpha_index_bpp = bpi;
+
+   } else if (0 != (block.data[0] & 0x04)) {
+      /////////////////////////////////////////////////////////////////////////
+      // Mode 2
+      f.n_subsets = 3;
+
+      /*!!
+      decode_bptc_u8  { bits = 6, begin = 3, dest = 'f.partition' }
+      decode_bptc_rgb { bits = 5, count = 6 }
+      decode_bptc_u64 { bits = 29, dest = 'f.color_index_data' }
+      !! 34 */
+      /* ################# !! GENERATED CODE -- DO NOT MODIFY !! ################# */
+      f.partition = U8(((block.data[0] >> 3) | (block.data[1] << 5)) & 0x3fu);
+      U8 r[6] = {
+         U8((block.data[1] >> 1) & 0x1fu),
+         U8(((block.data[1] >> 6) | (block.data[2] << 2)) & 0x1fu),
+         U8((block.data[2] >> 3) & 0x1fu),
+         U8(block.data[3] & 0x1fu),
+         U8(((block.data[3] >> 5) | (block.data[4] << 3)) & 0x1fu),
+         U8((block.data[4] >> 2) & 0x1fu)
+      };
+      U8 g[6] = {
+         U8(((block.data[4] >> 7) | (block.data[5] << 1)) & 0x1fu),
+         U8(((block.data[5] >> 4) | (block.data[6] << 4)) & 0x1fu),
+         U8((block.data[6] >> 1) & 0x1fu),
+         U8(((block.data[6] >> 6) | (block.data[7] << 2)) & 0x1fu),
+         U8((block.data[7] >> 3) & 0x1fu),
+         U8(block.data[8] & 0x1fu)
+      };
+      U8 b[6] = {
+         U8(((block.data[8] >> 5) | (block.data[9] << 3)) & 0x1fu),
+         U8((block.data[9] >> 2) & 0x1fu),
+         U8(((block.data[9] >> 7) | (block.data[10] << 1)) & 0x1fu),
+         U8(((block.data[10] >> 4) | (block.data[11] << 4)) & 0x1fu),
+         U8((block.data[11] >> 1) & 0x1fu),
+         U8(((block.data[11] >> 6) | (block.data[12] << 2)) & 0x1fu)
+      };
+      f.color_index_data = U64((
+         (block.data[12] >> 3) | 
+         (block.data[13] << 5) | 
+         (block.data[14] << 13) | 
+         (block.data[15] << 21)) & 0x1fffffffu);
+      
+      /* ######################### END OF GENERATED CODE ######################### */
+
+      for (glm::length_t e = 0; e < 6; ++e) {
+         f.endpoints[e].r = ComponentRawNorm<U8, 8, ComponentType::unorm>::decode(U8((r[e] << 3) | (r[e] >> 2)));
+         f.endpoints[e].g = ComponentRawNorm<U8, 8, ComponentType::unorm>::decode(U8((g[e] << 3) | (g[e] >> 2)));
+         f.endpoints[e].b = ComponentRawNorm<U8, 8, ComponentType::unorm>::decode(U8((b[e] << 3) | (b[e] >> 2)));
+      }
+
+      constexpr U8 bpi = 2;
+      const U8 anchor0 = 0;
+      const U8 anchor1 = anchor3_1[f.partition];
+      const U8 anchor2 = anchor3_2[f.partition];
+
+      const U64 mask0 = (1ull << ((anchor0 + 1) * bpi - 1)) - 1;
+      const U64 mask1 = (1ull << ((anchor1 + 1) * bpi - 2)) - 1;
+      const U64 mask2 = (1ull << ((anchor2 + 1) * bpi - 3)) - 1;
+
+      f.color_index_data = (f.color_index_data & mask0) |
+         ((f.color_index_data & (mask1 & ~mask0)) << 1) |
+         ((f.color_index_data & (mask2 & ~mask1)) << 2) |
+         ((f.color_index_data & ~mask2) << 3);
+
+      f.alpha_index_data = f.color_index_data;
+
+      f.color_index_bpp = bpi;
+      f.alpha_index_bpp = bpi;
+
+   } else if (0 != (block.data[0] & 0x08)) {
+      /////////////////////////////////////////////////////////////////////////
+      // Mode 3
+      f.n_subsets = 2;
+      
+      /*!!
+      decode_bptc_u8  { bits = 6, begin = 4, dest = 'f.partition' }
+      decode_bptc_rgb { bits = 7, count = 4 }
+      decode_bptc_p   { count = 4 }
+      decode_bptc_u64 { bits = 30, dest = 'f.color_index_data' }
+      !! 34 */
+      /* ################# !! GENERATED CODE -- DO NOT MODIFY !! ################# */
+      f.partition = U8(((block.data[0] >> 4) | (block.data[1] << 4)) & 0x3fu);
+      U8 r[4] = {
+         U8(((block.data[1] >> 2) | (block.data[2] << 6)) & 0x7fu),
+         U8((block.data[2] >> 1) & 0x7fu),
+         U8(block.data[3] & 0x7fu),
+         U8(((block.data[3] >> 7) | (block.data[4] << 1)) & 0x7fu)
+      };
+      U8 g[4] = {
+         U8(((block.data[4] >> 6) | (block.data[5] << 2)) & 0x7fu),
+         U8(((block.data[5] >> 5) | (block.data[6] << 3)) & 0x7fu),
+         U8(((block.data[6] >> 4) | (block.data[7] << 4)) & 0x7fu),
+         U8(((block.data[7] >> 3) | (block.data[8] << 5)) & 0x7fu)
+      };
+      U8 b[4] = {
+         U8(((block.data[8] >> 2) | (block.data[9] << 6)) & 0x7fu),
+         U8((block.data[9] >> 1) & 0x7fu),
+         U8(block.data[10] & 0x7fu),
+         U8(((block.data[10] >> 7) | (block.data[11] << 1)) & 0x7fu)
+      };
+      U8 p[4] = {
+         U8((block.data[11] >> 6) & 0x1u),
+         U8((block.data[11] >> 7) & 0x1u),
+         U8(block.data[12] & 0x1u),
+         U8((block.data[12] >> 1) & 0x1u)
+      };
+      f.color_index_data = U64((
+         (block.data[12] >> 2) | 
+         (block.data[13] << 6) | 
+         (block.data[14] << 14) | 
+         (block.data[15] << 22)) & 0x3fffffffu);
+      
+      /* ######################### END OF GENERATED CODE ######################### */
+
+      for (glm::length_t e = 0; e < 4; ++e) {
+         f.endpoints[e].r = ComponentRawNorm<U8, 8, ComponentType::unorm>::decode(U8((r[e] << 1) | p[e]));
+         f.endpoints[e].g = ComponentRawNorm<U8, 8, ComponentType::unorm>::decode(U8((g[e] << 1) | p[e]));
+         f.endpoints[e].b = ComponentRawNorm<U8, 8, ComponentType::unorm>::decode(U8((b[e] << 1) | p[e]));
+      }
+
+      constexpr U8 bpi = 2;
+      const U8 anchor0 = 0;
+      const U8 anchor1 = anchor2_1[f.partition];
+
+      const U64 mask0 = (1ull << ((anchor0 + 1) * bpi - 1)) - 1;
+      const U64 mask1 = (1ull << ((anchor1 + 1) * bpi - 2)) - 1;
+
+      f.color_index_data = (f.color_index_data & mask0) |
+         ((f.color_index_data & (mask1 & ~mask0)) << 1) |
+         ((f.color_index_data & ~mask1) << 2);
+
+      f.alpha_index_data = f.color_index_data;
+
+      f.color_index_bpp = bpi;
+      f.alpha_index_bpp = bpi;
+
+   } else if (0 != (block.data[0] & 0x10)) {
+      /////////////////////////////////////////////////////////////////////////
+      // Mode 4
+      f.n_subsets = 1;
+
+      /*!!
+      decode_bptc     { bits = 2, begin = 5, typename = 'BptcRotation', dest = 'f.rotation' }
+      decode_bptc_u8  { bits = 1, dest = 'index_selection', declare = true }
+      decode_bptc_rgb { bits = 5, count = 2 }
+      decode_bptc_a   { bits = 6, count = 2 }
+      decode_bptc_u64 { bits = 31, dest = 'primary_index_data', declare = true }
+      decode_bptc_u64 { bits = 47, dest = 'secondary_index_data', declare = true }
+      !! 35 */
+      /* ################# !! GENERATED CODE -- DO NOT MODIFY !! ################# */
+      f.rotation = BptcRotation((block.data[0] >> 5) & 0x3u);
+      U8 index_selection = U8((block.data[0] >> 7) & 0x1u);
+      U8 r[2] = {
+         U8(block.data[1] & 0x1fu),
+         U8(((block.data[1] >> 5) | (block.data[2] << 3)) & 0x1fu)
+      };
+      U8 g[2] = {
+         U8((block.data[2] >> 2) & 0x1fu),
+         U8(((block.data[2] >> 7) | (block.data[3] << 1)) & 0x1fu)
+      };
+      U8 b[2] = {
+         U8(((block.data[3] >> 4) | (block.data[4] << 4)) & 0x1fu),
+         U8((block.data[4] >> 1) & 0x1fu)
+      };
+      U8 a[2] = {
+         U8(((block.data[4] >> 6) | (block.data[5] << 2)) & 0x3fu),
+         U8(((block.data[5] >> 4) | (block.data[6] << 4)) & 0x3fu)
+      };
+      U64 primary_index_data = U64((
+         (block.data[6] >> 2) | 
+         (block.data[7] << 6) | 
+         (block.data[8] << 14) | 
+         (block.data[9] << 22) | 
+         (block.data[10] << 30)) & 0x7fffffffu);
+      U64 secondary_index_data = U64((
+         (U64(block.data[10]) >> 1) | 
+         (U64(block.data[11]) << 7) | 
+         (U64(block.data[12]) << 15) | 
+         (U64(block.data[13]) << 23) | 
+         (U64(block.data[14]) << 31) | 
+         (U64(block.data[15]) << 39)) & 0x7fffffffffffull);
+      
+      /* ######################### END OF GENERATED CODE ######################### */
+
+      for (glm::length_t e = 0; e < 2; ++e) {
+         f.endpoints[e].r = ComponentRawNorm<U8, 8, ComponentType::unorm>::decode(U8((r[e] << 3) | (r[e] >> 2)));
+         f.endpoints[e].g = ComponentRawNorm<U8, 8, ComponentType::unorm>::decode(U8((g[e] << 3) | (g[e] >> 2)));
+         f.endpoints[e].b = ComponentRawNorm<U8, 8, ComponentType::unorm>::decode(U8((b[e] << 3) | (b[e] >> 2)));
+         f.endpoints[e].a = ComponentRawNorm<U8, 8, ComponentType::unorm>::decode(U8((a[e] << 2) | (a[e] >> 4)));
+      }
+
+      constexpr U8 primary_bpi = 2;
+      constexpr U8 secondary_bpi = 3;
+      const U8 anchor = 0;
+
+      const U64 primary_mask = (1ull << ((anchor + 1) * primary_bpi - 1)) - 1;
+      const U64 secondary_mask = (1ull << ((anchor + 1) * secondary_bpi - 1)) - 1;
+
+      primary_index_data = (primary_index_data & primary_mask) |
+         ((primary_index_data & ~primary_mask) << 1);
+
+      secondary_index_data = (secondary_index_data & secondary_mask) |
+         ((secondary_index_data & ~secondary_mask) << 1);
+
+      if (index_selection == 0) {
+         f.color_index_data = primary_index_data;
+         f.color_index_bpp = primary_bpi;
+         f.alpha_index_data = secondary_index_data;
+         f.alpha_index_bpp = secondary_bpi;
+      } else {
+         f.alpha_index_data = primary_index_data;
+         f.alpha_index_bpp = primary_bpi;
+         f.color_index_data = secondary_index_data;
+         f.color_index_bpp = secondary_bpi;
+      }
+
+   } else if (0 != (block.data[0] & 0x20)) {
+      /////////////////////////////////////////////////////////////////////////
+      // Mode 5
+      f.n_subsets = 1;
+
+      /*!!
+      decode_bptc     { bits = 2, begin = 6, typename = 'BptcRotation', dest = 'f.rotation' }
+      decode_bptc_rgb { bits = 7, count = 2 }
+      decode_bptc_a   { bits = 8, count = 2 }
+      decode_bptc_u64 { bits = 31, dest = 'primary_index_data', declare = true }
+      decode_bptc_u64 { bits = 31, dest = 'secondary_index_data', declare = true }
+      !! 32 */
+      /* ################# !! GENERATED CODE -- DO NOT MODIFY !! ################# */
+      f.rotation = BptcRotation((block.data[0] >> 6) & 0x3u);
+      U8 r[2] = {
+         U8(block.data[1] & 0x7fu),
+         U8(((block.data[1] >> 7) | (block.data[2] << 1)) & 0x7fu)
+      };
+      U8 g[2] = {
+         U8(((block.data[2] >> 6) | (block.data[3] << 2)) & 0x7fu),
+         U8(((block.data[3] >> 5) | (block.data[4] << 3)) & 0x7fu)
+      };
+      U8 b[2] = {
+         U8(((block.data[4] >> 4) | (block.data[5] << 4)) & 0x7fu),
+         U8(((block.data[5] >> 3) | (block.data[6] << 5)) & 0x7fu)
+      };
+      U8 a[2] = {
+         U8(((block.data[6] >> 2) | (block.data[7] << 6)) & 0xffu),
+         U8(((block.data[7] >> 2) | (block.data[8] << 6)) & 0xffu)
+      };
+      U64 primary_index_data = U64((
+         (block.data[8] >> 2) | 
+         (block.data[9] << 6) | 
+         (block.data[10] << 14) | 
+         (block.data[11] << 22) | 
+         (block.data[12] << 30)) & 0x7fffffffu);
+      U64 secondary_index_data = U64((
+         (block.data[12] >> 1) | 
+         (block.data[13] << 7) | 
+         (block.data[14] << 15) | 
+         (block.data[15] << 23)) & 0x7fffffffu);
+      
+      /* ######################### END OF GENERATED CODE ######################### */
+
+      for (glm::length_t e = 0; e < 2; ++e) {
+         f.endpoints[e].r = ComponentRawNorm<U8, 8, ComponentType::unorm>::decode(U8((r[e] << 1) | (r[e] >> 6)));
+         f.endpoints[e].g = ComponentRawNorm<U8, 8, ComponentType::unorm>::decode(U8((g[e] << 1) | (g[e] >> 6)));
+         f.endpoints[e].b = ComponentRawNorm<U8, 8, ComponentType::unorm>::decode(U8((b[e] << 1) | (b[e] >> 6)));
+         f.endpoints[e].a = ComponentRawNorm<U8, 8, ComponentType::unorm>::decode(a[e]);
+      }
+
+      constexpr U8 primary_bpi = 2;
+      constexpr U8 secondary_bpi = 2;
+      const U8 anchor = 0;
+
+      const U64 primary_mask = (1ull << ((anchor + 1) * primary_bpi - 1)) - 1;
+      const U64 secondary_mask = (1ull << ((anchor + 1) * secondary_bpi - 1)) - 1;
+
+      primary_index_data = (primary_index_data & primary_mask) |
+         ((primary_index_data & ~primary_mask) << 1);
+
+      secondary_index_data = (secondary_index_data & secondary_mask) |
+         ((secondary_index_data & ~secondary_mask) << 1);
+
+      f.color_index_data = primary_index_data;
+      f.color_index_bpp = primary_bpi;
+      f.alpha_index_data = secondary_index_data;
+      f.alpha_index_bpp = secondary_bpi;
+      
+   } else if (0 != (block.data[0] & 0x40)) {
+      /////////////////////////////////////////////////////////////////////////
+      // Mode 6
+      f.n_subsets = 1;
+
+      /*!!
+      decode_bptc_rgba { bits = 7, begin = 7, count = 2 }
+      decode_bptc_p    { count = 2 }
+      decode_bptc_u64  { bits = 63, dest = 'f.color_index_data' }
+      !! 33 */
+      /* ################# !! GENERATED CODE -- DO NOT MODIFY !! ################# */
+      U8 r[2] = {
+         U8(((block.data[0] >> 7) | (block.data[1] << 1)) & 0x7fu),
+         U8(((block.data[1] >> 6) | (block.data[2] << 2)) & 0x7fu)
+      };
+      U8 g[2] = {
+         U8(((block.data[2] >> 5) | (block.data[3] << 3)) & 0x7fu),
+         U8(((block.data[3] >> 4) | (block.data[4] << 4)) & 0x7fu)
+      };
+      U8 b[2] = {
+         U8(((block.data[4] >> 3) | (block.data[5] << 5)) & 0x7fu),
+         U8(((block.data[5] >> 2) | (block.data[6] << 6)) & 0x7fu)
+      };
+      U8 a[2] = {
+         U8((block.data[6] >> 1) & 0x7fu),
+         U8(block.data[7] & 0x7fu)
+      };
+      U8 p[2] = {
+         U8((block.data[7] >> 7) & 0x1u),
+         U8(block.data[8] & 0x1u)
+      };
+      f.color_index_data = U64((
+         (U64(block.data[8]) >> 1) | 
+         (U64(block.data[9]) << 7) | 
+         (U64(block.data[10]) << 15) | 
+         (U64(block.data[11]) << 23) | 
+         (U64(block.data[12]) << 31) | 
+         (U64(block.data[13]) << 39) | 
+         (U64(block.data[14]) << 47) | 
+         (U64(block.data[15]) << 55)) & 0x7fffffffffffffffull);
+      
+      /* ######################### END OF GENERATED CODE ######################### */
+
+      for (glm::length_t e = 0; e < 2; ++e) {
+         f.endpoints[e].r = ComponentRawNorm<U8, 8, ComponentType::unorm>::decode(U8((r[e] << 1) | p[e]));
+         f.endpoints[e].g = ComponentRawNorm<U8, 8, ComponentType::unorm>::decode(U8((g[e] << 1) | p[e]));
+         f.endpoints[e].b = ComponentRawNorm<U8, 8, ComponentType::unorm>::decode(U8((b[e] << 1) | p[e]));
+         f.endpoints[e].a = ComponentRawNorm<U8, 8, ComponentType::unorm>::decode(U8((a[e] << 1) | p[e]));
+      }
+
+      constexpr U8 bpi = 4;
+      const U8 anchor = 0;
+
+      const U64 mask = (1ull << ((anchor + 1) * bpi - 1)) - 1;
+
+      f.color_index_data = (f.color_index_data & mask) |
+         ((f.color_index_data & ~mask) << 1);
+
+      f.alpha_index_data = f.color_index_data;
+
+      f.color_index_bpp = bpi;
+      f.alpha_index_bpp = bpi;
+
+   } else if (0 != (block.data[0] & 0x80)) {
+      /////////////////////////////////////////////////////////////////////////
+      // Mode 7
+      f.n_subsets = 2;
+
+      /*!!
+      decode_bptc_u8   { bits = 6, begin = 8, dest = 'f.partition' }
+      decode_bptc_rgba { bits = 5, count = 4 }
+      decode_bptc_p    { pad_bits = 2, count = 4 }
+      decode_bptc_u64  { bits = 30, dest = 'f.color_index_data' }
+      !! 40 */
+      /* ################# !! GENERATED CODE -- DO NOT MODIFY !! ################# */
+      f.partition = U8(block.data[1] & 0x3fu);
+      U8 r[4] = {
+         U8(((block.data[1] >> 6) | (block.data[2] << 2)) & 0x1fu),
+         U8((block.data[2] >> 3) & 0x1fu),
+         U8(block.data[3] & 0x1fu),
+         U8(((block.data[3] >> 5) | (block.data[4] << 3)) & 0x1fu)
+      };
+      U8 g[4] = {
+         U8((block.data[4] >> 2) & 0x1fu),
+         U8(((block.data[4] >> 7) | (block.data[5] << 1)) & 0x1fu),
+         U8(((block.data[5] >> 4) | (block.data[6] << 4)) & 0x1fu),
+         U8((block.data[6] >> 1) & 0x1fu)
+      };
+      U8 b[4] = {
+         U8(((block.data[6] >> 6) | (block.data[7] << 2)) & 0x1fu),
+         U8((block.data[7] >> 3) & 0x1fu),
+         U8(block.data[8] & 0x1fu),
+         U8(((block.data[8] >> 5) | (block.data[9] << 3)) & 0x1fu)
+      };
+      U8 a[4] = {
+         U8((block.data[9] >> 2) & 0x1fu),
+         U8(((block.data[9] >> 7) | (block.data[10] << 1)) & 0x1fu),
+         U8(((block.data[10] >> 4) | (block.data[11] << 4)) & 0x1fu),
+         U8((block.data[11] >> 1) & 0x1fu)
+      };
+      U8 p[4] = {
+         U8((block.data[11] >> 4) & 0x4u),
+         U8((block.data[11] >> 5) & 0x4u),
+         U8((block.data[12] << 2) & 0x4u),
+         U8((block.data[12] << 1) & 0x4u)
+      };
+      f.color_index_data = U64((
+         (block.data[12] >> 2) | 
+         (block.data[13] << 6) | 
+         (block.data[14] << 14) | 
+         (block.data[15] << 22)) & 0x3fffffffu);
+      
+      /* ######################### END OF GENERATED CODE ######################### */
+
+      for (glm::length_t e = 0; e < 4; ++e) {
+         f.endpoints[e].r = ComponentRawNorm<U8, 8, ComponentType::unorm>::decode(U8((r[e] << 3) | p[e] | (r[e] >> 3)));
+         f.endpoints[e].g = ComponentRawNorm<U8, 8, ComponentType::unorm>::decode(U8((g[e] << 3) | p[e] | (g[e] >> 3)));
+         f.endpoints[e].b = ComponentRawNorm<U8, 8, ComponentType::unorm>::decode(U8((b[e] << 3) | p[e] | (b[e] >> 3)));
+         f.endpoints[e].a = ComponentRawNorm<U8, 8, ComponentType::unorm>::decode(U8((a[e] << 3) | p[e] | (a[e] >> 3)));
+      }
+
+      constexpr U8 bpi = 2;
+      const U8 anchor0 = 0;
+      const U8 anchor1 = anchor2_1[f.partition];
+
+      const U64 mask0 = (1ull << ((anchor0 + 1) * bpi - 1)) - 1;
+      const U64 mask1 = (1ull << ((anchor1 + 1) * bpi - 2)) - 1;
+
+      f.color_index_data = (f.color_index_data & mask0) |
+         ((f.color_index_data & (mask1 & ~mask0)) << 1) |
+         ((f.color_index_data & ~mask1) << 2);
+
+      f.alpha_index_data = f.color_index_data;
+
+      f.color_index_bpp = bpi;
+      f.alpha_index_bpp = bpi;
+   }
+
+   return f;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+inline U16 bptc_unquantize_unsigned(U16 value, U8 epb) {
+   if (value == 0) {
+      return 0;
+   } else if (value == (1 << epb) - 1) {
+      return 0xffff;
+   } else {
+      return ((value << 15) + 0x4000) >> (epb - 1);
+   }
+}
+
+///////////////////////////////////////////////////////////////////////////////
+inline U16 bptc_unquantize_signed(U16 value, U8 epb) {
+   if (value == 0) {
+      return 0;
+   } else {
+      U16 sign_mask = 1 << (epb - 1);
+      if (value == sign_mask) {
+         return 0x8001;
+      }
+      
+      if (0 != (value & sign_mask)) {
+         value = ((~value) + 1) & ((1 << epb) - 1);
+         value = ((value << 15) + 0x4000) >> (epb - 1);
+         value = (~value) + 1;
+      } else {
+         value = ((value << 15) + 0x4000) >> (epb - 1);
+      }
+      return value;
+   }
+}
+
+///////////////////////////////////////////////////////////////////////////////
+inline BptcFloatFields decode_bptc_float_fields(BptcBlock block, bool is_signed) {
+   BptcFloatFields f;
+
+   constexpr U8 anchor2_1[32] = {15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15, 2, 8, 2, 2, 8, 8,15, 2, 8, 2, 2, 8, 8, 2, 2 };
+
+   U8 mode = (0 == (block.data[0] & 0x2)) ? (block.data[0] & 0x3) : (block.data[0] & 0x1f);
+   U8 epb = 11;
+   switch (mode) {
+      case 0:
+      {
+         /*!! bits_used = 2
+         decode_bptc_g2(4)
+         decode_bptc_b2(4)
+         decode_bptc_b3(4)
+         decode_bptc_u16 { bits = 10, dest = { 'f.r0', 'f.g0', 'f.b0' } }
+         decode_bptc_r1  { bits = 5 }
+         decode_bptc_g3(4)
+         decode_bptc_g2  { bits = 4 }
+         decode_bptc_g1  { bits = 5 }
+         decode_bptc_b3(0)
+         decode_bptc_g3  { bits = 4 }
+         decode_bptc_b1  { bits = 5 }
+         decode_bptc_b3(1)
+         decode_bptc_b2  { bits = 4 }
+         decode_bptc_r2  { bits = 5 }
+         decode_bptc_b3(2)
+         decode_bptc_r3  { bits = 5 }
+         decode_bptc_b3(3)
+         sign_extend(2, 10, 5)
+         bptc_delta(2, 10)
+         !! 41 */
+         /* ################# !! GENERATED CODE -- DO NOT MODIFY !! ################# */
+         f.g2 |= U16((block.data[0] << 2) & 0x10u);
+         f.b2 |= U16((block.data[0] << 1) & 0x10u);
+         f.b3 |= U16(block.data[0] & 0x10u);
+         f.r0 = U16(((block.data[0] >> 5) | (block.data[1] << 3)) & 0x3ffu);
+         f.g0 = U16(((block.data[1] >> 7) | (block.data[2] << 1) | (block.data[3] << 9)) & 0x3ffu);
+         f.b0 = U16(((block.data[3] >> 1) | (block.data[4] << 7)) & 0x3ffu);
+         f.r1 = U16((block.data[4] >> 3) & 0x1fu);
+         f.g3 |= U16((block.data[5] << 4) & 0x10u);
+         f.g2 |= U16((block.data[5] >> 1) & 0xfu);
+         f.g1 = U16(((block.data[5] >> 5) | (block.data[6] << 3)) & 0x1fu);
+         f.b3 |= U16((block.data[6] >> 2) & 0x1u);
+         f.g3 |= U16((block.data[6] >> 3) & 0xfu);
+         f.b1 = U16(((block.data[6] >> 7) | (block.data[7] << 1)) & 0x1fu);
+         f.b3 |= U16((block.data[7] >> 3) & 0x2u);
+         f.b2 |= U16(((block.data[7] >> 5) | (block.data[8] << 3)) & 0xfu);
+         f.r2 = U16((block.data[8] >> 1) & 0x1fu);
+         f.b3 |= U16((block.data[8] >> 4) & 0x4u);
+         f.r3 = U16(((block.data[8] >> 7) | (block.data[9] << 1)) & 0x1fu);
+         f.b3 |= U16((block.data[9] >> 1) & 0x8u);
+         if (0 != (f.r1 & 0x10u)) f.r1 |= 0x3e0u;
+         if (0 != (f.g1 & 0x10u)) f.g1 |= 0x3e0u;
+         if (0 != (f.b1 & 0x10u)) f.b1 |= 0x3e0u;
+         if (0 != (f.r2 & 0x10u)) f.r2 |= 0x3e0u;
+         if (0 != (f.g2 & 0x10u)) f.g2 |= 0x3e0u;
+         if (0 != (f.b2 & 0x10u)) f.b2 |= 0x3e0u;
+         if (0 != (f.r3 & 0x10u)) f.r3 |= 0x3e0u;
+         if (0 != (f.g3 & 0x10u)) f.g3 |= 0x3e0u;
+         if (0 != (f.b3 & 0x10u)) f.b3 |= 0x3e0u;
+         f.r1 = (f.r0 + f.r1) & 0x3ffu;
+         f.g1 = (f.g0 + f.g1) & 0x3ffu;
+         f.b1 = (f.b0 + f.b1) & 0x3ffu;
+         f.r2 = (f.r0 + f.r2) & 0x3ffu;
+         f.g2 = (f.g0 + f.g2) & 0x3ffu;
+         f.b2 = (f.b0 + f.b2) & 0x3ffu;
+         f.r3 = (f.r0 + f.r3) & 0x3ffu;
+         f.g3 = (f.g0 + f.g3) & 0x3ffu;
+         f.b3 = (f.b0 + f.b3) & 0x3ffu;
+         
+         /* ######################### END OF GENERATED CODE ######################### */
+         epb = 10;
+         break;
+      }
+
+      case 1:
+      {
+         /*!! bits_used = 2
+         decode_bptc_g2(5)
+         decode_bptc_g3 { bits = 2, pad_bits = 4 }
+         decode_bptc_r0 { bits = 7 }
+         decode_bptc_b3 { bits = 2 }
+         decode_bptc_b2(4)
+         decode_bptc_g0 { bits = 7 }
+         decode_bptc_b2(5)
+         decode_bptc_b3(2)
+         decode_bptc_g2(4)
+         decode_bptc_b0 { bits = 7 }
+         decode_bptc_b3(3)
+         decode_bptc_b3(4)
+         decode_bptc_b3(5)
+         decode_bptc_r1 { bits = 6 }
+         decode_bptc_g2 { bits = 4 }
+         decode_bptc_g1 { bits = 6 }
+         decode_bptc_g3 { bits = 4 }
+         decode_bptc_b1 { bits = 6 }
+         decode_bptc_b2 { bits = 4 }
+         decode_bptc_r2 { bits = 6 }
+         decode_bptc_r3 { bits = 6 }
+         sign_extend(2, 7, 6)
+         bptc_delta(2, 7)
+         !! 43 */
+         /* ################# !! GENERATED CODE -- DO NOT MODIFY !! ################# */
+         f.g2 |= U16((block.data[0] << 3) & 0x20u);
+         f.g3 |= U16((block.data[0] << 1) & 0x30u);
+         f.r0 = U16(((block.data[0] >> 5) | (block.data[1] << 3)) & 0x7fu);
+         f.b3 |= U16((block.data[1] >> 4) & 0x3u);
+         f.b2 |= U16((block.data[1] >> 2) & 0x10u);
+         f.g0 = U16(((block.data[1] >> 7) | (block.data[2] << 1)) & 0x7fu);
+         f.b2 |= U16((block.data[2] >> 1) & 0x20u);
+         f.b3 |= U16((block.data[2] >> 5) & 0x4u);
+         f.g2 |= U16((block.data[3] << 4) & 0x10u);
+         f.b0 = U16((block.data[3] >> 1) & 0x7fu);
+         f.b3 |= U16((block.data[4] << 3) & 0x8u);
+         f.b3 |= U16((block.data[4] << 3) & 0x10u);
+         f.b3 |= U16((block.data[4] << 3) & 0x20u);
+         f.r1 = U16(((block.data[4] >> 3) | (block.data[5] << 5)) & 0x3fu);
+         f.g2 |= U16((block.data[5] >> 1) & 0xfu);
+         f.g1 = U16(((block.data[5] >> 5) | (block.data[6] << 3)) & 0x3fu);
+         f.g3 |= U16((block.data[6] >> 3) & 0xfu);
+         f.b1 = U16(((block.data[6] >> 7) | (block.data[7] << 1)) & 0x3fu);
+         f.b2 |= U16(((block.data[7] >> 5) | (block.data[8] << 3)) & 0xfu);
+         f.r2 = U16((block.data[8] >> 1) & 0x3fu);
+         f.r3 = U16(((block.data[8] >> 7) | (block.data[9] << 1)) & 0x3fu);
+         if (0 != (f.r1 & 0x20u)) f.r1 |= 0x40u;
+         if (0 != (f.g1 & 0x20u)) f.g1 |= 0x40u;
+         if (0 != (f.b1 & 0x20u)) f.b1 |= 0x40u;
+         if (0 != (f.r2 & 0x20u)) f.r2 |= 0x40u;
+         if (0 != (f.g2 & 0x20u)) f.g2 |= 0x40u;
+         if (0 != (f.b2 & 0x20u)) f.b2 |= 0x40u;
+         if (0 != (f.r3 & 0x20u)) f.r3 |= 0x40u;
+         if (0 != (f.g3 & 0x20u)) f.g3 |= 0x40u;
+         if (0 != (f.b3 & 0x20u)) f.b3 |= 0x40u;
+         f.r1 = (f.r0 + f.r1) & 0x7fu;
+         f.g1 = (f.g0 + f.g1) & 0x7fu;
+         f.b1 = (f.b0 + f.b1) & 0x7fu;
+         f.r2 = (f.r0 + f.r2) & 0x7fu;
+         f.g2 = (f.g0 + f.g2) & 0x7fu;
+         f.b2 = (f.b0 + f.b2) & 0x7fu;
+         f.r3 = (f.r0 + f.r3) & 0x7fu;
+         f.g3 = (f.g0 + f.g3) & 0x7fu;
+         f.b3 = (f.b0 + f.b3) & 0x7fu;
+         
+         /* ######################### END OF GENERATED CODE ######################### */
+         epb = 7;
+         break;
+      }
+
+      case 2:
+      {
+         /*!! bits_used = 5
+         decode_bptc_u16 { bits = 10, dest = { 'f.r0', 'f.g0', 'f.b0' } }
+         decode_bptc_r1 { bits = 5 }
+         decode_bptc_r0(10)
+         decode_bptc_g2 { bits = 4 }
+         decode_bptc_g1 { bits = 4 }
+         decode_bptc_g0(10)
+         decode_bptc_b3(0)
+         decode_bptc_g3 { bits = 4 }
+         decode_bptc_b1 { bits = 4 }
+         decode_bptc_b0(10)
+         decode_bptc_b3(1)
+         decode_bptc_b2 { bits = 4 }
+         decode_bptc_r2 { bits = 5 }
+         decode_bptc_b3(2)
+         decode_bptc_r3 { bits = 5 }
+         decode_bptc_b3(3)
+         sign_extend(2, 11, 5, 4, 4)
+         bptc_delta(2, 11)
+         !! 40 */
+         /* ################# !! GENERATED CODE -- DO NOT MODIFY !! ################# */
+         f.r0 = U16(((block.data[0] >> 5) | (block.data[1] << 3)) & 0x3ffu);
+         f.g0 = U16(((block.data[1] >> 7) | (block.data[2] << 1) | (block.data[3] << 9)) & 0x3ffu);
+         f.b0 = U16(((block.data[3] >> 1) | (block.data[4] << 7)) & 0x3ffu);
+         f.r1 = U16((block.data[4] >> 3) & 0x1fu);
+         f.r0 |= U16((block.data[5] << 10) & 0x400u);
+         f.g2 |= U16((block.data[5] >> 1) & 0xfu);
+         f.g1 = U16(((block.data[5] >> 5) | (block.data[6] << 3)) & 0xfu);
+         f.g0 |= U16((block.data[6] << 9) & 0x400u);
+         f.b3 |= U16((block.data[6] >> 2) & 0x1u);
+         f.g3 |= U16((block.data[6] >> 3) & 0xfu);
+         f.b1 = U16(((block.data[6] >> 7) | (block.data[7] << 1)) & 0xfu);
+         f.b0 |= U16((block.data[7] << 7) & 0x400u);
+         f.b3 |= U16((block.data[7] >> 3) & 0x2u);
+         f.b2 |= U16(((block.data[7] >> 5) | (block.data[8] << 3)) & 0xfu);
+         f.r2 = U16((block.data[8] >> 1) & 0x1fu);
+         f.b3 |= U16((block.data[8] >> 4) & 0x4u);
+         f.r3 = U16(((block.data[8] >> 7) | (block.data[9] << 1)) & 0x1fu);
+         f.b3 |= U16((block.data[9] >> 1) & 0x8u);
+         if (0 != (f.r1 & 0x10u)) f.r1 |= 0x7e0u;
+         if (0 != (f.g1 & 0x8u)) f.g1 |= 0x7f0u;
+         if (0 != (f.b1 & 0x8u)) f.b1 |= 0x7f0u;
+         if (0 != (f.r2 & 0x10u)) f.r2 |= 0x7e0u;
+         if (0 != (f.g2 & 0x8u)) f.g2 |= 0x7f0u;
+         if (0 != (f.b2 & 0x8u)) f.b2 |= 0x7f0u;
+         if (0 != (f.r3 & 0x10u)) f.r3 |= 0x7e0u;
+         if (0 != (f.g3 & 0x8u)) f.g3 |= 0x7f0u;
+         if (0 != (f.b3 & 0x8u)) f.b3 |= 0x7f0u;
+         f.r1 = (f.r0 + f.r1) & 0x7ffu;
+         f.g1 = (f.g0 + f.g1) & 0x7ffu;
+         f.b1 = (f.b0 + f.b1) & 0x7ffu;
+         f.r2 = (f.r0 + f.r2) & 0x7ffu;
+         f.g2 = (f.g0 + f.g2) & 0x7ffu;
+         f.b2 = (f.b0 + f.b2) & 0x7ffu;
+         f.r3 = (f.r0 + f.r3) & 0x7ffu;
+         f.g3 = (f.g0 + f.g3) & 0x7ffu;
+         f.b3 = (f.b0 + f.b3) & 0x7ffu;
+         
+         /* ######################### END OF GENERATED CODE ######################### */
+         epb = 11;
+         break;
+      }
+      
+      case 6:
+      {
+         /*!! bits_used = 5
+         decode_bptc_u16 { bits = 10, dest = { 'f.r0', 'f.g0', 'f.b0' } }
+         decode_bptc_r1 { bits = 4 }
+         decode_bptc_r0(10)
+         decode_bptc_g3(4)
+         decode_bptc_g2 { bits = 4 }
+         decode_bptc_g1 { bits = 5 }
+         decode_bptc_g0(10)
+         decode_bptc_g3 { bits = 4 }
+         decode_bptc_b1 { bits = 4 }
+         decode_bptc_b0(10)
+         decode_bptc_b3(1)
+         decode_bptc_b2 { bits = 4 }
+         decode_bptc_r2 { bits = 4 }
+         decode_bptc_b3(0)
+         decode_bptc_b3(2)
+         decode_bptc_r3 { bits = 4 }
+         decode_bptc_g2(4)
+         decode_bptc_b3(3)
+         sign_extend(2, 11, 4, 5, 4)
+         bptc_delta(2, 11)
+         !! 42 */
+         /* ################# !! GENERATED CODE -- DO NOT MODIFY !! ################# */
+         f.r0 = U16(((block.data[0] >> 5) | (block.data[1] << 3)) & 0x3ffu);
+         f.g0 = U16(((block.data[1] >> 7) | (block.data[2] << 1) | (block.data[3] << 9)) & 0x3ffu);
+         f.b0 = U16(((block.data[3] >> 1) | (block.data[4] << 7)) & 0x3ffu);
+         f.r1 = U16((block.data[4] >> 3) & 0xfu);
+         f.r0 |= U16((block.data[4] << 3) & 0x400u);
+         f.g3 |= U16((block.data[5] << 4) & 0x10u);
+         f.g2 |= U16((block.data[5] >> 1) & 0xfu);
+         f.g1 = U16(((block.data[5] >> 5) | (block.data[6] << 3)) & 0x1fu);
+         f.g0 |= U16((block.data[6] << 8) & 0x400u);
+         f.g3 |= U16((block.data[6] >> 3) & 0xfu);
+         f.b1 = U16(((block.data[6] >> 7) | (block.data[7] << 1)) & 0xfu);
+         f.b0 |= U16((block.data[7] << 7) & 0x400u);
+         f.b3 |= U16((block.data[7] >> 3) & 0x2u);
+         f.b2 |= U16(((block.data[7] >> 5) | (block.data[8] << 3)) & 0xfu);
+         f.r2 = U16((block.data[8] >> 1) & 0xfu);
+         f.b3 |= U16((block.data[8] >> 5) & 0x1u);
+         f.b3 |= U16((block.data[8] >> 4) & 0x4u);
+         f.r3 = U16(((block.data[8] >> 7) | (block.data[9] << 1)) & 0xfu);
+         f.g2 |= U16((block.data[9] << 1) & 0x10u);
+         f.b3 |= U16((block.data[9] >> 1) & 0x8u);
+         if (0 != (f.r1 & 0x8u)) f.r1 |= 0x7f0u;
+         if (0 != (f.g1 & 0x10u)) f.g1 |= 0x7e0u;
+         if (0 != (f.b1 & 0x8u)) f.b1 |= 0x7f0u;
+         if (0 != (f.r2 & 0x8u)) f.r2 |= 0x7f0u;
+         if (0 != (f.g2 & 0x10u)) f.g2 |= 0x7e0u;
+         if (0 != (f.b2 & 0x8u)) f.b2 |= 0x7f0u;
+         if (0 != (f.r3 & 0x8u)) f.r3 |= 0x7f0u;
+         if (0 != (f.g3 & 0x10u)) f.g3 |= 0x7e0u;
+         if (0 != (f.b3 & 0x8u)) f.b3 |= 0x7f0u;
+         f.r1 = (f.r0 + f.r1) & 0x7ffu;
+         f.g1 = (f.g0 + f.g1) & 0x7ffu;
+         f.b1 = (f.b0 + f.b1) & 0x7ffu;
+         f.r2 = (f.r0 + f.r2) & 0x7ffu;
+         f.g2 = (f.g0 + f.g2) & 0x7ffu;
+         f.b2 = (f.b0 + f.b2) & 0x7ffu;
+         f.r3 = (f.r0 + f.r3) & 0x7ffu;
+         f.g3 = (f.g0 + f.g3) & 0x7ffu;
+         f.b3 = (f.b0 + f.b3) & 0x7ffu;
+         
+         /* ######################### END OF GENERATED CODE ######################### */
+         epb = 11;
+         break;
+      }
+
+      case 10:
+      {
+         /*!! bits_used = 5
+         decode_bptc_u16 { bits = 10, dest = { 'f.r0', 'f.g0', 'f.b0' } }
+         decode_bptc_r1 { bits = 4 }
+         decode_bptc_r0(10)
+         decode_bptc_b2(4)
+         decode_bptc_g2 { bits = 4 }
+         decode_bptc_g1 { bits = 4 }
+         decode_bptc_g0(10)
+         decode_bptc_b3(0)
+         decode_bptc_g3 { bits = 4 }
+         decode_bptc_b1 { bits = 5 }
+         decode_bptc_b0(10)
+         decode_bptc_b2 { bits = 4 }
+         decode_bptc_r2 { bits = 4 }
+         decode_bptc_b3 { bits = 2, pad_bits = 1 }
+         decode_bptc_r3 { bits = 4 }
+         decode_bptc_b3(4)
+         decode_bptc_b3(4)
+         sign_extend(2, 11, 4, 4, 5)
+         bptc_delta(2, 11)
+         !! 41 */
+         /* ################# !! GENERATED CODE -- DO NOT MODIFY !! ################# */
+         f.r0 = U16(((block.data[0] >> 5) | (block.data[1] << 3)) & 0x3ffu);
+         f.g0 = U16(((block.data[1] >> 7) | (block.data[2] << 1) | (block.data[3] << 9)) & 0x3ffu);
+         f.b0 = U16(((block.data[3] >> 1) | (block.data[4] << 7)) & 0x3ffu);
+         f.r1 = U16((block.data[4] >> 3) & 0xfu);
+         f.r0 |= U16((block.data[4] << 3) & 0x400u);
+         f.b2 |= U16((block.data[5] << 4) & 0x10u);
+         f.g2 |= U16((block.data[5] >> 1) & 0xfu);
+         f.g1 = U16(((block.data[5] >> 5) | (block.data[6] << 3)) & 0xfu);
+         f.g0 |= U16((block.data[6] << 9) & 0x400u);
+         f.b3 |= U16((block.data[6] >> 2) & 0x1u);
+         f.g3 |= U16((block.data[6] >> 3) & 0xfu);
+         f.b1 = U16(((block.data[6] >> 7) | (block.data[7] << 1)) & 0x1fu);
+         f.b0 |= U16((block.data[7] << 6) & 0x400u);
+         f.b2 |= U16(((block.data[7] >> 5) | (block.data[8] << 3)) & 0xfu);
+         f.r2 = U16((block.data[8] >> 1) & 0xfu);
+         f.b3 |= U16((block.data[8] >> 4) & 0x6u);
+         f.r3 = U16(((block.data[8] >> 7) | (block.data[9] << 1)) & 0xfu);
+         f.b3 |= U16((block.data[9] << 1) & 0x10u);
+         f.b3 |= U16(block.data[9] & 0x10u);
+         if (0 != (f.r1 & 0x8u)) f.r1 |= 0x7f0u;
+         if (0 != (f.g1 & 0x8u)) f.g1 |= 0x7f0u;
+         if (0 != (f.b1 & 0x10u)) f.b1 |= 0x7e0u;
+         if (0 != (f.r2 & 0x8u)) f.r2 |= 0x7f0u;
+         if (0 != (f.g2 & 0x8u)) f.g2 |= 0x7f0u;
+         if (0 != (f.b2 & 0x10u)) f.b2 |= 0x7e0u;
+         if (0 != (f.r3 & 0x8u)) f.r3 |= 0x7f0u;
+         if (0 != (f.g3 & 0x8u)) f.g3 |= 0x7f0u;
+         if (0 != (f.b3 & 0x10u)) f.b3 |= 0x7e0u;
+         f.r1 = (f.r0 + f.r1) & 0x7ffu;
+         f.g1 = (f.g0 + f.g1) & 0x7ffu;
+         f.b1 = (f.b0 + f.b1) & 0x7ffu;
+         f.r2 = (f.r0 + f.r2) & 0x7ffu;
+         f.g2 = (f.g0 + f.g2) & 0x7ffu;
+         f.b2 = (f.b0 + f.b2) & 0x7ffu;
+         f.r3 = (f.r0 + f.r3) & 0x7ffu;
+         f.g3 = (f.g0 + f.g3) & 0x7ffu;
+         f.b3 = (f.b0 + f.b3) & 0x7ffu;
+         
+         /* ######################### END OF GENERATED CODE ######################### */
+         epb = 11;
+         break;
+      }
+
+      case 14:
+      {
+         /*!! bits_used = 5
+         decode_bptc_r0 { bits = 9 }
+         decode_bptc_b2(4)
+         decode_bptc_g0 { bits = 9 }
+         decode_bptc_g2(4)
+         decode_bptc_b0 { bits = 9 }
+         decode_bptc_b3(4)
+         decode_bptc_r1 { bits = 5 }
+         decode_bptc_g3(4)
+         decode_bptc_g2 { bits = 4 }
+         decode_bptc_g1 { bits = 5 }
+         decode_bptc_b3(0)
+         decode_bptc_g3 { bits = 4 }
+         decode_bptc_b1 { bits = 5 }
+         decode_bptc_b3(1)
+         decode_bptc_b2 { bits = 4 }
+         decode_bptc_r2 { bits = 5 }
+         decode_bptc_b3(2)
+         decode_bptc_r3 { bits = 5 }
+         decode_bptc_b3(3)
+         sign_extend(2, 9, 5)
+         bptc_delta(2, 9)
+         !! 41 */
+         /* ################# !! GENERATED CODE -- DO NOT MODIFY !! ################# */
+         f.r0 = U16(((block.data[0] >> 5) | (block.data[1] << 3)) & 0x1ffu);
+         f.b2 |= U16((block.data[1] >> 2) & 0x10u);
+         f.g0 = U16(((block.data[1] >> 7) | (block.data[2] << 1)) & 0x1ffu);
+         f.g2 |= U16((block.data[3] << 4) & 0x10u);
+         f.b0 = U16(((block.data[3] >> 1) | (block.data[4] << 7)) & 0x1ffu);
+         f.b3 |= U16((block.data[4] << 2) & 0x10u);
+         f.r1 = U16((block.data[4] >> 3) & 0x1fu);
+         f.g3 |= U16((block.data[5] << 4) & 0x10u);
+         f.g2 |= U16((block.data[5] >> 1) & 0xfu);
+         f.g1 = U16(((block.data[5] >> 5) | (block.data[6] << 3)) & 0x1fu);
+         f.b3 |= U16((block.data[6] >> 2) & 0x1u);
+         f.g3 |= U16((block.data[6] >> 3) & 0xfu);
+         f.b1 = U16(((block.data[6] >> 7) | (block.data[7] << 1)) & 0x1fu);
+         f.b3 |= U16((block.data[7] >> 3) & 0x2u);
+         f.b2 |= U16(((block.data[7] >> 5) | (block.data[8] << 3)) & 0xfu);
+         f.r2 = U16((block.data[8] >> 1) & 0x1fu);
+         f.b3 |= U16((block.data[8] >> 4) & 0x4u);
+         f.r3 = U16(((block.data[8] >> 7) | (block.data[9] << 1)) & 0x1fu);
+         f.b3 |= U16((block.data[9] >> 1) & 0x8u);
+         if (0 != (f.r1 & 0x10u)) f.r1 |= 0x1e0u;
+         if (0 != (f.g1 & 0x10u)) f.g1 |= 0x1e0u;
+         if (0 != (f.b1 & 0x10u)) f.b1 |= 0x1e0u;
+         if (0 != (f.r2 & 0x10u)) f.r2 |= 0x1e0u;
+         if (0 != (f.g2 & 0x10u)) f.g2 |= 0x1e0u;
+         if (0 != (f.b2 & 0x10u)) f.b2 |= 0x1e0u;
+         if (0 != (f.r3 & 0x10u)) f.r3 |= 0x1e0u;
+         if (0 != (f.g3 & 0x10u)) f.g3 |= 0x1e0u;
+         if (0 != (f.b3 & 0x10u)) f.b3 |= 0x1e0u;
+         f.r1 = (f.r0 + f.r1) & 0x1ffu;
+         f.g1 = (f.g0 + f.g1) & 0x1ffu;
+         f.b1 = (f.b0 + f.b1) & 0x1ffu;
+         f.r2 = (f.r0 + f.r2) & 0x1ffu;
+         f.g2 = (f.g0 + f.g2) & 0x1ffu;
+         f.b2 = (f.b0 + f.b2) & 0x1ffu;
+         f.r3 = (f.r0 + f.r3) & 0x1ffu;
+         f.g3 = (f.g0 + f.g3) & 0x1ffu;
+         f.b3 = (f.b0 + f.b3) & 0x1ffu;
+         
+         /* ######################### END OF GENERATED CODE ######################### */
+         epb = 9;
+         break;
+      }
+
+      case 18:
+      {
+         /*!! bits_used = 5
+         decode_bptc_r0 { bits = 8 }
+         decode_bptc_g3(4)
+         decode_bptc_b2(4)
+         decode_bptc_g0 { bits = 8 }
+         decode_bptc_b3(2)
+         decode_bptc_g2(4)
+         decode_bptc_b0 { bits = 8 }
+         decode_bptc_b3 { bits = 2, pad_bits = 3 }
+         decode_bptc_r1 { bits = 6 }
+         decode_bptc_g2 { bits = 4 }
+         decode_bptc_g1 { bits = 5 }
+         decode_bptc_b3(0)
+         decode_bptc_g3 { bits = 4 }
+         decode_bptc_b1 { bits = 5 }
+         decode_bptc_b3(1)
+         decode_bptc_b2 { bits = 4 }
+         decode_bptc_r2 { bits = 6 }
+         decode_bptc_r3 { bits = 6 }
+         sign_extend(2, 8, 6, 5, 5)
+         bptc_delta(2, 8)
+         !! 40 */
+         /* ################# !! GENERATED CODE -- DO NOT MODIFY !! ################# */
+         f.r0 = U16(((block.data[0] >> 5) | (block.data[1] << 3)) & 0xffu);
+         f.g3 |= U16((block.data[1] >> 1) & 0x10u);
+         f.b2 |= U16((block.data[1] >> 2) & 0x10u);
+         f.g0 = U16(((block.data[1] >> 7) | (block.data[2] << 1)) & 0xffu);
+         f.b3 |= U16((block.data[2] >> 5) & 0x4u);
+         f.g2 |= U16((block.data[3] << 4) & 0x10u);
+         f.b0 = U16(((block.data[3] >> 1) | (block.data[4] << 7)) & 0xffu);
+         f.b3 |= U16((block.data[4] << 2) & 0x18u);
+         f.r1 = U16(((block.data[4] >> 3) | (block.data[5] << 5)) & 0x3fu);
+         f.g2 |= U16((block.data[5] >> 1) & 0xfu);
+         f.g1 = U16(((block.data[5] >> 5) | (block.data[6] << 3)) & 0x1fu);
+         f.b3 |= U16((block.data[6] >> 2) & 0x1u);
+         f.g3 |= U16((block.data[6] >> 3) & 0xfu);
+         f.b1 = U16(((block.data[6] >> 7) | (block.data[7] << 1)) & 0x1fu);
+         f.b3 |= U16((block.data[7] >> 3) & 0x2u);
+         f.b2 |= U16(((block.data[7] >> 5) | (block.data[8] << 3)) & 0xfu);
+         f.r2 = U16((block.data[8] >> 1) & 0x3fu);
+         f.r3 = U16(((block.data[8] >> 7) | (block.data[9] << 1)) & 0x3fu);
+         if (0 != (f.r1 & 0x20u)) f.r1 |= 0xc0u;
+         if (0 != (f.g1 & 0x10u)) f.g1 |= 0xe0u;
+         if (0 != (f.b1 & 0x10u)) f.b1 |= 0xe0u;
+         if (0 != (f.r2 & 0x20u)) f.r2 |= 0xc0u;
+         if (0 != (f.g2 & 0x10u)) f.g2 |= 0xe0u;
+         if (0 != (f.b2 & 0x10u)) f.b2 |= 0xe0u;
+         if (0 != (f.r3 & 0x20u)) f.r3 |= 0xc0u;
+         if (0 != (f.g3 & 0x10u)) f.g3 |= 0xe0u;
+         if (0 != (f.b3 & 0x10u)) f.b3 |= 0xe0u;
+         f.r1 = (f.r0 + f.r1) & 0xffu;
+         f.g1 = (f.g0 + f.g1) & 0xffu;
+         f.b1 = (f.b0 + f.b1) & 0xffu;
+         f.r2 = (f.r0 + f.r2) & 0xffu;
+         f.g2 = (f.g0 + f.g2) & 0xffu;
+         f.b2 = (f.b0 + f.b2) & 0xffu;
+         f.r3 = (f.r0 + f.r3) & 0xffu;
+         f.g3 = (f.g0 + f.g3) & 0xffu;
+         f.b3 = (f.b0 + f.b3) & 0xffu;
+         
+         /* ######################### END OF GENERATED CODE ######################### */
+         epb = 8;
+         break;
+      }
+
+      case 22:
+      {
+         /*!! bits_used = 5
+         decode_bptc_r0 { bits = 8 }
+         decode_bptc_b3(0)
+         decode_bptc_b2(4)
+         decode_bptc_g0 { bits = 8 }
+         decode_bptc_g2(5)
+         decode_bptc_g2(4)
+         decode_bptc_b0 { bits = 8 }
+         decode_bptc_g3(5)
+         decode_bptc_b3(4)
+         decode_bptc_r1 { bits = 5 }
+         decode_bptc_g3(4)
+         decode_bptc_g2 { bits = 4 }
+         decode_bptc_g1 { bits = 6 }
+         decode_bptc_g3 { bits = 4 }
+         decode_bptc_b1 { bits = 5 }
+         decode_bptc_b3(1)
+         decode_bptc_b2 { bits = 4 }
+         decode_bptc_r2 { bits = 5 }
+         decode_bptc_b3(2)
+         decode_bptc_r3 { bits = 5 }
+         decode_bptc_b3(3)
+         sign_extend(2, 8, 5, 6, 5)
+         bptc_delta(2, 8)
+         !! 43 */
+         /* ################# !! GENERATED CODE -- DO NOT MODIFY !! ################# */
+         f.r0 = U16(((block.data[0] >> 5) | (block.data[1] << 3)) & 0xffu);
+         f.b3 |= U16((block.data[1] >> 5) & 0x1u);
+         f.b2 |= U16((block.data[1] >> 2) & 0x10u);
+         f.g0 = U16(((block.data[1] >> 7) | (block.data[2] << 1)) & 0xffu);
+         f.g2 |= U16((block.data[2] >> 2) & 0x20u);
+         f.g2 |= U16((block.data[3] << 4) & 0x10u);
+         f.b0 = U16(((block.data[3] >> 1) | (block.data[4] << 7)) & 0xffu);
+         f.g3 |= U16((block.data[4] << 4) & 0x20u);
+         f.b3 |= U16((block.data[4] << 2) & 0x10u);
+         f.r1 = U16((block.data[4] >> 3) & 0x1fu);
+         f.g3 |= U16((block.data[5] << 4) & 0x10u);
+         f.g2 |= U16((block.data[5] >> 1) & 0xfu);
+         f.g1 = U16(((block.data[5] >> 5) | (block.data[6] << 3)) & 0x3fu);
+         f.g3 |= U16((block.data[6] >> 3) & 0xfu);
+         f.b1 = U16(((block.data[6] >> 7) | (block.data[7] << 1)) & 0x1fu);
+         f.b3 |= U16((block.data[7] >> 3) & 0x2u);
+         f.b2 |= U16(((block.data[7] >> 5) | (block.data[8] << 3)) & 0xfu);
+         f.r2 = U16((block.data[8] >> 1) & 0x1fu);
+         f.b3 |= U16((block.data[8] >> 4) & 0x4u);
+         f.r3 = U16(((block.data[8] >> 7) | (block.data[9] << 1)) & 0x1fu);
+         f.b3 |= U16((block.data[9] >> 1) & 0x8u);
+         if (0 != (f.r1 & 0x10u)) f.r1 |= 0xe0u;
+         if (0 != (f.g1 & 0x20u)) f.g1 |= 0xc0u;
+         if (0 != (f.b1 & 0x10u)) f.b1 |= 0xe0u;
+         if (0 != (f.r2 & 0x10u)) f.r2 |= 0xe0u;
+         if (0 != (f.g2 & 0x20u)) f.g2 |= 0xc0u;
+         if (0 != (f.b2 & 0x10u)) f.b2 |= 0xe0u;
+         if (0 != (f.r3 & 0x10u)) f.r3 |= 0xe0u;
+         if (0 != (f.g3 & 0x20u)) f.g3 |= 0xc0u;
+         if (0 != (f.b3 & 0x10u)) f.b3 |= 0xe0u;
+         f.r1 = (f.r0 + f.r1) & 0xffu;
+         f.g1 = (f.g0 + f.g1) & 0xffu;
+         f.b1 = (f.b0 + f.b1) & 0xffu;
+         f.r2 = (f.r0 + f.r2) & 0xffu;
+         f.g2 = (f.g0 + f.g2) & 0xffu;
+         f.b2 = (f.b0 + f.b2) & 0xffu;
+         f.r3 = (f.r0 + f.r3) & 0xffu;
+         f.g3 = (f.g0 + f.g3) & 0xffu;
+         f.b3 = (f.b0 + f.b3) & 0xffu;
+         
+         /* ######################### END OF GENERATED CODE ######################### */
+         epb = 8;
+         break;
+      }
+
+      case 26:
+      {
+         /*!! bits_used = 5
+         decode_bptc_r0 { bits = 8 }
+         decode_bptc_b3(1)
+         decode_bptc_b2(4)
+         decode_bptc_g0 { bits = 8 }
+         decode_bptc_b2(5)
+         decode_bptc_g2(4)
+         decode_bptc_b0 { bits = 8 }
+         decode_bptc_b3(5)
+         decode_bptc_b3(4)
+         decode_bptc_r1 { bits = 5 }
+         decode_bptc_g3(4)
+         decode_bptc_g2 { bits = 4 }
+         decode_bptc_g1 { bits = 5 }
+         decode_bptc_b3(0)
+         decode_bptc_g3 { bits = 4 }
+         decode_bptc_b1 { bits = 6 }
+         decode_bptc_b2 { bits = 4 }
+         decode_bptc_r2 { bits = 5 }
+         decode_bptc_b3(2)
+         decode_bptc_r3 { bits = 5 }
+         decode_bptc_b3(3)
+         sign_extend(2, 8, 5, 5, 6)
+         bptc_delta(2, 8)
+         !! 43 */
+         /* ################# !! GENERATED CODE -- DO NOT MODIFY !! ################# */
+         f.r0 = U16(((block.data[0] >> 5) | (block.data[1] << 3)) & 0xffu);
+         f.b3 |= U16((block.data[1] >> 4) & 0x2u);
+         f.b2 |= U16((block.data[1] >> 2) & 0x10u);
+         f.g0 = U16(((block.data[1] >> 7) | (block.data[2] << 1)) & 0xffu);
+         f.b2 |= U16((block.data[2] >> 2) & 0x20u);
+         f.g2 |= U16((block.data[3] << 4) & 0x10u);
+         f.b0 = U16(((block.data[3] >> 1) | (block.data[4] << 7)) & 0xffu);
+         f.b3 |= U16((block.data[4] << 4) & 0x20u);
+         f.b3 |= U16((block.data[4] << 2) & 0x10u);
+         f.r1 = U16((block.data[4] >> 3) & 0x1fu);
+         f.g3 |= U16((block.data[5] << 4) & 0x10u);
+         f.g2 |= U16((block.data[5] >> 1) & 0xfu);
+         f.g1 = U16(((block.data[5] >> 5) | (block.data[6] << 3)) & 0x1fu);
+         f.b3 |= U16((block.data[6] >> 2) & 0x1u);
+         f.g3 |= U16((block.data[6] >> 3) & 0xfu);
+         f.b1 = U16(((block.data[6] >> 7) | (block.data[7] << 1)) & 0x3fu);
+         f.b2 |= U16(((block.data[7] >> 5) | (block.data[8] << 3)) & 0xfu);
+         f.r2 = U16((block.data[8] >> 1) & 0x1fu);
+         f.b3 |= U16((block.data[8] >> 4) & 0x4u);
+         f.r3 = U16(((block.data[8] >> 7) | (block.data[9] << 1)) & 0x1fu);
+         f.b3 |= U16((block.data[9] >> 1) & 0x8u);
+         if (0 != (f.r1 & 0x10u)) f.r1 |= 0xe0u;
+         if (0 != (f.g1 & 0x10u)) f.g1 |= 0xe0u;
+         if (0 != (f.b1 & 0x20u)) f.b1 |= 0xc0u;
+         if (0 != (f.r2 & 0x10u)) f.r2 |= 0xe0u;
+         if (0 != (f.g2 & 0x10u)) f.g2 |= 0xe0u;
+         if (0 != (f.b2 & 0x20u)) f.b2 |= 0xc0u;
+         if (0 != (f.r3 & 0x10u)) f.r3 |= 0xe0u;
+         if (0 != (f.g3 & 0x10u)) f.g3 |= 0xe0u;
+         if (0 != (f.b3 & 0x20u)) f.b3 |= 0xc0u;
+         f.r1 = (f.r0 + f.r1) & 0xffu;
+         f.g1 = (f.g0 + f.g1) & 0xffu;
+         f.b1 = (f.b0 + f.b1) & 0xffu;
+         f.r2 = (f.r0 + f.r2) & 0xffu;
+         f.g2 = (f.g0 + f.g2) & 0xffu;
+         f.b2 = (f.b0 + f.b2) & 0xffu;
+         f.r3 = (f.r0 + f.r3) & 0xffu;
+         f.g3 = (f.g0 + f.g3) & 0xffu;
+         f.b3 = (f.b0 + f.b3) & 0xffu;
+         
+         /* ######################### END OF GENERATED CODE ######################### */
+         epb = 8;
+         break;
+      }
+
+      case 30:
+      {
+         /*!! bits_used = 5
+         decode_bptc_r0 { bits = 6 }
+         decode_bptc_g3(4)
+         decode_bptc_b3 { bits = 2 }
+         decode_bptc_b2(4)
+         decode_bptc_g0 { bits = 6 }
+         decode_bptc_g2(5)
+         decode_bptc_b2(5)
+         decode_bptc_b3(2)
+         decode_bptc_g2(4)
+         decode_bptc_b0 { bits = 6 }
+         decode_bptc_g3(5)
+         decode_bptc_b3(3)
+         decode_bptc_b3(5)
+         decode_bptc_b3(4)
+         decode_bptc_r1 { bits = 6 }
+         decode_bptc_g2 { bits = 4 }
+         decode_bptc_g1 { bits = 6 }
+         decode_bptc_g3 { bits = 4 }
+         decode_bptc_b1 { bits = 6 }
+         decode_bptc_b2 { bits = 4 }
+         decode_bptc_r2 { bits = 6 }
+         decode_bptc_r3 { bits = 6 }
+         !! 26 */
+         /* ################# !! GENERATED CODE -- DO NOT MODIFY !! ################# */
+         f.r0 = U16(((block.data[0] >> 5) | (block.data[1] << 3)) & 0x3fu);
+         f.g3 |= U16((block.data[1] << 1) & 0x10u);
+         f.b3 |= U16((block.data[1] >> 4) & 0x3u);
+         f.b2 |= U16((block.data[1] >> 2) & 0x10u);
+         f.g0 = U16(((block.data[1] >> 7) | (block.data[2] << 1)) & 0x3fu);
+         f.g2 |= U16(block.data[2] & 0x20u);
+         f.b2 |= U16((block.data[2] >> 1) & 0x20u);
+         f.b3 |= U16((block.data[2] >> 5) & 0x4u);
+         f.g2 |= U16((block.data[3] << 4) & 0x10u);
+         f.b0 = U16((block.data[3] >> 1) & 0x3fu);
+         f.g3 |= U16((block.data[3] >> 2) & 0x20u);
+         f.b3 |= U16((block.data[4] << 3) & 0x8u);
+         f.b3 |= U16((block.data[4] << 4) & 0x20u);
+         f.b3 |= U16((block.data[4] << 2) & 0x10u);
+         f.r1 = U16(((block.data[4] >> 3) | (block.data[5] << 5)) & 0x3fu);
+         f.g2 |= U16((block.data[5] >> 1) & 0xfu);
+         f.g1 = U16(((block.data[5] >> 5) | (block.data[6] << 3)) & 0x3fu);
+         f.g3 |= U16((block.data[6] >> 3) & 0xfu);
+         f.b1 = U16(((block.data[6] >> 7) | (block.data[7] << 1)) & 0x3fu);
+         f.b2 |= U16(((block.data[7] >> 5) | (block.data[8] << 3)) & 0xfu);
+         f.r2 = U16((block.data[8] >> 1) & 0x3fu);
+         f.r3 = U16(((block.data[8] >> 7) | (block.data[9] << 1)) & 0x3fu);
+         
+         /* ######################### END OF GENERATED CODE ######################### */
+         epb = 6;
+         break;
+      }
+
+      case 3:
+      {
+         /*!! bits_used = 5
+         decode_bptc_u16 { bits = 10, dest = { 'f.r0', 'f.g0', 'f.b0', 'f.r1', 'f.g1', 'f.b1' } }
+         !! 10 */
+         /* ################# !! GENERATED CODE -- DO NOT MODIFY !! ################# */
+         f.r0 = U16(((block.data[0] >> 5) | (block.data[1] << 3)) & 0x3ffu);
+         f.g0 = U16(((block.data[1] >> 7) | (block.data[2] << 1) | (block.data[3] << 9)) & 0x3ffu);
+         f.b0 = U16(((block.data[3] >> 1) | (block.data[4] << 7)) & 0x3ffu);
+         f.r1 = U16(((block.data[4] >> 3) | (block.data[5] << 5)) & 0x3ffu);
+         f.g1 = U16(((block.data[5] >> 5) | (block.data[6] << 3)) & 0x3ffu);
+         f.b1 = U16(((block.data[6] >> 7) | (block.data[7] << 1) | (block.data[8] << 9)) & 0x3ffu);
+         
+         /* ######################### END OF GENERATED CODE ######################### */
+         epb = 10;
+         break;
+      }
+
+      case 7:
+      {
+         /*!! bits_used = 5
+         decode_bptc_u16 { bits = 10, dest = { 'f.r0', 'f.g0', 'f.b0' } }
+         decode_bptc_r1  { bits = 9 }
+         decode_bptc_r0(10)
+         decode_bptc_g1  { bits = 9 }
+         decode_bptc_g0(10)
+         decode_bptc_b1  { bits = 9 }
+         decode_bptc_b0(10)
+         sign_extend(1, 11, 9)
+         bptc_delta(1, 11)
+         !! 19 */
+         /* ################# !! GENERATED CODE -- DO NOT MODIFY !! ################# */
+         f.r0 = U16(((block.data[0] >> 5) | (block.data[1] << 3)) & 0x3ffu);
+         f.g0 = U16(((block.data[1] >> 7) | (block.data[2] << 1) | (block.data[3] << 9)) & 0x3ffu);
+         f.b0 = U16(((block.data[3] >> 1) | (block.data[4] << 7)) & 0x3ffu);
+         f.r1 = U16(((block.data[4] >> 3) | (block.data[5] << 5)) & 0x1ffu);
+         f.r0 |= U16((block.data[5] << 6) & 0x400u);
+         f.g1 = U16(((block.data[5] >> 5) | (block.data[6] << 3)) & 0x1ffu);
+         f.g0 |= U16((block.data[6] << 4) & 0x400u);
+         f.b1 = U16(((block.data[6] >> 7) | (block.data[7] << 1)) & 0x1ffu);
+         f.b0 |= U16((block.data[8] << 10) & 0x400u);
+         if (0 != (f.r1 & 0x100u)) f.r1 |= 0x600u;
+         if (0 != (f.g1 & 0x100u)) f.g1 |= 0x600u;
+         if (0 != (f.b1 & 0x100u)) f.b1 |= 0x600u;
+         f.r1 = (f.r0 + f.r1) & 0x7ffu;
+         f.g1 = (f.g0 + f.g1) & 0x7ffu;
+         f.b1 = (f.b0 + f.b1) & 0x7ffu;
+         
+         /* ######################### END OF GENERATED CODE ######################### */
+         epb = 11;
+         break;
+      }
+
+      case 11:
+      {
+         /*!! bits_used = 5
+         decode_bptc_u16 { bits = 10, dest = { 'f.r0', 'f.g0', 'f.b0' } }
+         decode_bptc_r1  { bits = 8 }
+         decode_bptc_r0(11)
+         decode_bptc_r0(10)
+         decode_bptc_g1  { bits = 8 }
+         decode_bptc_g0(11)
+         decode_bptc_g0(10)
+         decode_bptc_b1  { bits = 8 }
+         decode_bptc_b0(11)
+         decode_bptc_b0(10)
+         sign_extend(1, 12, 8)
+         bptc_delta(1, 12)
+         !! 22 */
+         /* ################# !! GENERATED CODE -- DO NOT MODIFY !! ################# */
+         f.r0 = U16(((block.data[0] >> 5) | (block.data[1] << 3)) & 0x3ffu);
+         f.g0 = U16(((block.data[1] >> 7) | (block.data[2] << 1) | (block.data[3] << 9)) & 0x3ffu);
+         f.b0 = U16(((block.data[3] >> 1) | (block.data[4] << 7)) & 0x3ffu);
+         f.r1 = U16(((block.data[4] >> 3) | (block.data[5] << 5)) & 0xffu);
+         f.r0 |= U16((block.data[5] << 8) & 0x800u);
+         f.r0 |= U16((block.data[5] << 6) & 0x400u);
+         f.g1 = U16(((block.data[5] >> 5) | (block.data[6] << 3)) & 0xffu);
+         f.g0 |= U16((block.data[6] << 6) & 0x800u);
+         f.g0 |= U16((block.data[6] << 4) & 0x400u);
+         f.b1 = U16(((block.data[6] >> 7) | (block.data[7] << 1)) & 0xffu);
+         f.b0 |= U16((block.data[7] << 4) & 0x800u);
+         f.b0 |= U16((block.data[8] << 10) & 0x400u);
+         if (0 != (f.r1 & 0x80u)) f.r1 |= 0xf00u;
+         if (0 != (f.g1 & 0x80u)) f.g1 |= 0xf00u;
+         if (0 != (f.b1 & 0x80u)) f.b1 |= 0xf00u;
+         f.r1 = (f.r0 + f.r1) & 0xfffu;
+         f.g1 = (f.g0 + f.g1) & 0xfffu;
+         f.b1 = (f.b0 + f.b1) & 0xfffu;
+         
+         /* ######################### END OF GENERATED CODE ######################### */
+         epb = 12;
+         break;
+      }
+
+      case 15:
+      {
+         /*!! bits_used = 5
+         decode_bptc_u16 { bits = 10, dest = { 'f.r0', 'f.g0', 'f.b0' } }
+         decode_bptc_r1  { bits = 4 }
+         decode_bptc_r0(15)
+         decode_bptc_r0(14)
+         decode_bptc_r0(13)
+         decode_bptc_r0(12)
+         decode_bptc_r0(11)
+         decode_bptc_r0(10)
+         decode_bptc_g1  { bits = 4 }
+         decode_bptc_g0(15)
+         decode_bptc_g0(14)
+         decode_bptc_g0(13)
+         decode_bptc_g0(12)
+         decode_bptc_g0(11)
+         decode_bptc_g0(10)
+         decode_bptc_b1  { bits = 4 }
+         decode_bptc_b0(15)
+         decode_bptc_b0(14)
+         decode_bptc_b0(13)
+         decode_bptc_b0(12)
+         decode_bptc_b0(11)
+         decode_bptc_b0(10)
+         sign_extend(1, 16, 4)
+         bptc_delta(1, 16)
+         !! 34 */
+         /* ################# !! GENERATED CODE -- DO NOT MODIFY !! ################# */
+         f.r0 = U16(((block.data[0] >> 5) | (block.data[1] << 3)) & 0x3ffu);
+         f.g0 = U16(((block.data[1] >> 7) | (block.data[2] << 1) | (block.data[3] << 9)) & 0x3ffu);
+         f.b0 = U16(((block.data[3] >> 1) | (block.data[4] << 7)) & 0x3ffu);
+         f.r1 = U16((block.data[4] >> 3) & 0xfu);
+         f.r0 |= U16((block.data[4] << 8) & 0x8000u);
+         f.r0 |= U16((block.data[5] << 14) & 0x4000u);
+         f.r0 |= U16((block.data[5] << 12) & 0x2000u);
+         f.r0 |= U16((block.data[5] << 10) & 0x1000u);
+         f.r0 |= U16((block.data[5] << 8) & 0x800u);
+         f.r0 |= U16((block.data[5] << 6) & 0x400u);
+         f.g1 = U16(((block.data[5] >> 5) | (block.data[6] << 3)) & 0xfu);
+         f.g0 |= U16((block.data[6] << 14) & 0x8000u);
+         f.g0 |= U16((block.data[6] << 12) & 0x4000u);
+         f.g0 |= U16((block.data[6] << 10) & 0x2000u);
+         f.g0 |= U16((block.data[6] << 8) & 0x1000u);
+         f.g0 |= U16((block.data[6] << 6) & 0x800u);
+         f.g0 |= U16((block.data[6] << 4) & 0x400u);
+         f.b1 = U16(((block.data[6] >> 7) | (block.data[7] << 1)) & 0xfu);
+         f.b0 |= U16((block.data[7] << 12) & 0x8000u);
+         f.b0 |= U16((block.data[7] << 10) & 0x4000u);
+         f.b0 |= U16((block.data[7] << 8) & 0x2000u);
+         f.b0 |= U16((block.data[7] << 6) & 0x1000u);
+         f.b0 |= U16((block.data[7] << 4) & 0x800u);
+         f.b0 |= U16((block.data[8] << 10) & 0x400u);
+         if (0 != (f.r1 & 0x8u)) f.r1 |= 0xfff0u;
+         if (0 != (f.g1 & 0x8u)) f.g1 |= 0xfff0u;
+         if (0 != (f.b1 & 0x8u)) f.b1 |= 0xfff0u;
+         f.r1 = (f.r0 + f.r1) & 0xffffu;
+         f.g1 = (f.g0 + f.g1) & 0xffffu;
+         f.b1 = (f.b0 + f.b1) & 0xffffu;
+         
+         /* ######################### END OF GENERATED CODE ######################### */
+         epb = 16;
+         break;
+      }
+   }
+
+   if (is_signed) {
+      if (epb < 16) {
+         f.r0 = bptc_unquantize_signed(f.r0, epb);
+         f.g0 = bptc_unquantize_signed(f.g0, epb);
+         f.b0 = bptc_unquantize_signed(f.b0, epb);
+         f.r1 = bptc_unquantize_signed(f.r1, epb);
+         f.g1 = bptc_unquantize_signed(f.g1, epb);
+         f.b1 = bptc_unquantize_signed(f.b1, epb);
+         if (f.n_subsets > 1) {
+            f.r2 = bptc_unquantize_signed(f.r2, epb);
+            f.g2 = bptc_unquantize_signed(f.g2, epb);
+            f.b2 = bptc_unquantize_signed(f.b2, epb);
+            f.r3 = bptc_unquantize_signed(f.r3, epb);
+            f.g3 = bptc_unquantize_signed(f.g3, epb);
+            f.b3 = bptc_unquantize_signed(f.b3, epb);
+         }
+      }
+   } else {
+      if (epb < 15) {
+         f.r0 = bptc_unquantize_unsigned(f.r0, epb);
+         f.g0 = bptc_unquantize_unsigned(f.g0, epb);
+         f.b0 = bptc_unquantize_unsigned(f.b0, epb);
+         f.r1 = bptc_unquantize_unsigned(f.r1, epb);
+         f.g1 = bptc_unquantize_unsigned(f.g1, epb);
+         f.b1 = bptc_unquantize_unsigned(f.b1, epb);
+         if (f.n_subsets > 1) {
+            f.r2 = bptc_unquantize_unsigned(f.r2, epb);
+            f.g2 = bptc_unquantize_unsigned(f.g2, epb);
+            f.b2 = bptc_unquantize_unsigned(f.b2, epb);
+            f.r3 = bptc_unquantize_unsigned(f.r3, epb);
+            f.g3 = bptc_unquantize_unsigned(f.g3, epb);
+            f.b3 = bptc_unquantize_unsigned(f.b3, epb);
+         }
+      }
+   }
+
+   if (0 == (mode & 1)) {
+      /*!!
+      decode_bptc_u8 { bits = 5, begin = 77, dest = 'f.partition' }
+      decode_bptc_u64 { bits = 46, dest = 'f.index_data' }
+      !! 12 */
+      /* ################# !! GENERATED CODE -- DO NOT MODIFY !! ################# */
+      f.partition = U8(((block.data[9] >> 5) | (block.data[10] << 3)) & 0x1fu);
+      f.index_data = U64((
+         (U64(block.data[10]) >> 2) | 
+         (U64(block.data[11]) << 6) | 
+         (U64(block.data[12]) << 14) | 
+         (U64(block.data[13]) << 22) | 
+         (U64(block.data[14]) << 30) | 
+         (U64(block.data[15]) << 38)) & 0x3fffffffffffull);
+      
+      /* ######################### END OF GENERATED CODE ######################### */
+
+      constexpr U8 bpi = 3;
+      const U8 anchor0 = 0;
+      const U8 anchor1 = anchor2_1[f.partition];
+
+      const U64 mask0 = (1ull << ((anchor0 + 1) * bpi - 1)) - 1;
+      const U64 mask1 = (1ull << ((anchor1 + 1) * bpi - 2)) - 1;
+
+      f.index_data = (f.index_data & mask0) |
+         ((f.index_data & (mask1 & ~mask0)) << 1) |
+         ((f.index_data & ~mask1) << 2);
+
+      f.index_bpp = bpi;
+      f.n_subsets = 2;
+
+   } else {
+      /*!! decode_bptc_u64 { bits = 63, begin = 65, dest = 'f.index_data' } !! 13 */
+      /* ################# !! GENERATED CODE -- DO NOT MODIFY !! ################# */
+      f.index_data = U64((
+         (U64(block.data[8]) >> 1) | 
+         (U64(block.data[9]) << 7) | 
+         (U64(block.data[10]) << 15) | 
+         (U64(block.data[11]) << 23) | 
+         (U64(block.data[12]) << 31) | 
+         (U64(block.data[13]) << 39) | 
+         (U64(block.data[14]) << 47) | 
+         (U64(block.data[15]) << 55)) & 0x7fffffffffffffffull);
+      
+      /* ######################### END OF GENERATED CODE ######################### */
+      
+      constexpr U8 bpi = 4;
+      const U8 anchor = 0;
+
+      const U64 mask = (1ull << ((anchor + 1) * bpi - 1)) - 1;
+
+      f.index_data = (f.index_data & mask) |
+         ((f.index_data & ~mask) << 1);
+
+      f.index_bpp = bpi;
+      f.n_subsets = 1;
+   }
+
+   return f;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+inline U8 bptc_pixel_subset_2(U8 partition, U32 pixel_num) {
+   constexpr U8 data[][16] = {
+      { 0,0,1,1,0,0,1,1,0,0,1,1,0,0,1,1 },
+      { 0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1 },
+      { 0,1,1,1,0,1,1,1,0,1,1,1,0,1,1,1 },
+      { 0,0,0,1,0,0,1,1,0,0,1,1,0,1,1,1 },
+      { 0,0,0,0,0,0,0,1,0,0,0,1,0,0,1,1 },
+      { 0,0,1,1,0,1,1,1,0,1,1,1,1,1,1,1 },
+      { 0,0,0,1,0,0,1,1,0,1,1,1,1,1,1,1 },
+      { 0,0,0,0,0,0,0,1,0,0,1,1,0,1,1,1 },
+      { 0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,1 },
+      { 0,0,1,1,0,1,1,1,1,1,1,1,1,1,1,1 },
+      { 0,0,0,0,0,0,0,1,0,1,1,1,1,1,1,1 },
+      { 0,0,0,0,0,0,0,0,0,0,0,1,0,1,1,1 },
+      { 0,0,0,1,0,1,1,1,1,1,1,1,1,1,1,1 },
+      { 0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1 },
+      { 0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1 },
+      { 0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1 },
+      { 0,0,0,0,1,0,0,0,1,1,1,0,1,1,1,1 },
+      { 0,1,1,1,0,0,0,1,0,0,0,0,0,0,0,0 },
+      { 0,0,0,0,0,0,0,0,1,0,0,0,1,1,1,0 },
+      { 0,1,1,1,0,0,1,1,0,0,0,1,0,0,0,0 },
+      { 0,0,1,1,0,0,0,1,0,0,0,0,0,0,0,0 },
+      { 0,0,0,0,1,0,0,0,1,1,0,0,1,1,1,0 },
+      { 0,0,0,0,0,0,0,0,1,0,0,0,1,1,0,0 },
+      { 0,1,1,1,0,0,1,1,0,0,1,1,0,0,0,1 },
+      { 0,0,1,1,0,0,0,1,0,0,0,1,0,0,0,0 },
+      { 0,0,0,0,1,0,0,0,1,0,0,0,1,1,0,0 },
+      { 0,1,1,0,0,1,1,0,0,1,1,0,0,1,1,0 },
+      { 0,0,1,1,0,1,1,0,0,1,1,0,1,1,0,0 },
+      { 0,0,0,1,0,1,1,1,1,1,1,0,1,0,0,0 },
+      { 0,0,0,0,1,1,1,1,1,1,1,1,0,0,0,0 },
+      { 0,1,1,1,0,0,0,1,1,0,0,0,1,1,1,0 },
+      { 0,0,1,1,1,0,0,1,1,0,0,1,1,1,0,0 },
+      { 0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1 },
+      { 0,0,0,0,1,1,1,1,0,0,0,0,1,1,1,1 },
+      { 0,1,0,1,1,0,1,0,0,1,0,1,1,0,1,0 },
+      { 0,0,1,1,0,0,1,1,1,1,0,0,1,1,0,0 },
+      { 0,0,1,1,1,1,0,0,0,0,1,1,1,1,0,0 },
+      { 0,1,0,1,0,1,0,1,1,0,1,0,1,0,1,0 },
+      { 0,1,1,0,1,0,0,1,0,1,1,0,1,0,0,1 },
+      { 0,1,0,1,1,0,1,0,1,0,1,0,0,1,0,1 },
+      { 0,1,1,1,0,0,1,1,1,1,0,0,1,1,1,0 },
+      { 0,0,0,1,0,0,1,1,1,1,0,0,1,0,0,0 },
+      { 0,0,1,1,0,0,1,0,0,1,0,0,1,1,0,0 },
+      { 0,0,1,1,1,0,1,1,1,1,0,1,1,1,0,0 },
+      { 0,1,1,0,1,0,0,1,1,0,0,1,0,1,1,0 },
+      { 0,0,1,1,1,1,0,0,1,1,0,0,0,0,1,1 },
+      { 0,1,1,0,0,1,1,0,1,0,0,1,1,0,0,1 },
+      { 0,0,0,0,0,1,1,0,0,1,1,0,0,0,0,0 },
+      { 0,1,0,0,1,1,1,0,0,1,0,0,0,0,0,0 },
+      { 0,0,1,0,0,1,1,1,0,0,1,0,0,0,0,0 },
+      { 0,0,0,0,0,0,1,0,0,1,1,1,0,0,1,0 },
+      { 0,0,0,0,0,1,0,0,1,1,1,0,0,1,0,0 },
+      { 0,1,1,0,1,1,0,0,1,0,0,1,0,0,1,1 },
+      { 0,0,1,1,0,1,1,0,1,1,0,0,1,0,0,1 },
+      { 0,1,1,0,0,0,1,1,1,0,0,1,1,1,0,0 },
+      { 0,0,1,1,1,0,0,1,1,1,0,0,0,1,1,0 },
+      { 0,1,1,0,1,1,0,0,1,1,0,0,1,0,0,1 },
+      { 0,1,1,0,0,0,1,1,0,0,1,1,1,0,0,1 },
+      { 0,1,1,1,1,1,1,0,1,0,0,0,0,0,0,1 },
+      { 0,0,0,1,1,0,0,0,1,1,1,0,0,1,1,1 },
+      { 0,0,0,0,1,1,1,1,0,0,1,1,0,0,1,1 },
+      { 0,0,1,1,0,0,1,1,1,1,1,1,0,0,0,0 },
+      { 0,0,1,0,0,0,1,0,1,1,1,0,1,1,1,0 },
+      { 0,1,0,0,0,1,0,0,0,1,1,1,0,1,1,1 },
+   };
+
+   return data[partition][pixel_num];
+}
+
+///////////////////////////////////////////////////////////////////////////////
+inline U8 bptc_pixel_subset_3(U8 partition, U32 pixel_num) {
+   constexpr U8 data[][16] = {
+      { 0,0,1,1,0,0,1,1,0,2,2,1,2,2,2,2 },
+      { 0,0,0,1,0,0,1,1,2,2,1,1,2,2,2,1 },
+      { 0,0,0,0,2,0,0,1,2,2,1,1,2,2,1,1 },
+      { 0,2,2,2,0,0,2,2,0,0,1,1,0,1,1,1 },
+      { 0,0,0,0,0,0,0,0,1,1,2,2,1,1,2,2 },
+      { 0,0,1,1,0,0,1,1,0,0,2,2,0,0,2,2 },
+      { 0,0,2,2,0,0,2,2,1,1,1,1,1,1,1,1 },
+      { 0,0,1,1,0,0,1,1,2,2,1,1,2,2,1,1 },
+      { 0,0,0,0,0,0,0,0,1,1,1,1,2,2,2,2 },
+      { 0,0,0,0,1,1,1,1,1,1,1,1,2,2,2,2 },
+      { 0,0,0,0,1,1,1,1,2,2,2,2,2,2,2,2 },
+      { 0,0,1,2,0,0,1,2,0,0,1,2,0,0,1,2 },
+      { 0,1,1,2,0,1,1,2,0,1,1,2,0,1,1,2 },
+      { 0,1,2,2,0,1,2,2,0,1,2,2,0,1,2,2 },
+      { 0,0,1,1,0,1,1,2,1,1,2,2,1,2,2,2 },
+      { 0,0,1,1,2,0,0,1,2,2,0,0,2,2,2,0 },
+      { 0,0,0,1,0,0,1,1,0,1,1,2,1,1,2,2 },
+      { 0,1,1,1,0,0,1,1,2,0,0,1,2,2,0,0 },
+      { 0,0,0,0,1,1,2,2,1,1,2,2,1,1,2,2 },
+      { 0,0,2,2,0,0,2,2,0,0,2,2,1,1,1,1 },
+      { 0,1,1,1,0,1,1,1,0,2,2,2,0,2,2,2 },
+      { 0,0,0,1,0,0,0,1,2,2,2,1,2,2,2,1 },
+      { 0,0,0,0,0,0,1,1,0,1,2,2,0,1,2,2 },
+      { 0,0,0,0,1,1,0,0,2,2,1,0,2,2,1,0 },
+      { 0,1,2,2,0,1,2,2,0,0,1,1,0,0,0,0 },
+      { 0,0,1,2,0,0,1,2,1,1,2,2,2,2,2,2 },
+      { 0,1,1,0,1,2,2,1,1,2,2,1,0,1,1,0 },
+      { 0,0,0,0,0,1,1,0,1,2,2,1,1,2,2,1 },
+      { 0,0,2,2,1,1,0,2,1,1,0,2,0,0,2,2 },
+      { 0,1,1,0,0,1,1,0,2,0,0,2,2,2,2,2 },
+      { 0,0,1,1,0,1,2,2,0,1,2,2,0,0,1,1 },
+      { 0,0,0,0,2,0,0,0,2,2,1,1,2,2,2,1 },
+      { 0,0,0,0,0,0,0,2,1,1,2,2,1,2,2,2 },
+      { 0,2,2,2,0,0,2,2,0,0,1,2,0,0,1,1 },
+      { 0,0,1,1,0,0,1,2,0,0,2,2,0,2,2,2 },
+      { 0,1,2,0,0,1,2,0,0,1,2,0,0,1,2,0 },
+      { 0,0,0,0,1,1,1,1,2,2,2,2,0,0,0,0 },
+      { 0,1,2,0,1,2,0,1,2,0,1,2,0,1,2,0 },
+      { 0,1,2,0,2,0,1,2,1,2,0,1,0,1,2,0 },
+      { 0,0,1,1,2,2,0,0,1,1,2,2,0,0,1,1 },
+      { 0,0,1,1,1,1,2,2,2,2,0,0,0,0,1,1 },
+      { 0,1,0,1,0,1,0,1,2,2,2,2,2,2,2,2 },
+      { 0,0,0,0,0,0,0,0,2,1,2,1,2,1,2,1 },
+      { 0,0,2,2,1,1,2,2,0,0,2,2,1,1,2,2 },
+      { 0,0,2,2,0,0,1,1,0,0,2,2,0,0,1,1 },
+      { 0,2,2,0,1,2,2,1,0,2,2,0,1,2,2,1 },
+      { 0,1,0,1,2,2,2,2,2,2,2,2,0,1,0,1 },
+      { 0,0,0,0,2,1,2,1,2,1,2,1,2,1,2,1 },
+      { 0,1,0,1,0,1,0,1,0,1,0,1,2,2,2,2 },
+      { 0,2,2,2,0,1,1,1,0,2,2,2,0,1,1,1 },
+      { 0,0,0,2,1,1,1,2,0,0,0,2,1,1,1,2 },
+      { 0,0,0,0,2,1,1,2,2,1,1,2,2,1,1,2 },
+      { 0,2,2,2,0,1,1,1,0,1,1,1,0,2,2,2 },
+      { 0,0,0,2,1,1,1,2,1,1,1,2,0,0,0,2 },
+      { 0,1,1,0,0,1,1,0,0,1,1,0,2,2,2,2 },
+      { 0,0,0,0,0,0,0,0,2,1,1,2,2,1,1,2 },
+      { 0,1,1,0,0,1,1,0,2,2,2,2,2,2,2,2 },
+      { 0,0,2,2,0,0,1,1,0,0,1,1,0,0,2,2 },
+      { 0,0,2,2,1,1,2,2,1,1,2,2,0,0,2,2 },
+      { 0,0,0,0,0,0,0,0,0,0,0,0,2,1,1,2 },
+      { 0,0,0,2,0,0,0,1,0,0,0,2,0,0,0,1 },
+      { 0,2,2,2,1,2,2,2,0,2,2,2,1,2,2,2 },
+      { 0,1,0,1,2,2,2,2,2,2,2,2,2,2,2,2 },
+      { 0,1,1,1,2,0,1,1,2,2,0,1,2,2,2,0 },
+   };
+
+   return data[partition][pixel_num];
+}
+
+///////////////////////////////////////////////////////////////////////////////
+inline U8 bptc_interpolation_factor_2(U8 code) {
+   constexpr U8 data[] = { 0, 21, 43, 64 };
+   assert(code < sizeof(data) / sizeof(U8));
+   return data[code];
+}
+
+///////////////////////////////////////////////////////////////////////////////
+inline U8 bptc_interpolation_factor_3(U8 code) {
+   constexpr U8 data[] = { 0, 9, 18, 27, 37, 46, 55, 64 };
+   assert(code < sizeof(data) / sizeof(U8));
+   return data[code];
+}
+
+///////////////////////////////////////////////////////////////////////////////
+inline U8 bptc_interpolation_factor_4(U8 code) {
+   constexpr U8 data[] = { 0, 4, 9, 13, 17, 21, 26, 30, 34, 38, 43, 47, 51, 55, 60, 64 };
+   assert(code < sizeof(data) / sizeof(U8));
+   return data[code];
+}
+
+///////////////////////////////////////////////////////////////////////////////
+inline vec4 decode_bptc_unorm_linear(BptcBlock block, uvec2 local) {
+   vec4 pixel;
+
+   BptcUnormFields f = decode_bptc_unorm_fields(block);
+   U32 pixel_num = 4 * local.y + local.x;
+
+   U8 subset;
+   switch (f.n_subsets) {
+      case 2:  subset = bptc_pixel_subset_2(f.partition, pixel_num); break;
+      case 3:  subset = bptc_pixel_subset_3(f.partition, pixel_num); break;
+      default: subset = 0; break;
+   }
+
+   vec4 first = f.endpoints[subset * 2];
+   vec4 second = f.endpoints[subset * 2 + 1];
+
+   F32 color_factor;
+   switch (f.color_index_bpp) {
+      case 2: color_factor = bptc_interpolation_factor_2((f.color_index_data >> (2 * pixel_num)) & 0x3); break;
+      case 3: color_factor = bptc_interpolation_factor_3((f.color_index_data >> (3 * pixel_num)) & 0x7); break;
+      case 4: color_factor = bptc_interpolation_factor_4((f.color_index_data >> (4 * pixel_num)) & 0xf); break;
+      default: assert(false); break;
+   }
+   F32 color_inv = 64.f - color_factor;
+   pixel = (first * color_inv + second * color_factor) / 64.f;
+
+   F32 alpha_factor;
+   switch (f.alpha_index_bpp) {
+      case 2: alpha_factor = bptc_interpolation_factor_2((f.alpha_index_data >> (2 * pixel_num)) & 0x3); break;
+      case 3: alpha_factor = bptc_interpolation_factor_3((f.alpha_index_data >> (3 * pixel_num)) & 0x7); break;
+      case 4: alpha_factor = bptc_interpolation_factor_4((f.alpha_index_data >> (4 * pixel_num)) & 0xf); break;
+      default: assert(false); break;
+   }
+   F32 alpha_inv = 64.f - alpha_factor;
+   pixel.a = (first.a * alpha_inv + second.a * alpha_factor) / 64.f;
+
+   using std::swap;
+   switch (f.rotation) {
+      case BptcRotation::swap_ra: swap(pixel.a, pixel.r); break;
+      case BptcRotation::swap_ga: swap(pixel.a, pixel.g); break;
+      case BptcRotation::swap_ba: swap(pixel.a, pixel.b); break;
+   }
+
+   return pixel;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+inline vec4 decode_bptc_unorm_srgb(BptcBlock block, uvec2 local) {
+   vec4 pixel;
+
+   BptcUnormFields f = decode_bptc_unorm_fields(block);
+   U32 pixel_num = 4 * local.y + local.x;
+
+   U8 subset;
+   switch (f.n_subsets) {
+      case 2:  subset = bptc_pixel_subset_2(f.partition, pixel_num); break;
+      case 3:  subset = bptc_pixel_subset_3(f.partition, pixel_num); break;
+      default: subset = 0; break;
+   }
+   
+   vec4 first = f.endpoints[subset * 2];
+   vec4 second = f.endpoints[subset * 2 + 1];
+
+   switch (f.color_index_bpp) {
+      case 2:
+      {
+         U8 code = (f.color_index_data >> (2 * pixel_num)) & 0x3;
+         if (code == 0) {
+            pixel = first;
+         } else if (code == 3) {
+            pixel = second;
+         } else {
+            F32 factor = bptc_interpolation_factor_2(code);
+            F32 inv = 64.f - factor;
+            vec3 lin_first = srgb_to_linear(vec3(first));
+            vec3 lin_second = srgb_to_linear(vec3(second));
+            pixel = vec4(linear_to_srgb((lin_first * inv + lin_second * factor) / 64.f), 1.f);
+         }
+         break;
+      }   
+      case 3:
+      {
+         U8 code = (f.color_index_data >> (3 * pixel_num)) & 0x7;
+         if (code == 0) {
+            pixel = first;
+         } else if (code == 7) {
+            pixel = second;
+         } else {
+            F32 factor = bptc_interpolation_factor_3(code);
+            F32 inv = 64.f - factor;
+            vec3 lin_first = srgb_to_linear(vec3(first));
+            vec3 lin_second = srgb_to_linear(vec3(second));
+            pixel = vec4(linear_to_srgb((lin_first * inv + lin_second * factor) / 64.f), 1.f);
+         }
+         break;
+      }
+      case 4:
+      {
+         U8 code = (f.color_index_data >> (4 * pixel_num)) & 0xf;
+         if (code == 0) {
+            pixel = first;
+         } else if (code == 15) {
+            pixel = second;
+         } else {
+            F32 factor = bptc_interpolation_factor_4(code);
+            F32 inv = 64.f - factor;
+            vec3 lin_first = srgb_to_linear(vec3(first));
+            vec3 lin_second = srgb_to_linear(vec3(second));
+            pixel = vec4(linear_to_srgb((lin_first * inv + lin_second * factor) / 64.f), 1.f);
+         }
+         break;
+      }
+      default: assert(false); break;
+   }
+
+   F32 alpha_factor = 0;
+   switch (f.alpha_index_bpp) {
+      case 2: alpha_factor = bptc_interpolation_factor_2((f.alpha_index_data >> (2 * pixel_num)) & 0x3); break;
+      case 3: alpha_factor = bptc_interpolation_factor_3((f.alpha_index_data >> (3 * pixel_num)) & 0x7); break;
+      case 4: alpha_factor = bptc_interpolation_factor_4((f.alpha_index_data >> (4 * pixel_num)) & 0xf); break;
+      default: assert(false); break;
+   }
+   F32 alpha_inv = 64.f - alpha_factor;
+   pixel.a = (first.a * alpha_inv + second.a * alpha_factor) / 64.f;
+
+   using std::swap;
+   switch (f.rotation) {
+      case BptcRotation::swap_ra: swap(pixel.a, pixel.r); break;
+      case BptcRotation::swap_ga: swap(pixel.a, pixel.g); break;
+      case BptcRotation::swap_ba: swap(pixel.a, pixel.b); break;
+   }
+
+   return pixel;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+inline vec4 decode_bptc_float(BptcBlock block, uvec2 local, bool is_signed) {
+   using cvec = glm::tvec3<U16>;
+
+   vec4 pixel;
+
+   BptcFloatFields f = decode_bptc_float_fields(block, is_signed);
+   U32 pixel_num = 4 * local.y + local.x;
+
+   U8 subset = f.n_subsets == 1 ? 0 : bptc_pixel_subset_2(f.partition, pixel_num);
+   
+   cvec first, second;
+   if (subset == 0) {
+      first = cvec(f.r0, f.g0, f.b0);
+      second = cvec(f.r1, f.g1, f.b1);
+   } else {
+      first = cvec(f.r2, f.g2, f.b2);
+      second = cvec(f.r3, f.g3, f.b3);
+   }
+
+   U8 factor;
+   if (f.index_bpp == 3) {
+      factor = bptc_interpolation_factor_3((f.index_data >> (3 * pixel_num)) & 0x7);
+   } else {
+      factor = bptc_interpolation_factor_4((f.index_data >> (3 * pixel_num)) & 0xf);
+   }
+   U8 inv_factor = 64 - factor;
+   cvec interpolated;
+   for (glm::length_t c = 0; c < 3; ++c) {
+      interpolated[c] = U16((first[c] * inv_factor + second[c] * factor) / 64);
+   }
+   
+   if (is_signed) {
+      cvec sign = interpolated & (U16)0x8000;
+      interpolated ^= sign;
+      for (glm::length_t c = 0; c < 3; ++c) {
+         interpolated[c] = U16(interpolated[c] * 31 / 32);
+      }
+      interpolated |= sign;
+   } else {
+      for (glm::length_t c = 0; c < 3; ++c) {
+         interpolated[c] = U16(interpolated[c] * 63 / 64);
+      }
+   }
+
+   for (glm::length_t c = 0; c < 3; ++c) {
+      pixel[c] = ComponentRawNorm<U16, 16, ComponentType::sfloat>::decode(interpolated[c]);
+   }
+   pixel.a = 1.f;
+
+   return pixel;
+}
+
+#pragma endregion
+#pragma region ETC
+
+// TODO
+
+#pragma endregion
+#pragma region RGTC
+
+///////////////////////////////////////////////////////////////////////////////
+struct Rgtc1Block {
+   U8 val0;
+   U8 val1;
+   U8 data[6];
+};
+
+///////////////////////////////////////////////////////////////////////////////
+struct Rgtc2Block {
+   Rgtc1Block red;
+   Rgtc1Block green;
+};
+
+///////////////////////////////////////////////////////////////////////////////
+template <ComponentType T>
+struct RgtcMinValue : std::integral_constant<I8, 0> { };
+template <>
+struct RgtcMinValue<ComponentType::snorm> : std::integral_constant<I8, -1> { };
+
+///////////////////////////////////////////////////////////////////////////////
+template <typename Coord, typename ImageView>
+Rgtc1Block get_rgtc1_block(const ImageView& image, Coord block_coord) {
+   Rgtc1Block block;
+   const void* ptr = image.data() + BlockOffset<ImageView, Coord>::offset(image, block_coord);
+   std::memcpy(&block, ptr, sizeof(block));
+   return block;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+template <typename Coord, typename ImageView>
+Rgtc2Block get_rgtc2_block(const ImageView& image, Coord block_coord) {
+   Rgtc2Block block;
+   const void* ptr = image.data() + BlockOffset<ImageView, Coord>::offset(image, block_coord);
+   std::memcpy(&block, ptr, sizeof(block));
+   return block;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+template <ComponentType T = ComponentType::unorm>
+F32 decode_rgtc1_impl(Rgtc1Block block, U32 pixel_num) {
+   U64 data = (U64)block.data[0] |
+      ((U64)block.data[1] << 8) |
+      ((U64)block.data[2] << 16) |
+      ((U64)block.data[3] << 24) |
+      ((U64)block.data[4] << 32) |
+      ((U64)block.data[5] << 40);
+
+   std::pair<F32, F32> val = std::make_pair(
+      ComponentRawNorm<U8, 8, T>::decode(block.val0),
+      ComponentRawNorm<U8, 8, T>::decode(block.val1)
+   );
+
+   U64 code = (data >> (3 * pixel_num)) & 0x7;
+   if (block.val0 > block.val1) {
+      switch (code) {
+         case 0: return val.first;
+         case 1: return val.second;
+         case 2: return (6.f * val.first + 1.f * val.second) / 7.f;
+         case 3: return (5.f * val.first + 2.f * val.second) / 7.f;
+         case 4: return (4.f * val.first + 3.f * val.second) / 7.f;
+         case 5: return (3.f * val.first + 4.f * val.second) / 7.f;
+         case 6: return (2.f * val.first + 5.f * val.second) / 7.f;
+         case 7: return (1.f * val.first + 6.f * val.second) / 7.f;
+      }
+   } else {
+      switch (code) {
+         case 0: return val.first;
+         case 1: return val.second;
+         case 2: return (4.f * val.first + 1.f * val.second) / 5.f;
+         case 3: return (3.f * val.first + 2.f * val.second) / 5.f;
+         case 4: return (2.f * val.first + 3.f * val.second) / 5.f;
+         case 5: return (1.f * val.first + 4.f * val.second) / 5.f;
+         case 6: return F32(RgtcMinValue<T>::value);
+         case 7: return 1.f;
+      }
+   }
+
+   assert(false);
+   return 0.f;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+template <ComponentType T = ComponentType::unorm>
+F32 decode_rgtc1(Rgtc1Block block, uvec2 local) {
+   return decode_rgtc1_impl<T>(block, 4 * local.y + local.x);
+}
+
+#pragma endregion
+#pragma region S3TC
+
+///////////////////////////////////////////////////////////////////////////////
+struct S3tc1Block {
+   U16 color0;
+   U16 color1;
+   U32 data;
+};
+
+///////////////////////////////////////////////////////////////////////////////
+struct S3tc2Block {
+   U64 alpha;
+   S3tc1Block rgb;
+};
+
+///////////////////////////////////////////////////////////////////////////////
+struct S3tc3Block {
+   Rgtc1Block alpha;
+   S3tc1Block rgb;
+};
+
+///////////////////////////////////////////////////////////////////////////////
+template <typename Coord, typename ImageView>
+S3tc1Block get_s3tc1_block(const ImageView& image, Coord block_coord) {
+   S3tc1Block block;
+   const void* ptr = image.data() + BlockOffset<ImageView, Coord>::offset(image, block_coord);
+   std::memcpy(&block, ptr, sizeof(block));
+   bo::static_to_host<bo::Little::value>(block.color0);
+   bo::static_to_host<bo::Little::value>(block.color1);
+   bo::static_to_host<bo::Little::value>(block.data);
+   return block;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+template <typename Coord, typename ImageView>
+S3tc2Block get_s3tc2_block(const ImageView& image, Coord block_coord) {
+   S3tc2Block block;
+   const void* ptr = image.data() + BlockOffset<ImageView, Coord>::offset(image, block_coord);
+   std::memcpy(&block, ptr, sizeof(block));
+   bo::static_to_host<bo::Little::value>(block.alpha);
+   bo::static_to_host<bo::Little::value>(block.rgb.color0);
+   bo::static_to_host<bo::Little::value>(block.rgb.color1);
+   bo::static_to_host<bo::Little::value>(block.rgb.data);
+   return block;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+template <typename Coord, typename ImageView>
+S3tc3Block get_s3tc3_block(const ImageView& image, Coord block_coord) {
+   S3tc3Block block;
+   const void* ptr = image.data() + BlockOffset<ImageView, Coord>::offset(image, block_coord);
+   std::memcpy(&block, ptr, sizeof(block));
+   bo::static_to_host<bo::Little::value>(block.rgb.color0);
+   bo::static_to_host<bo::Little::value>(block.rgb.color1);
+   bo::static_to_host<bo::Little::value>(block.rgb.data);
+   return block;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+inline std::pair<vec3, vec3> s3tc1_colors(S3tc1Block block) {
+   return std::make_pair(
+      vec3 {
+         ComponentRawNorm<U16, 5, ComponentType::unorm>::decode(block.color0 >> 11),
+         ComponentRawNorm<U16, 6, ComponentType::unorm>::decode((block.color0 >> 5) & 0x3f),
+         ComponentRawNorm<U16, 5, ComponentType::unorm>::decode(block.color0 & 0x1f)
+      },
+      vec3 {
+         ComponentRawNorm<U16, 5, ComponentType::unorm>::decode(block.color1 >> 11),
+         ComponentRawNorm<U16, 6, ComponentType::unorm>::decode((block.color1 >> 5) & 0x3f),
+         ComponentRawNorm<U16, 5, ComponentType::unorm>::decode(block.color1 & 0x1f)
+      });
+}
+
+///////////////////////////////////////////////////////////////////////////////
+inline vec3 decode_s3tc1_simple_linear(S3tc1Block block, U32 pixel_num) {
+   auto color = s3tc1_colors(block);
+   U32 code = (block.data >> (2 * pixel_num)) & 0x3;
+   switch (code) {
+      case 0: return vec4(color.first, 1.f);
+      case 1: return vec4(color.second, 1.f);
+      case 2: return vec4((color.first * 2.f + color.second) / 3.f, 1.f);
+      case 3: return vec4((color.first + 2.f * color.second) / 3.f, 1.f);
+   }
+   assert(false);
+   return vec3();
+}
+
+///////////////////////////////////////////////////////////////////////////////
+inline vec3 decode_s3tc1_simple_srgb(S3tc1Block block, U32 pixel_num) {
+   auto color = s3tc1_colors(block);
+   U32 code = (block.data >> (2 * pixel_num)) & 0x3;
+   switch (code) {
+      case 0: return vec4(color.first, 1.f);
+      case 1: return vec4(color.second, 1.f);
+      case 2: return vec4(linear_to_srgb((srgb_to_linear(color.first) * 2.f + srgb_to_linear(color.second)) / 3.f), 1.f);
+      case 3: return vec4(linear_to_srgb((srgb_to_linear(color.first) + 2.f * srgb_to_linear(color.second)) / 3.f), 1.f);
+   }
+   assert(false);
+   return vec3();
+}
+
+///////////////////////////////////////////////////////////////////////////////
+inline vec4 decode_s3tc1_linear(S3tc1Block block, uvec2 local, vec4 special_color) {
+   auto color = s3tc1_colors(block);
+   U32 code = (block.data >> (2 * (4 * local.y + local.x))) & 0x3;
+   if (block.color0 > block.color1) {
+      switch (code) {
+         case 0: return vec4(color.first, 1.f);
+         case 1: return vec4(color.second, 1.f);
+         case 2: return vec4((color.first * 2.f + color.second) / 3.f, 1.f);
+         case 3: return vec4((color.first + 2.f * color.second) / 3.f, 1.f);
+      }
+   } else {
+      switch (code) {
+         case 0: return vec4(color.first, 1.f);
+         case 1: return vec4(color.second, 1.f);
+         case 2: return vec4((color.first + color.second) / 2.f, 1.f);
+         case 3: return special_color;
+      }
+   }
+   assert(false);
+   return vec4();
+}
+
+///////////////////////////////////////////////////////////////////////////////
+inline vec4 decode_s3tc1_srgb(S3tc1Block block, uvec2 local, vec4 special_color) {
+   auto color = s3tc1_colors(block);
+   U32 code = (block.data >> (2 * (4 * local.y + local.x))) & 0x3;
+   if (block.color0 > block.color1) {
+      switch (code) {
+         case 0: return vec4(color.first, 1.f);
+         case 1: return vec4(color.second, 1.f);
+         case 2: return vec4(linear_to_srgb((color.first * 2.f + color.second) / 3.f), 1.f);
+         case 3: return vec4(linear_to_srgb((color.first + 2.f * color.second) / 3.f), 1.f);
+      }
+   } else {
+      switch (code) {
+         case 0: return vec4(color.first, 1.f);
+         case 1: return vec4(color.second, 1.f);
+         case 2: return vec4(linear_to_srgb((srgb_to_linear(color.first) + srgb_to_linear(color.second)) / 2.f), 1.f);
+         case 3: return special_color;
+      }
+   }
+   assert(false);
+   return vec4();
+}
+
+///////////////////////////////////////////////////////////////////////////////
+inline vec4 decode_s3tc2_linear(S3tc2Block block, uvec2 local) {
+   auto pixel_num = 4 * local.y + local.x;
+   U64 alpha = (block.alpha >> (4 * pixel_num)) & 0xf;
+   F32 a = ComponentRawNorm<U64, 4, ComponentType::unorm>::decode(alpha);
+   return vec4(decode_s3tc1_simple_linear(block.rgb, pixel_num), a);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+inline vec4 decode_s3tc2_srgb(S3tc2Block block, uvec2 local) {
+   auto pixel_num = 4 * local.y + local.x;
+   U64 alpha = (block.alpha >> (4 * pixel_num)) & 0xf;
+   F32 a = ComponentRawNorm<U64, 4, ComponentType::unorm>::decode(alpha);
+   return vec4(decode_s3tc1_simple_srgb(block.rgb, pixel_num), a);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+inline vec4 decode_s3tc3_linear(S3tc3Block block, uvec2 local) {
+   auto pixel_num = 4 * local.y + local.x;
+   return vec4(decode_s3tc1_simple_linear(block.rgb, pixel_num),
+               decode_rgtc1_impl<ComponentType::unorm>(block.alpha, pixel_num));
+}
+
+///////////////////////////////////////////////////////////////////////////////
+inline vec4 decode_s3tc3_srgb(S3tc3Block block, uvec2 local) {
+   auto pixel_num = 4 * local.y + local.x;
+   return vec4(decode_s3tc1_simple_srgb(block.rgb, pixel_num),
+               decode_rgtc1_impl<ComponentType::unorm>(block.alpha, pixel_num));
+}
+
+#pragma endregion
+#pragma region PixelRawNormAccessCompressed
+
+///////////////////////////////////////////////////////////////////////////////
+template <typename ImageView, typename Coord, BlockPacking Packing>
+struct PixelRawNormAccessCompressed { };
+
+///////////////////////////////////////////////////////////////////////////////
+template <typename ImageView, typename Coord>
+struct PixelRawNormAccessCompressed<ImageView, Coord, BlockPacking::c_s3tc1> {   // DXT1, BC1
+   static vec4 get(const ImageView& image, Coord pixel_coord) {
+      std::pair<Coord, Coord> block_coords = to_block_coords(image, pixel_coord);
+      S3tc1Block block = get_s3tc1_block(image, block_coords.first);
+      uvec2 local = convert_coord<uvec2>(block_coords.second);
+      vec4 special = image.format().components() == 4 ? vec4() : vec4(0, 0, 0, 1);
+      return image.format().colorspace() == Colorspace::srgb ?
+         decode_s3tc1_srgb(block, local, special) :
+         decode_s3tc1_linear(block, local, special);
+   }
+};
+
+///////////////////////////////////////////////////////////////////////////////
+template <typename ImageView, typename Coord>
+struct PixelRawNormAccessCompressed<ImageView, Coord, BlockPacking::c_s3tc2> {   // DXT2, DXT3, BC2
+   static vec4 get(const ImageView& image, Coord pixel_coord) {
+      std::pair<Coord, Coord> block_coords = to_block_coords(image, pixel_coord);
+      S3tc2Block block = get_s3tc2_block(image, block_coords.first);
+      uvec2 local = convert_coord<uvec2>(block_coords.second);
+      return image.format().colorspace() == Colorspace::srgb ?
+         decode_s3tc2_srgb(block, local) :
+         decode_s3tc2_linear(block, local);
+   }
+};
+
+///////////////////////////////////////////////////////////////////////////////
+template <typename ImageView, typename Coord>
+struct PixelRawNormAccessCompressed<ImageView, Coord, BlockPacking::c_s3tc3> {   // DXT4, DXT5, BC3
+   static vec4 get(const ImageView& image, Coord pixel_coord) {
+      std::pair<Coord, Coord> block_coords = to_block_coords(image, pixel_coord);
+      S3tc3Block block = get_s3tc3_block(image, block_coords.first);
+      uvec2 local = convert_coord<uvec2>(block_coords.second);
+      return image.format().colorspace() == Colorspace::srgb ?
+         decode_s3tc3_srgb(block, local) :
+         decode_s3tc3_linear(block, local);
+   }
+};
+
+///////////////////////////////////////////////////////////////////////////////
+template <typename ImageView, typename Coord>
+struct PixelRawNormAccessCompressed<ImageView, Coord, BlockPacking::c_rgtc1> {   // RGTC1, BC4
+   static vec4 get(const ImageView& image, Coord pixel_coord) {
+      std::pair<Coord, Coord> block_coords = to_block_coords(image, pixel_coord);
+      Rgtc1Block block = get_rgtc1_block(image, block_coords.first);
+      uvec2 local = convert_coord<uvec2>(block_coords.second);
+
+      F32 red;
+      if (image.format().component_type(0) == ComponentType::snorm) {
+         red = decode_rgtc1<ComponentType::snorm>(block, local);
+      } else {
+         red = decode_rgtc1<ComponentType::unorm>(block, local);
+      }
+
+      return vec4(red, 0.f, 0.f, 1.f);
+   }
+};
+
+///////////////////////////////////////////////////////////////////////////////
+template <typename ImageView, typename Coord>
+struct PixelRawNormAccessCompressed<ImageView, Coord, BlockPacking::c_rgtc2> {   // RGTC2, BC5
+   static vec4 get(const ImageView& image, Coord pixel_coord) {
+      std::pair<Coord, Coord> block_coords = to_block_coords(image, pixel_coord);
+      Rgtc2Block block = get_rgtc2_block(image, block_coords.first);
+      uvec2 local = convert_coord<uvec2>(block_coords.second);
+
+      F32 red, green;
+      if (image.format().component_type(0) == ComponentType::snorm) {
+         red = decode_rgtc1<ComponentType::snorm>(block.red, local);
+      } else {
+         red = decode_rgtc1<ComponentType::unorm>(block.red, local);
+      }
+      if (image.format().component_type(1) == ComponentType::snorm) {
+         green = decode_rgtc1<ComponentType::snorm>(block.green, local);
+      } else {
+         green = decode_rgtc1<ComponentType::unorm>(block.green, local);
+      }
+
+      return vec4(red, green, 0.f, 1.f);
+   }
+};
+
+///////////////////////////////////////////////////////////////////////////////
+template <typename ImageView, typename Coord>
+struct PixelRawNormAccessCompressed<ImageView, Coord, BlockPacking::c_bptc> {   // BPTC, BC6H, BC7
+   static vec4 get(const ImageView& image, Coord pixel_coord) {
+      std::pair<Coord, Coord> block_coords = to_block_coords(image, pixel_coord);
+      BptcBlock block = get_bptc_block(image, block_coords.first);
+      uvec2 local = convert_coord<uvec2>(block_coords.second);
+
+      if (image.format().component_type(0) == ComponentType::unorm) {
+         if (image.format().colorspace() == Colorspace::srgb) {
+            return decode_bptc_unorm_srgb(block, local);
+         } else {
+            return decode_bptc_unorm_srgb(block, local);
+         }
+      } else {
+         return decode_bptc_float(block, local, image.format().component_type(0) == ComponentType::sfloat);
+      }
+   }
+};
+
+///////////////////////////////////////////////////////////////////////////////
+template <typename ImageView, typename Coord>
+struct PixelRawNormAccessCompressed<ImageView, Coord, BlockPacking::c_etc1> {   // ETC1
+   static vec4 get(const ImageView& image, Coord pixel_coord) {
+      // TODO
+      return vec4(0, 0, 0, 1);
+   }
+};
+
+///////////////////////////////////////////////////////////////////////////////
+template <typename ImageView, typename Coord>
+struct PixelRawNormAccessCompressed<ImageView, Coord, BlockPacking::c_etc2> {   // ETC2
+   static vec4 get(const ImageView& image, Coord pixel_coord) {
+      // TODO
+      return vec4(0, 0, 0, 1);
+   }
+};
+
+///////////////////////////////////////////////////////////////////////////////
+template <typename ImageView, typename Coord>
+struct PixelRawNormAccessCompressed<ImageView, Coord, BlockPacking::c_astc> {   // ASTC
+   static vec4 get(const ImageView& image, Coord pixel_coord) {
+      // TODO
+      return vec4(0, 0, 0, 1);
+   }
+};
+
+#pragma endregion
+#pragma region PixelNormAccessCompressed
 
 ///////////////////////////////////////////////////////////////////////////////
 template <typename ImageView, typename Coord, BlockPacking Packing>
 struct PixelNormAccessCompressed {
    static vec4 get(const ImageView& image, Coord pixel_coord) {
-      // TODO
-      return vec4();
+      F32 data[6] = { 0.f, 1.f };
+      const vec4 raw = PixelRawNormAccessCompressed<ImageView, Coord, Packing>::get(image, pixel_coord);
+      std::memcpy(data + 2, glm::value_ptr(raw), sizeof(vec4));
+      const auto swizzles = image.format().swizzles();
+      return vec4(data[swizzles.r], data[swizzles.g], data[swizzles.b], data[swizzles.a]);
    }
 };
+
+#pragma endregion
 
 } // be::gfx::tex::detail
 
@@ -1205,8 +3594,6 @@ GetPixelNormFunc<Coord, ImageView> get_pixel_norm_func(const ImageView& image) {
             case BlockPacking::s_32_p_24_8:   return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_32_p_24_8, ComponentType::unorm>::get;
             
             /* ######################### END OF GENERATED CODE ######################### */
-
-      //`return detail::PixelNormAccessUncompressed<ImageView, `i`, true, BlockPacking::`name`, ComponentType::unorm>::get;`
          }
       } else if (component_type == ComponentType::uint) {
          switch (image.format().packing()) {
@@ -1255,8 +3642,6 @@ GetPixelNormFunc<Coord, ImageView> get_pixel_norm_func(const ImageView& image) {
             case BlockPacking::s_32_p_24_8:   return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_32_p_24_8, ComponentType::uint>::get;
             
             /* ######################### END OF GENERATED CODE ######################### */
-
-      //`return detail::PixelNormAccessUncompressed<ImageView, `i`, true, BlockPacking::`name`, ComponentType::uint>::get;`
          }
       } else if (component_type == ComponentType::sfloat) {
          switch (image.format().packing()) {
@@ -1280,8 +3665,6 @@ GetPixelNormFunc<Coord, ImageView> get_pixel_norm_func(const ImageView& image) {
             case BlockPacking::s_64_64_64_64: return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_64_64_64_64, ComponentType::sfloat>::get;
             
             /* ######################### END OF GENERATED CODE ######################### */
-
-      //`return detail::PixelNormAccessUncompressed<ImageView, `i`, true, BlockPacking::`name`, ComponentType::sfloat>::get;`
          }
       }
       switch (image.format().packing()) {
@@ -1330,8 +3713,6 @@ GetPixelNormFunc<Coord, ImageView> get_pixel_norm_func(const ImageView& image) {
          case BlockPacking::s_32_p_24_8:   return detail::PixelNormAccessUncompressed<ImageView, Coord, true, BlockPacking::s_32_p_24_8>::get;
          
          /* ######################### END OF GENERATED CODE ######################### */
-
-      //`return detail::PixelNormAccessUncompressed<ImageView, `i`, true, BlockPacking::`name`>::get;`
          default:
             assert(false);
             break;
@@ -1383,8 +3764,6 @@ GetPixelNormFunc<Coord, ImageView> get_pixel_norm_func(const ImageView& image) {
          case BlockPacking::s_32_p_24_8:   return detail::PixelNormAccessUncompressed<ImageView, Coord, false, BlockPacking::s_32_p_24_8>::get;
          
          /* ######################### END OF GENERATED CODE ######################### */
-
-      //`return detail::PixelNormAccessUncompressed<ImageView, `i`, false, BlockPacking::`name`>::get;`
          default:
             assert(false);
             break;

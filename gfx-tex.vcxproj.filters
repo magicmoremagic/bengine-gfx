@@ -347,6 +347,15 @@
     <ClInclude Include="include\tex\log_texture_info.hpp">
       <Filter>Header Files\operations</Filter>
     </ClInclude>
+    <ClInclude Include="include\tex\dimension_tag.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\tex\coords.hpp">
+      <Filter>Header Files\operations\block/pixel access</Filter>
+    </ClInclude>
+    <ClInclude Include="include\tex\convert_colorspace_srgb.hpp">
+      <Filter>Header Files\operations\normalized conversions</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src-tex\pch.cpp">
@@ -566,6 +575,9 @@
     </None>
     <None Include="meta\tex\betx_read_error.tsv">
       <Filter>Meta-Source Files</Filter>
+    </None>
+    <None Include="include\tex\coords.inl">
+      <Filter>Header Files\operations\block/pixel access</Filter>
     </None>
   </ItemGroup>
 </Project>

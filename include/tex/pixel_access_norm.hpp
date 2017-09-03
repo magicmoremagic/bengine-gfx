@@ -3,7 +3,10 @@
 #define BE_GFX_TEX_PIXEL_ACCESS_NORM_HPP_
 
 #include "pixel_access.hpp"
+#include "coords.hpp"
+#include "convert_colorspace_srgb.hpp"
 #include <be/core/builtins.hpp>
+#include <be/core/byte_order.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
 namespace be::gfx::tex {

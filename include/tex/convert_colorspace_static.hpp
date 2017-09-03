@@ -3,6 +3,7 @@
 #define BE_GFX_TEX_CONVERT_COLORSPACE_STATIC_HPP_
 
 #include "colorspace.hpp"
+#include "convert_colorspace_srgb.hpp"
 #include "pixel_norm_transform.hpp"
 #include <glm/vec4.hpp>
 #include <glm/mat3x3.hpp>

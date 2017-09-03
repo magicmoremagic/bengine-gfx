@@ -56,7 +56,7 @@ namespace be::bo {
 ///////////////////////////////////////////////////////////////////////////////
 template <>
 struct Converter<be::gfx::tex::detail::BetxHeader> : ConvertBase<be::gfx::tex::detail::BetxHeader> {
-   using base::in_place;
+   using ConvertBase<be::gfx::tex::detail::BetxHeader>::in_place;
 
    static void in_place(type& v, Little, Big) {
       static_to_big<Little::value>(v.layers);

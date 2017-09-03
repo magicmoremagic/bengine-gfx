@@ -28,7 +28,7 @@ namespace be::bo {
 
 template <>
 struct Converter<be::gfx::tex::ktx::detail::KtxHeader> : ConvertBase<be::gfx::tex::ktx::detail::KtxHeader> {
-   using base::in_place;
+   using ConvertBase<be::gfx::tex::ktx::detail::KtxHeader>::in_place;
 
    static void in_place(type& v, Little, Big) {
       if (v.endianness == 0x04030201) {

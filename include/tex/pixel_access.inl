@@ -7,10 +7,6 @@ namespace be::gfx::tex {
 namespace detail {
 
 ///////////////////////////////////////////////////////////////////////////////
-template <glm::length_t Dimension>
-using DimensionTag = std::integral_constant<glm::length_t, Dimension>;
-
-///////////////////////////////////////////////////////////////////////////////
 template <typename ImageView, typename Coord, bool IsSimple, typename Dimension = DimensionTag<t::vector_components<Coord>::value>>
 struct PixelOffset { };
 
@@ -119,31 +115,12 @@ template <typename T, typename Coord, typename ImageView>
 GetPixelFunc<T, Coord, ImageView> get_pixel_func(const ImageView& image) {
    using dim_type = glm::vec<t::vector_components<Coord>::value, ImageFormat::block_size_type>;
    assert(image);
-   if (is_compressed(image.format().packing())) {
-      switch (image.format().packing()) {
-         case BlockPacking::c_astc:
-         case BlockPacking::c_bptc:
-         case BlockPacking::c_etc1:
-         case BlockPacking::c_etc2:
-         case BlockPacking::c_s3tc1:
-         case BlockPacking::c_s3tc2:
-         case BlockPacking::c_s3tc3:
-         case BlockPacking::c_rgtc1:
-         case BlockPacking::c_rgtc2:
-            // TODO
-            break;
-         default:
-            assert(false);
-            break;
-      }
-      return nullptr;
+   assert(!is_compressed(image.format().packing()));
+   assert(sizeof(T) <= block_pixel_size(image.format().packing()));
+   if (dim_type(image.block_dim()) == dim_type(1)) {
+      return detail::get_pixel_uncompressed<T, Coord, ImageView, true>;
    } else {
-      assert(sizeof(T) <= block_pixel_size(image.format().packing()));
-      if (dim_type(image.block_dim()) == dim_type(1)) {
-         return detail::get_pixel_uncompressed<T, Coord, ImageView, true>;
-      } else {
-         return detail::get_pixel_uncompressed<T, Coord, ImageView, false>;
-      }
+      return detail::get_pixel_uncompressed<T, Coord, ImageView, false>;
    }
 }
 

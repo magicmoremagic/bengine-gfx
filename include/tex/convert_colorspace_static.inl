@@ -246,15 +246,7 @@ struct ConvertColorspace<ColorspaceTag<Colorspace::bt709_linear_rgb>, Colorspace
 template <>
 struct ConvertColorspace<ColorspaceTag<Colorspace::bt709_linear_rgb>, ColorspaceTag<Colorspace::srgb>> {
    static vec4 convert(vec4 rgb) {
-      for (glm::length_t i = 0; i < 3; ++i) {
-         const F32 c = rgb[i];
-         if (c <= 0.00313066844250063f) {
-            rgb[i] = c * 12.92f;
-         } else {
-            rgb[i] = 1.055f * std::pow(c, 1.f / 2.4f) - 0.055f;
-         }
-      }
-      return rgb;
+      return vec4(linear_to_srgb(vec3(rgb)), rgb.a);
    }
 };
 
@@ -262,15 +254,7 @@ struct ConvertColorspace<ColorspaceTag<Colorspace::bt709_linear_rgb>, Colorspace
 template <>
 struct ConvertColorspace<ColorspaceTag<Colorspace::srgb>, ColorspaceTag<Colorspace::bt709_linear_rgb>> {
    static vec4 convert(vec4 rgb) {
-      for (glm::length_t i = 0; i < 3; ++i) {
-         const F32 c = rgb[i];
-         if (c <= 0.0404482362771082f) {
-            rgb[i] = c / 12.92f;
-         } else {
-            rgb[i] = std::pow((c + 0.055f) / 1.055f, 2.4f);
-         }
-      }
-      return rgb;
+     return vec4(srgb_to_linear(vec3(rgb)), rgb.a);
    }
 };
 

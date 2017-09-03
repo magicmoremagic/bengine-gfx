@@ -5,7 +5,7 @@
 #include "block_packing.hpp"
 #include "image_format.hpp"
 #include "block_access.hpp"
-#include <be/core/glm.hpp>
+#include "dimension_tag.hpp"
 #include <be/core/glm_helpers.hpp>
 #include <cassert>
 

@@ -4,8 +4,7 @@
 
 #include "texture_view.hpp"
 #include "texture_file_format.hpp"
-#include <be/core/log.hpp>
-#include <be/core/service_log.hpp>
+#include <be/core/default_log.hpp>
 #include <be/core/filesystem.hpp>
 
 namespace be::gfx::tex {

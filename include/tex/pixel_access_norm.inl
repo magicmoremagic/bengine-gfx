@@ -1009,7 +1009,7 @@ struct PixelRawNormAccessUncompressedPacked<ImageView, Coord, IsSimple, BlockPac
       if (component_types == ImageFormat::component_types_type(expo, ufloat, ufloat, ufloat)) {
          // https://www.khronos.org/registry/OpenGL/extensions/EXT/EXT_texture_shared_exponent.txt
          constexpr F32 limit = (F32)f14_mantissa_mask * (1 << (f14_exponent_max - f14_exponent_basis - f14_mantissa_bits));
-         vec3 color = glm::clamp(vec3(pixel), 0.f, limit); // nan -> 0, inf -> limit
+         vec3 color = glm::clamp(vec3(pixel.g, pixel.b, pixel.a), 0.f, limit); // nan -> 0, inf -> limit
          const F32 max_value = std::max(std::max(color.r, color.g), color.b);
          int exp_shared = std::max(-f14_exponent_basis - 1, floor_log2(max_value)) + 1 + f14_exponent_basis;
          assert(exp_shared >= 0);
@@ -1035,9 +1035,9 @@ struct PixelRawNormAccessUncompressedPacked<ImageView, Coord, IsSimple, BlockPac
          assert(components[2] <= f14_mantissa_mask);
 
          data[packing_info::component_word_offset[0]] |= (static_cast<unsigned int>(exp_shared) & ((1 << packing_info::component_bit_width[0]) - 1)) << packing_info::component_bit_offset[0];
-         data[packing_info::component_word_offset[1]] |= (components[1] & ((1 << packing_info::component_bit_width[1]) - 1)) << packing_info::component_bit_offset[1];
-         data[packing_info::component_word_offset[2]] |= (components[2] & ((1 << packing_info::component_bit_width[2]) - 1)) << packing_info::component_bit_offset[2];
-         data[packing_info::component_word_offset[3]] |= (components[3] & ((1 << packing_info::component_bit_width[3]) - 1)) << packing_info::component_bit_offset[3];
+         data[packing_info::component_word_offset[1]] |= (components[0] & ((1 << packing_info::component_bit_width[1]) - 1)) << packing_info::component_bit_offset[1];
+         data[packing_info::component_word_offset[2]] |= (components[1] & ((1 << packing_info::component_bit_width[2]) - 1)) << packing_info::component_bit_offset[2];
+         data[packing_info::component_word_offset[3]] |= (components[2] & ((1 << packing_info::component_bit_width[3]) - 1)) << packing_info::component_bit_offset[3];
       } else {
          data[packing_info::component_word_offset[0]] |= (encode_image_component<word_type, packing_info::component_bit_width[0]>(pixel[0], static_cast<ComponentType>(component_types[0])) & ((1 << packing_info::component_bit_width[0]) - 1)) << packing_info::component_bit_offset[0];
          data[packing_info::component_word_offset[1]] |= (encode_image_component<word_type, packing_info::component_bit_width[1]>(pixel[1], static_cast<ComponentType>(component_types[1])) & ((1 << packing_info::component_bit_width[1]) - 1)) << packing_info::component_bit_offset[1];

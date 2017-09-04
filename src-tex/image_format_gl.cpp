@@ -989,6 +989,7 @@ ImageFormatGl gl_format(ImageFormat format) {
    }
 }
 
+///////////////////////////////////////////////////////////////////////////////
 ImageFormat canonical_format(gl::GLenum internal_format) {
    using namespace gl;
    using Dim = ImageFormat::block_dim_type;

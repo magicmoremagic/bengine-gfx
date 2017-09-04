@@ -2,6 +2,7 @@
 
 #include "tex/image.hpp"
 #include "tex/image_view_hash.hpp"
+#include "tex/image_format_gl.hpp"
 #include "tex/make_image.hpp"
 #include "tex/block_access.hpp"
 #include "tex/pixel_access.hpp"
@@ -490,6 +491,30 @@ TEST_CASE("ImageView normalized pixel access bgra5551unorm", BE_CATCH_TAGS) {
          for (tc.y = 0; tc.y < dim; ++tc.y) {
             for (tc.x = 0; tc.x < dim; ++tc.x) {
                REQUIRE(glm::length(get_pixel_norm(img.view, tc) - vec4(tc.x / 31.f, tc.y / 31.f, tc.z / 31.f, tc.x + tc.y + tc.z == 2 ? 1.f : 0.f)) < 1/31.f);
+            }
+         }
+      }
+   }
+}
+
+TEST_CASE("ImageView normalized pixel access rgbe9995ufloat", BE_CATCH_TAGS) {
+   ImageFormat format = canonical_format(gl::GL_RGB9_E5);
+   const int dim = 4;
+   Image img = make_image(format, ivec3(dim));
+
+   SECTION("volumetric") {
+      ivec3 tc;
+      for (tc.z = 0; tc.z < dim; ++tc.z) {
+         for (tc.y = 0; tc.y < dim; ++tc.y) {
+            for (tc.x = 0; tc.x < dim; ++tc.x) {
+               put_pixel_norm(img.view, tc, vec4(tc.x / 31.f, tc.y / 31.f, tc.z / 31.f, 1.f));
+            }
+         }
+      }
+      for (tc.z = 0; tc.z < dim; ++tc.z) {
+         for (tc.y = 0; tc.y < dim; ++tc.y) {
+            for (tc.x = 0; tc.x < dim; ++tc.x) {
+               REQUIRE(glm::length(get_pixel_norm(img.view, tc) - vec4(tc.x / 31.f, tc.y / 31.f, tc.z / 31.f, 1.f)) < 1/31.f);
             }
          }
       }

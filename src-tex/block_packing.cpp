@@ -1,7 +1,7 @@
 #include "pch.hpp"
 #include "tex/block_packing.hpp"
 
-/*!! include 'tex/block_packing' !! 649 */
+/*!! include 'tex/block_packing' !! 648 */
 /* ################# !! GENERATED CODE -- DO NOT MODIFY !! ################# */
 
 namespace be::gfx::tex {
@@ -432,7 +432,6 @@ U8 block_bit_offset_0(BlockPacking constant) noexcept {
       case BlockPacking::p_5_9_9_9:     return U8(27);
       case BlockPacking::p_10_10_10_2:  return U8(22);
       case BlockPacking::p_2_10_10_10:  return U8(30);
-      case BlockPacking::s_32_p_24_8:   return U8(32);
       default:
          return U8(0);
    }

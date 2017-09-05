@@ -1,5 +1,6 @@
 #ifdef BE_TEST
 
+#include "tostring.hpp"
 #include "tex/image_region.hpp"
 #include "tex/image_region_hash.hpp"
 #include "tex/make_image.hpp"
@@ -13,23 +14,6 @@
 
 using namespace be;
 using namespace be::gfx::tex;
-
-namespace Catch {
-
-std::string toString(be::ivec3 value) {
-   std::ostringstream oss;
-   oss << "vec3(" << value.x << ", " << value.y << ", " << value.z << ")";
-   return oss.str();
-}
-
-std::string toString(const be::ibox& value) {
-   std::ostringstream oss;
-   oss << "ibox[ (" << value.offset.x << ", " << value.offset.y << ", " << value.offset.z
-       << "), ("    << value.dim.x << ", " << value.dim.y << ", " << value.dim.z << ") ]";
-   return oss.str();
-}
-
-} // Catch
 
 TEST_CASE("std::hash<ImageRegion>", BE_CATCH_TAGS) {
    std::unordered_set<ImageRegion> stet3;

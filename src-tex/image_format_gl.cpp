@@ -1099,7 +1099,7 @@ ImageFormat canonical_format(gl::GLenum internal_format) {
       case GL_SRGB8:          return ImageFormat(U8(3), U8(1), BlockPacking::s_8_8_8, 3, component_types(ComponentType::unorm, 3), swizzles_rgb(), Colorspace::srgb, true);
 
       case GL_RGB:
-      case GL_RGB8:           return ImageFormat(U8(3), U8(1), BlockPacking::s_8_8_8, 3, component_types(ComponentType::unorm, 3), swizzles_rgba(), Colorspace::bt709_linear_rgb, true);
+      case GL_RGB8:           return ImageFormat(U8(3), U8(1), BlockPacking::s_8_8_8, 3, component_types(ComponentType::unorm, 3), swizzles_rgb(), Colorspace::bt709_linear_rgb, true);
 
       case GL_RGB16:          return ImageFormat(U8(6),  U8(1), BlockPacking::s_16_16_16, 3, component_types(ComponentType::unorm, 3),  swizzles_rgb(), Colorspace::bt709_linear_rgb, true);
       case GL_R3_G3_B2:       return ImageFormat(U8(1),  U8(1), BlockPacking::p_2_3_3,    3, component_types(ComponentType::unorm, 3),  swizzles_bgr(), Colorspace::bt709_linear_rgb, true);

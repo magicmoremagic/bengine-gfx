@@ -588,7 +588,7 @@ template <> struct BlockPackingInfo<BlockPacking::s_32_p_24_8> {
    static constexpr U8 word_size = 4;
    static constexpr U8 words = 2;
    static constexpr U8 component_word_offset[4] = { 0, 1, 1, 0 };
-   static constexpr U8 component_bit_offset[4] = { 32, 8, 0, 0 };
+   static constexpr U8 component_bit_offset[4] = { 0, 8, 0, 0 };
    static constexpr U8 component_bit_width[4] = { 32, 24, 8, 0 };
 };
 

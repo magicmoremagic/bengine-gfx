@@ -46,14 +46,22 @@
   <PropertyGroup />
   <ItemDefinitionGroup />
   <ItemGroup>
-    <ClCompile Include="test\test_image_format.cpp" />
-    <ClCompile Include="test\test_image_region.cpp" />
-    <ClCompile Include="test\test_image_view.cpp" />
+    <ClCompile Include="test\test_tex_blit_blocks.cpp" />
+    <ClCompile Include="test\test_tex_blit_pixels.cpp" />
+    <ClCompile Include="test\test_tex_block_access.cpp" />
+    <ClCompile Include="test\test_tex_image_format.cpp" />
+    <ClCompile Include="test\test_tex_image_region.cpp" />
+    <ClCompile Include="test\test_tex_image_view.cpp" />
     <ClCompile Include="test\test_main.cpp" />
     <ClCompile Include="test\test_read_write_image.cpp" />
-    <ClCompile Include="test\test_texture_storage.cpp" />
-    <ClCompile Include="test\test_texture_view.cpp" />
+    <ClCompile Include="test\test_tex_pixel_access.cpp" />
+    <ClCompile Include="test\test_tex_pixel_access_norm.cpp" />
+    <ClCompile Include="test\test_tex_texture_storage.cpp" />
+    <ClCompile Include="test\test_tex_texture_view.cpp" />
     <ClCompile Include="test\test_uniform_resample.cpp" />
     <ClCompile Include="test\version.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="test\tostring.hpp" />
   </ItemGroup>
 </Project>

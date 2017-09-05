@@ -644,14 +644,19 @@ struct PixelRawNormAccessUncompressedPacked<ImageView, Coord, IsSimple, Packing,
    static vec4 get(const ImageView& image, Coord pixel_coord) {
       vec4 pixel;
       data_type data = get_pixel_uncompressed<data_type, Coord, ImageView, IsSimple>(image, pixel_coord);
-      pixel[0] = ComponentRawNorm<word_type, packing_info::component_bit_width[0], ComponentType>::decode((data[packing_info::component_word_offset[0]] >> packing_info::component_bit_offset[0]) & ((1 << packing_info::component_bit_width[0]) - 1));
+      pixel[0] = ComponentRawNorm<word_type, packing_info::component_bit_width[0], ComponentType>::decode((data[packing_info::component_word_offset[0]] >> packing_info::component_bit_offset[0]) & low_mask(packing_info::component_bit_width[0]));
       return pixel;
    }
 
    static void put(ImageView& image, Coord pixel_coord, vec4 pixel) {
       data_type data;
-      data[packing_info::component_word_offset[0]] |= (ComponentRawNorm<word_type, packing_info::component_bit_width[0], ComponentType>::encode(pixel[0]) & ((1 << packing_info::component_bit_width[0]) - 1)) << packing_info::component_bit_offset[0];
+      data[packing_info::component_word_offset[0]] |= (ComponentRawNorm<word_type, packing_info::component_bit_width[0], ComponentType>::encode(pixel[0]) & low_mask(packing_info::component_bit_width[0])) << packing_info::component_bit_offset[0];
       put_pixel_uncompressed<data_type, Coord, ImageView, IsSimple>(image, pixel_coord, data);
+   }
+
+private:
+   static constexpr word_type low_mask(U8 bits) noexcept {
+      return static_cast<word_type>((1ull << bits) - 1ull);
    }
 };
 
@@ -666,15 +671,20 @@ struct PixelRawNormAccessUncompressedPacked<ImageView, Coord, IsSimple, Packing,
       vec4 pixel;
       data_type data = get_pixel_uncompressed<data_type, Coord, ImageView, IsSimple>(image, pixel_coord);
       const auto component_types = image.format().component_types();
-      pixel[0] = decode_image_component<word_type, packing_info::component_bit_width[0]>((data[packing_info::component_word_offset[0]] >> packing_info::component_bit_offset[0]) & ((1 << packing_info::component_bit_width[0]) - 1), static_cast<ComponentType>(component_types[0]));
+      pixel[0] = decode_image_component<word_type, packing_info::component_bit_width[0]>((data[packing_info::component_word_offset[0]] >> packing_info::component_bit_offset[0]) & low_mask(packing_info::component_bit_width[0]), static_cast<ComponentType>(component_types[0]));
       return pixel;
    }
 
    static void put(ImageView& image, Coord pixel_coord, vec4 pixel) {
       data_type data;
       const auto component_types = image.format().component_types();
-      data[packing_info::component_word_offset[0]] |= (encode_image_component<word_type, packing_info::component_bit_width[0]>(pixel[0], static_cast<ComponentType>(component_types[0])) & ((1 << packing_info::component_bit_width[0]) - 1)) << packing_info::component_bit_offset[0];
+      data[packing_info::component_word_offset[0]] |= (encode_image_component<word_type, packing_info::component_bit_width[0]>(pixel[0], static_cast<ComponentType>(component_types[0])) & low_mask(packing_info::component_bit_width[0])) << packing_info::component_bit_offset[0];
       put_pixel_uncompressed<data_type, Coord, ImageView, IsSimple>(image, pixel_coord, data);
+   }
+
+private:
+   static constexpr word_type low_mask(U8 bits) noexcept {
+      return static_cast<word_type>((1ull << bits) - 1ull);
    }
 };
 
@@ -688,16 +698,21 @@ struct PixelRawNormAccessUncompressedPacked<ImageView, Coord, IsSimple, Packing,
    static vec4 get(const ImageView& image, Coord pixel_coord) {
       vec4 pixel;
       data_type data = get_pixel_uncompressed<data_type, Coord, ImageView, IsSimple>(image, pixel_coord);
-      pixel[0] = ComponentRawNorm<word_type, packing_info::component_bit_width[0], ComponentType>::decode((data[packing_info::component_word_offset[0]] >> packing_info::component_bit_offset[0]) & ((1 << packing_info::component_bit_width[0]) - 1));
-      pixel[1] = ComponentRawNorm<word_type, packing_info::component_bit_width[1], ComponentType>::decode((data[packing_info::component_word_offset[1]] >> packing_info::component_bit_offset[1]) & ((1 << packing_info::component_bit_width[1]) - 1));
+      pixel[0] = ComponentRawNorm<word_type, packing_info::component_bit_width[0], ComponentType>::decode((data[packing_info::component_word_offset[0]] >> packing_info::component_bit_offset[0]) & low_mask(packing_info::component_bit_width[0]));
+      pixel[1] = ComponentRawNorm<word_type, packing_info::component_bit_width[1], ComponentType>::decode((data[packing_info::component_word_offset[1]] >> packing_info::component_bit_offset[1]) & low_mask(packing_info::component_bit_width[1]));
       return pixel;
    }
 
    static void put(ImageView& image, Coord pixel_coord, vec4 pixel) {
       data_type data;
-      data[packing_info::component_word_offset[0]] |= (ComponentRawNorm<word_type, packing_info::component_bit_width[0], ComponentType>::encode(pixel[0]) & ((1 << packing_info::component_bit_width[0]) - 1)) << packing_info::component_bit_offset[0];
-      data[packing_info::component_word_offset[1]] |= (ComponentRawNorm<word_type, packing_info::component_bit_width[1], ComponentType>::encode(pixel[1]) & ((1 << packing_info::component_bit_width[1]) - 1)) << packing_info::component_bit_offset[1];
+      data[packing_info::component_word_offset[0]] |= (ComponentRawNorm<word_type, packing_info::component_bit_width[0], ComponentType>::encode(pixel[0]) & low_mask(packing_info::component_bit_width[0])) << packing_info::component_bit_offset[0];
+      data[packing_info::component_word_offset[1]] |= (ComponentRawNorm<word_type, packing_info::component_bit_width[1], ComponentType>::encode(pixel[1]) & low_mask(packing_info::component_bit_width[1])) << packing_info::component_bit_offset[1];
       put_pixel_uncompressed<data_type, Coord, ImageView, IsSimple>(image, pixel_coord, data);
+   }
+
+private:
+   static constexpr word_type low_mask(U8 bits) noexcept {
+      return static_cast<word_type>((1ull << bits) - 1ull);
    }
 };
 
@@ -712,17 +727,22 @@ struct PixelRawNormAccessUncompressedPacked<ImageView, Coord, IsSimple, Packing,
       vec4 pixel;
       data_type data = get_pixel_uncompressed<data_type, Coord, ImageView, IsSimple>(image, pixel_coord);
       const auto component_types = image.format().component_types();
-      pixel[0] = decode_image_component<word_type, packing_info::component_bit_width[0]>((data[packing_info::component_word_offset[0]] >> packing_info::component_bit_offset[0]) & ((1 << packing_info::component_bit_width[0]) - 1), static_cast<ComponentType>(component_types[0]));
-      pixel[1] = decode_image_component<word_type, packing_info::component_bit_width[1]>((data[packing_info::component_word_offset[1]] >> packing_info::component_bit_offset[1]) & ((1 << packing_info::component_bit_width[1]) - 1), static_cast<ComponentType>(component_types[1]));
+      pixel[0] = decode_image_component<word_type, packing_info::component_bit_width[0]>((data[packing_info::component_word_offset[0]] >> packing_info::component_bit_offset[0]) & low_mask(packing_info::component_bit_width[0]), static_cast<ComponentType>(component_types[0]));
+      pixel[1] = decode_image_component<word_type, packing_info::component_bit_width[1]>((data[packing_info::component_word_offset[1]] >> packing_info::component_bit_offset[1]) & low_mask(packing_info::component_bit_width[1]), static_cast<ComponentType>(component_types[1]));
       return pixel;
    }
 
    static void put(ImageView& image, Coord pixel_coord, vec4 pixel) {
       data_type data;
       const auto component_types = image.format().component_types();
-      data[packing_info::component_word_offset[0]] |= (encode_image_component<word_type, packing_info::component_bit_width[0]>(pixel[0], static_cast<ComponentType>(component_types[0])) & ((1 << packing_info::component_bit_width[0]) - 1)) << packing_info::component_bit_offset[0];
-      data[packing_info::component_word_offset[1]] |= (encode_image_component<word_type, packing_info::component_bit_width[1]>(pixel[1], static_cast<ComponentType>(component_types[1])) & ((1 << packing_info::component_bit_width[1]) - 1)) << packing_info::component_bit_offset[1];
+      data[packing_info::component_word_offset[0]] |= (encode_image_component<word_type, packing_info::component_bit_width[0]>(pixel[0], static_cast<ComponentType>(component_types[0])) & low_mask(packing_info::component_bit_width[0])) << packing_info::component_bit_offset[0];
+      data[packing_info::component_word_offset[1]] |= (encode_image_component<word_type, packing_info::component_bit_width[1]>(pixel[1], static_cast<ComponentType>(component_types[1])) & low_mask(packing_info::component_bit_width[1])) << packing_info::component_bit_offset[1];
       put_pixel_uncompressed<data_type, Coord, ImageView, IsSimple>(image, pixel_coord, data);
+   }
+
+private:
+   static constexpr word_type low_mask(U8 bits) noexcept {
+      return static_cast<word_type>((1ull << bits) - 1ull);
    }
 };
 
@@ -736,18 +756,23 @@ struct PixelRawNormAccessUncompressedPacked<ImageView, Coord, IsSimple, Packing,
    static vec4 get(const ImageView& image, Coord pixel_coord) {
       vec4 pixel;
       data_type data = get_pixel_uncompressed<data_type, Coord, ImageView, IsSimple>(image, pixel_coord);
-      pixel[0] = ComponentRawNorm<word_type, packing_info::component_bit_width[0], ComponentType>::decode((data[packing_info::component_word_offset[0]] >> packing_info::component_bit_offset[0]) & ((1 << packing_info::component_bit_width[0]) - 1));
-      pixel[1] = ComponentRawNorm<word_type, packing_info::component_bit_width[1], ComponentType>::decode((data[packing_info::component_word_offset[1]] >> packing_info::component_bit_offset[1]) & ((1 << packing_info::component_bit_width[1]) - 1));
-      pixel[2] = ComponentRawNorm<word_type, packing_info::component_bit_width[2], ComponentType>::decode((data[packing_info::component_word_offset[2]] >> packing_info::component_bit_offset[2]) & ((1 << packing_info::component_bit_width[2]) - 1));
+      pixel[0] = ComponentRawNorm<word_type, packing_info::component_bit_width[0], ComponentType>::decode((data[packing_info::component_word_offset[0]] >> packing_info::component_bit_offset[0]) & low_mask(packing_info::component_bit_width[0]));
+      pixel[1] = ComponentRawNorm<word_type, packing_info::component_bit_width[1], ComponentType>::decode((data[packing_info::component_word_offset[1]] >> packing_info::component_bit_offset[1]) & low_mask(packing_info::component_bit_width[1]));
+      pixel[2] = ComponentRawNorm<word_type, packing_info::component_bit_width[2], ComponentType>::decode((data[packing_info::component_word_offset[2]] >> packing_info::component_bit_offset[2]) & low_mask(packing_info::component_bit_width[2]));
       return pixel;
    }
 
    static void put(ImageView& image, Coord pixel_coord, vec4 pixel) {
       data_type data;
-      data[packing_info::component_word_offset[0]] |= (ComponentRawNorm<word_type, packing_info::component_bit_width[0], ComponentType>::encode(pixel[0]) & ((1 << packing_info::component_bit_width[0]) - 1)) << packing_info::component_bit_offset[0];
-      data[packing_info::component_word_offset[1]] |= (ComponentRawNorm<word_type, packing_info::component_bit_width[1], ComponentType>::encode(pixel[1]) & ((1 << packing_info::component_bit_width[1]) - 1)) << packing_info::component_bit_offset[1];
-      data[packing_info::component_word_offset[2]] |= (ComponentRawNorm<word_type, packing_info::component_bit_width[2], ComponentType>::encode(pixel[2]) & ((1 << packing_info::component_bit_width[2]) - 1)) << packing_info::component_bit_offset[2];
+      data[packing_info::component_word_offset[0]] |= (ComponentRawNorm<word_type, packing_info::component_bit_width[0], ComponentType>::encode(pixel[0]) & low_mask(packing_info::component_bit_width[0])) << packing_info::component_bit_offset[0];
+      data[packing_info::component_word_offset[1]] |= (ComponentRawNorm<word_type, packing_info::component_bit_width[1], ComponentType>::encode(pixel[1]) & low_mask(packing_info::component_bit_width[1])) << packing_info::component_bit_offset[1];
+      data[packing_info::component_word_offset[2]] |= (ComponentRawNorm<word_type, packing_info::component_bit_width[2], ComponentType>::encode(pixel[2]) & low_mask(packing_info::component_bit_width[2])) << packing_info::component_bit_offset[2];
       put_pixel_uncompressed<data_type, Coord, ImageView, IsSimple>(image, pixel_coord, data);
+   }
+
+private:
+   static constexpr word_type low_mask(U8 bits) noexcept {
+      return static_cast<word_type>((1ull << bits) - 1ull);
    }
 };
 
@@ -762,19 +787,24 @@ struct PixelRawNormAccessUncompressedPacked<ImageView, Coord, IsSimple, Packing,
       vec4 pixel;
       data_type data = get_pixel_uncompressed<data_type, Coord, ImageView, IsSimple>(image, pixel_coord);
       const auto component_types = image.format().component_types();
-      pixel[0] = decode_image_component<word_type, packing_info::component_bit_width[0]>((data[packing_info::component_word_offset[0]] >> packing_info::component_bit_offset[0]) & ((1 << packing_info::component_bit_width[0]) - 1), static_cast<ComponentType>(component_types[0]));
-      pixel[1] = decode_image_component<word_type, packing_info::component_bit_width[1]>((data[packing_info::component_word_offset[1]] >> packing_info::component_bit_offset[1]) & ((1 << packing_info::component_bit_width[1]) - 1), static_cast<ComponentType>(component_types[1]));
-      pixel[2] = decode_image_component<word_type, packing_info::component_bit_width[2]>((data[packing_info::component_word_offset[2]] >> packing_info::component_bit_offset[2]) & ((1 << packing_info::component_bit_width[2]) - 1), static_cast<ComponentType>(component_types[2]));
+      pixel[0] = decode_image_component<word_type, packing_info::component_bit_width[0]>((data[packing_info::component_word_offset[0]] >> packing_info::component_bit_offset[0]) & low_mask(packing_info::component_bit_width[0]), static_cast<ComponentType>(component_types[0]));
+      pixel[1] = decode_image_component<word_type, packing_info::component_bit_width[1]>((data[packing_info::component_word_offset[1]] >> packing_info::component_bit_offset[1]) & low_mask(packing_info::component_bit_width[1]), static_cast<ComponentType>(component_types[1]));
+      pixel[2] = decode_image_component<word_type, packing_info::component_bit_width[2]>((data[packing_info::component_word_offset[2]] >> packing_info::component_bit_offset[2]) & low_mask(packing_info::component_bit_width[2]), static_cast<ComponentType>(component_types[2]));
       return pixel;
    }
 
    static void put(ImageView& image, Coord pixel_coord, vec4 pixel) {
       data_type data;
       const auto component_types = image.format().component_types();
-      data[packing_info::component_word_offset[0]] |= (encode_image_component<word_type, packing_info::component_bit_width[0]>(pixel[0], static_cast<ComponentType>(component_types[0])) & ((1 << packing_info::component_bit_width[0]) - 1)) << packing_info::component_bit_offset[0];
-      data[packing_info::component_word_offset[1]] |= (encode_image_component<word_type, packing_info::component_bit_width[1]>(pixel[1], static_cast<ComponentType>(component_types[1])) & ((1 << packing_info::component_bit_width[1]) - 1)) << packing_info::component_bit_offset[1];
-      data[packing_info::component_word_offset[2]] |= (encode_image_component<word_type, packing_info::component_bit_width[2]>(pixel[2], static_cast<ComponentType>(component_types[2])) & ((1 << packing_info::component_bit_width[2]) - 1)) << packing_info::component_bit_offset[2];
+      data[packing_info::component_word_offset[0]] |= (encode_image_component<word_type, packing_info::component_bit_width[0]>(pixel[0], static_cast<ComponentType>(component_types[0])) & low_mask(packing_info::component_bit_width[0])) << packing_info::component_bit_offset[0];
+      data[packing_info::component_word_offset[1]] |= (encode_image_component<word_type, packing_info::component_bit_width[1]>(pixel[1], static_cast<ComponentType>(component_types[1])) & low_mask(packing_info::component_bit_width[1])) << packing_info::component_bit_offset[1];
+      data[packing_info::component_word_offset[2]] |= (encode_image_component<word_type, packing_info::component_bit_width[2]>(pixel[2], static_cast<ComponentType>(component_types[2])) & low_mask(packing_info::component_bit_width[2])) << packing_info::component_bit_offset[2];
       put_pixel_uncompressed<data_type, Coord, ImageView, IsSimple>(image, pixel_coord, data);
+   }
+
+private:
+   static constexpr word_type low_mask(U8 bits) noexcept {
+      return static_cast<word_type>((1ull << bits) - 1ull);
    }
 };
 
@@ -788,20 +818,25 @@ struct PixelRawNormAccessUncompressedPacked<ImageView, Coord, IsSimple, Packing,
    static vec4 get(const ImageView& image, Coord pixel_coord) {
       vec4 pixel;
       data_type data = get_pixel_uncompressed<data_type, Coord, ImageView, IsSimple>(image, pixel_coord);
-      pixel[0] = ComponentRawNorm<word_type, packing_info::component_bit_width[0], ComponentType>::decode((data[packing_info::component_word_offset[0]] >> packing_info::component_bit_offset[0]) & ((1 << packing_info::component_bit_width[0]) - 1));
-      pixel[1] = ComponentRawNorm<word_type, packing_info::component_bit_width[1], ComponentType>::decode((data[packing_info::component_word_offset[1]] >> packing_info::component_bit_offset[1]) & ((1 << packing_info::component_bit_width[1]) - 1));
-      pixel[2] = ComponentRawNorm<word_type, packing_info::component_bit_width[2], ComponentType>::decode((data[packing_info::component_word_offset[2]] >> packing_info::component_bit_offset[2]) & ((1 << packing_info::component_bit_width[2]) - 1));
-      pixel[3] = ComponentRawNorm<word_type, packing_info::component_bit_width[3], ComponentType>::decode((data[packing_info::component_word_offset[3]] >> packing_info::component_bit_offset[3]) & ((1 << packing_info::component_bit_width[3]) - 1));
+      pixel[0] = ComponentRawNorm<word_type, packing_info::component_bit_width[0], ComponentType>::decode((data[packing_info::component_word_offset[0]] >> packing_info::component_bit_offset[0]) & low_mask(packing_info::component_bit_width[0]));
+      pixel[1] = ComponentRawNorm<word_type, packing_info::component_bit_width[1], ComponentType>::decode((data[packing_info::component_word_offset[1]] >> packing_info::component_bit_offset[1]) & low_mask(packing_info::component_bit_width[1]));
+      pixel[2] = ComponentRawNorm<word_type, packing_info::component_bit_width[2], ComponentType>::decode((data[packing_info::component_word_offset[2]] >> packing_info::component_bit_offset[2]) & low_mask(packing_info::component_bit_width[2]));
+      pixel[3] = ComponentRawNorm<word_type, packing_info::component_bit_width[3], ComponentType>::decode((data[packing_info::component_word_offset[3]] >> packing_info::component_bit_offset[3]) & low_mask(packing_info::component_bit_width[3]));
       return pixel;
    }
 
    static void put(ImageView& image, Coord pixel_coord, vec4 pixel) {
       data_type data;
-      data[packing_info::component_word_offset[0]] |= (ComponentRawNorm<word_type, packing_info::component_bit_width[0], ComponentType>::encode(pixel[0]) & ((1 << packing_info::component_bit_width[0]) - 1)) << packing_info::component_bit_offset[0];
-      data[packing_info::component_word_offset[1]] |= (ComponentRawNorm<word_type, packing_info::component_bit_width[1], ComponentType>::encode(pixel[1]) & ((1 << packing_info::component_bit_width[1]) - 1)) << packing_info::component_bit_offset[1];
-      data[packing_info::component_word_offset[2]] |= (ComponentRawNorm<word_type, packing_info::component_bit_width[2], ComponentType>::encode(pixel[2]) & ((1 << packing_info::component_bit_width[2]) - 1)) << packing_info::component_bit_offset[2];
-      data[packing_info::component_word_offset[3]] |= (ComponentRawNorm<word_type, packing_info::component_bit_width[3], ComponentType>::encode(pixel[3]) & ((1 << packing_info::component_bit_width[3]) - 1)) << packing_info::component_bit_offset[3];
+      data[packing_info::component_word_offset[0]] |= (ComponentRawNorm<word_type, packing_info::component_bit_width[0], ComponentType>::encode(pixel[0]) & low_mask(packing_info::component_bit_width[0])) << packing_info::component_bit_offset[0];
+      data[packing_info::component_word_offset[1]] |= (ComponentRawNorm<word_type, packing_info::component_bit_width[1], ComponentType>::encode(pixel[1]) & low_mask(packing_info::component_bit_width[1])) << packing_info::component_bit_offset[1];
+      data[packing_info::component_word_offset[2]] |= (ComponentRawNorm<word_type, packing_info::component_bit_width[2], ComponentType>::encode(pixel[2]) & low_mask(packing_info::component_bit_width[2])) << packing_info::component_bit_offset[2];
+      data[packing_info::component_word_offset[3]] |= (ComponentRawNorm<word_type, packing_info::component_bit_width[3], ComponentType>::encode(pixel[3]) & low_mask(packing_info::component_bit_width[3])) << packing_info::component_bit_offset[3];
       put_pixel_uncompressed<data_type, Coord, ImageView, IsSimple>(image, pixel_coord, data);
+   }
+
+private:
+   static constexpr word_type low_mask(U8 bits) noexcept {
+      return static_cast<word_type>((1ull << bits) - 1ull);
    }
 };
 
@@ -816,21 +851,26 @@ struct PixelRawNormAccessUncompressedPacked<ImageView, Coord, IsSimple, Packing,
       vec4 pixel;
       data_type data = get_pixel_uncompressed<data_type, Coord, ImageView, IsSimple>(image, pixel_coord);
       const auto component_types = image.format().component_types();
-      pixel[0] = decode_image_component<word_type, packing_info::component_bit_width[0]>((data[packing_info::component_word_offset[0]] >> packing_info::component_bit_offset[0]) & ((1 << packing_info::component_bit_width[0]) - 1), static_cast<ComponentType>(component_types[0]));
-      pixel[1] = decode_image_component<word_type, packing_info::component_bit_width[1]>((data[packing_info::component_word_offset[1]] >> packing_info::component_bit_offset[1]) & ((1 << packing_info::component_bit_width[1]) - 1), static_cast<ComponentType>(component_types[1]));
-      pixel[2] = decode_image_component<word_type, packing_info::component_bit_width[2]>((data[packing_info::component_word_offset[2]] >> packing_info::component_bit_offset[2]) & ((1 << packing_info::component_bit_width[2]) - 1), static_cast<ComponentType>(component_types[2]));
-      pixel[3] = decode_image_component<word_type, packing_info::component_bit_width[3]>((data[packing_info::component_word_offset[3]] >> packing_info::component_bit_offset[3]) & ((1 << packing_info::component_bit_width[3]) - 1), static_cast<ComponentType>(component_types[3]));
+      pixel[0] = decode_image_component<word_type, packing_info::component_bit_width[0]>((data[packing_info::component_word_offset[0]] >> packing_info::component_bit_offset[0]) & low_mask(packing_info::component_bit_width[0]), static_cast<ComponentType>(component_types[0]));
+      pixel[1] = decode_image_component<word_type, packing_info::component_bit_width[1]>((data[packing_info::component_word_offset[1]] >> packing_info::component_bit_offset[1]) & low_mask(packing_info::component_bit_width[1]), static_cast<ComponentType>(component_types[1]));
+      pixel[2] = decode_image_component<word_type, packing_info::component_bit_width[2]>((data[packing_info::component_word_offset[2]] >> packing_info::component_bit_offset[2]) & low_mask(packing_info::component_bit_width[2]), static_cast<ComponentType>(component_types[2]));
+      pixel[3] = decode_image_component<word_type, packing_info::component_bit_width[3]>((data[packing_info::component_word_offset[3]] >> packing_info::component_bit_offset[3]) & low_mask(packing_info::component_bit_width[3]), static_cast<ComponentType>(component_types[3]));
       return pixel;
    }
 
    static void put(ImageView& image, Coord pixel_coord, vec4 pixel) {
       data_type data;
       const auto component_types = image.format().component_types();
-      data[packing_info::component_word_offset[0]] |= (encode_image_component<word_type, packing_info::component_bit_width[0]>(pixel[0], static_cast<ComponentType>(component_types[0])) & ((1 << packing_info::component_bit_width[0]) - 1)) << packing_info::component_bit_offset[0];
-      data[packing_info::component_word_offset[1]] |= (encode_image_component<word_type, packing_info::component_bit_width[1]>(pixel[1], static_cast<ComponentType>(component_types[1])) & ((1 << packing_info::component_bit_width[1]) - 1)) << packing_info::component_bit_offset[1];
-      data[packing_info::component_word_offset[2]] |= (encode_image_component<word_type, packing_info::component_bit_width[2]>(pixel[2], static_cast<ComponentType>(component_types[2])) & ((1 << packing_info::component_bit_width[2]) - 1)) << packing_info::component_bit_offset[2];
-      data[packing_info::component_word_offset[3]] |= (encode_image_component<word_type, packing_info::component_bit_width[3]>(pixel[3], static_cast<ComponentType>(component_types[3])) & ((1 << packing_info::component_bit_width[3]) - 1)) << packing_info::component_bit_offset[3];
+      data[packing_info::component_word_offset[0]] |= (encode_image_component<word_type, packing_info::component_bit_width[0]>(pixel[0], static_cast<ComponentType>(component_types[0])) & low_mask(packing_info::component_bit_width[0])) << packing_info::component_bit_offset[0];
+      data[packing_info::component_word_offset[1]] |= (encode_image_component<word_type, packing_info::component_bit_width[1]>(pixel[1], static_cast<ComponentType>(component_types[1])) & low_mask(packing_info::component_bit_width[1])) << packing_info::component_bit_offset[1];
+      data[packing_info::component_word_offset[2]] |= (encode_image_component<word_type, packing_info::component_bit_width[2]>(pixel[2], static_cast<ComponentType>(component_types[2])) & low_mask(packing_info::component_bit_width[2])) << packing_info::component_bit_offset[2];
+      data[packing_info::component_word_offset[3]] |= (encode_image_component<word_type, packing_info::component_bit_width[3]>(pixel[3], static_cast<ComponentType>(component_types[3])) & low_mask(packing_info::component_bit_width[3])) << packing_info::component_bit_offset[3];
       put_pixel_uncompressed<data_type, Coord, ImageView, IsSimple>(image, pixel_coord, data);
+   }
+
+private:
+   static constexpr word_type low_mask(U8 bits) noexcept {
+      return static_cast<word_type>((1ull << bits) - 1ull);
    }
 };
 
@@ -878,18 +918,18 @@ struct PixelRawNormAccessUncompressedPacked<ImageView, Coord, IsSimple, BlockPac
       if (component_types == ImageFormat::component_types_type(ufloat, ufloat, ufloat, expo)) {
          // https://www.khronos.org/registry/OpenGL/extensions/EXT/EXT_texture_shared_exponent.txt
          vec3 pixel3;
-         pixel3[0] = ComponentRawNorm<word_type, packing_info::component_bit_width[0], ComponentType::uint>::decode((data[packing_info::component_word_offset[0]] >> packing_info::component_bit_offset[0]) & ((1 << packing_info::component_bit_width[0]) - 1));
-         pixel3[1] = ComponentRawNorm<word_type, packing_info::component_bit_width[1], ComponentType::uint>::decode((data[packing_info::component_word_offset[1]] >> packing_info::component_bit_offset[1]) & ((1 << packing_info::component_bit_width[1]) - 1));
-         pixel3[2] = ComponentRawNorm<word_type, packing_info::component_bit_width[2], ComponentType::uint>::decode((data[packing_info::component_word_offset[2]] >> packing_info::component_bit_offset[2]) & ((1 << packing_info::component_bit_width[2]) - 1));
+         pixel3[0] = ComponentRawNorm<word_type, packing_info::component_bit_width[0], ComponentType::uint>::decode((data[packing_info::component_word_offset[0]] >> packing_info::component_bit_offset[0]) & low_mask(packing_info::component_bit_width[0]));
+         pixel3[1] = ComponentRawNorm<word_type, packing_info::component_bit_width[1], ComponentType::uint>::decode((data[packing_info::component_word_offset[1]] >> packing_info::component_bit_offset[1]) & low_mask(packing_info::component_bit_width[1]));
+         pixel3[2] = ComponentRawNorm<word_type, packing_info::component_bit_width[2], ComponentType::uint>::decode((data[packing_info::component_word_offset[2]] >> packing_info::component_bit_offset[2]) & low_mask(packing_info::component_bit_width[2]));
 
-         word_type exponent = (data[packing_info::component_word_offset[3]] >> packing_info::component_bit_offset[3]) & ((1 << packing_info::component_bit_width[3]) - 1);
+         word_type exponent = (data[packing_info::component_word_offset[3]] >> packing_info::component_bit_offset[3]) & low_mask(packing_info::component_bit_width[3]);
          pixel3 *= pow2(exponent - f14_exponent_basis - f14_mantissa_bits);
          pixel = vec4(pixel3, 0.f);
       } else {
-         pixel[0] = decode_image_component<word_type, packing_info::component_bit_width[0]>((data[packing_info::component_word_offset[0]] >> packing_info::component_bit_offset[0]) & ((1 << packing_info::component_bit_width[0]) - 1), static_cast<ComponentType>(component_types[0]));
-         pixel[1] = decode_image_component<word_type, packing_info::component_bit_width[1]>((data[packing_info::component_word_offset[1]] >> packing_info::component_bit_offset[1]) & ((1 << packing_info::component_bit_width[1]) - 1), static_cast<ComponentType>(component_types[1]));
-         pixel[2] = decode_image_component<word_type, packing_info::component_bit_width[2]>((data[packing_info::component_word_offset[2]] >> packing_info::component_bit_offset[2]) & ((1 << packing_info::component_bit_width[2]) - 1), static_cast<ComponentType>(component_types[2]));
-         pixel[3] = decode_image_component<word_type, packing_info::component_bit_width[3]>((data[packing_info::component_word_offset[3]] >> packing_info::component_bit_offset[3]) & ((1 << packing_info::component_bit_width[3]) - 1), static_cast<ComponentType>(component_types[3]));
+         pixel[0] = decode_image_component<word_type, packing_info::component_bit_width[0]>((data[packing_info::component_word_offset[0]] >> packing_info::component_bit_offset[0]) & low_mask(packing_info::component_bit_width[0]), static_cast<ComponentType>(component_types[0]));
+         pixel[1] = decode_image_component<word_type, packing_info::component_bit_width[1]>((data[packing_info::component_word_offset[1]] >> packing_info::component_bit_offset[1]) & low_mask(packing_info::component_bit_width[1]), static_cast<ComponentType>(component_types[1]));
+         pixel[2] = decode_image_component<word_type, packing_info::component_bit_width[2]>((data[packing_info::component_word_offset[2]] >> packing_info::component_bit_offset[2]) & low_mask(packing_info::component_bit_width[2]), static_cast<ComponentType>(component_types[2]));
+         pixel[3] = decode_image_component<word_type, packing_info::component_bit_width[3]>((data[packing_info::component_word_offset[3]] >> packing_info::component_bit_offset[3]) & low_mask(packing_info::component_bit_width[3]), static_cast<ComponentType>(component_types[3]));
       }
       return pixel;
    }
@@ -927,17 +967,22 @@ struct PixelRawNormAccessUncompressedPacked<ImageView, Coord, IsSimple, BlockPac
          assert(components[1] <= f14_mantissa_mask);
          assert(components[2] <= f14_mantissa_mask);
 
-         data[packing_info::component_word_offset[0]] |= (components[0] & ((1 << packing_info::component_bit_width[0]) - 1)) << packing_info::component_bit_offset[0];
-         data[packing_info::component_word_offset[1]] |= (components[1] & ((1 << packing_info::component_bit_width[1]) - 1)) << packing_info::component_bit_offset[1];
-         data[packing_info::component_word_offset[2]] |= (components[2] & ((1 << packing_info::component_bit_width[2]) - 1)) << packing_info::component_bit_offset[2];
-         data[packing_info::component_word_offset[3]] |= (static_cast<unsigned int>(exp_shared) & ((1 << packing_info::component_bit_width[3]) - 1)) << packing_info::component_bit_offset[3];
+         data[packing_info::component_word_offset[0]] |= (components[0] & low_mask(packing_info::component_bit_width[0])) << packing_info::component_bit_offset[0];
+         data[packing_info::component_word_offset[1]] |= (components[1] & low_mask(packing_info::component_bit_width[1])) << packing_info::component_bit_offset[1];
+         data[packing_info::component_word_offset[2]] |= (components[2] & low_mask(packing_info::component_bit_width[2])) << packing_info::component_bit_offset[2];
+         data[packing_info::component_word_offset[3]] |= (static_cast<unsigned int>(exp_shared) & low_mask(packing_info::component_bit_width[3])) << packing_info::component_bit_offset[3];
       } else {
-         data[packing_info::component_word_offset[0]] |= (encode_image_component<word_type, packing_info::component_bit_width[0]>(pixel[0], static_cast<ComponentType>(component_types[0])) & ((1 << packing_info::component_bit_width[0]) - 1)) << packing_info::component_bit_offset[0];
-         data[packing_info::component_word_offset[1]] |= (encode_image_component<word_type, packing_info::component_bit_width[1]>(pixel[1], static_cast<ComponentType>(component_types[1])) & ((1 << packing_info::component_bit_width[1]) - 1)) << packing_info::component_bit_offset[1];
-         data[packing_info::component_word_offset[2]] |= (encode_image_component<word_type, packing_info::component_bit_width[2]>(pixel[2], static_cast<ComponentType>(component_types[2])) & ((1 << packing_info::component_bit_width[2]) - 1)) << packing_info::component_bit_offset[2];
-         data[packing_info::component_word_offset[3]] |= (encode_image_component<word_type, packing_info::component_bit_width[3]>(pixel[3], static_cast<ComponentType>(component_types[3])) & ((1 << packing_info::component_bit_width[3]) - 1)) << packing_info::component_bit_offset[3];
+         data[packing_info::component_word_offset[0]] |= (encode_image_component<word_type, packing_info::component_bit_width[0]>(pixel[0], static_cast<ComponentType>(component_types[0])) & low_mask(packing_info::component_bit_width[0])) << packing_info::component_bit_offset[0];
+         data[packing_info::component_word_offset[1]] |= (encode_image_component<word_type, packing_info::component_bit_width[1]>(pixel[1], static_cast<ComponentType>(component_types[1])) & low_mask(packing_info::component_bit_width[1])) << packing_info::component_bit_offset[1];
+         data[packing_info::component_word_offset[2]] |= (encode_image_component<word_type, packing_info::component_bit_width[2]>(pixel[2], static_cast<ComponentType>(component_types[2])) & low_mask(packing_info::component_bit_width[2])) << packing_info::component_bit_offset[2];
+         data[packing_info::component_word_offset[3]] |= (encode_image_component<word_type, packing_info::component_bit_width[3]>(pixel[3], static_cast<ComponentType>(component_types[3])) & low_mask(packing_info::component_bit_width[3])) << packing_info::component_bit_offset[3];
       }
       put_pixel_uncompressed<data_type, Coord, ImageView, IsSimple>(image, pixel_coord, data);
+   }
+
+private:
+   static constexpr word_type low_mask(U8 bits) noexcept {
+      return static_cast<word_type>((1ull << bits) - 1ull);
    }
 };
 
@@ -985,18 +1030,18 @@ struct PixelRawNormAccessUncompressedPacked<ImageView, Coord, IsSimple, BlockPac
       if (component_types == ImageFormat::component_types_type(expo, ufloat, ufloat, ufloat)) {
          // https://www.khronos.org/registry/OpenGL/extensions/EXT/EXT_texture_shared_exponent.txt
          vec3 pixel3;
-         pixel3[0] = ComponentRawNorm<word_type, packing_info::component_bit_width[1], ComponentType::uint>::decode((data[packing_info::component_word_offset[1]] >> packing_info::component_bit_offset[1]) & ((1 << packing_info::component_bit_width[1]) - 1));
-         pixel3[1] = ComponentRawNorm<word_type, packing_info::component_bit_width[2], ComponentType::uint>::decode((data[packing_info::component_word_offset[2]] >> packing_info::component_bit_offset[2]) & ((1 << packing_info::component_bit_width[2]) - 1));
-         pixel3[2] = ComponentRawNorm<word_type, packing_info::component_bit_width[3], ComponentType::uint>::decode((data[packing_info::component_word_offset[3]] >> packing_info::component_bit_offset[3]) & ((1 << packing_info::component_bit_width[3]) - 1));
+         pixel3[0] = ComponentRawNorm<word_type, packing_info::component_bit_width[1], ComponentType::uint>::decode((data[packing_info::component_word_offset[1]] >> packing_info::component_bit_offset[1]) & low_mask(packing_info::component_bit_width[1]));
+         pixel3[1] = ComponentRawNorm<word_type, packing_info::component_bit_width[2], ComponentType::uint>::decode((data[packing_info::component_word_offset[2]] >> packing_info::component_bit_offset[2]) & low_mask(packing_info::component_bit_width[2]));
+         pixel3[2] = ComponentRawNorm<word_type, packing_info::component_bit_width[3], ComponentType::uint>::decode((data[packing_info::component_word_offset[3]] >> packing_info::component_bit_offset[3]) & low_mask(packing_info::component_bit_width[3]));
 
-         word_type exponent = (data[packing_info::component_word_offset[0]] >> packing_info::component_bit_offset[0]) & ((1 << packing_info::component_bit_width[0]) - 1);
+         word_type exponent = (data[packing_info::component_word_offset[0]] >> packing_info::component_bit_offset[0]) & low_mask(packing_info::component_bit_width[0]);
          pixel3 *= pow2(exponent - f14_exponent_basis - f14_mantissa_bits);
          pixel = vec4(0.f, pixel3);
       } else {
-         pixel[0] = decode_image_component<word_type, packing_info::component_bit_width[0]>((data[packing_info::component_word_offset[0]] >> packing_info::component_bit_offset[0]) & ((1 << packing_info::component_bit_width[0]) - 1), static_cast<ComponentType>(component_types[0]));
-         pixel[1] = decode_image_component<word_type, packing_info::component_bit_width[1]>((data[packing_info::component_word_offset[1]] >> packing_info::component_bit_offset[1]) & ((1 << packing_info::component_bit_width[1]) - 1), static_cast<ComponentType>(component_types[1]));
-         pixel[2] = decode_image_component<word_type, packing_info::component_bit_width[2]>((data[packing_info::component_word_offset[2]] >> packing_info::component_bit_offset[2]) & ((1 << packing_info::component_bit_width[2]) - 1), static_cast<ComponentType>(component_types[2]));
-         pixel[3] = decode_image_component<word_type, packing_info::component_bit_width[3]>((data[packing_info::component_word_offset[3]] >> packing_info::component_bit_offset[3]) & ((1 << packing_info::component_bit_width[3]) - 1), static_cast<ComponentType>(component_types[3]));
+         pixel[0] = decode_image_component<word_type, packing_info::component_bit_width[0]>((data[packing_info::component_word_offset[0]] >> packing_info::component_bit_offset[0]) & low_mask(packing_info::component_bit_width[0]), static_cast<ComponentType>(component_types[0]));
+         pixel[1] = decode_image_component<word_type, packing_info::component_bit_width[1]>((data[packing_info::component_word_offset[1]] >> packing_info::component_bit_offset[1]) & low_mask(packing_info::component_bit_width[1]), static_cast<ComponentType>(component_types[1]));
+         pixel[2] = decode_image_component<word_type, packing_info::component_bit_width[2]>((data[packing_info::component_word_offset[2]] >> packing_info::component_bit_offset[2]) & low_mask(packing_info::component_bit_width[2]), static_cast<ComponentType>(component_types[2]));
+         pixel[3] = decode_image_component<word_type, packing_info::component_bit_width[3]>((data[packing_info::component_word_offset[3]] >> packing_info::component_bit_offset[3]) & low_mask(packing_info::component_bit_width[3]), static_cast<ComponentType>(component_types[3]));
       }
       return pixel;
    }
@@ -1034,17 +1079,22 @@ struct PixelRawNormAccessUncompressedPacked<ImageView, Coord, IsSimple, BlockPac
          assert(components[1] <= f14_mantissa_mask);
          assert(components[2] <= f14_mantissa_mask);
 
-         data[packing_info::component_word_offset[0]] |= (static_cast<unsigned int>(exp_shared) & ((1 << packing_info::component_bit_width[0]) - 1)) << packing_info::component_bit_offset[0];
-         data[packing_info::component_word_offset[1]] |= (components[0] & ((1 << packing_info::component_bit_width[1]) - 1)) << packing_info::component_bit_offset[1];
-         data[packing_info::component_word_offset[2]] |= (components[1] & ((1 << packing_info::component_bit_width[2]) - 1)) << packing_info::component_bit_offset[2];
-         data[packing_info::component_word_offset[3]] |= (components[2] & ((1 << packing_info::component_bit_width[3]) - 1)) << packing_info::component_bit_offset[3];
+         data[packing_info::component_word_offset[0]] |= (static_cast<unsigned int>(exp_shared) & low_mask(packing_info::component_bit_width[0])) << packing_info::component_bit_offset[0];
+         data[packing_info::component_word_offset[1]] |= (components[0] & low_mask(packing_info::component_bit_width[1])) << packing_info::component_bit_offset[1];
+         data[packing_info::component_word_offset[2]] |= (components[1] & low_mask(packing_info::component_bit_width[2])) << packing_info::component_bit_offset[2];
+         data[packing_info::component_word_offset[3]] |= (components[2] & low_mask(packing_info::component_bit_width[3])) << packing_info::component_bit_offset[3];
       } else {
-         data[packing_info::component_word_offset[0]] |= (encode_image_component<word_type, packing_info::component_bit_width[0]>(pixel[0], static_cast<ComponentType>(component_types[0])) & ((1 << packing_info::component_bit_width[0]) - 1)) << packing_info::component_bit_offset[0];
-         data[packing_info::component_word_offset[1]] |= (encode_image_component<word_type, packing_info::component_bit_width[1]>(pixel[1], static_cast<ComponentType>(component_types[1])) & ((1 << packing_info::component_bit_width[1]) - 1)) << packing_info::component_bit_offset[1];
-         data[packing_info::component_word_offset[2]] |= (encode_image_component<word_type, packing_info::component_bit_width[2]>(pixel[2], static_cast<ComponentType>(component_types[2])) & ((1 << packing_info::component_bit_width[2]) - 1)) << packing_info::component_bit_offset[2];
-         data[packing_info::component_word_offset[3]] |= (encode_image_component<word_type, packing_info::component_bit_width[3]>(pixel[3], static_cast<ComponentType>(component_types[3])) & ((1 << packing_info::component_bit_width[3]) - 1)) << packing_info::component_bit_offset[3];
+         data[packing_info::component_word_offset[0]] |= (encode_image_component<word_type, packing_info::component_bit_width[0]>(pixel[0], static_cast<ComponentType>(component_types[0])) & low_mask(packing_info::component_bit_width[0])) << packing_info::component_bit_offset[0];
+         data[packing_info::component_word_offset[1]] |= (encode_image_component<word_type, packing_info::component_bit_width[1]>(pixel[1], static_cast<ComponentType>(component_types[1])) & low_mask(packing_info::component_bit_width[1])) << packing_info::component_bit_offset[1];
+         data[packing_info::component_word_offset[2]] |= (encode_image_component<word_type, packing_info::component_bit_width[2]>(pixel[2], static_cast<ComponentType>(component_types[2])) & low_mask(packing_info::component_bit_width[2])) << packing_info::component_bit_offset[2];
+         data[packing_info::component_word_offset[3]] |= (encode_image_component<word_type, packing_info::component_bit_width[3]>(pixel[3], static_cast<ComponentType>(component_types[3])) & low_mask(packing_info::component_bit_width[3])) << packing_info::component_bit_offset[3];
       }
       put_pixel_uncompressed<data_type, Coord, ImageView, IsSimple>(image, pixel_coord, data);
+   }
+
+private:
+   static constexpr word_type low_mask(U8 bits) noexcept {
+      return static_cast<word_type>((1ull << bits) - 1ull);
    }
 };
 

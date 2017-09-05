@@ -7,24 +7,12 @@
     <Filter Include="Tests\old">
       <UniqueIdentifier>{8117a5d8-4d4b-4eb9-9ea6-f96e6fc43b3d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Tests\tex">
+      <UniqueIdentifier>{25012c2d-28e3-4823-b3df-7aa3a79510f5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="test\test_main.cpp" />
-    <ClCompile Include="test\test_image_view.cpp">
-      <Filter>Tests</Filter>
-    </ClCompile>
-    <ClCompile Include="test\test_image_format.cpp">
-      <Filter>Tests</Filter>
-    </ClCompile>
-    <ClCompile Include="test\test_texture_view.cpp">
-      <Filter>Tests</Filter>
-    </ClCompile>
-    <ClCompile Include="test\test_texture_storage.cpp">
-      <Filter>Tests</Filter>
-    </ClCompile>
-    <ClCompile Include="test\test_image_region.cpp">
-      <Filter>Tests</Filter>
-    </ClCompile>
     <ClCompile Include="test\test_uniform_resample.cpp">
       <Filter>Tests\old</Filter>
     </ClCompile>
@@ -32,5 +20,38 @@
       <Filter>Tests\old</Filter>
     </ClCompile>
     <ClCompile Include="test\version.cpp" />
+    <ClCompile Include="test\test_tex_block_access.cpp">
+      <Filter>Tests\tex</Filter>
+    </ClCompile>
+    <ClCompile Include="test\test_tex_image_format.cpp">
+      <Filter>Tests\tex</Filter>
+    </ClCompile>
+    <ClCompile Include="test\test_tex_image_region.cpp">
+      <Filter>Tests\tex</Filter>
+    </ClCompile>
+    <ClCompile Include="test\test_tex_image_view.cpp">
+      <Filter>Tests\tex</Filter>
+    </ClCompile>
+    <ClCompile Include="test\test_tex_pixel_access.cpp">
+      <Filter>Tests\tex</Filter>
+    </ClCompile>
+    <ClCompile Include="test\test_tex_pixel_access_norm.cpp">
+      <Filter>Tests\tex</Filter>
+    </ClCompile>
+    <ClCompile Include="test\test_tex_texture_storage.cpp">
+      <Filter>Tests\tex</Filter>
+    </ClCompile>
+    <ClCompile Include="test\test_tex_texture_view.cpp">
+      <Filter>Tests\tex</Filter>
+    </ClCompile>
+    <ClCompile Include="test\test_tex_blit_blocks.cpp">
+      <Filter>Tests\tex</Filter>
+    </ClCompile>
+    <ClCompile Include="test\test_tex_blit_pixels.cpp">
+      <Filter>Tests\tex</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="test\tostring.hpp" />
   </ItemGroup>
 </Project>

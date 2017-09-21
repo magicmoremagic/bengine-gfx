@@ -12,6 +12,7 @@
 #define BE_CATCH_TAGS "[gfx][gfx:tex][gfx:tex:ImageView]"
 
 using namespace be;
+using namespace be::gfx::gl;
 using namespace be::gfx::tex;
 
 TEST_CASE("detail::ComponentRawNorm<U16, 11, ufloat>", BE_CATCH_TAGS) {
@@ -186,7 +187,7 @@ void monochrome_test(ImageFormat format) {
 
 TEST_CASE("normalized pixel access - monochrome components", BE_CATCH_TAGS) {
 
-   /*!! register_template_string([[`with each $ using # { `SECTION("`$`") { monochrome_test(canonical_format(gl::`$`)); }`nl }]], 'gl_monochrome_test')
+   /*!! register_template_string([[`with each $ using # { `SECTION("`$`") { monochrome_test(canonical_format(`$`)); }`nl }]], 'gl_monochrome_test')
    write_template('gl_monochrome_test', {
    'GL_R8',                'GL_R16',            'GL_R8_SNORM',          'GL_R16_SNORM',
    'GL_R8UI',              'GL_R16UI',          'GL_R32UI',             'GL_R8I',
@@ -195,7 +196,7 @@ TEST_CASE("normalized pixel access - monochrome components", BE_CATCH_TAGS) {
    'GL_RG8UI',             'GL_RG16UI',         'GL_RG32UI',            'GL_RG8I',
    'GL_RG16I',             'GL_RG32I',          'GL_RG16F',             'GL_RG32F',
    'GL_SRGB8',             'GL_RGB8',           'GL_RGB16',             'GL_R3_G3_B2',
-   'GL_RGB565',            'GL_RGB4',           'GL_RGB5',              'GL_RGB8_SNORM',
+   --[['GL_RGB565',]]      'GL_RGB4',           'GL_RGB5',              'GL_RGB8_SNORM',
    'GL_RGB16_SNORM',       'GL_RGB8UI',         'GL_RGB16UI',           'GL_RGB32UI',
    'GL_RGB8I',             'GL_RGB16I',         'GL_RGB32I',            'GL_R11F_G11F_B10F',
    'GL_RGB16F',            'GL_RGB32F',         'GL_RGB9_E5',           'GL_RGBA16',
@@ -204,72 +205,74 @@ TEST_CASE("normalized pixel access - monochrome components", BE_CATCH_TAGS) {
    'GL_RGB10_A2UI',        'GL_RGBA8I',         'GL_RGBA16I',           'GL_RGBA32I',
    'GL_RGBA16F',           'GL_RGBA32F',        'GL_DEPTH_COMPONENT16', 'GL_DEPTH_COMPONENT32F',
    'GL_DEPTH_COMPONENT24', 'GL_STENCIL_INDEX8', 'GL_DEPTH24_STENCIL8',  'GL_DEPTH32F_STENCIL8'
-   }) !! 68 */
+   }) !! 67 */
    /* ################# !! GENERATED CODE -- DO NOT MODIFY !! ################# */
-   SECTION("GL_R8") { monochrome_test(canonical_format(gl::GL_R8)); }
-   SECTION("GL_R16") { monochrome_test(canonical_format(gl::GL_R16)); }
-   SECTION("GL_R8_SNORM") { monochrome_test(canonical_format(gl::GL_R8_SNORM)); }
-   SECTION("GL_R16_SNORM") { monochrome_test(canonical_format(gl::GL_R16_SNORM)); }
-   SECTION("GL_R8UI") { monochrome_test(canonical_format(gl::GL_R8UI)); }
-   SECTION("GL_R16UI") { monochrome_test(canonical_format(gl::GL_R16UI)); }
-   SECTION("GL_R32UI") { monochrome_test(canonical_format(gl::GL_R32UI)); }
-   SECTION("GL_R8I") { monochrome_test(canonical_format(gl::GL_R8I)); }
-   SECTION("GL_R16I") { monochrome_test(canonical_format(gl::GL_R16I)); }
-   SECTION("GL_R32I") { monochrome_test(canonical_format(gl::GL_R32I)); }
-   SECTION("GL_R16F") { monochrome_test(canonical_format(gl::GL_R16F)); }
-   SECTION("GL_R32F") { monochrome_test(canonical_format(gl::GL_R32F)); }
-   SECTION("GL_RG8") { monochrome_test(canonical_format(gl::GL_RG8)); }
-   SECTION("GL_RG16") { monochrome_test(canonical_format(gl::GL_RG16)); }
-   SECTION("GL_RG8_SNORM") { monochrome_test(canonical_format(gl::GL_RG8_SNORM)); }
-   SECTION("GL_RG16_SNORM") { monochrome_test(canonical_format(gl::GL_RG16_SNORM)); }
-   SECTION("GL_RG8UI") { monochrome_test(canonical_format(gl::GL_RG8UI)); }
-   SECTION("GL_RG16UI") { monochrome_test(canonical_format(gl::GL_RG16UI)); }
-   SECTION("GL_RG32UI") { monochrome_test(canonical_format(gl::GL_RG32UI)); }
-   SECTION("GL_RG8I") { monochrome_test(canonical_format(gl::GL_RG8I)); }
-   SECTION("GL_RG16I") { monochrome_test(canonical_format(gl::GL_RG16I)); }
-   SECTION("GL_RG32I") { monochrome_test(canonical_format(gl::GL_RG32I)); }
-   SECTION("GL_RG16F") { monochrome_test(canonical_format(gl::GL_RG16F)); }
-   SECTION("GL_RG32F") { monochrome_test(canonical_format(gl::GL_RG32F)); }
-   SECTION("GL_SRGB8") { monochrome_test(canonical_format(gl::GL_SRGB8)); }
-   SECTION("GL_RGB8") { monochrome_test(canonical_format(gl::GL_RGB8)); }
-   SECTION("GL_RGB16") { monochrome_test(canonical_format(gl::GL_RGB16)); }
-   SECTION("GL_R3_G3_B2") { monochrome_test(canonical_format(gl::GL_R3_G3_B2)); }
-   SECTION("GL_RGB565") { monochrome_test(canonical_format(gl::GL_RGB565)); }
-   SECTION("GL_RGB4") { monochrome_test(canonical_format(gl::GL_RGB4)); }
-   SECTION("GL_RGB5") { monochrome_test(canonical_format(gl::GL_RGB5)); }
-   SECTION("GL_RGB8_SNORM") { monochrome_test(canonical_format(gl::GL_RGB8_SNORM)); }
-   SECTION("GL_RGB16_SNORM") { monochrome_test(canonical_format(gl::GL_RGB16_SNORM)); }
-   SECTION("GL_RGB8UI") { monochrome_test(canonical_format(gl::GL_RGB8UI)); }
-   SECTION("GL_RGB16UI") { monochrome_test(canonical_format(gl::GL_RGB16UI)); }
-   SECTION("GL_RGB32UI") { monochrome_test(canonical_format(gl::GL_RGB32UI)); }
-   SECTION("GL_RGB8I") { monochrome_test(canonical_format(gl::GL_RGB8I)); }
-   SECTION("GL_RGB16I") { monochrome_test(canonical_format(gl::GL_RGB16I)); }
-   SECTION("GL_RGB32I") { monochrome_test(canonical_format(gl::GL_RGB32I)); }
-   SECTION("GL_R11F_G11F_B10F") { monochrome_test(canonical_format(gl::GL_R11F_G11F_B10F)); }
-   SECTION("GL_RGB16F") { monochrome_test(canonical_format(gl::GL_RGB16F)); }
-   SECTION("GL_RGB32F") { monochrome_test(canonical_format(gl::GL_RGB32F)); }
-   SECTION("GL_RGB9_E5") { monochrome_test(canonical_format(gl::GL_RGB9_E5)); }
-   SECTION("GL_RGBA16") { monochrome_test(canonical_format(gl::GL_RGBA16)); }
-   SECTION("GL_RGBA4") { monochrome_test(canonical_format(gl::GL_RGBA4)); }
-   SECTION("GL_RGB5_A1") { monochrome_test(canonical_format(gl::GL_RGB5_A1)); }
-   SECTION("GL_RGB10_A2") { monochrome_test(canonical_format(gl::GL_RGB10_A2)); }
-   SECTION("GL_RGBA8_SNORM") { monochrome_test(canonical_format(gl::GL_RGBA8_SNORM)); }
-   SECTION("GL_RGBA16_SNORM") { monochrome_test(canonical_format(gl::GL_RGBA16_SNORM)); }
-   SECTION("GL_RGBA8UI") { monochrome_test(canonical_format(gl::GL_RGBA8UI)); }
-   SECTION("GL_RGBA16UI") { monochrome_test(canonical_format(gl::GL_RGBA16UI)); }
-   SECTION("GL_RGBA32UI") { monochrome_test(canonical_format(gl::GL_RGBA32UI)); }
-   SECTION("GL_RGB10_A2UI") { monochrome_test(canonical_format(gl::GL_RGB10_A2UI)); }
-   SECTION("GL_RGBA8I") { monochrome_test(canonical_format(gl::GL_RGBA8I)); }
-   SECTION("GL_RGBA16I") { monochrome_test(canonical_format(gl::GL_RGBA16I)); }
-   SECTION("GL_RGBA32I") { monochrome_test(canonical_format(gl::GL_RGBA32I)); }
-   SECTION("GL_RGBA16F") { monochrome_test(canonical_format(gl::GL_RGBA16F)); }
-   SECTION("GL_RGBA32F") { monochrome_test(canonical_format(gl::GL_RGBA32F)); }
-   SECTION("GL_DEPTH_COMPONENT16") { monochrome_test(canonical_format(gl::GL_DEPTH_COMPONENT16)); }
-   SECTION("GL_DEPTH_COMPONENT32F") { monochrome_test(canonical_format(gl::GL_DEPTH_COMPONENT32F)); }
-   SECTION("GL_DEPTH_COMPONENT24") { monochrome_test(canonical_format(gl::GL_DEPTH_COMPONENT24)); }
-   SECTION("GL_STENCIL_INDEX8") { monochrome_test(canonical_format(gl::GL_STENCIL_INDEX8)); }
-   SECTION("GL_DEPTH24_STENCIL8") { monochrome_test(canonical_format(gl::GL_DEPTH24_STENCIL8)); }
-   SECTION("GL_DEPTH32F_STENCIL8") { monochrome_test(canonical_format(gl::GL_DEPTH32F_STENCIL8)); }
+   SECTION("GL_R8") { monochrome_test(canonical_format(GL_R8)); }
+   SECTION("GL_R16") { monochrome_test(canonical_format(GL_R16)); }
+   SECTION("GL_R8_SNORM") { monochrome_test(canonical_format(GL_R8_SNORM)); }
+   SECTION("GL_R16_SNORM") { monochrome_test(canonical_format(GL_R16_SNORM)); }
+   SECTION("GL_R8UI") { monochrome_test(canonical_format(GL_R8UI)); }
+   SECTION("GL_R16UI") { monochrome_test(canonical_format(GL_R16UI)); }
+   SECTION("GL_R32UI") { monochrome_test(canonical_format(GL_R32UI)); }
+   SECTION("GL_R8I") { monochrome_test(canonical_format(GL_R8I)); }
+   SECTION("GL_R16I") { monochrome_test(canonical_format(GL_R16I)); }
+   SECTION("GL_R32I") { monochrome_test(canonical_format(GL_R32I)); }
+   SECTION("GL_R16F") { monochrome_test(canonical_format(GL_R16F)); }
+   SECTION("GL_R32F") { monochrome_test(canonical_format(GL_R32F)); }
+   SECTION("GL_RG8") { monochrome_test(canonical_format(GL_RG8)); }
+   SECTION("GL_RG16") { monochrome_test(canonical_format(GL_RG16)); }
+   SECTION("GL_RG8_SNORM") { monochrome_test(canonical_format(GL_RG8_SNORM)); }
+   SECTION("GL_RG16_SNORM") { monochrome_test(canonical_format(GL_RG16_SNORM)); }
+   SECTION("GL_RG8UI") { monochrome_test(canonical_format(GL_RG8UI)); }
+   SECTION("GL_RG16UI") { monochrome_test(canonical_format(GL_RG16UI)); }
+   SECTION("GL_RG32UI") { monochrome_test(canonical_format(GL_RG32UI)); }
+   SECTION("GL_RG8I") { monochrome_test(canonical_format(GL_RG8I)); }
+   SECTION("GL_RG16I") { monochrome_test(canonical_format(GL_RG16I)); }
+   SECTION("GL_RG32I") { monochrome_test(canonical_format(GL_RG32I)); }
+   SECTION("GL_RG16F") { monochrome_test(canonical_format(GL_RG16F)); }
+   SECTION("GL_RG32F") { monochrome_test(canonical_format(GL_RG32F)); }
+   SECTION("GL_SRGB8") { monochrome_test(canonical_format(GL_SRGB8)); }
+   SECTION("GL_RGB8") { monochrome_test(canonical_format(GL_RGB8)); }
+   SECTION("GL_RGB16") { monochrome_test(canonical_format(GL_RGB16)); }
+   SECTION("GL_R3_G3_B2") { monochrome_test(canonical_format(GL_R3_G3_B2)); }
+   SECTION("GL_RGB4") { monochrome_test(canonical_format(GL_RGB4)); }
+   SECTION("GL_RGB5") { monochrome_test(canonical_format(GL_RGB5)); }
+   SECTION("GL_RGB8_SNORM") { monochrome_test(canonical_format(GL_RGB8_SNORM)); }
+   SECTION("GL_RGB16_SNORM") { monochrome_test(canonical_format(GL_RGB16_SNORM)); }
+   SECTION("GL_RGB8UI") { monochrome_test(canonical_format(GL_RGB8UI)); }
+   SECTION("GL_RGB16UI") { monochrome_test(canonical_format(GL_RGB16UI)); }
+   SECTION("GL_RGB32UI") { monochrome_test(canonical_format(GL_RGB32UI)); }
+   SECTION("GL_RGB8I") { monochrome_test(canonical_format(GL_RGB8I)); }
+   SECTION("GL_RGB16I") { monochrome_test(canonical_format(GL_RGB16I)); }
+   SECTION("GL_RGB32I") { monochrome_test(canonical_format(GL_RGB32I)); }
+   SECTION("GL_R11F_G11F_B10F") { monochrome_test(canonical_format(GL_R11F_G11F_B10F)); }
+   SECTION("GL_RGB16F") { monochrome_test(canonical_format(GL_RGB16F)); }
+   SECTION("GL_RGB32F") { monochrome_test(canonical_format(GL_RGB32F)); }
+   SECTION("GL_RGB9_E5") { monochrome_test(canonical_format(GL_RGB9_E5)); }
+   SECTION("GL_RGBA16") { monochrome_test(canonical_format(GL_RGBA16)); }
+   SECTION("GL_RGBA4") { monochrome_test(canonical_format(GL_RGBA4)); }
+   SECTION("GL_RGB5_A1") { monochrome_test(canonical_format(GL_RGB5_A1)); }
+   SECTION("GL_RGB10_A2") { monochrome_test(canonical_format(GL_RGB10_A2)); }
+   SECTION("GL_RGBA8_SNORM") { monochrome_test(canonical_format(GL_RGBA8_SNORM)); }
+   SECTION("GL_RGBA16_SNORM") { monochrome_test(canonical_format(GL_RGBA16_SNORM)); }
+   SECTION("GL_RGBA8UI") { monochrome_test(canonical_format(GL_RGBA8UI)); }
+   SECTION("GL_RGBA16UI") { monochrome_test(canonical_format(GL_RGBA16UI)); }
+   SECTION("GL_RGBA32UI") { monochrome_test(canonical_format(GL_RGBA32UI)); }
+   SECTION("GL_RGB10_A2UI") { monochrome_test(canonical_format(GL_RGB10_A2UI)); }
+   SECTION("GL_RGBA8I") { monochrome_test(canonical_format(GL_RGBA8I)); }
+   SECTION("GL_RGBA16I") { monochrome_test(canonical_format(GL_RGBA16I)); }
+   SECTION("GL_RGBA32I") { monochrome_test(canonical_format(GL_RGBA32I)); }
+   SECTION("GL_RGBA16F") { monochrome_test(canonical_format(GL_RGBA16F)); }
+   SECTION("GL_RGBA32F") { monochrome_test(canonical_format(GL_RGBA32F)); }
+   SECTION("GL_DEPTH_COMPONENT16") { monochrome_test(canonical_format(GL_DEPTH_COMPONENT16)); }
+   SECTION("GL_DEPTH_COMPONENT32F") { monochrome_test(canonical_format(GL_DEPTH_COMPONENT32F)); }
+   SECTION("GL_DEPTH_COMPONENT24") { monochrome_test(canonical_format(GL_DEPTH_COMPONENT24)); }
+   SECTION("GL_STENCIL_INDEX8") { monochrome_test(canonical_format(GL_STENCIL_INDEX8)); }
+   SECTION("GL_DEPTH24_STENCIL8") { monochrome_test(canonical_format(GL_DEPTH24_STENCIL8)); }
+   SECTION("GL_DEPTH32F_STENCIL8") { monochrome_test(canonical_format(GL_DEPTH32F_STENCIL8)); }
+
+   /* ######################### END OF GENERATED CODE ######################### */
+   /* ######################### END OF GENERATED CODE ######################### */
 
    /* ######################### END OF GENERATED CODE ######################### */
 }
@@ -402,7 +405,7 @@ TEST_CASE("ImageView normalized pixel access bgra5551unorm", BE_CATCH_TAGS) {
 }
 
 TEST_CASE("ImageView normalized pixel access rgbe9995ufloat", BE_CATCH_TAGS) {
-   ImageFormat format = canonical_format(gl::GL_RGB9_E5);
+   ImageFormat format = canonical_format(GL_RGB9_E5);
    const int dim = 4;
    Image img = make_image(format, ivec3(dim));
 

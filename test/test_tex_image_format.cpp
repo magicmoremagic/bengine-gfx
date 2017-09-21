@@ -8,6 +8,7 @@
 #define BE_CATCH_TAGS "[gfx][gfx:tex][gfx:tex:ImageFormat]"
 
 using namespace be;
+using namespace be::gfx::gl;
 using namespace be::gfx::tex;
 
 TEST_CASE("std::hash<ImageFormat>", BE_CATCH_TAGS) {
@@ -15,14 +16,14 @@ TEST_CASE("std::hash<ImageFormat>", BE_CATCH_TAGS) {
    REQUIRE_NOTHROW(stet.emplace());
 }
 
-void gl_roundtrip(gl::GLenum internal_format) {
+void gl_roundtrip(GLenum internal_format) {
    ImageFormat format = canonical_format(internal_format);
    ImageFormatGl gl = gl_format(format);
    REQUIRE(gl.internal_format == internal_format);
 }
 
 TEST_CASE("GL Internal Format <--> ImageFormat round trip") {
-   using namespace gl;
+   //#bgl checked (GL_KHR_texture_compression_astc_ldr)
    gl_roundtrip(GL_COMPRESSED_SRGB8_ALPHA8_ASTC_4x4_KHR);
    gl_roundtrip(GL_COMPRESSED_SRGB8_ALPHA8_ASTC_5x4_KHR);
    gl_roundtrip(GL_COMPRESSED_SRGB8_ALPHA8_ASTC_5x5_KHR);
@@ -51,10 +52,12 @@ TEST_CASE("GL Internal Format <--> ImageFormat round trip") {
    gl_roundtrip(GL_COMPRESSED_RGBA_ASTC_10x10_KHR);
    gl_roundtrip(GL_COMPRESSED_RGBA_ASTC_12x10_KHR);
    gl_roundtrip(GL_COMPRESSED_RGBA_ASTC_12x12_KHR);
+   //#bgl checked(4.2)
    gl_roundtrip(GL_COMPRESSED_SRGB_ALPHA_BPTC_UNORM);
    gl_roundtrip(GL_COMPRESSED_RGBA_BPTC_UNORM);
    gl_roundtrip(GL_COMPRESSED_RGB_BPTC_SIGNED_FLOAT);
    gl_roundtrip(GL_COMPRESSED_RGB_BPTC_UNSIGNED_FLOAT);
+   //#bgl checked (4.3)
    gl_roundtrip(GL_COMPRESSED_R11_EAC);
    gl_roundtrip(GL_COMPRESSED_SIGNED_R11_EAC);
    gl_roundtrip(GL_COMPRESSED_RG11_EAC);
@@ -65,14 +68,17 @@ TEST_CASE("GL Internal Format <--> ImageFormat round trip") {
    gl_roundtrip(GL_COMPRESSED_RGB8_PUNCHTHROUGH_ALPHA1_ETC2);
    gl_roundtrip(GL_COMPRESSED_SRGB8_ALPHA8_ETC2_EAC);
    gl_roundtrip(GL_COMPRESSED_RGBA8_ETC2_EAC);
-   gl_roundtrip(GL_COMPRESSED_SRGB_S3TC_DXT1_EXT);
+   //#bgl checked (GL_EXT_texture_compression_s3tc)
    gl_roundtrip(GL_COMPRESSED_RGB_S3TC_DXT1_EXT);
-   gl_roundtrip(GL_COMPRESSED_SRGB_ALPHA_S3TC_DXT1_EXT);
    gl_roundtrip(GL_COMPRESSED_RGBA_S3TC_DXT1_EXT);
-   gl_roundtrip(GL_COMPRESSED_SRGB_ALPHA_S3TC_DXT3_EXT);
    gl_roundtrip(GL_COMPRESSED_RGBA_S3TC_DXT3_EXT);
-   gl_roundtrip(GL_COMPRESSED_SRGB_ALPHA_S3TC_DXT5_EXT);
    gl_roundtrip(GL_COMPRESSED_RGBA_S3TC_DXT5_EXT);
+   //#bgl checked (GL_EXT_texture_compression_s3tc_srgb)
+   gl_roundtrip(GL_COMPRESSED_SRGB_S3TC_DXT1_EXT);
+   gl_roundtrip(GL_COMPRESSED_SRGB_ALPHA_S3TC_DXT1_EXT);
+   gl_roundtrip(GL_COMPRESSED_SRGB_ALPHA_S3TC_DXT3_EXT);
+   gl_roundtrip(GL_COMPRESSED_SRGB_ALPHA_S3TC_DXT5_EXT);
+   //#bgl unchecked
    gl_roundtrip(GL_COMPRESSED_RED_RGTC1);
    gl_roundtrip(GL_COMPRESSED_SIGNED_RED_RGTC1);
    gl_roundtrip(GL_COMPRESSED_RG_RGTC2);
@@ -112,7 +118,9 @@ TEST_CASE("GL Internal Format <--> ImageFormat round trip") {
    gl_roundtrip(GL_RGB8);
    gl_roundtrip(GL_RGB16);
    gl_roundtrip(GL_R3_G3_B2);
+   //#bgl checked (4.1)
    gl_roundtrip(GL_RGB565);
+   //#bgl unchecked
    gl_roundtrip(GL_RGB4);
    gl_roundtrip(GL_RGB5);
    gl_roundtrip(GL_RGB8_SNORM);

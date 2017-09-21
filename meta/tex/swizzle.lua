@@ -4,7 +4,7 @@ swizzle = make_enum_class('be::gfx::tex::Swizzle', 'U8', {
    'zero', 'one', 'red', 'green', 'blue', 'alpha'
 })
 
-gl_swizzle = make_enum('gl::GLenum', 'gl::GLenum', {
+gl_swizzle = make_enum('gl::AllEnums', 'gl::AllEnums', {
    'GL_ZERO', 'GL_ONE', 'GL_RED', 'GL_GREEN', 'GL_BLUE', 'GL_ALPHA', 'GL_INVALID_VALUE'
 })
 

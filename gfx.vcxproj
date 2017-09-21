@@ -55,7 +55,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="include\apply.hpp" />
-    <ClInclude Include="include\glbinding.hpp" />
+    <ClInclude Include="include\bgl.hpp" />
     <ClInclude Include="include\step_filter.hpp" />
     <ClInclude Include="include\cubic_filter.hpp" />
     <ClInclude Include="include\filter_traits.hpp" />
@@ -76,6 +76,7 @@
     <ClInclude Include="include\stbiw_detail.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\bgl.cpp" />
     <ClCompile Include="src\pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>

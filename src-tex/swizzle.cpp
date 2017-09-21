@@ -51,27 +51,27 @@ std::ostream& operator<<(std::ostream& os, Swizzle constant) {
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-gl::GLenum swizzle_to_gl(be::gfx::tex::Swizzle constant) noexcept {
+gl::AllEnums swizzle_to_gl(be::gfx::tex::Swizzle constant) noexcept {
    switch (constant) {
-      case be::gfx::tex::Swizzle::zero:  return gl::GLenum::GL_ZERO;
-      case be::gfx::tex::Swizzle::one:   return gl::GLenum::GL_ONE;
-      case be::gfx::tex::Swizzle::red:   return gl::GLenum::GL_RED;
-      case be::gfx::tex::Swizzle::green: return gl::GLenum::GL_GREEN;
-      case be::gfx::tex::Swizzle::blue:  return gl::GLenum::GL_BLUE;
-      case be::gfx::tex::Swizzle::alpha: return gl::GLenum::GL_ALPHA;
+      case be::gfx::tex::Swizzle::zero:  return gl::AllEnums::GL_ZERO;
+      case be::gfx::tex::Swizzle::one:   return gl::AllEnums::GL_ONE;
+      case be::gfx::tex::Swizzle::red:   return gl::AllEnums::GL_RED;
+      case be::gfx::tex::Swizzle::green: return gl::AllEnums::GL_GREEN;
+      case be::gfx::tex::Swizzle::blue:  return gl::AllEnums::GL_BLUE;
+      case be::gfx::tex::Swizzle::alpha: return gl::AllEnums::GL_ALPHA;
       default:
-         return gl::GLenum::GL_INVALID_VALUE;
+         return gl::AllEnums::GL_INVALID_VALUE;
    }
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-be::gfx::tex::Swizzle swizzle_from_gl(gl::GLenum constant) noexcept {
+be::gfx::tex::Swizzle swizzle_from_gl(gl::AllEnums constant) noexcept {
    switch (constant) {
-      case gl::GLenum::GL_ONE:           return be::gfx::tex::Swizzle::one;
-      case gl::GLenum::GL_RED:           return be::gfx::tex::Swizzle::red;
-      case gl::GLenum::GL_GREEN:         return be::gfx::tex::Swizzle::green;
-      case gl::GLenum::GL_BLUE:          return be::gfx::tex::Swizzle::blue;
-      case gl::GLenum::GL_ALPHA:         return be::gfx::tex::Swizzle::alpha;
+      case gl::AllEnums::GL_ONE:           return be::gfx::tex::Swizzle::one;
+      case gl::AllEnums::GL_RED:           return be::gfx::tex::Swizzle::red;
+      case gl::AllEnums::GL_GREEN:         return be::gfx::tex::Swizzle::green;
+      case gl::AllEnums::GL_BLUE:          return be::gfx::tex::Swizzle::blue;
+      case gl::AllEnums::GL_ALPHA:         return be::gfx::tex::Swizzle::alpha;
       default:
          return be::gfx::tex::Swizzle::zero;
    }

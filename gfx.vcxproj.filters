@@ -86,7 +86,7 @@
     <ClInclude Include="include\version.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\glbinding.hpp">
+    <ClInclude Include="include\bgl.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -105,6 +105,9 @@
     </ClCompile>
     <ClCompile Include="src\stbiw_detail.c">
       <Filter>Source Files\old</Filter>
+    </ClCompile>
+    <ClCompile Include="src\bgl.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

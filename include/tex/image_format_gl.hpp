@@ -3,7 +3,7 @@
 #define BE_GFX_TEX_IMAGE_FORMAT_GL_HPP_
 
 #include "image_format.hpp"
-#include <be/gfx/glbinding.hpp>
+#include <be/gfx/bgl.hpp>
 
 namespace be::gfx::tex {
 

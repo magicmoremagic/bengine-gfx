@@ -3,7 +3,7 @@
 #define BE_GFX_TEX_SWIZZLE_HPP_
 
 #include "gfx_tex_autolink.hpp"
-#include <be/gfx/glbinding.hpp>
+#include <be/gfx/bgl.hpp>
 #include <be/core/enum_traits.hpp>
 
 /*!! include 'tex/swizzle' !! 58 */
@@ -25,8 +25,8 @@ bool is_valid(Swizzle constant) noexcept;
 const char* swizzle_name(Swizzle constant) noexcept;
 std::array<const Swizzle, 6> swizzle_values() noexcept;
 std::ostream& operator<<(std::ostream& os, Swizzle constant);
-gl::GLenum swizzle_to_gl(be::gfx::tex::Swizzle constant) noexcept;
-be::gfx::tex::Swizzle swizzle_from_gl(gl::GLenum constant) noexcept;
+gl::AllEnums swizzle_to_gl(be::gfx::tex::Swizzle constant) noexcept;
+be::gfx::tex::Swizzle swizzle_from_gl(gl::AllEnums constant) noexcept;
 
 } // be::gfx::tex
 

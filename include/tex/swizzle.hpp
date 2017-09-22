@@ -2,7 +2,6 @@
 #ifndef BE_GFX_TEX_SWIZZLE_HPP_
 #define BE_GFX_TEX_SWIZZLE_HPP_
 
-#include "gfx_tex_autolink.hpp"
 #include <be/gfx/bgl.hpp>
 #include <be/core/enum_traits.hpp>
 

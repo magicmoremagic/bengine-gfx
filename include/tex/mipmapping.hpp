@@ -2,7 +2,6 @@
 #ifndef BE_GFX_TEX_MIPMAPPING_HPP_
 #define BE_GFX_TEX_MIPMAPPING_HPP_
 
-#include "gfx_tex_autolink.hpp"
 #include <be/core/glm.hpp>
 #include <glm/vec2.hpp>
 #include <glm/common.hpp>

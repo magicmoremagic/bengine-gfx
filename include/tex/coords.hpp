@@ -2,7 +2,6 @@
 #ifndef BE_GFX_TEX_COORDS_HPP_
 #define BE_GFX_TEX_COORDS_HPP_
 
-#include "gfx_tex_autolink.hpp"
 #include <be/core/glm_helpers.hpp>
 #include <cassert>
 

@@ -67,7 +67,6 @@
     <ClInclude Include="src\pch.hpp" />
     <ClInclude Include="include\read_image.hpp" />
     <ClInclude Include="include\resize_image.hpp" />
-    <ClInclude Include="include\gfx_autolink.hpp" />
     <ClInclude Include="include\linear_filter.hpp" />
     <ClInclude Include="include\uniform_resample.hpp" />
     <ClInclude Include="include\variable_size_median_kernel.hpp" />

@@ -2,7 +2,6 @@
 #ifndef BE_GFX_TEX_VISIT_TEXTURE_HPP_
 #define BE_GFX_TEX_VISIT_TEXTURE_HPP_
 
-#include "gfx_tex_autolink.hpp"
 #include <be/core/glm_helpers.hpp>
 
 namespace be::gfx::tex {

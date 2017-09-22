@@ -2,7 +2,6 @@
 //#ifndef BE_GFX_IMAGE_READ_HPP_
 //#define BE_GFX_IMAGE_READ_HPP_
 //
-//#include "gfx_autolink.hpp"
 //#include <be/core/buf.hpp>
 //#include <be/util/files.hpp>
 //#include <gli/texture.hpp>

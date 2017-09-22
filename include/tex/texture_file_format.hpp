@@ -2,7 +2,6 @@
 #ifndef BE_GFX_TEX_TEXTURE_FILE_FORMAT_HPP_
 #define BE_GFX_TEX_TEXTURE_FILE_FORMAT_HPP_
 
-#include "gfx_tex_autolink.hpp"
 #include <be/core/enum_traits.hpp>
 
 /*!! include 'tex/texture_file_format' !! 72 */

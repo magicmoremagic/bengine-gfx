@@ -2,7 +2,6 @@
 #ifndef BE_GFX_TEX_BETX_PAYLOAD_COMPRESSION_MODE_HPP_
 #define BE_GFX_TEX_BETX_PAYLOAD_COMPRESSION_MODE_HPP_
 
-#include "gfx_tex_autolink.hpp"
 #include <be/core/enum_traits.hpp>
 
 /*!! include 'tex/betx_payload_compression_mode' !! 48 */

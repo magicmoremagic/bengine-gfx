@@ -9,8 +9,6 @@
 #include <be/core/filesystem.hpp>
 #include <be/core/logging.hpp>
 #include <be/core/byte_order.hpp>
-#include <be/util/util_fs_autolink.hpp>
-#include <be/util/util_compression_autolink.hpp>
 
 namespace be::gfx::tex {
 

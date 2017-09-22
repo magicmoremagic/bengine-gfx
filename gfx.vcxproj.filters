@@ -32,9 +32,6 @@
     <ClInclude Include="src\pch.hpp">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\gfx_autolink.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\cubic_filter.hpp">
       <Filter>Header Files\old\filters</Filter>
     </ClInclude>

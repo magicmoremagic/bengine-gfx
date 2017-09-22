@@ -2,7 +2,6 @@
 //#ifndef BE_GFX_WRITE_IMAGE_HPP_
 //#define BE_GFX_WRITE_IMAGE_HPP_
 //
-//#include "gfx_autolink.hpp"
 //#include "fwd_types.hpp"
 //#include <be/core/buf.hpp>
 //#include <be/util/files.hpp>

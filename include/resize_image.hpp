@@ -2,7 +2,6 @@
 #ifndef BE_GFX_RESIZE_IMAGE_HPP_
 #define BE_GFX_RESIZE_IMAGE_HPP_
 
-#include "gfx_autolink.hpp"
 #include "fwd_types.hpp"
 //#include <gli/sampler.hpp>
 

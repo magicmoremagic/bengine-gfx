@@ -8,7 +8,6 @@
 #include <be/core/buf.hpp>
 #include <be/core/filesystem.hpp>
 #include <be/core/log.hpp>
-#include <be/util/util_fs_autolink.hpp>
 
 namespace be::gfx::tex {
 

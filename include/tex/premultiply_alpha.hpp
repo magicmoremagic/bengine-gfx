@@ -2,7 +2,6 @@
 #ifndef BE_GFX_TEX_PREMULTIPLY_ALPHA_HPP_
 #define BE_GFX_TEX_PREMULTIPLY_ALPHA_HPP_
 
-#include "gfx_tex_autolink.hpp"
 #include "pixel_norm_transform.hpp"
 
 namespace be::gfx::tex {

@@ -5,7 +5,6 @@
 #include "default_texture_reader.hpp"
 #include "betx_payload_compression_mode.hpp"
 #include <be/core/logging.hpp>
-#include <be/util/util_compression_autolink.hpp>
 
 namespace be::gfx::tex {
 namespace detail {

@@ -2,7 +2,6 @@
 #ifndef BE_GFX_TEX_IMAGE_REGION_HPP_
 #define BE_GFX_TEX_IMAGE_REGION_HPP_
 
-#include "gfx_tex_autolink.hpp"
 #include <be/core/extents.hpp>
 #include <be/core/glm_helpers.hpp>
 #include <glm/vec3.hpp>

@@ -2,7 +2,6 @@
 #ifndef BE_GFX_TEX_COLORSPACE_HPP_
 #define BE_GFX_TEX_COLORSPACE_HPP_
 
-#include "gfx_tex_autolink.hpp"
 #include <be/core/enum_traits.hpp>
 
 // TODO RGBE

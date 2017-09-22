@@ -143,9 +143,6 @@
     <ClInclude Include="src-tex\pch.hpp">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\tex\gfx_tex_autolink.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\tex\blit_blocks.hpp">
       <Filter>Header Files\operations\blitting</Filter>
     </ClInclude>

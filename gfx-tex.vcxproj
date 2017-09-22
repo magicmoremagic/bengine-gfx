@@ -88,7 +88,6 @@
     <ClInclude Include="include\tex\texture_reader_base.hpp" />
     <ClInclude Include="src-tex\betx_write_error_.hpp" />
     <ClInclude Include="src-tex\pch.hpp" />
-    <ClInclude Include="include\tex\gfx_tex_autolink.hpp" />
     <ClInclude Include="include\tex\pixel_access.hpp" />
     <ClInclude Include="include\tex\pixel_access_norm.hpp" />
     <ClInclude Include="include\tex\pixel_norm_transform.hpp" />

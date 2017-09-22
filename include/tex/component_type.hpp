@@ -2,7 +2,6 @@
 #ifndef BE_GFX_TEX_COMPONENT_TYPE_HPP_
 #define BE_GFX_TEX_COMPONENT_TYPE_HPP_
 
-#include "gfx_tex_autolink.hpp"
 #include <be/core/enum_traits.hpp>
 
 /*!! include 'tex/component_type' !! 61 */

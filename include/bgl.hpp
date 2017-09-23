@@ -1,11 +1,8 @@
+/* ################# !! GENERATED CODE -- DO NOT MODIFY !! ################# */
 #pragma once
 #ifndef BE_GFX_BGL_HPP_
 #define BE_GFX_BGL_HPP_
 
-/*!! local paths = { 'modules', 'tools', 'demos' }
-for i = 1, #paths do paths[i] = '"' .. be.fs.compose_path(root_dir, paths[i]) .. '"' end
-write_proc('bglgen ' .. table.concat(paths, ' ')) !! 2255 */
-/* ################# !! GENERATED CODE -- DO NOT MODIFY !! ################# */
 //#bgl stop
 /*
 This file includes excerpts from the combined OpenGL XML registry:
@@ -2256,10 +2253,9 @@ void glViewport(GLint x, GLint y, GLsizei width, GLsizei height) noexcept {
 }
 
 } // be::gfx::gl
+
+#endif
+
 #endif
 
 /* ######################### END OF GENERATED CODE ######################### */
-/* ######################### END OF GENERATED CODE ######################### */
-/* ######################### END OF GENERATED CODE ######################### */
-
-#endif

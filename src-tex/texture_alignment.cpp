@@ -1,5 +1,6 @@
 #include "pch.hpp"
 #include "tex/texture_alignment.hpp"
+#include <be/core/alg.hpp>
 
 namespace be::gfx::tex {
 

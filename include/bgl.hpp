@@ -57,15 +57,11 @@ This file includes excerpts from the combined OpenGL XML registry:
 #define __GLEXT_H_
 
 #ifndef GLAPIENTRY
-#ifndef APIENTRY
 #ifdef _WIN32
-#define APIENTRY __stdcall
+#define GLAPIENTRY __stdcall
 #else
-#define APIENTRY
+#define GLAPIENTRY
 #endif
-#define BE_GFX_BGL_APIENTRY_DEFINED
-#endif
-#define GLAPIENTRY APIENTRY
 #endif
 
 #include <be/core/be.hpp>
@@ -143,635 +139,6 @@ bool gl33() noexcept;
 #define GL_KHR_debug (::be::gfx::gl::khr_debug())
 
 bool khr_debug() noexcept;
-
-////////// ENUM GROUPS ///////////////////////////////////////////////////////
-
-namespace ClearBufferMask {
-enum ClearBufferMask {
-   depth_buffer_bit      = 0x00000100, // GL 1.0
-   accum_buffer_bit      = 0x00000200, // GL 1.0
-   stencil_buffer_bit    = 0x00000400, // GL 1.0
-   color_buffer_bit      = 0x00004000, // GL 1.0
-};
-} // ClearBufferMask
-
-namespace PrimitiveType {
-enum PrimitiveType {
-   points                      = 0x0000, // GL 1.0
-   lines                       = 0x0001, // GL 1.0
-   line_loop                   = 0x0002, // GL 1.0
-   line_strip                  = 0x0003, // GL 1.0
-   triangles                   = 0x0004, // GL 1.0, ARB_tessellation_shader, EXT_tessellation_shader, OES_tessellation_shader
-   triangle_strip              = 0x0005, // GL 1.0
-   triangle_fan                = 0x0006, // GL 1.0
-   quads                       = 0x0007, // GL 1.0, GL 4.0, ARB_tessellation_shader
-   quad_strip                  = 0x0008, // GL 1.0
-   polygon                     = 0x0009, // GL 1.0
-   lines_adjacency             = 0x000A, // GL 3.2
-   line_strip_adjacency        = 0x000B, // GL 3.2
-   triangles_adjacency         = 0x000C, // GL 3.2
-   triangle_strip_adjacency    = 0x000D, // GL 3.2
-};
-} // PrimitiveType
-
-namespace GetPName {
-enum GetPName {
-   current_color                    = 0x0B00, // GL 1.0
-   current_index                    = 0x0B01, // GL 1.0
-   current_normal                   = 0x0B02, // GL 1.0
-   current_texture_coords           = 0x0B03, // GL 1.0
-   current_raster_color             = 0x0B04, // GL 1.0
-   current_raster_index             = 0x0B05, // GL 1.0
-   current_raster_texture_coords    = 0x0B06, // GL 1.0
-   current_raster_position          = 0x0B07, // GL 1.0
-   current_raster_position_valid    = 0x0B08, // GL 1.0
-   current_raster_distance          = 0x0B09, // GL 1.0
-   point_smooth                     = 0x0B10, // GL 1.0
-   point_size                       = 0x0B11, // GL 1.0
-   point_size_range                 = 0x0B12, // GL 1.0
-   smooth_point_size_range          = 0x0B12, // Aliases GL_POINT_SIZE_RANGE // GL 1.2
-   point_size_granularity           = 0x0B13, // GL 1.0
-   smooth_point_size_granularity    = 0x0B13, // Aliases GL_POINT_SIZE_GRANULARITY // GL 1.2
-   line_smooth                      = 0x0B20, // GL 1.0
-   line_width                       = 0x0B21, // GL 1.0
-   line_width_range                 = 0x0B22, // GL 1.0
-   smooth_line_width_range          = 0x0B22, // Aliases GL_LINE_WIDTH_RANGE // GL 1.2
-   line_width_granularity           = 0x0B23, // GL 1.0
-   smooth_line_width_granularity    = 0x0B23, // Aliases GL_LINE_WIDTH_GRANULARITY // GL 1.2
-   line_stipple                     = 0x0B24, // GL 1.0
-   line_stipple_pattern             = 0x0B25, // GL 1.0
-   line_stipple_repeat              = 0x0B26, // GL 1.0
-   list_mode                        = 0x0B30, // GL 1.0
-   max_list_nesting                 = 0x0B31, // GL 1.0
-   list_base                        = 0x0B32, // GL 1.0
-   list_index                       = 0x0B33, // GL 1.0
-   polygon_mode                     = 0x0B40, // GL 1.0
-   polygon_smooth                   = 0x0B41, // GL 1.0
-   polygon_stipple                  = 0x0B42, // GL 1.0
-   edge_flag                        = 0x0B43, // GL 1.0
-   cull_face                        = 0x0B44, // GL 1.0
-   cull_face_mode                   = 0x0B45, // GL 1.0
-   front_face                       = 0x0B46, // GL 1.0
-   lighting                         = 0x0B50, // GL 1.0
-   light_model_local_viewer         = 0x0B51, // GL 1.0
-   light_model_two_side             = 0x0B52, // GL 1.0
-   light_model_ambient              = 0x0B53, // GL 1.0
-   shade_model                      = 0x0B54, // GL 1.0
-   color_material_face              = 0x0B55, // GL 1.0
-   color_material_parameter         = 0x0B56, // GL 1.0
-   color_material                   = 0x0B57, // GL 1.0
-   fog                              = 0x0B60, // GL 1.0, NV_register_combiners
-   fog_index                        = 0x0B61, // GL 1.0
-   fog_density                      = 0x0B62, // GL 1.0
-   fog_start                        = 0x0B63, // GL 1.0
-   fog_end                          = 0x0B64, // GL 1.0
-   fog_mode                         = 0x0B65, // GL 1.0
-   fog_color                        = 0x0B66, // GL 1.0
-   depth_range                      = 0x0B70, // GL 1.0, ARB_viewport_array, NV_viewport_array, OES_viewport_array
-   depth_test                       = 0x0B71, // GL 1.0
-   depth_writemask                  = 0x0B72, // GL 1.0
-   depth_clear_value                = 0x0B73, // GL 1.0
-   depth_func                       = 0x0B74, // GL 1.0
-   accum_clear_value                = 0x0B80, // GL 1.0
-   stencil_test                     = 0x0B90, // GL 1.0
-   stencil_clear_value              = 0x0B91, // GL 1.0
-   stencil_func                     = 0x0B92, // GL 1.0
-   stencil_value_mask               = 0x0B93, // GL 1.0
-   stencil_fail                     = 0x0B94, // GL 1.0
-   stencil_pass_depth_fail          = 0x0B95, // GL 1.0
-   stencil_pass_depth_pass          = 0x0B96, // GL 1.0
-   stencil_ref                      = 0x0B97, // GL 1.0
-   stencil_writemask                = 0x0B98, // GL 1.0
-   matrix_mode                      = 0x0BA0, // GL 1.0
-   normalize                        = 0x0BA1, // GL 1.0
-   viewport                         = 0x0BA2, // GL 1.0, ARB_viewport_array, NV_viewport_array, OES_viewport_array
-   modelview_stack_depth            = 0x0BA3, // GL 1.0
-   projection_stack_depth           = 0x0BA4, // GL 1.0
-   texture_stack_depth              = 0x0BA5, // GL 1.0
-   modelview_matrix                 = 0x0BA6, // GL 1.0
-   projection_matrix                = 0x0BA7, // GL 1.0
-   texture_matrix                   = 0x0BA8, // GL 1.0
-   attrib_stack_depth               = 0x0BB0, // GL 1.0
-   client_attrib_stack_depth        = 0x0BB1, // GL 1.1
-   alpha_test                       = 0x0BC0, // GL 1.0
-   alpha_test_func                  = 0x0BC1, // GL 1.0
-   alpha_test_ref                   = 0x0BC2, // GL 1.0
-   dither                           = 0x0BD0, // GL 1.0
-   blend_dst                        = 0x0BE0, // GL 1.0
-   blend_src                        = 0x0BE1, // GL 1.0
-   blend                            = 0x0BE2, // GL 1.0, EXT_draw_buffers_indexed, OES_draw_buffers_indexed
-   logic_op_mode                    = 0x0BF0, // GL 1.0
-   index_logic_op                   = 0x0BF1, // GL 1.1
-   logic_op                         = 0x0BF1, // GL 1.0
-   color_logic_op                   = 0x0BF2, // GL 1.1
-   aux_buffers                      = 0x0C00, // GL 1.0
-   draw_buffer                      = 0x0C01, // GL 1.0
-   read_buffer                      = 0x0C02, // GL 1.0
-   scissor_box                      = 0x0C10, // GL 1.0, ARB_viewport_array, NV_viewport_array, OES_viewport_array
-   scissor_test                     = 0x0C11, // GL 1.0, ARB_viewport_array, NV_viewport_array, OES_viewport_array
-   index_clear_value                = 0x0C20, // GL 1.0
-   index_writemask                  = 0x0C21, // GL 1.0
-   color_clear_value                = 0x0C22, // GL 1.0
-   color_writemask                  = 0x0C23, // GL 1.0, EXT_draw_buffers_indexed, OES_draw_buffers_indexed
-   index_mode                       = 0x0C30, // GL 1.0
-   rgba_mode                        = 0x0C31, // GL 1.0
-   doublebuffer                     = 0x0C32, // GL 1.0
-   stereo                           = 0x0C33, // GL 1.0
-   render_mode                      = 0x0C40, // GL 1.0
-   perspective_correction_hint      = 0x0C50, // GL 1.0
-   point_smooth_hint                = 0x0C51, // GL 1.0
-   line_smooth_hint                 = 0x0C52, // GL 1.0
-   polygon_smooth_hint              = 0x0C53, // GL 1.0
-   fog_hint                         = 0x0C54, // GL 1.0
-   texture_gen_s                    = 0x0C60, // GL 1.0
-   texture_gen_t                    = 0x0C61, // GL 1.0
-   texture_gen_r                    = 0x0C62, // GL 1.0
-   texture_gen_q                    = 0x0C63, // GL 1.0
-   pixel_map_i_to_i_size            = 0x0CB0, // GL 1.0
-   pixel_map_s_to_s_size            = 0x0CB1, // GL 1.0
-   pixel_map_i_to_r_size            = 0x0CB2, // GL 1.0
-   pixel_map_i_to_g_size            = 0x0CB3, // GL 1.0
-   pixel_map_i_to_b_size            = 0x0CB4, // GL 1.0
-   pixel_map_i_to_a_size            = 0x0CB5, // GL 1.0
-   pixel_map_r_to_r_size            = 0x0CB6, // GL 1.0
-   pixel_map_g_to_g_size            = 0x0CB7, // GL 1.0
-   pixel_map_b_to_b_size            = 0x0CB8, // GL 1.0
-   pixel_map_a_to_a_size            = 0x0CB9, // GL 1.0
-   unpack_swap_bytes                = 0x0CF0, // GL 1.0
-   unpack_lsb_first                 = 0x0CF1, // GL 1.0
-   unpack_row_length                = 0x0CF2, // GL 1.0
-   unpack_skip_rows                 = 0x0CF3, // GL 1.0
-   unpack_skip_pixels               = 0x0CF4, // GL 1.0
-   unpack_alignment                 = 0x0CF5, // GL 1.0
-   pack_swap_bytes                  = 0x0D00, // GL 1.0
-   pack_lsb_first                   = 0x0D01, // GL 1.0
-   pack_row_length                  = 0x0D02, // GL 1.0
-   pack_skip_rows                   = 0x0D03, // GL 1.0
-   pack_skip_pixels                 = 0x0D04, // GL 1.0
-   pack_alignment                   = 0x0D05, // GL 1.0
-   map_color                        = 0x0D10, // GL 1.0
-   map_stencil                      = 0x0D11, // GL 1.0
-   index_shift                      = 0x0D12, // GL 1.0
-   index_offset                     = 0x0D13, // GL 1.0
-   red_scale                        = 0x0D14, // GL 1.0
-   red_bias                         = 0x0D15, // GL 1.0
-   zoom_x                           = 0x0D16, // GL 1.0
-   zoom_y                           = 0x0D17, // GL 1.0
-   green_scale                      = 0x0D18, // GL 1.0
-   green_bias                       = 0x0D19, // GL 1.0
-   blue_scale                       = 0x0D1A, // GL 1.0
-   blue_bias                        = 0x0D1B, // GL 1.0
-   alpha_scale                      = 0x0D1C, // GL 1.0
-   alpha_bias                       = 0x0D1D, // GL 1.0
-   depth_scale                      = 0x0D1E, // GL 1.0
-   depth_bias                       = 0x0D1F, // GL 1.0
-   max_eval_order                   = 0x0D30, // GL 1.0
-   max_lights                       = 0x0D31, // GL 1.0
-   max_clip_planes                  = 0x0D32, // GL 1.0
-   max_clip_distances               = 0x0D32, // Aliases GL_MAX_CLIP_PLANES // GL 3.0
-   max_texture_size                 = 0x0D33, // GL 1.0
-   max_pixel_map_table              = 0x0D34, // GL 1.0
-   max_attrib_stack_depth           = 0x0D35, // GL 1.0
-   max_modelview_stack_depth        = 0x0D36, // GL 1.0
-   max_name_stack_depth             = 0x0D37, // GL 1.0
-   max_projection_stack_depth       = 0x0D38, // GL 1.0
-   max_texture_stack_depth          = 0x0D39, // GL 1.0
-   max_viewport_dims                = 0x0D3A, // GL 1.0
-   max_client_attrib_stack_depth    = 0x0D3B, // GL 1.1
-   subpixel_bits                    = 0x0D50, // GL 1.0
-   index_bits                       = 0x0D51, // GL 1.0
-   red_bits                         = 0x0D52, // GL 1.0
-   green_bits                       = 0x0D53, // GL 1.0
-   blue_bits                        = 0x0D54, // GL 1.0
-   alpha_bits                       = 0x0D55, // GL 1.0
-   depth_bits                       = 0x0D56, // GL 1.0
-   stencil_bits                     = 0x0D57, // GL 1.0
-   accum_red_bits                   = 0x0D58, // GL 1.0
-   accum_green_bits                 = 0x0D59, // GL 1.0
-   accum_blue_bits                  = 0x0D5A, // GL 1.0
-   accum_alpha_bits                 = 0x0D5B, // GL 1.0
-   name_stack_depth                 = 0x0D70, // GL 1.0
-   auto_normal                      = 0x0D80, // GL 1.0
-   map1_color_4                     = 0x0D90, // GL 1.0
-   map1_index                       = 0x0D91, // GL 1.0
-   map1_normal                      = 0x0D92, // GL 1.0
-   map1_texture_coord_1             = 0x0D93, // GL 1.0
-   map1_texture_coord_2             = 0x0D94, // GL 1.0
-   map1_texture_coord_3             = 0x0D95, // GL 1.0
-   map1_texture_coord_4             = 0x0D96, // GL 1.0
-   map1_vertex_3                    = 0x0D97, // GL 1.0
-   map1_vertex_4                    = 0x0D98, // GL 1.0
-   map2_color_4                     = 0x0DB0, // GL 1.0
-   map2_index                       = 0x0DB1, // GL 1.0
-   map2_normal                      = 0x0DB2, // GL 1.0
-   map2_texture_coord_1             = 0x0DB3, // GL 1.0
-   map2_texture_coord_2             = 0x0DB4, // GL 1.0
-   map2_texture_coord_3             = 0x0DB5, // GL 1.0
-   map2_texture_coord_4             = 0x0DB6, // GL 1.0
-   map2_vertex_3                    = 0x0DB7, // GL 1.0
-   map2_vertex_4                    = 0x0DB8, // GL 1.0
-   map1_grid_domain                 = 0x0DD0, // GL 1.0
-   map1_grid_segments               = 0x0DD1, // GL 1.0
-   map2_grid_domain                 = 0x0DD2, // GL 1.0
-   map2_grid_segments               = 0x0DD3, // GL 1.0
-   texture_1d                       = 0x0DE0, // GL 1.0, ARB_internalformat_query2
-   texture_2d                       = 0x0DE1, // GL 1.0, ARB_internalformat_query2, EXT_sparse_texture
-   feedback_buffer_size             = 0x0DF1, // GL 1.1
-   feedback_buffer_type             = 0x0DF2, // GL 1.1
-   selection_buffer_size            = 0x0DF4, // GL 1.1
-   polygon_offset_units             = 0x2A00, // GL 1.1
-   polygon_offset_point             = 0x2A01, // GL 1.1
-   polygon_offset_line              = 0x2A02, // GL 1.1
-   clip_plane0                      = 0x3000, // GL 1.0
-   clip_plane1                      = 0x3001, // GL 1.0
-   clip_plane2                      = 0x3002, // GL 1.0
-   clip_plane3                      = 0x3003, // GL 1.0
-   clip_plane4                      = 0x3004, // GL 1.0
-   clip_plane5                      = 0x3005, // GL 1.0
-   light0                           = 0x4000, // GL 1.0
-   light1                           = 0x4001, // GL 1.0
-   light2                           = 0x4002, // GL 1.0
-   light3                           = 0x4003, // GL 1.0
-   light4                           = 0x4004, // GL 1.0
-   light5                           = 0x4005, // GL 1.0
-   light6                           = 0x4006, // GL 1.0
-   light7                           = 0x4007, // GL 1.0
-   polygon_offset_fill              = 0x8037, // GL 1.1
-   polygon_offset_factor            = 0x8038, // GL 1.1
-   texture_binding_1d               = 0x8068, // GL 1.1, GL 4.5, ARB_direct_state_access
-   texture_binding_2d               = 0x8069, // GL 1.1, GL 4.5, ARB_direct_state_access
-   texture_binding_3d               = 0x806A, // GL 1.2, GL 4.5, ARB_direct_state_access
-   vertex_array                     = 0x8074, // GL 1.1, GL 4.3, KHR_debug
-   normal_array                     = 0x8075, // GL 1.1
-   color_array                      = 0x8076, // GL 1.1
-   index_array                      = 0x8077, // GL 1.1
-   texture_coord_array              = 0x8078, // GL 1.1
-   edge_flag_array                  = 0x8079, // GL 1.1
-   vertex_array_size                = 0x807A, // GL 1.1
-   vertex_array_type                = 0x807B, // GL 1.1
-   vertex_array_stride              = 0x807C, // GL 1.1
-   normal_array_type                = 0x807E, // GL 1.1
-   normal_array_stride              = 0x807F, // GL 1.1
-   color_array_size                 = 0x8081, // GL 1.1
-   color_array_type                 = 0x8082, // GL 1.1
-   color_array_stride               = 0x8083, // GL 1.1
-   index_array_type                 = 0x8085, // GL 1.1
-   index_array_stride               = 0x8086, // GL 1.1
-   texture_coord_array_size         = 0x8088, // GL 1.1
-   texture_coord_array_type         = 0x8089, // GL 1.1
-   texture_coord_array_stride       = 0x808A, // GL 1.1
-   edge_flag_array_stride           = 0x808C, // GL 1.1
-   light_model_color_control        = 0x81F8, // GL 1.2
-   aliased_point_size_range         = 0x846D, // GL 1.2
-   aliased_line_width_range         = 0x846E, // GL 1.2
-};
-} // GetPName
-
-namespace EnableCap {
-enum EnableCap {
-   point_smooth            = 0x0B10, // GL 1.0
-   line_smooth             = 0x0B20, // GL 1.0
-   line_stipple            = 0x0B24, // GL 1.0
-   polygon_smooth          = 0x0B41, // GL 1.0
-   polygon_stipple         = 0x0B42, // GL 1.0
-   cull_face               = 0x0B44, // GL 1.0
-   lighting                = 0x0B50, // GL 1.0
-   color_material          = 0x0B57, // GL 1.0
-   fog                     = 0x0B60, // GL 1.0, NV_register_combiners
-   depth_test              = 0x0B71, // GL 1.0
-   stencil_test            = 0x0B90, // GL 1.0
-   normalize               = 0x0BA1, // GL 1.0
-   alpha_test              = 0x0BC0, // GL 1.0
-   dither                  = 0x0BD0, // GL 1.0
-   blend                   = 0x0BE2, // GL 1.0, EXT_draw_buffers_indexed, OES_draw_buffers_indexed
-   index_logic_op          = 0x0BF1, // GL 1.1
-   color_logic_op          = 0x0BF2, // GL 1.1
-   scissor_test            = 0x0C11, // GL 1.0, ARB_viewport_array, NV_viewport_array, OES_viewport_array
-   texture_gen_s           = 0x0C60, // GL 1.0
-   texture_gen_t           = 0x0C61, // GL 1.0
-   texture_gen_r           = 0x0C62, // GL 1.0
-   texture_gen_q           = 0x0C63, // GL 1.0
-   auto_normal             = 0x0D80, // GL 1.0
-   map1_color_4            = 0x0D90, // GL 1.0
-   map1_index              = 0x0D91, // GL 1.0
-   map1_normal             = 0x0D92, // GL 1.0
-   map1_texture_coord_1    = 0x0D93, // GL 1.0
-   map1_texture_coord_2    = 0x0D94, // GL 1.0
-   map1_texture_coord_3    = 0x0D95, // GL 1.0
-   map1_texture_coord_4    = 0x0D96, // GL 1.0
-   map1_vertex_3           = 0x0D97, // GL 1.0
-   map1_vertex_4           = 0x0D98, // GL 1.0
-   map2_color_4            = 0x0DB0, // GL 1.0
-   map2_index              = 0x0DB1, // GL 1.0
-   map2_normal             = 0x0DB2, // GL 1.0
-   map2_texture_coord_1    = 0x0DB3, // GL 1.0
-   map2_texture_coord_2    = 0x0DB4, // GL 1.0
-   map2_texture_coord_3    = 0x0DB5, // GL 1.0
-   map2_texture_coord_4    = 0x0DB6, // GL 1.0
-   map2_vertex_3           = 0x0DB7, // GL 1.0
-   map2_vertex_4           = 0x0DB8, // GL 1.0
-   texture_1d              = 0x0DE0, // GL 1.0, ARB_internalformat_query2
-   texture_2d              = 0x0DE1, // GL 1.0, ARB_internalformat_query2, EXT_sparse_texture
-   polygon_offset_point    = 0x2A01, // GL 1.1
-   polygon_offset_line     = 0x2A02, // GL 1.1
-   clip_plane0             = 0x3000, // GL 1.0
-   clip_plane1             = 0x3001, // GL 1.0
-   clip_plane2             = 0x3002, // GL 1.0
-   clip_plane3             = 0x3003, // GL 1.0
-   clip_plane4             = 0x3004, // GL 1.0
-   clip_plane5             = 0x3005, // GL 1.0
-   light0                  = 0x4000, // GL 1.0
-   light1                  = 0x4001, // GL 1.0
-   light2                  = 0x4002, // GL 1.0
-   light3                  = 0x4003, // GL 1.0
-   light4                  = 0x4004, // GL 1.0
-   light5                  = 0x4005, // GL 1.0
-   light6                  = 0x4006, // GL 1.0
-   light7                  = 0x4007, // GL 1.0
-   polygon_offset_fill     = 0x8037, // GL 1.1
-   vertex_array            = 0x8074, // GL 1.1, GL 4.3, KHR_debug
-   normal_array            = 0x8075, // GL 1.1
-   color_array             = 0x8076, // GL 1.1
-   index_array             = 0x8077, // GL 1.1
-   texture_coord_array     = 0x8078, // GL 1.1
-   edge_flag_array         = 0x8079, // GL 1.1
-};
-} // EnableCap
-
-namespace PixelStoreParameter {
-enum PixelStoreParameter {
-   unpack_swap_bytes      = 0x0CF0, // GL 1.0
-   unpack_lsb_first       = 0x0CF1, // GL 1.0
-   unpack_row_length      = 0x0CF2, // GL 1.0
-   unpack_skip_rows       = 0x0CF3, // GL 1.0
-   unpack_skip_pixels     = 0x0CF4, // GL 1.0
-   unpack_alignment       = 0x0CF5, // GL 1.0
-   pack_swap_bytes        = 0x0D00, // GL 1.0
-   pack_lsb_first         = 0x0D01, // GL 1.0
-   pack_row_length        = 0x0D02, // GL 1.0
-   pack_skip_rows         = 0x0D03, // GL 1.0
-   pack_skip_pixels       = 0x0D04, // GL 1.0
-   pack_alignment         = 0x0D05, // GL 1.0
-   pack_skip_images       = 0x806B, // GL 1.2
-   pack_image_height      = 0x806C, // GL 1.2
-   unpack_skip_images     = 0x806D, // GL 1.2
-   unpack_image_height    = 0x806E, // GL 1.2
-};
-} // PixelStoreParameter
-
-namespace TextureTarget {
-enum TextureTarget {
-   texture_1d                            = 0x0DE0, // GL 1.0, ARB_internalformat_query2
-   texture_2d                            = 0x0DE1, // GL 1.0, ARB_internalformat_query2, EXT_sparse_texture
-   proxy_texture_1d                      = 0x8063, // GL 1.1
-   proxy_texture_2d                      = 0x8064, // GL 1.1
-   texture_3d                            = 0x806F, // GL 1.2, ARB_internalformat_query2, EXT_sparse_texture
-   proxy_texture_3d                      = 0x8070, // GL 1.2
-   texture_rectangle                     = 0x84F5, // GL 3.1, ARB_internalformat_query2
-   proxy_texture_rectangle               = 0x84F7, // GL 3.1
-   texture_cube_map                      = 0x8513, // GL 1.3, ARB_internalformat_query2, EXT_sparse_texture
-   texture_cube_map_positive_x           = 0x8515, // GL 1.3
-   texture_cube_map_negative_x           = 0x8516, // GL 1.3
-   texture_cube_map_positive_y           = 0x8517, // GL 1.3
-   texture_cube_map_negative_y           = 0x8518, // GL 1.3
-   texture_cube_map_positive_z           = 0x8519, // GL 1.3
-   texture_cube_map_negative_z           = 0x851A, // GL 1.3
-   proxy_texture_cube_map                = 0x851B, // GL 1.3
-   texture_1d_array                      = 0x8C18, // GL 3.0, ARB_internalformat_query2
-   proxy_texture_1d_array                = 0x8C19, // GL 3.0
-   texture_2d_array                      = 0x8C1A, // GL 3.0, ARB_internalformat_query2, EXT_sparse_texture
-   proxy_texture_2d_array                = 0x8C1B, // GL 3.0
-   texture_2d_multisample                = 0x9100, // GL 3.2, ARB_internalformat_query2, ARB_texture_multisample, NV_internalformat_sample_query
-   proxy_texture_2d_multisample          = 0x9101, // GL 3.2, ARB_texture_multisample
-   texture_2d_multisample_array          = 0x9102, // GL 3.2, ARB_internalformat_query2, ARB_texture_multisample, NV_internalformat_sample_query
-   proxy_texture_2d_multisample_array    = 0x9103, // GL 3.2, ARB_texture_multisample
-};
-} // TextureTarget
-
-namespace TextureParameterName {
-enum TextureParameterName {
-   texture_width              = 0x1000, // GL 1.0
-   texture_height             = 0x1001, // GL 1.0
-   texture_internal_format    = 0x1003, // GL 1.1
-   texture_components         = 0x1003, // GL 1.0
-   texture_border_color       = 0x1004, // GL 1.0
-   texture_border             = 0x1005, // GL 1.0
-   texture_mag_filter         = 0x2800, // GL 1.0
-   texture_min_filter         = 0x2801, // GL 1.0
-   texture_wrap_s             = 0x2802, // GL 1.0
-   texture_wrap_t             = 0x2803, // GL 1.0
-   texture_red_size           = 0x805C, // GL 1.1
-   texture_green_size         = 0x805D, // GL 1.1
-   texture_blue_size          = 0x805E, // GL 1.1
-   texture_alpha_size         = 0x805F, // GL 1.1
-   texture_luminance_size     = 0x8060, // GL 1.1
-   texture_intensity_size     = 0x8061, // GL 1.1
-   texture_priority           = 0x8066, // GL 1.1
-   texture_resident           = 0x8067, // GL 1.1
-   texture_wrap_r             = 0x8072, // GL 1.2
-   texture_min_lod            = 0x813A, // GL 1.2
-   texture_max_lod            = 0x813B, // GL 1.2
-   texture_base_level         = 0x813C, // GL 1.2
-   texture_max_level          = 0x813D, // GL 1.2
-   generate_mipmap            = 0x8191, // GL 1.4
-   texture_lod_bias           = 0x8501, // GL 1.4
-   texture_compare_mode       = 0x884C, // GL 1.4
-   texture_compare_func       = 0x884D, // GL 1.4
-   texture_swizzle_r          = 0x8E42, // GL 3.3, ARB_texture_swizzle
-   texture_swizzle_g          = 0x8E43, // GL 3.3, ARB_texture_swizzle
-   texture_swizzle_b          = 0x8E44, // GL 3.3, ARB_texture_swizzle
-   texture_swizzle_a          = 0x8E45, // GL 3.3, ARB_texture_swizzle
-   texture_swizzle_rgba       = 0x8E46, // GL 3.3, ARB_texture_swizzle
-};
-} // TextureParameterName
-
-namespace PixelType {
-enum PixelType {
-   byte                       = 0x1400, // GL 1.0, EXT_render_snorm, OES_byte_coordinates
-   unsigned_byte              = 0x1401, // GL 1.0
-   gl_short                   = 0x1402, // GL 1.0, EXT_render_snorm
-   unsigned_short             = 0x1403, // GL 1.0, ANGLE_depth_texture, OES_depth_texture
-   gl_int                     = 0x1404, // GL 1.0
-   unsigned_int               = 0x1405, // GL 1.0, ANGLE_depth_texture, OES_depth_texture, OES_element_index_uint
-   gl_float                   = 0x1406, // GL 1.0, ARB_vertex_shader, OES_texture_float
-   bitmap                     = 0x1A00, // GL 1.0
-   unsigned_byte_3_3_2        = 0x8032, // GL 1.2
-   unsigned_short_4_4_4_4     = 0x8033, // GL 1.2
-   unsigned_short_5_5_5_1     = 0x8034, // GL 1.2
-   unsigned_int_8_8_8_8       = 0x8035, // GL 1.2
-   unsigned_int_10_10_10_2    = 0x8036, // GL 1.2
-};
-} // PixelType
-
-namespace PixelFormat {
-enum PixelFormat {
-   unsigned_short     = 0x1403, // GL 1.0, ANGLE_depth_texture, OES_depth_texture
-   unsigned_int       = 0x1405, // GL 1.0, ANGLE_depth_texture, OES_depth_texture, OES_element_index_uint
-   color_index        = 0x1900, // GL 1.0
-   stencil_index      = 0x1901, // GL 1.0, GL 4.4, ARB_texture_stencil8
-   depth_component    = 0x1902, // GL 1.0, ANGLE_depth_texture, OES_depth_texture
-   red                = 0x1903, // GL 1.0, AMD_interleaved_elements
-   green              = 0x1904, // GL 1.0, AMD_interleaved_elements
-   blue               = 0x1905, // GL 1.0, AMD_interleaved_elements
-   alpha              = 0x1906, // GL 1.0, AMD_interleaved_elements
-   rgb                = 0x1907, // GL 1.0
-   rgba               = 0x1908, // GL 1.0
-   luminance          = 0x1909, // GL 1.0
-   luminance_alpha    = 0x190A, // GL 1.0
-};
-} // PixelFormat
-
-namespace InternalFormat {
-enum InternalFormat {
-   depth_component                              = 0x1902, // GL 1.0, ANGLE_depth_texture, OES_depth_texture
-   red                                          = 0x1903, // GL 1.0, AMD_interleaved_elements
-   rgb                                          = 0x1907, // GL 1.0
-   rgba                                         = 0x1908, // GL 1.0
-   r3_g3_b2                                     = 0x2A10, // GL 1.1
-   alpha4                                       = 0x803B, // GL 1.1
-   alpha8                                       = 0x803C, // GL 1.1
-   alpha12                                      = 0x803D, // GL 1.1
-   alpha16                                      = 0x803E, // GL 1.1
-   luminance4                                   = 0x803F, // GL 1.1
-   luminance8                                   = 0x8040, // GL 1.1
-   luminance12                                  = 0x8041, // GL 1.1
-   luminance16                                  = 0x8042, // GL 1.1
-   luminance4_alpha4                            = 0x8043, // GL 1.1
-   luminance6_alpha2                            = 0x8044, // GL 1.1
-   luminance8_alpha8                            = 0x8045, // GL 1.1
-   luminance12_alpha4                           = 0x8046, // GL 1.1
-   luminance12_alpha12                          = 0x8047, // GL 1.1
-   luminance16_alpha16                          = 0x8048, // GL 1.1
-   intensity                                    = 0x8049, // GL 1.1
-   intensity4                                   = 0x804A, // GL 1.1
-   intensity8                                   = 0x804B, // GL 1.1
-   intensity12                                  = 0x804C, // GL 1.1
-   intensity16                                  = 0x804D, // GL 1.1
-   rgb4                                         = 0x804F, // GL 1.1
-   rgb5                                         = 0x8050, // GL 1.1
-   rgb8                                         = 0x8051, // GL 1.1
-   rgb10                                        = 0x8052, // GL 1.1
-   rgb12                                        = 0x8053, // GL 1.1
-   rgb16                                        = 0x8054, // GL 1.1
-   rgba4                                        = 0x8056, // GL 1.1
-   rgb5_a1                                      = 0x8057, // GL 1.1
-   rgba8                                        = 0x8058, // GL 1.1
-   rgb10_a2                                     = 0x8059, // GL 1.1
-   rgba12                                       = 0x805A, // GL 1.1
-   rgba16                                       = 0x805B, // GL 1.1
-   depth_component16                            = 0x81A5, // GL 1.4, ANGLE_depth_texture
-   compressed_red                               = 0x8225, // GL 3.0
-   compressed_rg                                = 0x8226, // GL 3.0
-   rg                                           = 0x8227, // GL 3.0, ARB_texture_rg
-   r8                                           = 0x8229, // GL 3.0, ARB_texture_rg
-   r16                                          = 0x822A, // GL 3.0, ARB_texture_rg
-   rg8                                          = 0x822B, // GL 3.0, ARB_texture_rg
-   rg16                                         = 0x822C, // GL 3.0, ARB_texture_rg
-   r16f                                         = 0x822D, // GL 3.0, ARB_texture_rg
-   r32f                                         = 0x822E, // GL 3.0, ARB_texture_rg
-   rg16f                                        = 0x822F, // GL 3.0, ARB_texture_rg
-   rg32f                                        = 0x8230, // GL 3.0, ARB_texture_rg
-   r8i                                          = 0x8231, // GL 3.0, ARB_texture_rg
-   r8ui                                         = 0x8232, // GL 3.0, ARB_texture_rg
-   r16i                                         = 0x8233, // GL 3.0, ARB_texture_rg
-   r16ui                                        = 0x8234, // GL 3.0, ARB_texture_rg
-   r32i                                         = 0x8235, // GL 3.0, ARB_texture_rg
-   r32ui                                        = 0x8236, // GL 3.0, ARB_texture_rg
-   rg8i                                         = 0x8237, // GL 3.0, ARB_texture_rg
-   rg8ui                                        = 0x8238, // GL 3.0, AMD_interleaved_elements, ARB_texture_rg
-   rg16i                                        = 0x8239, // GL 3.0, ARB_texture_rg
-   rg16ui                                       = 0x823A, // GL 3.0, AMD_interleaved_elements, ARB_texture_rg
-   rg32i                                        = 0x823B, // GL 3.0, ARB_texture_rg
-   rg32ui                                       = 0x823C, // GL 3.0, ARB_texture_rg
-   compressed_rgb_s3tc_dxt1_ext                 = 0x83F0, // EXT_texture_compression_dxt1, EXT_texture_compression_s3tc
-   compressed_rgba_s3tc_dxt1_ext                = 0x83F1, // EXT_texture_compression_dxt1, EXT_texture_compression_s3tc
-   compressed_rgba_s3tc_dxt3_ext                = 0x83F2, // EXT_texture_compression_s3tc
-   compressed_rgba_s3tc_dxt5_ext                = 0x83F3, // EXT_texture_compression_s3tc
-   compressed_rgb                               = 0x84ED, // GL 1.3
-   compressed_rgba                              = 0x84EE, // GL 1.3
-   depth_stencil                                = 0x84F9, // GL 3.0, ARB_framebuffer_object
-   rgba32f                                      = 0x8814, // GL 3.0
-   rgba16f                                      = 0x881A, // GL 3.0
-   rgb16f                                       = 0x881B, // GL 3.0
-   depth24_stencil8                             = 0x88F0, // GL 3.0, ARB_framebuffer_object
-   r11f_g11f_b10f                               = 0x8C3A, // GL 3.0
-   rgb9_e5                                      = 0x8C3D, // GL 3.0
-   srgb                                         = 0x8C40, // GL 2.1
-   srgb8                                        = 0x8C41, // GL 2.1
-   srgb_alpha                                   = 0x8C42, // GL 2.1
-   srgb8_alpha8                                 = 0x8C43, // GL 2.1
-   compressed_srgb                              = 0x8C48, // GL 2.1
-   compressed_srgb_alpha                        = 0x8C49, // GL 2.1
-   compressed_srgb_s3tc_dxt1_ext                = 0x8C4C, // EXT_texture_compression_s3tc_srgb, EXT_texture_sRGB
-   compressed_srgb_alpha_s3tc_dxt1_ext          = 0x8C4D, // EXT_texture_compression_s3tc_srgb, EXT_texture_sRGB
-   compressed_srgb_alpha_s3tc_dxt3_ext          = 0x8C4E, // EXT_texture_compression_s3tc_srgb, EXT_texture_sRGB
-   compressed_srgb_alpha_s3tc_dxt5_ext          = 0x8C4F, // EXT_texture_compression_s3tc_srgb, EXT_texture_sRGB
-   depth_component32f                           = 0x8CAC, // GL 3.0, ARB_depth_buffer_float
-   depth32f_stencil8                            = 0x8CAD, // GL 3.0, ARB_depth_buffer_float
-   rgba32ui                                     = 0x8D70, // GL 3.0
-   rgb32ui                                      = 0x8D71, // GL 3.0, ARB_texture_buffer_object_rgb32
-   rgba16ui                                     = 0x8D76, // GL 3.0
-   rgb16ui                                      = 0x8D77, // GL 3.0
-   rgba8ui                                      = 0x8D7C, // GL 3.0, AMD_interleaved_elements
-   rgb8ui                                       = 0x8D7D, // GL 3.0
-   rgba32i                                      = 0x8D82, // GL 3.0
-   rgb32i                                       = 0x8D83, // GL 3.0, ARB_texture_buffer_object_rgb32, ARB_vertex_attrib_64bit
-   rgba16i                                      = 0x8D88, // GL 3.0
-   rgb16i                                       = 0x8D89, // GL 3.0
-   rgba8i                                       = 0x8D8E, // GL 3.0
-   rgb8i                                        = 0x8D8F, // GL 3.0
-   compressed_red_rgtc1                         = 0x8DBB, // GL 3.0, ARB_texture_compression_rgtc
-   compressed_signed_red_rgtc1                  = 0x8DBC, // GL 3.0, ARB_texture_compression_rgtc
-   compressed_rg_rgtc2                          = 0x8DBD, // GL 3.0, ARB_texture_compression_rgtc
-   compressed_signed_rg_rgtc2                   = 0x8DBE, // GL 3.0, ARB_texture_compression_rgtc
-   compressed_rgba_bptc_unorm                   = 0x8E8C, // GL 4.2
-   compressed_srgb_alpha_bptc_unorm             = 0x8E8D, // GL 4.2
-   compressed_rgb_bptc_signed_float             = 0x8E8E, // GL 4.2
-   compressed_rgb_bptc_unsigned_float           = 0x8E8F, // GL 4.2
-   r8_snorm                                     = 0x8F94, // GL 3.1, EXT_render_snorm, EXT_texture_snorm
-   rg8_snorm                                    = 0x8F95, // GL 3.1, EXT_render_snorm, EXT_texture_snorm
-   rgb8_snorm                                   = 0x8F96, // GL 3.1, EXT_texture_snorm
-   rgba8_snorm                                  = 0x8F97, // GL 3.1, EXT_render_snorm, EXT_texture_snorm
-   r16_snorm                                    = 0x8F98, // GL 3.1, EXT_texture_snorm
-   rg16_snorm                                   = 0x8F99, // GL 3.1, EXT_texture_snorm
-   rgb16_snorm                                  = 0x8F9A, // GL 3.1, EXT_texture_snorm
-   rgb10_a2ui                                   = 0x906F, // GL 3.3, ARB_texture_rgb10_a2ui
-   compressed_r11_eac                           = 0x9270, // GL 4.3, ARB_ES3_compatibility
-   compressed_signed_r11_eac                    = 0x9271, // GL 4.3, ARB_ES3_compatibility
-   compressed_rg11_eac                          = 0x9272, // GL 4.3, ARB_ES3_compatibility
-   compressed_signed_rg11_eac                   = 0x9273, // GL 4.3, ARB_ES3_compatibility
-   compressed_rgb8_etc2                         = 0x9274, // GL 4.3, ARB_ES3_compatibility
-   compressed_srgb8_etc2                        = 0x9275, // GL 4.3, ARB_ES3_compatibility
-   compressed_rgb8_punchthrough_alpha1_etc2     = 0x9276, // GL 4.3, ARB_ES3_compatibility
-   compressed_srgb8_punchthrough_alpha1_etc2    = 0x9277, // GL 4.3, ARB_ES3_compatibility
-   compressed_rgba8_etc2_eac                    = 0x9278, // GL 4.3, ARB_ES3_compatibility
-   compressed_srgb8_alpha8_etc2_eac             = 0x9279, // GL 4.3, ARB_ES3_compatibility
-};
-} // InternalFormat
-
-namespace StringName {
-enum StringName {
-   vendor                      = 0x1F00, // GL 1.0
-   renderer                    = 0x1F01, // GL 1.0
-   version                     = 0x1F02, // GL 1.0
-   extensions                  = 0x1F03, // GL 1.0
-   shading_language_version    = 0x8B8C, // GL 2.0
-};
-} // StringName
-
-namespace TextureEnvParameter {
-enum TextureEnvParameter {
-   texture_env_mode     = 0x2200, // GL 1.0
-   texture_env_color    = 0x2201, // GL 1.0
-};
-} // TextureEnvParameter
-
-namespace TextureEnvTarget {
-enum TextureEnvTarget {
-   texture_env    = 0x2300, // GL 1.0
-};
-} // TextureEnvTarget
-
 
 ////////// ENUMS /////////////////////////////////////////////////////////////
 
@@ -2182,16 +1549,31 @@ void glViewport(GLint x, GLint y, GLsizei width, GLsizei height) noexcept;
 
 } // be::gfx::gl
 
-#if defined(BE_GFX_BGL_APIENTRY_DEFINED) && !defined(BE_GFX_BGL_IMPLEMENTATION)
-#undef BE_GFX_BGL_APIENTRY_DEFINED
-#undef APIENTRY
-#endif
-
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
 
 #ifdef BE_GFX_BGL_IMPLEMENTATION
+
+#ifdef _WIN32
+#ifdef __gl_h_
+#undef __gl_h_
+#endif
+#ifdef __GL_H__
+#undef __GL_H__
+#endif
+#ifdef GL_VERSION_1_0
+#undef GL_VERSION_1_0
+#endif
+#ifdef GL_VERSION_1_1
+#undef GL_VERSION_1_1
+#endif
+#ifndef WIN32_LEAN_AND_MEAN
+#define WIN32_LEAN_AND_MEAN
+#endif
+#include <Windows.h>
+#include <GL/GL.h>
+#endif
 
 #include <glfw/glfw3.h>
 
@@ -2199,6 +1581,7 @@ namespace be::gfx::gl {
 
 ////////// BGL ///////////////////////////////////////////////////////////////
 
+#ifndef _WIN32
 using GLGETSTRING_PROC = const GLubyte *(GLAPIENTRY*)(GLenum);
 using GLTEXCOORD2FV_PROC = void (GLAPIENTRY*)(const GLfloat *);
 using GLTEXPARAMETERI_PROC = void (GLAPIENTRY*)(GLenum, GLenum, GLint);
@@ -2209,16 +1592,21 @@ using GLBINDTEXTURE_PROC = void (GLAPIENTRY*)(GLenum, GLuint);
 using GLCLEAR_PROC = void (GLAPIENTRY*)(GLbitfield);
 using GLCLEARCOLOR_PROC = void (GLAPIENTRY*)(GLfloat, GLfloat, GLfloat, GLfloat);
 using GLCOLOR3FV_PROC = void (GLAPIENTRY*)(const GLfloat *);
+#endif
 using GLDEBUGMESSAGECALLBACK_PROC = void (GLAPIENTRY*)(GLDEBUGPROC, const void *);
+#ifndef _WIN32
 using GLDELETETEXTURES_PROC = void (GLAPIENTRY*)(GLsizei, const GLuint *);
 using GLEND_PROC = void (GLAPIENTRY*)();
 using GLGENTEXTURES_PROC = void (GLAPIENTRY*)(GLsizei, GLuint *);
 using GLGETINTEGERV_PROC = void (GLAPIENTRY*)(GLenum, GLint *);
+#endif
 using GLGETSTRINGI_PROC = const GLubyte *(GLAPIENTRY*)(GLenum, GLuint);
+#ifndef _WIN32
 using GLPIXELSTOREI_PROC = void (GLAPIENTRY*)(GLenum, GLint);
 using GLTEXENVI_PROC = void (GLAPIENTRY*)(GLenum, GLenum, GLint);
 using GLTEXIMAGE2D_PROC = void (GLAPIENTRY*)(GLenum, GLint, GLint, GLsizei, GLsizei, GLint, GLenum, GLenum, const void *);
 using GLVIEWPORT_PROC = void (GLAPIENTRY*)(GLint, GLint, GLsizei, GLsizei);
+#endif
 
 struct BglContext final {
    bool bgl_version_1_0 = false;
@@ -2236,6 +1624,7 @@ struct BglContext final {
 
    bool bgl_khr_debug = false;
 
+#ifndef _WIN32
    GLGETSTRING_PROC bglGetString = nullptr;
    GLTEXCOORD2FV_PROC bglTexCoord2fv = nullptr;
    GLTEXPARAMETERI_PROC bglTexParameteri = nullptr;
@@ -2246,23 +1635,28 @@ struct BglContext final {
    GLCLEAR_PROC bglClear = nullptr;
    GLCLEARCOLOR_PROC bglClearColor = nullptr;
    GLCOLOR3FV_PROC bglColor3fv = nullptr;
+#endif
    GLDEBUGMESSAGECALLBACK_PROC bglDebugMessageCallback = nullptr;
+#ifndef _WIN32
    GLDELETETEXTURES_PROC bglDeleteTextures = nullptr;
    GLEND_PROC bglEnd = nullptr;
    GLGENTEXTURES_PROC bglGenTextures = nullptr;
    GLGETINTEGERV_PROC bglGetIntegerv = nullptr;
+#endif
    GLGETSTRINGI_PROC bglGetStringi = nullptr;
+#ifndef _WIN32
    GLPIXELSTOREI_PROC bglPixelStorei = nullptr;
    GLTEXENVI_PROC bglTexEnvi = nullptr;
    GLTEXIMAGE2D_PROC bglTexImage2D = nullptr;
    GLVIEWPORT_PROC bglViewport = nullptr;
+#endif
 
    static BglContextHandle make_handle() {
-	  return BglContextHandle(new BglContext());
+      return BglContextHandle(new BglContext());
    }
 
    static BglContextHandle make_handle(const BglContext& ctx) {
-	  return BglContextHandle(new BglContext(ctx));
+      return BglContextHandle(new BglContext(ctx));
    }
 };
 
@@ -2311,7 +1705,8 @@ U64 hash_name(const char* begin, const char* end) {
 void check_extension(U64 hash) {
    BglContext& ctx = BE_GFX_BGL_CONTEXT;
    switch (hash)  {
-      case U64(-1961367689909740958ll): ctx.bgl_khr_debug = ctx.bglDebugMessageCallback; break;
+      case U64(-1961367689909740958ll): ctx.bgl_khr_debug = true
+         && ctx.bglDebugMessageCallback; break;
    }
 }
 
@@ -2380,6 +1775,7 @@ BglContextHandle init_context() {
       throw std::system_error(std::make_error_code(std::errc::not_supported), "OpenGL version could not be parsed!");
    }
 
+#ifndef _WIN32
    ctx.bglGetString = GLGETSTRING_PROC(glfwGetProcAddress("glGetString"));
    ctx.bglTexCoord2fv = GLTEXCOORD2FV_PROC(glfwGetProcAddress("glTexCoord2fv"));
    ctx.bglTexParameteri = GLTEXPARAMETERI_PROC(glfwGetProcAddress("glTexParameteri"));
@@ -2390,23 +1786,34 @@ BglContextHandle init_context() {
    ctx.bglClear = GLCLEAR_PROC(glfwGetProcAddress("glClear"));
    ctx.bglClearColor = GLCLEARCOLOR_PROC(glfwGetProcAddress("glClearColor"));
    ctx.bglColor3fv = GLCOLOR3FV_PROC(glfwGetProcAddress("glColor3fv"));
+#endif
    ctx.bglDebugMessageCallback = GLDEBUGMESSAGECALLBACK_PROC(glfwGetProcAddress("glDebugMessageCallback"));
+#ifndef _WIN32
    ctx.bglDeleteTextures = GLDELETETEXTURES_PROC(glfwGetProcAddress("glDeleteTextures"));
    ctx.bglEnd = GLEND_PROC(glfwGetProcAddress("glEnd"));
    ctx.bglGenTextures = GLGENTEXTURES_PROC(glfwGetProcAddress("glGenTextures"));
    ctx.bglGetIntegerv = GLGETINTEGERV_PROC(glfwGetProcAddress("glGetIntegerv"));
+#endif
    ctx.bglGetStringi = GLGETSTRINGI_PROC(glfwGetProcAddress("glGetStringi"));
+#ifndef _WIN32
    ctx.bglPixelStorei = GLPIXELSTOREI_PROC(glfwGetProcAddress("glPixelStorei"));
    ctx.bglTexEnvi = GLTEXENVI_PROC(glfwGetProcAddress("glTexEnvi"));
    ctx.bglTexImage2D = GLTEXIMAGE2D_PROC(glfwGetProcAddress("glTexImage2D"));
    ctx.bglViewport = GLVIEWPORT_PROC(glfwGetProcAddress("glViewport"));
+#endif
 
    ctx.bgl_version_1_0 = (major > 1 || major == 1 && minor >= 0)
-       && ctx.bglBegin && ctx.bglClear && ctx.bglClearColor && ctx.bglColor3fv && ctx.bglEnable
-       && ctx.bglEnd && ctx.bglGetIntegerv && ctx.bglGetString && ctx.bglPixelStorei && ctx.bglTexCoord2fv
-       && ctx.bglTexEnvi && ctx.bglTexImage2D && ctx.bglTexParameteri && ctx.bglVertex2f && ctx.bglViewport;
+#ifndef _WIN32
+      && ctx.bglBegin && ctx.bglClear && ctx.bglClearColor && ctx.bglColor3fv && ctx.bglEnable
+      && ctx.bglEnd && ctx.bglGetIntegerv && ctx.bglGetString && ctx.bglPixelStorei && ctx.bglTexCoord2fv
+      && ctx.bglTexEnvi && ctx.bglTexImage2D && ctx.bglTexParameteri && ctx.bglVertex2f && ctx.bglViewport
+#endif
+      ;
    ctx.bgl_version_1_1 = ctx.bgl_version_1_0 && (major > 1 || major == 1 && minor >= 1)
-       && ctx.bglBindTexture && ctx.bglDeleteTextures && ctx.bglGenTextures;
+#ifndef _WIN32
+      && ctx.bglBindTexture && ctx.bglDeleteTextures && ctx.bglGenTextures
+#endif
+      ;
    ctx.bgl_version_1_2 = ctx.bgl_version_1_1 && (major > 1 || major == 1 && minor >= 2);
    ctx.bgl_version_1_3 = ctx.bgl_version_1_2 && (major > 1 || major == 1 && minor >= 3);
    ctx.bgl_version_1_4 = ctx.bgl_version_1_3 && (major > 1 || major == 1 && minor >= 4);
@@ -2414,7 +1821,7 @@ BglContextHandle init_context() {
    ctx.bgl_version_2_0 = ctx.bgl_version_1_5 && (major > 2 || major == 2 && minor >= 0);
    ctx.bgl_version_2_1 = ctx.bgl_version_2_0 && (major > 2 || major == 2 && minor >= 1);
    ctx.bgl_version_3_0 = ctx.bgl_version_2_1 && (major > 3 || major == 3 && minor >= 0)
-       && ctx.bglGetStringi;
+      && ctx.bglGetStringi;
    ctx.bgl_version_3_1 = ctx.bgl_version_3_0 && (major > 3 || major == 3 && minor >= 1);
    ctx.bgl_version_3_2 = ctx.bgl_version_3_1 && (major > 3 || major == 3 && minor >= 2);
    ctx.bgl_version_3_3 = ctx.bgl_version_3_2 && (major > 3 || major == 3 && minor >= 3);
@@ -3793,64 +3200,136 @@ bool khr_debug() noexcept {
 ////////// COMMANDS (IMPL) ///////////////////////////////////////////////////
 
 const GLubyte *glGetString(GLenum name) noexcept {
+#ifdef _WIN32
+   return ::glGetString(name);
+#else
    return BE_GFX_BGL_CONTEXT.bglGetString(name);
+#endif
 }
 void glTexCoord2fv(const GLfloat * v) noexcept {
-   return BE_GFX_BGL_CONTEXT.bglTexCoord2fv(v);
+#ifdef _WIN32
+   ::glTexCoord2fv(v);
+#else
+   BE_GFX_BGL_CONTEXT.bglTexCoord2fv(v);
+#endif
 }
 void glTexParameteri(GLenum target, GLenum pname, GLint param) noexcept {
-   return BE_GFX_BGL_CONTEXT.bglTexParameteri(target, pname, param);
+#ifdef _WIN32
+   ::glTexParameteri(target, pname, param);
+#else
+   BE_GFX_BGL_CONTEXT.bglTexParameteri(target, pname, param);
+#endif
 }
 void glVertex2f(GLfloat x, GLfloat y) noexcept {
-   return BE_GFX_BGL_CONTEXT.bglVertex2f(x, y);
+#ifdef _WIN32
+   ::glVertex2f(x, y);
+#else
+   BE_GFX_BGL_CONTEXT.bglVertex2f(x, y);
+#endif
 }
 void glEnable(GLenum cap) noexcept {
-   return BE_GFX_BGL_CONTEXT.bglEnable(cap);
+#ifdef _WIN32
+   ::glEnable(cap);
+#else
+   BE_GFX_BGL_CONTEXT.bglEnable(cap);
+#endif
 }
 void glBegin(GLenum mode) noexcept {
-   return BE_GFX_BGL_CONTEXT.bglBegin(mode);
+#ifdef _WIN32
+   ::glBegin(mode);
+#else
+   BE_GFX_BGL_CONTEXT.bglBegin(mode);
+#endif
 }
 void glBindTexture(GLenum target, GLuint texture) noexcept {
-   return BE_GFX_BGL_CONTEXT.bglBindTexture(target, texture);
+#ifdef _WIN32
+   ::glBindTexture(target, texture);
+#else
+   BE_GFX_BGL_CONTEXT.bglBindTexture(target, texture);
+#endif
 }
 void glClear(GLbitfield mask) noexcept {
-   return BE_GFX_BGL_CONTEXT.bglClear(mask);
+#ifdef _WIN32
+   ::glClear(mask);
+#else
+   BE_GFX_BGL_CONTEXT.bglClear(mask);
+#endif
 }
 void glClearColor(GLfloat red, GLfloat green, GLfloat blue, GLfloat alpha) noexcept {
-   return BE_GFX_BGL_CONTEXT.bglClearColor(red, green, blue, alpha);
+#ifdef _WIN32
+   ::glClearColor(red, green, blue, alpha);
+#else
+   BE_GFX_BGL_CONTEXT.bglClearColor(red, green, blue, alpha);
+#endif
 }
 void glColor3fv(const GLfloat * v) noexcept {
-   return BE_GFX_BGL_CONTEXT.bglColor3fv(v);
+#ifdef _WIN32
+   ::glColor3fv(v);
+#else
+   BE_GFX_BGL_CONTEXT.bglColor3fv(v);
+#endif
 }
 void glDebugMessageCallback(GLDEBUGPROC callback, const void * userParam) noexcept {
-   return BE_GFX_BGL_CONTEXT.bglDebugMessageCallback(callback, userParam);
+   BE_GFX_BGL_CONTEXT.bglDebugMessageCallback(callback, userParam);
 }
 void glDeleteTextures(GLsizei n, const GLuint * textures) noexcept {
-   return BE_GFX_BGL_CONTEXT.bglDeleteTextures(n, textures);
+#ifdef _WIN32
+   ::glDeleteTextures(n, textures);
+#else
+   BE_GFX_BGL_CONTEXT.bglDeleteTextures(n, textures);
+#endif
 }
 void glEnd() noexcept {
-   return BE_GFX_BGL_CONTEXT.bglEnd();
+#ifdef _WIN32
+   ::glEnd();
+#else
+   BE_GFX_BGL_CONTEXT.bglEnd();
+#endif
 }
 void glGenTextures(GLsizei n, GLuint * textures) noexcept {
-   return BE_GFX_BGL_CONTEXT.bglGenTextures(n, textures);
+#ifdef _WIN32
+   ::glGenTextures(n, textures);
+#else
+   BE_GFX_BGL_CONTEXT.bglGenTextures(n, textures);
+#endif
 }
 void glGetIntegerv(GLenum pname, GLint * data) noexcept {
-   return BE_GFX_BGL_CONTEXT.bglGetIntegerv(pname, data);
+#ifdef _WIN32
+   ::glGetIntegerv(pname, data);
+#else
+   BE_GFX_BGL_CONTEXT.bglGetIntegerv(pname, data);
+#endif
 }
 const GLubyte *glGetStringi(GLenum name, GLuint index) noexcept {
    return BE_GFX_BGL_CONTEXT.bglGetStringi(name, index);
 }
 void glPixelStorei(GLenum pname, GLint param) noexcept {
-   return BE_GFX_BGL_CONTEXT.bglPixelStorei(pname, param);
+#ifdef _WIN32
+   ::glPixelStorei(pname, param);
+#else
+   BE_GFX_BGL_CONTEXT.bglPixelStorei(pname, param);
+#endif
 }
 void glTexEnvi(GLenum target, GLenum pname, GLint param) noexcept {
-   return BE_GFX_BGL_CONTEXT.bglTexEnvi(target, pname, param);
+#ifdef _WIN32
+   ::glTexEnvi(target, pname, param);
+#else
+   BE_GFX_BGL_CONTEXT.bglTexEnvi(target, pname, param);
+#endif
 }
 void glTexImage2D(GLenum target, GLint level, GLint internalformat, GLsizei width, GLsizei height, GLint border, GLenum format, GLenum type, const void * pixels) noexcept {
-   return BE_GFX_BGL_CONTEXT.bglTexImage2D(target, level, internalformat, width, height, border, format, type, pixels);
+#ifdef _WIN32
+   ::glTexImage2D(target, level, internalformat, width, height, border, format, type, pixels);
+#else
+   BE_GFX_BGL_CONTEXT.bglTexImage2D(target, level, internalformat, width, height, border, format, type, pixels);
+#endif
 }
 void glViewport(GLint x, GLint y, GLsizei width, GLsizei height) noexcept {
-   return BE_GFX_BGL_CONTEXT.bglViewport(x, y, width, height);
+#ifdef _WIN32
+   ::glViewport(x, y, width, height);
+#else
+   BE_GFX_BGL_CONTEXT.bglViewport(x, y, width, height);
+#endif
 }
 
 } // be::gfx::gl

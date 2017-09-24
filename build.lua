@@ -25,6 +25,9 @@ module 'gfx' {
          'core',
          'util',
          'gfx-tex',
+      },
+      toolchain 'vc_win' {
+         link 'opengl32'
       }
    },
 

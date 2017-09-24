@@ -4,6 +4,7 @@
 #define BE_GFX_BGL_HPP_
 
 //#bgl stop
+
 /*
 This file includes excerpts from the combined OpenGL XML registry:
 
@@ -2116,25 +2117,67 @@ enum AllEnums {
 
 ////////// COMMANDS //////////////////////////////////////////////////////////
 
+// Defined by: GL 1.0
 const GLubyte *glGetString(GLenum name) noexcept;
+
+// Defined by: GL 1.0
 void glTexCoord2fv(const GLfloat * v) noexcept;
+
+// Defined by: GL 1.0
 void glTexParameteri(GLenum target, GLenum pname, GLint param) noexcept;
+
+// Vector equiv: glVertex2fv
+// Defined by: GL 1.0
 void glVertex2f(GLfloat x, GLfloat y) noexcept;
+
+// Defined by: GL 1.0
 void glEnable(GLenum cap) noexcept;
+
+// Defined by: GL 1.0
 void glBegin(GLenum mode) noexcept;
+
+// Aliases: glBindTextureEXT
+// Defined by: GL 1.1
 void glBindTexture(GLenum target, GLuint texture) noexcept;
+
+// Defined by: GL 1.0
 void glClear(GLbitfield mask) noexcept;
+
+// Defined by: GL 1.0
 void glClearColor(GLfloat red, GLfloat green, GLfloat blue, GLfloat alpha) noexcept;
+
+// Defined by: GL 1.0
 void glColor3fv(const GLfloat * v) noexcept;
+
+// Aliases: glDebugMessageCallbackARB, glDebugMessageCallbackKHR
+// Defined by: GL 4.3, KHR_debug
 void glDebugMessageCallback(GLDEBUGPROC callback, const void * userParam) noexcept;
+
+// Defined by: GL 1.1
 void glDeleteTextures(GLsizei n, const GLuint * textures) noexcept;
+
+// Defined by: GL 1.0
 void glEnd() noexcept;
+
+// Defined by: GL 1.1
 void glGenTextures(GLsizei n, GLuint * textures) noexcept;
+
+// Defined by: GL 1.0
 void glGetIntegerv(GLenum pname, GLint * data) noexcept;
+
+// Defined by: GL 3.0
 const GLubyte *glGetStringi(GLenum name, GLuint index) noexcept;
+
+// Defined by: GL 1.0
 void glPixelStorei(GLenum pname, GLint param) noexcept;
+
+// Defined by: GL 1.0
 void glTexEnvi(GLenum target, GLenum pname, GLint param) noexcept;
+
+// Defined by: GL 1.0
 void glTexImage2D(GLenum target, GLint level, GLint internalformat, GLsizei width, GLsizei height, GLint border, GLenum format, GLenum type, const void * pixels) noexcept;
+
+// Defined by: GL 1.0
 void glViewport(GLint x, GLint y, GLsizei width, GLsizei height) noexcept;
 
 } // be::gfx::gl

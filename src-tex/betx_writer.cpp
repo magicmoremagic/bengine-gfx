@@ -161,15 +161,15 @@ Buf<UC> BetxWriter::write(std::error_code& ec) noexcept {
    header.layer_alignment = alignment.layer_bits();
 
    for (glm::length_t c = 0; c < 4; ++c) {
-      if (!is_valid(format.component_type(c))) {
-         ec = err::invalid_component_type;
+      if (!is_valid(format.field_type(c))) {
+         ec = err::invalid_field_type;
          return result;
       } else if (!is_valid(format.swizzle(c))) {
          ec = err::invalid_swizzle;
          return result;
       }
 
-      header.component_types[c] = static_cast<U8>(format.component_type(c));
+      header.field_types[c] = static_cast<U8>(format.field_type(c));
       header.swizzle[c] = static_cast<U8>(format.swizzle(c));
    }
 

@@ -34,7 +34,7 @@ bool is_valid(BetxReadError constant) noexcept {
       case BetxReadError::unsupported_block_dimensions:
       case BetxReadError::invalid_block_size:
       case BetxReadError::unsupported_block_size:
-      case BetxReadError::invalid_component_type:
+      case BetxReadError::invalid_field_type:
       case BetxReadError::invalid_component_count:
       case BetxReadError::too_many_components:
       case BetxReadError::invalid_swizzle:
@@ -89,7 +89,7 @@ const char* betx_read_error_name(BetxReadError constant) noexcept {
       case BetxReadError::unsupported_block_dimensions: return "unsupported_block_dimensions";
       case BetxReadError::invalid_block_size:           return "invalid_block_size";
       case BetxReadError::unsupported_block_size:       return "unsupported_block_size";
-      case BetxReadError::invalid_component_type:       return "invalid_component_type";
+      case BetxReadError::invalid_field_type:           return "invalid_field_type";
       case BetxReadError::invalid_component_count:      return "invalid_component_count";
       case BetxReadError::too_many_components:          return "too_many_components";
       case BetxReadError::invalid_swizzle:              return "invalid_swizzle";
@@ -175,7 +175,7 @@ int texture_file_error_condition(BetxReadError constant) noexcept {
       case BetxReadError::unsupported_block_dimensions: return static_cast<int>(TextureFileError::unsupported);
       case BetxReadError::invalid_block_size:           return static_cast<int>(TextureFileError::corrupted);
       case BetxReadError::unsupported_block_size:       return static_cast<int>(TextureFileError::unsupported);
-      case BetxReadError::invalid_component_type:       return static_cast<int>(TextureFileError::corrupted);
+      case BetxReadError::invalid_field_type:           return static_cast<int>(TextureFileError::corrupted);
       case BetxReadError::invalid_component_count:      return static_cast<int>(TextureFileError::corrupted);
       case BetxReadError::too_many_components:          return static_cast<int>(TextureFileError::corrupted);
       case BetxReadError::invalid_swizzle:              return static_cast<int>(TextureFileError::corrupted);
@@ -223,7 +223,7 @@ int generic_error_condition(BetxReadError constant) noexcept {
       case BetxReadError::unsupported_block_dimensions: return static_cast<int>(std::errc::not_supported);
       case BetxReadError::invalid_block_size:           return static_cast<int>(std::errc::illegal_byte_sequence);
       case BetxReadError::unsupported_block_size:       return static_cast<int>(std::errc::not_supported);
-      case BetxReadError::invalid_component_type:       return static_cast<int>(std::errc::illegal_byte_sequence);
+      case BetxReadError::invalid_field_type:           return static_cast<int>(std::errc::illegal_byte_sequence);
       case BetxReadError::invalid_component_count:      return static_cast<int>(std::errc::illegal_byte_sequence);
       case BetxReadError::too_many_components:          return static_cast<int>(std::errc::illegal_byte_sequence);
       case BetxReadError::invalid_swizzle:              return static_cast<int>(std::errc::illegal_byte_sequence);
@@ -273,8 +273,8 @@ const char* read_error_msg(BetxReadError constant) noexcept {
       case BetxReadError::unsupported_block_dimensions: return "Block dimensions too large to load";
       case BetxReadError::invalid_block_size:           return "Block size must be >= 1";
       case BetxReadError::unsupported_block_size:       return "Block size too large to load";
-      case BetxReadError::invalid_component_type:       return "Component type not recognized";
-      case BetxReadError::invalid_component_count:      return "Component count must be >= 1";
+      case BetxReadError::invalid_field_type:           return "Field type not recognized";
+      case BetxReadError::invalid_component_count:      return "Component count must be between 1 and 4";
       case BetxReadError::too_many_components:          return "Only 4 components per texel can be accessed";
       case BetxReadError::invalid_swizzle:              return "Swizzle not recognized";
       case BetxReadError::invalid_colorspace:           return "Colorspace not recognized";

@@ -45,7 +45,7 @@ TEST_CASE("ImageRegion direct construction", BE_CATCH_TAGS) {
 }
 
 TEST_CASE("ImageRegion from ImageView", BE_CATCH_TAGS) {
-   ImageFormat format(U8(32), 2, BlockPacking::s_8_8_8_8, 4, component_types(ComponentType::unorm, 4),
+   ImageFormat format(U8(32), 2, BlockPacking::s_8_8_8_8, 4, field_types(FieldType::unorm, 4),
                            swizzles_rgba(), Colorspace::srgb, false);
 
    const int dim = 4;

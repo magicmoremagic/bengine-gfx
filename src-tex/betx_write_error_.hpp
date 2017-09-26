@@ -20,7 +20,7 @@ enum class BetxWriteError : U8 {
    invalid_layer_count,
    invalid_face_count,
    invalid_level_count,
-   invalid_component_type,
+   invalid_field_type,
    invalid_swizzle,
    invalid_payload_compression,
    not_enough_memory
@@ -65,7 +65,7 @@ struct EnumTraits<::be::gfx::tex::detail::BetxWriteError> {
          ::be::gfx::tex::detail::BetxWriteError::invalid_layer_count,
          ::be::gfx::tex::detail::BetxWriteError::invalid_face_count,
          ::be::gfx::tex::detail::BetxWriteError::invalid_level_count,
-         ::be::gfx::tex::detail::BetxWriteError::invalid_component_type,
+         ::be::gfx::tex::detail::BetxWriteError::invalid_field_type,
          ::be::gfx::tex::detail::BetxWriteError::invalid_swizzle,
          ::be::gfx::tex::detail::BetxWriteError::invalid_payload_compression,
          ::be::gfx::tex::detail::BetxWriteError::not_enough_memory,

@@ -1,11 +1,11 @@
 include 'common/enum'
 
 swizzle = make_enum_class('be::gfx::tex::Swizzle', 'U8', {
-   'zero', 'one', 'red', 'green', 'blue', 'alpha'
+   'field_zero', 'field_one', 'field_two', 'field_three', 'literal_zero', 'literal_one',
 })
 
 gl_swizzle = make_enum('gl::AllEnums', 'gl::AllEnums', {
-   'GL_ZERO', 'GL_ONE', 'GL_RED', 'GL_GREEN', 'GL_BLUE', 'GL_ALPHA', 'GL_INVALID_VALUE'
+   'GL_RED', 'GL_GREEN', 'GL_BLUE', 'GL_ALPHA', 'GL_ZERO', 'GL_ONE', 'GL_INVALID_VALUE'
 })
 
 for i = 1, #swizzle.constants do
@@ -14,7 +14,7 @@ for i = 1, #swizzle.constants do
 end
 
 local swizzle_gl_map  = { name = 'swizzle_to_gl',   input_enum = swizzle, output_enum = gl_swizzle, mapper = 'gl',  default = 'GL_INVALID_VALUE' }
-local gl_swizzle_map  = { name = 'swizzle_from_gl', input_enum = gl_swizzle, output_enum = swizzle, mapper = 'swizzle',  default = 'zero' }
+local gl_swizzle_map  = { name = 'swizzle_from_gl', input_enum = gl_swizzle, output_enum = swizzle, mapper = 'swizzle',  default = 'literal_zero' }
 
 include('common/enum_std_begin', swizzle)
 

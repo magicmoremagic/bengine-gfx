@@ -4,27 +4,27 @@ struct `name`Info {
    using is_compressed = True;
    using is_packed = False;
    using unsigned_word_type = void;
-   static constexpr U8 components = 0;
+   static constexpr U8 fields = 0;
    static constexpr U8 word_size = 0;
    static constexpr U8 words = 0;
-   static constexpr U8 component_word_offset[4] = { 0, 0, 0, 0 };
-   static constexpr U8 component_bit_offset[4] = { 0, 0, 0, 0 };
-   static constexpr U8 component_bit_width[4] = { 0, 0, 0, 0 };
+   static constexpr U8 field_word_offset[4] = { 0, 0, 0, 0 };
+   static constexpr U8 field_bit_offset[4] = { 0, 0, 0, 0 };
+   static constexpr U8 field_bit_width[4] = { 0, 0, 0, 0 };
 };
 `
 enum_name = name
 with each constants using # {
-   if n_comp > 0 {`
+   if n_fields > 0 {`
 template <> struct `enum_name`Info<`enum_name`::`name`> {
    using is_compressed = False;
-   using is_packed = ` n_comp == n_words ? 'False' : 'True' `;
+   using is_packed = ` n_fields == n_words ? 'False' : 'True' `;
    using unsigned_word_type = `unsigned_word_types[word_size]`;
-   static constexpr U8 components = `n_comp`;
+   static constexpr U8 fields = `n_fields`;
    static constexpr U8 word_size = `word_size`;
    static constexpr U8 words = `n_words`;
-   static constexpr U8 component_word_offset[4] = { `w0`, `w1`, `w2`, `w3` };
-   static constexpr U8 component_bit_offset[4] = { `o0`, `o1`, `o2`, `o3` };
-   static constexpr U8 component_bit_width[4] = { `b0`, `b1`, `b2`, `b3` };
+   static constexpr U8 field_word_offset[4] = { `w0`, `w1`, `w2`, `w3` };
+   static constexpr U8 field_bit_offset[4] = { `o0`, `o1`, `o2`, `o3` };
+   static constexpr U8 field_bit_width[4] = { `b0`, `b1`, `b2`, `b3` };
 };
 `
    }

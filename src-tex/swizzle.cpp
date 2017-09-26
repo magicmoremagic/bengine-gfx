@@ -9,12 +9,12 @@ namespace be::gfx::tex {
 ///////////////////////////////////////////////////////////////////////////////
 bool is_valid(Swizzle constant) noexcept {
    switch (constant) {
-      case Swizzle::zero:
-      case Swizzle::one:
-      case Swizzle::red:
-      case Swizzle::green:
-      case Swizzle::blue:
-      case Swizzle::alpha:
+      case Swizzle::field_zero:
+      case Swizzle::field_one:
+      case Swizzle::field_two:
+      case Swizzle::field_three:
+      case Swizzle::literal_zero:
+      case Swizzle::literal_one:
          return true;
       default:
          return false;
@@ -24,12 +24,12 @@ bool is_valid(Swizzle constant) noexcept {
 ///////////////////////////////////////////////////////////////////////////////
 const char* swizzle_name(Swizzle constant) noexcept {
    switch (constant) {
-      case Swizzle::zero:  return "zero";
-      case Swizzle::one:   return "one";
-      case Swizzle::red:   return "red";
-      case Swizzle::green: return "green";
-      case Swizzle::blue:  return "blue";
-      case Swizzle::alpha: return "alpha";
+      case Swizzle::field_zero:   return "field_zero";
+      case Swizzle::field_one:    return "field_one";
+      case Swizzle::field_two:    return "field_two";
+      case Swizzle::field_three:  return "field_three";
+      case Swizzle::literal_zero: return "literal_zero";
+      case Swizzle::literal_one:  return "literal_one";
       default:
          return "?";
    }
@@ -53,12 +53,12 @@ std::ostream& operator<<(std::ostream& os, Swizzle constant) {
 ///////////////////////////////////////////////////////////////////////////////
 gl::AllEnums swizzle_to_gl(be::gfx::tex::Swizzle constant) noexcept {
    switch (constant) {
-      case be::gfx::tex::Swizzle::zero:  return gl::AllEnums::GL_ZERO;
-      case be::gfx::tex::Swizzle::one:   return gl::AllEnums::GL_ONE;
-      case be::gfx::tex::Swizzle::red:   return gl::AllEnums::GL_RED;
-      case be::gfx::tex::Swizzle::green: return gl::AllEnums::GL_GREEN;
-      case be::gfx::tex::Swizzle::blue:  return gl::AllEnums::GL_BLUE;
-      case be::gfx::tex::Swizzle::alpha: return gl::AllEnums::GL_ALPHA;
+      case be::gfx::tex::Swizzle::field_zero:   return gl::AllEnums::GL_RED;
+      case be::gfx::tex::Swizzle::field_one:    return gl::AllEnums::GL_GREEN;
+      case be::gfx::tex::Swizzle::field_two:    return gl::AllEnums::GL_BLUE;
+      case be::gfx::tex::Swizzle::field_three:  return gl::AllEnums::GL_ALPHA;
+      case be::gfx::tex::Swizzle::literal_zero: return gl::AllEnums::GL_ZERO;
+      case be::gfx::tex::Swizzle::literal_one:  return gl::AllEnums::GL_ONE;
       default:
          return gl::AllEnums::GL_INVALID_VALUE;
    }
@@ -67,13 +67,13 @@ gl::AllEnums swizzle_to_gl(be::gfx::tex::Swizzle constant) noexcept {
 ///////////////////////////////////////////////////////////////////////////////
 be::gfx::tex::Swizzle swizzle_from_gl(gl::AllEnums constant) noexcept {
    switch (constant) {
-      case gl::AllEnums::GL_ONE:           return be::gfx::tex::Swizzle::one;
-      case gl::AllEnums::GL_RED:           return be::gfx::tex::Swizzle::red;
-      case gl::AllEnums::GL_GREEN:         return be::gfx::tex::Swizzle::green;
-      case gl::AllEnums::GL_BLUE:          return be::gfx::tex::Swizzle::blue;
-      case gl::AllEnums::GL_ALPHA:         return be::gfx::tex::Swizzle::alpha;
+      case gl::AllEnums::GL_RED:           return be::gfx::tex::Swizzle::field_zero;
+      case gl::AllEnums::GL_GREEN:         return be::gfx::tex::Swizzle::field_one;
+      case gl::AllEnums::GL_BLUE:          return be::gfx::tex::Swizzle::field_two;
+      case gl::AllEnums::GL_ALPHA:         return be::gfx::tex::Swizzle::field_three;
+      case gl::AllEnums::GL_ONE:           return be::gfx::tex::Swizzle::literal_one;
       default:
-         return be::gfx::tex::Swizzle::zero;
+         return be::gfx::tex::Swizzle::literal_zero;
    }
 }
 

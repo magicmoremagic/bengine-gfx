@@ -64,7 +64,7 @@
     <ClInclude Include="include\tex\block_packing.hpp" />
     <ClInclude Include="include\tex\byte_order.hpp" />
     <ClInclude Include="include\tex\colorspace.hpp" />
-    <ClInclude Include="include\tex\component_type.hpp" />
+    <ClInclude Include="include\tex\field_type.hpp" />
     <ClInclude Include="include\tex\converting_pixel_blitter.hpp" />
     <ClInclude Include="include\tex\convert_colorspace.hpp" />
     <ClInclude Include="include\tex\convert_colorspace_static.hpp" />
@@ -134,7 +134,7 @@
     <ClCompile Include="src-tex\block_packing.cpp" />
     <ClCompile Include="src-tex\byte_order.cpp" />
     <ClCompile Include="src-tex\colorspace.cpp" />
-    <ClCompile Include="src-tex\component_type.cpp" />
+    <ClCompile Include="src-tex\field_type.cpp" />
     <ClCompile Include="src-tex\convert_colorspace.cpp" />
     <ClCompile Include="src-tex\default_texture_reader.cpp" />
     <ClCompile Include="src-tex\image_format.cpp" />

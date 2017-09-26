@@ -12,12 +12,12 @@ namespace be::gfx::tex {
 
 ///////////////////////////////////////////////////////////////////////////////
 enum class Swizzle : U8 {
-   zero = 0,
-   one,
-   red,
-   green,
-   blue,
-   alpha
+   field_zero = 0,
+   field_one,
+   field_two,
+   field_three,
+   literal_zero,
+   literal_one
 };
 
 bool is_valid(Swizzle constant) noexcept;
@@ -50,12 +50,12 @@ struct EnumTraits<::be::gfx::tex::Swizzle> {
    template <typename C = std::array<const type, count>>
    static C values() {
       return {
-         ::be::gfx::tex::Swizzle::zero,
-         ::be::gfx::tex::Swizzle::one,
-         ::be::gfx::tex::Swizzle::red,
-         ::be::gfx::tex::Swizzle::green,
-         ::be::gfx::tex::Swizzle::blue,
-         ::be::gfx::tex::Swizzle::alpha,
+         ::be::gfx::tex::Swizzle::field_zero,
+         ::be::gfx::tex::Swizzle::field_one,
+         ::be::gfx::tex::Swizzle::field_two,
+         ::be::gfx::tex::Swizzle::field_three,
+         ::be::gfx::tex::Swizzle::literal_zero,
+         ::be::gfx::tex::Swizzle::literal_one,
       };
    }
 };

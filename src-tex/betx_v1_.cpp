@@ -227,19 +227,19 @@ TextureFileInfo BetxReader::info_v1_(const detail::BetxHeader& header, std::erro
    // info.format.component_type
    U8 expected_components = 0;
    for (glm::length_t c = 0; c < 4; ++c) {
-      switch (header.component_types[c]) {
-         case 0x0: format.component_type(c, ComponentType::none); break;
-         case 0x1: ++expected_components; format.component_type(c, ComponentType::unorm); break;
-         case 0x2: ++expected_components; format.component_type(c, ComponentType::snorm); break;
-         case 0x3: ++expected_components; format.component_type(c, ComponentType::uint); break;
-         case 0x4: ++expected_components; format.component_type(c, ComponentType::sint); break;
-         case 0x5: ++expected_components; format.component_type(c, ComponentType::ufloat); break;
-         case 0x6: ++expected_components; format.component_type(c, ComponentType::sfloat); break;
-         case 0x7: ++expected_components; format.component_type(c, ComponentType::expo); break;
+      switch (header.field_types[c]) {
+         case 0x0: format.field_type(c, FieldType::none); break;
+         case 0x1: ++expected_components; format.field_type(c, FieldType::unorm); break;
+         case 0x2: ++expected_components; format.field_type(c, FieldType::snorm); break;
+         case 0x3: ++expected_components; format.field_type(c, FieldType::uint); break;
+         case 0x4: ++expected_components; format.field_type(c, FieldType::sint); break;
+         case 0x5: ++expected_components; format.field_type(c, FieldType::ufloat); break;
+         case 0x6: ++expected_components; format.field_type(c, FieldType::sfloat); break;
+         case 0x7: ++expected_components; format.field_type(c, FieldType::expo); break;
 
          default:
-            format.component_type(c, ComponentType::none);
-            if (!should_continue_(err::invalid_component_type, ec)) {
+            format.field_type(c, FieldType::none);
+            if (!should_continue_(err::invalid_field_type, ec)) {
                return info;
             }
             break;
@@ -262,15 +262,15 @@ TextureFileInfo BetxReader::info_v1_(const detail::BetxHeader& header, std::erro
    // info.format.swizzle
    for (glm::length_t c = 0; c < 4; ++c) {
       switch (header.swizzle[c]) {
-         case 0x0: format.swizzle(c, Swizzle::zero); break;
-         case 0x1: format.swizzle(c, Swizzle::one); break;
-         case 0x2: format.swizzle(c, Swizzle::red); break;
-         case 0x3: format.swizzle(c, Swizzle::green); break;
-         case 0x4: format.swizzle(c, Swizzle::blue); break;
-         case 0x5: format.swizzle(c, Swizzle::alpha); break;
+         case 0x0: format.swizzle(c, Swizzle::field_zero); break;
+         case 0x1: format.swizzle(c, Swizzle::field_one); break;
+         case 0x2: format.swizzle(c, Swizzle::field_two); break;
+         case 0x3: format.swizzle(c, Swizzle::field_three); break;
+         case 0x4: format.swizzle(c, Swizzle::literal_zero); break;
+         case 0x5: format.swizzle(c, Swizzle::literal_one); break;
 
          default:
-            format.swizzle(c, Swizzle::zero);
+            format.swizzle(c, Swizzle::literal_zero);
             if (!should_continue_(err::invalid_swizzle, ec)) {
                return info;
             }

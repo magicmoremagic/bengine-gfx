@@ -105,7 +105,7 @@ void blit_pixels(const SourceImageView& src, DestImageView& dest) {
       if (sf.premultiplied() == df.premultiplied() &&
           sf.colorspace() == df.colorspace() &&
           sf.swizzles() == df.swizzles() &&
-          sf.component_types() == df.component_types() &&
+          sf.field_types() == df.field_types() &&
           sf.components() == df.components() &&
           sf.packing() == df.packing()) {
          // formats are the same, with possible exception of block_dim and block_span
@@ -202,7 +202,7 @@ void blit_pixels(const SourceImageView& src, ImageRegion src_region, DestImageVi
       ibox dest_extents = dest_region.extents();
 
       if (sf.premultiplied() == df.premultiplied() && sf.colorspace() == df.colorspace() && sf.swizzles() == df.swizzles() &&
-          sf.component_types() == df.component_types() && sf.components() == df.components() && sf.packing() == df.packing()) {
+          sf.field_types() == df.field_types() && sf.components() == df.components() && sf.packing() == df.packing()) {
          // formats are the same, with possible exception of block_dim and block_size
          // so we can memcpy pixels (or better) and don't need ConvertingPixelBlitter
          if (src_region.basis_vec() == dest_region.basis_vec() && sf.block_dim() == df.block_dim() && sf.block_size() == df.block_size()) {

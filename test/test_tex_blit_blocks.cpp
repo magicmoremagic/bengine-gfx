@@ -14,7 +14,7 @@ using namespace be;
 using namespace be::gfx::tex;
 
 TEST_CASE("ImageView blit_blocks(ImageView, ImageView)", BE_CATCH_TAGS) {
-   ImageFormat format(U8(4), 1, BlockPacking::s_8_8_8_8, 4, component_types(ComponentType::unorm, 4),
+   ImageFormat format(U8(4), 1, BlockPacking::s_8_8_8_8, 4, field_types(FieldType::unorm, 4),
                       swizzles_rgba(), Colorspace::srgb, false);
 
    ivec3 dim(4);
@@ -95,7 +95,7 @@ TEST_CASE("ImageView blit_blocks(ImageView, ImageView)", BE_CATCH_TAGS) {
 }
 
 TEST_CASE("ImageView blit_blocks(ImageView, ImageRegion, ImageView, ImageRegion)", BE_CATCH_TAGS) {
-   ImageFormat format(U8(4), 1, BlockPacking::s_8_8_8_8, 4, component_types(ComponentType::unorm, 4),
+   ImageFormat format(U8(4), 1, BlockPacking::s_8_8_8_8, 4, field_types(FieldType::unorm, 4),
                       swizzles_rgba(), Colorspace::srgb, false);
 
    ivec3 dim(4);

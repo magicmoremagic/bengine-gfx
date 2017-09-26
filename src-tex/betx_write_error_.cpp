@@ -17,7 +17,7 @@ bool is_valid(BetxWriteError constant) noexcept {
       case BetxWriteError::invalid_layer_count:
       case BetxWriteError::invalid_face_count:
       case BetxWriteError::invalid_level_count:
-      case BetxWriteError::invalid_component_type:
+      case BetxWriteError::invalid_field_type:
       case BetxWriteError::invalid_swizzle:
       case BetxWriteError::invalid_payload_compression:
       case BetxWriteError::not_enough_memory:
@@ -38,7 +38,7 @@ const char* betx_write_error_name(BetxWriteError constant) noexcept {
       case BetxWriteError::invalid_layer_count:         return "invalid_layer_count";
       case BetxWriteError::invalid_face_count:          return "invalid_face_count";
       case BetxWriteError::invalid_level_count:         return "invalid_level_count";
-      case BetxWriteError::invalid_component_type:      return "invalid_component_type";
+      case BetxWriteError::invalid_field_type:          return "invalid_field_type";
       case BetxWriteError::invalid_swizzle:             return "invalid_swizzle";
       case BetxWriteError::invalid_payload_compression: return "invalid_payload_compression";
       case BetxWriteError::not_enough_memory:           return "not_enough_memory";
@@ -73,7 +73,7 @@ int texture_file_error_condition(BetxWriteError constant) noexcept {
       case BetxWriteError::invalid_layer_count:         return static_cast<int>(TextureFileError::unsupported);
       case BetxWriteError::invalid_face_count:          return static_cast<int>(TextureFileError::unsupported);
       case BetxWriteError::invalid_level_count:         return static_cast<int>(TextureFileError::unsupported);
-      case BetxWriteError::invalid_component_type:      return static_cast<int>(TextureFileError::unsupported);
+      case BetxWriteError::invalid_field_type:          return static_cast<int>(TextureFileError::unsupported);
       case BetxWriteError::invalid_swizzle:             return static_cast<int>(TextureFileError::unsupported);
       case BetxWriteError::invalid_payload_compression: return static_cast<int>(TextureFileError::unsupported);
       default:
@@ -92,7 +92,7 @@ int generic_error_condition(BetxWriteError constant) noexcept {
       case BetxWriteError::invalid_layer_count:         return static_cast<int>(std::errc::invalid_argument);
       case BetxWriteError::invalid_face_count:          return static_cast<int>(std::errc::invalid_argument);
       case BetxWriteError::invalid_level_count:         return static_cast<int>(std::errc::invalid_argument);
-      case BetxWriteError::invalid_component_type:      return static_cast<int>(std::errc::invalid_argument);
+      case BetxWriteError::invalid_field_type:          return static_cast<int>(std::errc::invalid_argument);
       case BetxWriteError::invalid_swizzle:             return static_cast<int>(std::errc::invalid_argument);
       case BetxWriteError::invalid_payload_compression: return static_cast<int>(std::errc::invalid_argument);
       case BetxWriteError::not_enough_memory:           return static_cast<int>(std::errc::not_enough_memory);
@@ -112,7 +112,7 @@ const char* write_error_msg(BetxWriteError constant) noexcept {
       case BetxWriteError::invalid_layer_count:         return "Layer count must be in the range [ 1, 65535 ]";
       case BetxWriteError::invalid_face_count:          return "Face count must be in the range [ 1, 255 ]";
       case BetxWriteError::invalid_level_count:         return "Mipmap level count must be in the range [ 1, 255 ]";
-      case BetxWriteError::invalid_component_type:      return "Component type not recognized";
+      case BetxWriteError::invalid_field_type:          return "Field type not recognized";
       case BetxWriteError::invalid_swizzle:             return "Swizzle not recognized";
       case BetxWriteError::invalid_payload_compression: return "Payload compression mode not recognized";
       case BetxWriteError::not_enough_memory:           return "Could not allocate enough memory";

@@ -21,9 +21,6 @@
     <Filter Include="Source Files\data structures">
       <UniqueIdentifier>{9f89191a-9ec4-4fd1-aa62-2e0f6a3b2aec}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\enums">
-      <UniqueIdentifier>{cd4a8149-2bee-491f-a544-8216cf6ce192}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\data structures">
       <UniqueIdentifier>{24dee0b2-bf48-43d8-8b10-fdb8afc87f7d}</UniqueIdentifier>
     </Filter>
@@ -138,6 +135,9 @@
     <Filter Include="Header Files\operations\files\betx">
       <UniqueIdentifier>{6d30ee91-d6da-4f9b-9a0c-2c036346bc02}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\enums">
+      <UniqueIdentifier>{cd4a8149-2bee-491f-a544-8216cf6ce192}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src-tex\pch.hpp">
@@ -156,9 +156,6 @@
       <Filter>Header Files\enums</Filter>
     </ClInclude>
     <ClInclude Include="include\tex\colorspace.hpp">
-      <Filter>Header Files\enums</Filter>
-    </ClInclude>
-    <ClInclude Include="include\tex\component_type.hpp">
       <Filter>Header Files\enums</Filter>
     </ClInclude>
     <ClInclude Include="include\tex\convert_colorspace.hpp">
@@ -211,9 +208,6 @@
     </ClInclude>
     <ClInclude Include="include\tex\pixel_access_norm.hpp">
       <Filter>Header Files\operations\block/pixel access</Filter>
-    </ClInclude>
-    <ClInclude Include="include\tex\swizzle.hpp">
-      <Filter>Header Files\enums</Filter>
     </ClInclude>
     <ClInclude Include="include\tex\texture.hpp">
       <Filter>Header Files\data structures</Filter>
@@ -353,6 +347,12 @@
     <ClInclude Include="include\tex\convert_colorspace_srgb.hpp">
       <Filter>Header Files\operations\normalized conversions</Filter>
     </ClInclude>
+    <ClInclude Include="include\tex\field_type.hpp">
+      <Filter>Header Files\enums</Filter>
+    </ClInclude>
+    <ClInclude Include="include\tex\swizzle.hpp">
+      <Filter>Header Files\enums</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src-tex\pch.cpp">
@@ -362,9 +362,6 @@
       <Filter>Source Files\enums</Filter>
     </ClCompile>
     <ClCompile Include="src-tex\colorspace.cpp">
-      <Filter>Source Files\enums</Filter>
-    </ClCompile>
-    <ClCompile Include="src-tex\component_type.cpp">
       <Filter>Source Files\enums</Filter>
     </ClCompile>
     <ClCompile Include="src-tex\convert_colorspace.cpp">
@@ -395,9 +392,6 @@
       <Filter>Source Files\data structures</Filter>
     </ClCompile>
     <ClCompile Include="src-tex\texture_class.cpp">
-      <Filter>Source Files\enums</Filter>
-    </ClCompile>
-    <ClCompile Include="src-tex\swizzle.cpp">
       <Filter>Source Files\enums</Filter>
     </ClCompile>
     <ClCompile Include="src-tex\image_format_gl.cpp">
@@ -486,6 +480,12 @@
     </ClCompile>
     <ClCompile Include="src-tex\log_texture_info.cpp">
       <Filter>Source Files\operations</Filter>
+    </ClCompile>
+    <ClCompile Include="src-tex\field_type.cpp">
+      <Filter>Source Files\enums</Filter>
+    </ClCompile>
+    <ClCompile Include="src-tex\swizzle.cpp">
+      <Filter>Source Files\enums</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

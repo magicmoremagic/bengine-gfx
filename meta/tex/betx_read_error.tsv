@@ -24,8 +24,8 @@ invalid_block_dimensions		corrupted	illegal_byte_sequence	All block dimensions m
 unsupported_block_dimensions	true	unsupported	not_supported	Block dimensions too large to load
 invalid_block_size		corrupted	illegal_byte_sequence	Block size must be >= 1
 unsupported_block_size		unsupported	not_supported	Block size too large to load
-invalid_component_type		corrupted	illegal_byte_sequence	Component type not recognized
-invalid_component_count		corrupted	illegal_byte_sequence	Component count must be >= 1
+invalid_field_type		corrupted	illegal_byte_sequence	Field type not recognized
+invalid_component_count		corrupted	illegal_byte_sequence	Component count must be between 1 and 4
 too_many_components		corrupted	illegal_byte_sequence	Only 4 components per texel can be accessed
 invalid_swizzle		corrupted	illegal_byte_sequence	Swizzle not recognized
 invalid_colorspace		corrupted	illegal_byte_sequence	Colorspace not recognized

@@ -15,8 +15,8 @@ using namespace be;
 using namespace be::gfx::gl;
 using namespace be::gfx::tex;
 
-TEST_CASE("detail::ComponentRawNorm<U16, 11, ufloat>", BE_CATCH_TAGS) {
-   using clazz = be::gfx::tex::detail::ComponentRawNorm<U16, 11, ComponentType::ufloat>;
+TEST_CASE("detail::FieldRawNorm<U16, 11, ufloat>", BE_CATCH_TAGS) {
+   using clazz = be::gfx::tex::detail::FieldRawNorm<U16, 11, FieldType::ufloat>;
 
    SECTION("decode") {
       REQUIRE(clazz::decode(0) == 0.f);
@@ -50,8 +50,8 @@ TEST_CASE("detail::ComponentRawNorm<U16, 11, ufloat>", BE_CATCH_TAGS) {
    }
 }
 
-TEST_CASE("detail::ComponentRawNorm<U16, 10, ufloat>", BE_CATCH_TAGS) {
-   using clazz = be::gfx::tex::detail::ComponentRawNorm<U16, 10, ComponentType::ufloat>;
+TEST_CASE("detail::FieldRawNorm<U16, 10, ufloat>", BE_CATCH_TAGS) {
+   using clazz = be::gfx::tex::detail::FieldRawNorm<U16, 10, FieldType::ufloat>;
 
    SECTION("decode") {
       REQUIRE(clazz::decode(0) == 0.f);
@@ -85,8 +85,8 @@ TEST_CASE("detail::ComponentRawNorm<U16, 10, ufloat>", BE_CATCH_TAGS) {
    }
 }
 
-TEST_CASE("detail::ImageComponentRawNorm<U16, 16, sfloat>", BE_CATCH_TAGS) {
-   using clazz = be::gfx::tex::detail::ComponentRawNorm<U16, 16, ComponentType::sfloat>;
+TEST_CASE("detail::FieldRawNorm<U16, 16, sfloat>", BE_CATCH_TAGS) {
+   using clazz = be::gfx::tex::detail::FieldRawNorm<U16, 16, FieldType::sfloat>;
 
    SECTION("decode") {
       REQUIRE(clazz::decode(0) == 0.f);
@@ -272,14 +272,11 @@ TEST_CASE("normalized pixel access - monochrome components", BE_CATCH_TAGS) {
    SECTION("GL_DEPTH32F_STENCIL8") { monochrome_test(canonical_format(GL_DEPTH32F_STENCIL8)); }
 
    /* ######################### END OF GENERATED CODE ######################### */
-   /* ######################### END OF GENERATED CODE ######################### */
-
-   /* ######################### END OF GENERATED CODE ######################### */
 }
 
 
 TEST_CASE("ImageView normalized pixel access rgba8888unorm", BE_CATCH_TAGS) {
-   ImageFormat format(U8(4), 1, BlockPacking::s_8_8_8_8, 4, component_types(ComponentType::unorm, 4),
+   ImageFormat format(U8(4), 1, BlockPacking::s_8_8_8_8, 4, field_types(FieldType::unorm, 4),
                       swizzles_rgba(), Colorspace::srgb, false);
 
    const int dim = 4;
@@ -329,7 +326,7 @@ TEST_CASE("ImageView normalized pixel access rgba8888unorm", BE_CATCH_TAGS) {
 }
 
 TEST_CASE("ImageView normalized pixel access bgr888uint", BE_CATCH_TAGS) {
-   ImageFormat format(U8(3), 1, BlockPacking::s_8_8_8, 3, component_types(ComponentType::uint, 3),
+   ImageFormat format(U8(3), 1, BlockPacking::s_8_8_8, 3, field_types(FieldType::uint, 3),
                       swizzles_bgr(), Colorspace::srgb, false);
 
    const int dim = 4;
@@ -379,7 +376,7 @@ TEST_CASE("ImageView normalized pixel access bgr888uint", BE_CATCH_TAGS) {
 }
 
 TEST_CASE("ImageView normalized pixel access bgra5551unorm", BE_CATCH_TAGS) {
-   ImageFormat format(U8(2), 1, BlockPacking::p_5_5_5_1, 4, component_types(ComponentType::unorm, 4),
+   ImageFormat format(U8(2), 1, BlockPacking::p_5_5_5_1, 4, field_types(FieldType::unorm, 4),
                       swizzles_bgra(), Colorspace::srgb, false);
 
    const int dim = 4;

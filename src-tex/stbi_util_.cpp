@@ -24,30 +24,30 @@ std::size_t get_stbi_texture_file_info(int w, int h, int components, int bpc, Te
 
    if (bpc == 8) {
       switch (components) {
-         case 1: info.format = ImageFormat(1, 1, BlockPacking::s_8, 1, component_types(ComponentType::unorm, 1), swizzles_rrr(), Colorspace::unknown, false); break;
-         case 2: info.format = ImageFormat(2, 1, BlockPacking::s_8_8, 2, component_types(ComponentType::unorm, 2), swizzles(Swizzle::red, Swizzle::red, Swizzle::red, Swizzle::green), Colorspace::unknown, false); break;
-         case 3: info.format = ImageFormat(3, 1, BlockPacking::s_8_8_8, 3, component_types(ComponentType::unorm, 3), swizzles_rgb(), Colorspace::unknown, false); break;
-         case 4: info.format = ImageFormat(4, 1, BlockPacking::s_8_8_8_8, 4, component_types(ComponentType::unorm, 4), swizzles_rgba(), Colorspace::unknown, false); break;
+         case 1: info.format = ImageFormat(1, 1, BlockPacking::s_8, 1, field_types(FieldType::unorm, 1), swizzles_rrr(), Colorspace::unknown, false); break;
+         case 2: info.format = ImageFormat(2, 1, BlockPacking::s_8_8, 2, field_types(FieldType::unorm, 2), swizzles(Swizzle::field_zero, Swizzle::field_zero, Swizzle::field_zero, Swizzle::field_one), Colorspace::unknown, false); break;
+         case 3: info.format = ImageFormat(3, 1, BlockPacking::s_8_8_8, 3, field_types(FieldType::unorm, 3), swizzles_rgb(), Colorspace::unknown, false); break;
+         case 4: info.format = ImageFormat(4, 1, BlockPacking::s_8_8_8_8, 4, field_types(FieldType::unorm, 4), swizzles_rgba(), Colorspace::unknown, false); break;
          default:
             ec = make_error_code(TextureFileError::unsupported);
             break;
       }
    } else if (bpc == 16) {
       switch (components) {
-         case 1: info.format = ImageFormat(2, 1, BlockPacking::s_16, 1, component_types(ComponentType::unorm, 1), swizzles_rrr(), Colorspace::unknown, false); break;
-         case 2: info.format = ImageFormat(4, 1, BlockPacking::s_16_16, 2, component_types(ComponentType::unorm, 2), swizzles(Swizzle::red, Swizzle::red, Swizzle::red, Swizzle::green), Colorspace::unknown, false); break;
-         case 3: info.format = ImageFormat(6, 1, BlockPacking::s_16_16_16, 3, component_types(ComponentType::unorm, 3), swizzles_rgb(), Colorspace::unknown, false); break;
-         case 4: info.format = ImageFormat(8, 1, BlockPacking::s_16_16_16_16, 4, component_types(ComponentType::unorm, 4), swizzles_rgba(), Colorspace::unknown, false); break;
+         case 1: info.format = ImageFormat(2, 1, BlockPacking::s_16, 1, field_types(FieldType::unorm, 1), swizzles_rrr(), Colorspace::unknown, false); break;
+         case 2: info.format = ImageFormat(4, 1, BlockPacking::s_16_16, 2, field_types(FieldType::unorm, 2), swizzles(Swizzle::field_zero, Swizzle::field_zero, Swizzle::field_zero, Swizzle::field_one), Colorspace::unknown, false); break;
+         case 3: info.format = ImageFormat(6, 1, BlockPacking::s_16_16_16, 3, field_types(FieldType::unorm, 3), swizzles_rgb(), Colorspace::unknown, false); break;
+         case 4: info.format = ImageFormat(8, 1, BlockPacking::s_16_16_16_16, 4, field_types(FieldType::unorm, 4), swizzles_rgba(), Colorspace::unknown, false); break;
          default:
             ec = make_error_code(TextureFileError::unsupported);
             break;
       }
    } else if (bpc == 32) {
       switch (components) {
-         case 1: info.format = ImageFormat(4, 1, BlockPacking::s_32, 1, component_types(ComponentType::sfloat, 1), swizzles_rrr(), Colorspace::linear_other, false); break;
-         case 2: info.format = ImageFormat(8, 1, BlockPacking::s_32_32, 2, component_types(ComponentType::sfloat, 2), swizzles(Swizzle::red, Swizzle::red, Swizzle::red, Swizzle::green), Colorspace::linear_other, false); break;
-         case 3: info.format = ImageFormat(12, 1, BlockPacking::s_32_32_32, 3, component_types(ComponentType::sfloat, 3), swizzles_rgb(), Colorspace::linear_other, false); break;
-         case 4: info.format = ImageFormat(16, 1, BlockPacking::s_32_32_32_32, 4, component_types(ComponentType::sfloat, 4), swizzles_rgba(), Colorspace::linear_other, false); break;
+         case 1: info.format = ImageFormat(4, 1, BlockPacking::s_32, 1, field_types(FieldType::sfloat, 1), swizzles_rrr(), Colorspace::linear_other, false); break;
+         case 2: info.format = ImageFormat(8, 1, BlockPacking::s_32_32, 2, field_types(FieldType::sfloat, 2), swizzles(Swizzle::field_zero, Swizzle::field_zero, Swizzle::field_zero, Swizzle::field_one), Colorspace::linear_other, false); break;
+         case 3: info.format = ImageFormat(12, 1, BlockPacking::s_32_32_32, 3, field_types(FieldType::sfloat, 3), swizzles_rgb(), Colorspace::linear_other, false); break;
+         case 4: info.format = ImageFormat(16, 1, BlockPacking::s_32_32_32_32, 4, field_types(FieldType::sfloat, 4), swizzles_rgba(), Colorspace::linear_other, false); break;
          default:
             ec = make_error_code(TextureFileError::unsupported);
             break;

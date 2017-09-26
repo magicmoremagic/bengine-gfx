@@ -189,7 +189,7 @@ bool is_packed(BlockPacking constant) noexcept {
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-U8 component_count(BlockPacking constant) noexcept {
+U8 field_count(BlockPacking constant) noexcept {
    switch (constant) {
       case BlockPacking::s_8:           return U8(1);
       case BlockPacking::s_8_8:         return U8(2);

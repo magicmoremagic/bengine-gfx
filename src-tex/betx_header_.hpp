@@ -36,7 +36,7 @@ struct BetxHeader {
    U8 components;
    U8 colorspace;
    U8 format_flags;
-   U8 component_types[4];
+   U8 field_types[4];
    U8 swizzle[4];
    U32 payload_offset;
    U64 payload_size;

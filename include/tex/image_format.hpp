@@ -8,6 +8,7 @@
 #include "swizzle.hpp"
 #include <be/core/glm.hpp>
 #include <be/core/buf.hpp>
+#include <be/core/enum_vec4.hpp>
 #include <glm/vec3.hpp>
 #include <glm/vec4.hpp>
 
@@ -27,8 +28,8 @@ public:
    static constexpr component_count_type max_components = component_count_type(-1);
    static constexpr component_count_type max_mapped_components = component_count_type(4);
 
-   using field_types_type = glm::vec<max_fields, std::underlying_type_t<FieldType>>;
-   using swizzles_type = glm::vec<max_mapped_components, std::underlying_type_t<Swizzle>>;
+   using field_types_type = enum_vec<max_fields, FieldType>;
+   using swizzles_type = enum_vec<max_mapped_components, Swizzle>;
 
    ImageFormat();
    ImageFormat(std::size_t block_size, std::size_t block_dim, BlockPacking packing, glm::length_t components, field_types_type field_types, swizzles_type swizzles, Colorspace colorspace, bool premultiplied);

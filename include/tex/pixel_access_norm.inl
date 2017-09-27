@@ -612,7 +612,7 @@ struct PixelRawNormAccessUncompressedNonPacked<ImageView, Coord, IsSimple, Packi
       data_type data = get_pixel_uncompressed<data_type, Coord, ImageView, IsSimple>(image, pixel_coord);
       const auto field_types = image.format().field_types();
       for (glm::length_t c = 0; c < fields; ++c) {
-         pixel[c] = decode_field<word_type, word_size_bits>(data[c], static_cast<FieldType>(field_types[c]));
+         pixel[c] = decode_field<word_type, word_size_bits>(data[c], field_types[c]);
       }
       return pixel;
    }
@@ -621,7 +621,7 @@ struct PixelRawNormAccessUncompressedNonPacked<ImageView, Coord, IsSimple, Packi
       data_type data;
       const auto field_types = image.format().field_types();
       for (glm::length_t c = 0; c < fields; ++c) {
-         data[c] = encode_field<word_type, word_size_bits>(pixel[c], static_cast<FieldType>(field_types[c]));
+         data[c] = encode_field<word_type, word_size_bits>(pixel[c], field_types[c]);
       }
       put_pixel_uncompressed<data_type, Coord, ImageView, IsSimple>(image, pixel_coord, data);
    }
@@ -671,14 +671,14 @@ struct PixelRawNormAccessUncompressedPacked<ImageView, Coord, IsSimple, Packing,
       vec4 pixel;
       data_type data = get_pixel_uncompressed<data_type, Coord, ImageView, IsSimple>(image, pixel_coord);
       const auto field_types = image.format().field_types();
-      pixel[0] = decode_field<word_type, packing_info::field_bit_width[0]>((data[packing_info::field_word_offset[0]] >> packing_info::field_bit_offset[0]) & low_mask(packing_info::field_bit_width[0]), static_cast<FieldType>(field_types[0]));
+      pixel[0] = decode_field<word_type, packing_info::field_bit_width[0]>((data[packing_info::field_word_offset[0]] >> packing_info::field_bit_offset[0]) & low_mask(packing_info::field_bit_width[0]), field_types[0]);
       return pixel;
    }
 
    static void put(ImageView& image, Coord pixel_coord, vec4 pixel) {
       data_type data;
       const auto field_types = image.format().field_types();
-      data[packing_info::field_word_offset[0]] |= (encode_field<word_type, packing_info::field_bit_width[0]>(pixel[0], static_cast<FieldType>(field_types[0])) & low_mask(packing_info::field_bit_width[0])) << packing_info::field_bit_offset[0];
+      data[packing_info::field_word_offset[0]] |= (encode_field<word_type, packing_info::field_bit_width[0]>(pixel[0], field_types[0]) & low_mask(packing_info::field_bit_width[0])) << packing_info::field_bit_offset[0];
       put_pixel_uncompressed<data_type, Coord, ImageView, IsSimple>(image, pixel_coord, data);
    }
 
@@ -727,16 +727,16 @@ struct PixelRawNormAccessUncompressedPacked<ImageView, Coord, IsSimple, Packing,
       vec4 pixel;
       data_type data = get_pixel_uncompressed<data_type, Coord, ImageView, IsSimple>(image, pixel_coord);
       const auto field_types = image.format().field_types();
-      pixel[0] = decode_field<word_type, packing_info::field_bit_width[0]>((data[packing_info::field_word_offset[0]] >> packing_info::field_bit_offset[0]) & low_mask(packing_info::field_bit_width[0]), static_cast<FieldType>(field_types[0]));
-      pixel[1] = decode_field<word_type, packing_info::field_bit_width[1]>((data[packing_info::field_word_offset[1]] >> packing_info::field_bit_offset[1]) & low_mask(packing_info::field_bit_width[1]), static_cast<FieldType>(field_types[1]));
+      pixel[0] = decode_field<word_type, packing_info::field_bit_width[0]>((data[packing_info::field_word_offset[0]] >> packing_info::field_bit_offset[0]) & low_mask(packing_info::field_bit_width[0]), field_types[0]);
+      pixel[1] = decode_field<word_type, packing_info::field_bit_width[1]>((data[packing_info::field_word_offset[1]] >> packing_info::field_bit_offset[1]) & low_mask(packing_info::field_bit_width[1]), field_types[1]);
       return pixel;
    }
 
    static void put(ImageView& image, Coord pixel_coord, vec4 pixel) {
       data_type data;
       const auto field_types = image.format().field_types();
-      data[packing_info::field_word_offset[0]] |= (encode_field<word_type, packing_info::field_bit_width[0]>(pixel[0], static_cast<FieldType>(field_types[0])) & low_mask(packing_info::field_bit_width[0])) << packing_info::field_bit_offset[0];
-      data[packing_info::field_word_offset[1]] |= (encode_field<word_type, packing_info::field_bit_width[1]>(pixel[1], static_cast<FieldType>(field_types[1])) & low_mask(packing_info::field_bit_width[1])) << packing_info::field_bit_offset[1];
+      data[packing_info::field_word_offset[0]] |= (encode_field<word_type, packing_info::field_bit_width[0]>(pixel[0], field_types[0]) & low_mask(packing_info::field_bit_width[0])) << packing_info::field_bit_offset[0];
+      data[packing_info::field_word_offset[1]] |= (encode_field<word_type, packing_info::field_bit_width[1]>(pixel[1], field_types[1]) & low_mask(packing_info::field_bit_width[1])) << packing_info::field_bit_offset[1];
       put_pixel_uncompressed<data_type, Coord, ImageView, IsSimple>(image, pixel_coord, data);
    }
 
@@ -787,18 +787,18 @@ struct PixelRawNormAccessUncompressedPacked<ImageView, Coord, IsSimple, Packing,
       vec4 pixel;
       data_type data = get_pixel_uncompressed<data_type, Coord, ImageView, IsSimple>(image, pixel_coord);
       const auto field_types = image.format().field_types();
-      pixel[0] = decode_field<word_type, packing_info::field_bit_width[0]>((data[packing_info::field_word_offset[0]] >> packing_info::field_bit_offset[0]) & low_mask(packing_info::field_bit_width[0]), static_cast<FieldType>(field_types[0]));
-      pixel[1] = decode_field<word_type, packing_info::field_bit_width[1]>((data[packing_info::field_word_offset[1]] >> packing_info::field_bit_offset[1]) & low_mask(packing_info::field_bit_width[1]), static_cast<FieldType>(field_types[1]));
-      pixel[2] = decode_field<word_type, packing_info::field_bit_width[2]>((data[packing_info::field_word_offset[2]] >> packing_info::field_bit_offset[2]) & low_mask(packing_info::field_bit_width[2]), static_cast<FieldType>(field_types[2]));
+      pixel[0] = decode_field<word_type, packing_info::field_bit_width[0]>((data[packing_info::field_word_offset[0]] >> packing_info::field_bit_offset[0]) & low_mask(packing_info::field_bit_width[0]), field_types[0]);
+      pixel[1] = decode_field<word_type, packing_info::field_bit_width[1]>((data[packing_info::field_word_offset[1]] >> packing_info::field_bit_offset[1]) & low_mask(packing_info::field_bit_width[1]), field_types[1]);
+      pixel[2] = decode_field<word_type, packing_info::field_bit_width[2]>((data[packing_info::field_word_offset[2]] >> packing_info::field_bit_offset[2]) & low_mask(packing_info::field_bit_width[2]), field_types[2]);
       return pixel;
    }
 
    static void put(ImageView& image, Coord pixel_coord, vec4 pixel) {
       data_type data;
       const auto field_types = image.format().field_types();
-      data[packing_info::field_word_offset[0]] |= (encode_field<word_type, packing_info::field_bit_width[0]>(pixel[0], static_cast<FieldType>(field_types[0])) & low_mask(packing_info::field_bit_width[0])) << packing_info::field_bit_offset[0];
-      data[packing_info::field_word_offset[1]] |= (encode_field<word_type, packing_info::field_bit_width[1]>(pixel[1], static_cast<FieldType>(field_types[1])) & low_mask(packing_info::field_bit_width[1])) << packing_info::field_bit_offset[1];
-      data[packing_info::field_word_offset[2]] |= (encode_field<word_type, packing_info::field_bit_width[2]>(pixel[2], static_cast<FieldType>(field_types[2])) & low_mask(packing_info::field_bit_width[2])) << packing_info::field_bit_offset[2];
+      data[packing_info::field_word_offset[0]] |= (encode_field<word_type, packing_info::field_bit_width[0]>(pixel[0], field_types[0]) & low_mask(packing_info::field_bit_width[0])) << packing_info::field_bit_offset[0];
+      data[packing_info::field_word_offset[1]] |= (encode_field<word_type, packing_info::field_bit_width[1]>(pixel[1], field_types[1]) & low_mask(packing_info::field_bit_width[1])) << packing_info::field_bit_offset[1];
+      data[packing_info::field_word_offset[2]] |= (encode_field<word_type, packing_info::field_bit_width[2]>(pixel[2], field_types[2]) & low_mask(packing_info::field_bit_width[2])) << packing_info::field_bit_offset[2];
       put_pixel_uncompressed<data_type, Coord, ImageView, IsSimple>(image, pixel_coord, data);
    }
 
@@ -851,20 +851,20 @@ struct PixelRawNormAccessUncompressedPacked<ImageView, Coord, IsSimple, Packing,
       vec4 pixel;
       data_type data = get_pixel_uncompressed<data_type, Coord, ImageView, IsSimple>(image, pixel_coord);
       const auto field_types = image.format().field_types();
-      pixel[0] = decode_field<word_type, packing_info::field_bit_width[0]>((data[packing_info::field_word_offset[0]] >> packing_info::field_bit_offset[0]) & low_mask(packing_info::field_bit_width[0]), static_cast<FieldType>(field_types[0]));
-      pixel[1] = decode_field<word_type, packing_info::field_bit_width[1]>((data[packing_info::field_word_offset[1]] >> packing_info::field_bit_offset[1]) & low_mask(packing_info::field_bit_width[1]), static_cast<FieldType>(field_types[1]));
-      pixel[2] = decode_field<word_type, packing_info::field_bit_width[2]>((data[packing_info::field_word_offset[2]] >> packing_info::field_bit_offset[2]) & low_mask(packing_info::field_bit_width[2]), static_cast<FieldType>(field_types[2]));
-      pixel[3] = decode_field<word_type, packing_info::field_bit_width[3]>((data[packing_info::field_word_offset[3]] >> packing_info::field_bit_offset[3]) & low_mask(packing_info::field_bit_width[3]), static_cast<FieldType>(field_types[3]));
+      pixel[0] = decode_field<word_type, packing_info::field_bit_width[0]>((data[packing_info::field_word_offset[0]] >> packing_info::field_bit_offset[0]) & low_mask(packing_info::field_bit_width[0]), field_types[0]);
+      pixel[1] = decode_field<word_type, packing_info::field_bit_width[1]>((data[packing_info::field_word_offset[1]] >> packing_info::field_bit_offset[1]) & low_mask(packing_info::field_bit_width[1]), field_types[1]);
+      pixel[2] = decode_field<word_type, packing_info::field_bit_width[2]>((data[packing_info::field_word_offset[2]] >> packing_info::field_bit_offset[2]) & low_mask(packing_info::field_bit_width[2]), field_types[2]);
+      pixel[3] = decode_field<word_type, packing_info::field_bit_width[3]>((data[packing_info::field_word_offset[3]] >> packing_info::field_bit_offset[3]) & low_mask(packing_info::field_bit_width[3]), field_types[3]);
       return pixel;
    }
 
    static void put(ImageView& image, Coord pixel_coord, vec4 pixel) {
       data_type data;
       const auto field_types = image.format().field_types();
-      data[packing_info::field_word_offset[0]] |= (encode_field<word_type, packing_info::field_bit_width[0]>(pixel[0], static_cast<FieldType>(field_types[0])) & low_mask(packing_info::field_bit_width[0])) << packing_info::field_bit_offset[0];
-      data[packing_info::field_word_offset[1]] |= (encode_field<word_type, packing_info::field_bit_width[1]>(pixel[1], static_cast<FieldType>(field_types[1])) & low_mask(packing_info::field_bit_width[1])) << packing_info::field_bit_offset[1];
-      data[packing_info::field_word_offset[2]] |= (encode_field<word_type, packing_info::field_bit_width[2]>(pixel[2], static_cast<FieldType>(field_types[2])) & low_mask(packing_info::field_bit_width[2])) << packing_info::field_bit_offset[2];
-      data[packing_info::field_word_offset[3]] |= (encode_field<word_type, packing_info::field_bit_width[3]>(pixel[3], static_cast<FieldType>(field_types[3])) & low_mask(packing_info::field_bit_width[3])) << packing_info::field_bit_offset[3];
+      data[packing_info::field_word_offset[0]] |= (encode_field<word_type, packing_info::field_bit_width[0]>(pixel[0], field_types[0]) & low_mask(packing_info::field_bit_width[0])) << packing_info::field_bit_offset[0];
+      data[packing_info::field_word_offset[1]] |= (encode_field<word_type, packing_info::field_bit_width[1]>(pixel[1], field_types[1]) & low_mask(packing_info::field_bit_width[1])) << packing_info::field_bit_offset[1];
+      data[packing_info::field_word_offset[2]] |= (encode_field<word_type, packing_info::field_bit_width[2]>(pixel[2], field_types[2]) & low_mask(packing_info::field_bit_width[2])) << packing_info::field_bit_offset[2];
+      data[packing_info::field_word_offset[3]] |= (encode_field<word_type, packing_info::field_bit_width[3]>(pixel[3], field_types[3]) & low_mask(packing_info::field_bit_width[3])) << packing_info::field_bit_offset[3];
       put_pixel_uncompressed<data_type, Coord, ImageView, IsSimple>(image, pixel_coord, data);
    }
 
@@ -913,9 +913,7 @@ struct PixelRawNormAccessUncompressedPacked<ImageView, Coord, IsSimple, BlockPac
       vec4 pixel;
       data_type data = get_pixel_uncompressed<data_type, Coord, ImageView, IsSimple>(image, pixel_coord);
       const auto field_types = image.format().field_types();
-      constexpr U8 ufloat = static_cast<U8>(FieldType::ufloat);
-      constexpr U8 expo = static_cast<U8>(FieldType::expo);
-      if (field_types == ImageFormat::field_types_type(ufloat, ufloat, ufloat, expo)) {
+      if (field_types == ImageFormat::field_types_type(FieldType::ufloat, FieldType::ufloat, FieldType::ufloat, FieldType::expo)) {
          // https://www.khronos.org/registry/OpenGL/extensions/EXT/EXT_texture_shared_exponent.txt
          vec3 pixel3;
          pixel3[0] = FieldRawNorm<word_type, packing_info::field_bit_width[0], FieldType::uint>::decode((data[packing_info::field_word_offset[0]] >> packing_info::field_bit_offset[0]) & low_mask(packing_info::field_bit_width[0]));
@@ -926,10 +924,10 @@ struct PixelRawNormAccessUncompressedPacked<ImageView, Coord, IsSimple, BlockPac
          pixel3 *= pow2(exponent - f14_exponent_basis - f14_mantissa_bits);
          pixel = vec4(pixel3, 0.f);
       } else {
-         pixel[0] = decode_field<word_type, packing_info::field_bit_width[0]>((data[packing_info::field_word_offset[0]] >> packing_info::field_bit_offset[0]) & low_mask(packing_info::field_bit_width[0]), static_cast<FieldType>(field_types[0]));
-         pixel[1] = decode_field<word_type, packing_info::field_bit_width[1]>((data[packing_info::field_word_offset[1]] >> packing_info::field_bit_offset[1]) & low_mask(packing_info::field_bit_width[1]), static_cast<FieldType>(field_types[1]));
-         pixel[2] = decode_field<word_type, packing_info::field_bit_width[2]>((data[packing_info::field_word_offset[2]] >> packing_info::field_bit_offset[2]) & low_mask(packing_info::field_bit_width[2]), static_cast<FieldType>(field_types[2]));
-         pixel[3] = decode_field<word_type, packing_info::field_bit_width[3]>((data[packing_info::field_word_offset[3]] >> packing_info::field_bit_offset[3]) & low_mask(packing_info::field_bit_width[3]), static_cast<FieldType>(field_types[3]));
+         pixel[0] = decode_field<word_type, packing_info::field_bit_width[0]>((data[packing_info::field_word_offset[0]] >> packing_info::field_bit_offset[0]) & low_mask(packing_info::field_bit_width[0]), field_types[0]);
+         pixel[1] = decode_field<word_type, packing_info::field_bit_width[1]>((data[packing_info::field_word_offset[1]] >> packing_info::field_bit_offset[1]) & low_mask(packing_info::field_bit_width[1]), field_types[1]);
+         pixel[2] = decode_field<word_type, packing_info::field_bit_width[2]>((data[packing_info::field_word_offset[2]] >> packing_info::field_bit_offset[2]) & low_mask(packing_info::field_bit_width[2]), field_types[2]);
+         pixel[3] = decode_field<word_type, packing_info::field_bit_width[3]>((data[packing_info::field_word_offset[3]] >> packing_info::field_bit_offset[3]) & low_mask(packing_info::field_bit_width[3]), field_types[3]);
       }
       return pixel;
    }
@@ -937,9 +935,7 @@ struct PixelRawNormAccessUncompressedPacked<ImageView, Coord, IsSimple, BlockPac
    static void put(ImageView& image, Coord pixel_coord, vec4 pixel) {
       data_type data;
       const auto field_types = image.format().field_types();
-      constexpr U8 ufloat = static_cast<U8>(FieldType::ufloat);
-      constexpr U8 expo = static_cast<U8>(FieldType::expo);
-      if (field_types == ImageFormat::field_types_type(ufloat, ufloat, ufloat, expo)) {
+      if (field_types == ImageFormat::field_types_type(FieldType::ufloat, FieldType::ufloat, FieldType::ufloat, FieldType::expo)) {
          // https://www.khronos.org/registry/OpenGL/extensions/EXT/EXT_texture_shared_exponent.txt
          constexpr F32 limit = (F32)f14_mantissa_mask * (1 << (f14_exponent_max - f14_exponent_basis - f14_mantissa_bits));
          vec3 color = glm::clamp(vec3(pixel), 0.f, limit); // nan -> 0, inf -> limit
@@ -972,10 +968,10 @@ struct PixelRawNormAccessUncompressedPacked<ImageView, Coord, IsSimple, BlockPac
          data[packing_info::field_word_offset[2]] |= (comp_fields[2] & low_mask(packing_info::field_bit_width[2])) << packing_info::field_bit_offset[2];
          data[packing_info::field_word_offset[3]] |= (static_cast<unsigned int>(exp_shared) & low_mask(packing_info::field_bit_width[3])) << packing_info::field_bit_offset[3];
       } else {
-         data[packing_info::field_word_offset[0]] |= (encode_field<word_type, packing_info::field_bit_width[0]>(pixel[0], static_cast<FieldType>(field_types[0])) & low_mask(packing_info::field_bit_width[0])) << packing_info::field_bit_offset[0];
-         data[packing_info::field_word_offset[1]] |= (encode_field<word_type, packing_info::field_bit_width[1]>(pixel[1], static_cast<FieldType>(field_types[1])) & low_mask(packing_info::field_bit_width[1])) << packing_info::field_bit_offset[1];
-         data[packing_info::field_word_offset[2]] |= (encode_field<word_type, packing_info::field_bit_width[2]>(pixel[2], static_cast<FieldType>(field_types[2])) & low_mask(packing_info::field_bit_width[2])) << packing_info::field_bit_offset[2];
-         data[packing_info::field_word_offset[3]] |= (encode_field<word_type, packing_info::field_bit_width[3]>(pixel[3], static_cast<FieldType>(field_types[3])) & low_mask(packing_info::field_bit_width[3])) << packing_info::field_bit_offset[3];
+         data[packing_info::field_word_offset[0]] |= (encode_field<word_type, packing_info::field_bit_width[0]>(pixel[0], field_types[0]) & low_mask(packing_info::field_bit_width[0])) << packing_info::field_bit_offset[0];
+         data[packing_info::field_word_offset[1]] |= (encode_field<word_type, packing_info::field_bit_width[1]>(pixel[1], field_types[1]) & low_mask(packing_info::field_bit_width[1])) << packing_info::field_bit_offset[1];
+         data[packing_info::field_word_offset[2]] |= (encode_field<word_type, packing_info::field_bit_width[2]>(pixel[2], field_types[2]) & low_mask(packing_info::field_bit_width[2])) << packing_info::field_bit_offset[2];
+         data[packing_info::field_word_offset[3]] |= (encode_field<word_type, packing_info::field_bit_width[3]>(pixel[3], field_types[3]) & low_mask(packing_info::field_bit_width[3])) << packing_info::field_bit_offset[3];
       }
       put_pixel_uncompressed<data_type, Coord, ImageView, IsSimple>(image, pixel_coord, data);
    }
@@ -1025,9 +1021,7 @@ struct PixelRawNormAccessUncompressedPacked<ImageView, Coord, IsSimple, BlockPac
       vec4 pixel;
       data_type data = get_pixel_uncompressed<data_type, Coord, ImageView, IsSimple>(image, pixel_coord);
       const auto field_types = image.format().field_types();
-      constexpr U8 ufloat = static_cast<U8>(FieldType::ufloat);
-      constexpr U8 expo = static_cast<U8>(FieldType::expo);
-      if (field_types == ImageFormat::field_types_type(expo, ufloat, ufloat, ufloat)) {
+      if (field_types == ImageFormat::field_types_type(FieldType::expo, FieldType::ufloat, FieldType::ufloat, FieldType::ufloat)) {
          // https://www.khronos.org/registry/OpenGL/extensions/EXT/EXT_texture_shared_exponent.txt
          vec3 pixel3;
          pixel3[0] = FieldRawNorm<word_type, packing_info::field_bit_width[1], FieldType::uint>::decode((data[packing_info::field_word_offset[1]] >> packing_info::field_bit_offset[1]) & low_mask(packing_info::field_bit_width[1]));
@@ -1038,10 +1032,10 @@ struct PixelRawNormAccessUncompressedPacked<ImageView, Coord, IsSimple, BlockPac
          pixel3 *= pow2(exponent - f14_exponent_basis - f14_mantissa_bits);
          pixel = vec4(0.f, pixel3);
       } else {
-         pixel[0] = decode_field<word_type, packing_info::field_bit_width[0]>((data[packing_info::field_word_offset[0]] >> packing_info::field_bit_offset[0]) & low_mask(packing_info::field_bit_width[0]), static_cast<FieldType>(field_types[0]));
-         pixel[1] = decode_field<word_type, packing_info::field_bit_width[1]>((data[packing_info::field_word_offset[1]] >> packing_info::field_bit_offset[1]) & low_mask(packing_info::field_bit_width[1]), static_cast<FieldType>(field_types[1]));
-         pixel[2] = decode_field<word_type, packing_info::field_bit_width[2]>((data[packing_info::field_word_offset[2]] >> packing_info::field_bit_offset[2]) & low_mask(packing_info::field_bit_width[2]), static_cast<FieldType>(field_types[2]));
-         pixel[3] = decode_field<word_type, packing_info::field_bit_width[3]>((data[packing_info::field_word_offset[3]] >> packing_info::field_bit_offset[3]) & low_mask(packing_info::field_bit_width[3]), static_cast<FieldType>(field_types[3]));
+         pixel[0] = decode_field<word_type, packing_info::field_bit_width[0]>((data[packing_info::field_word_offset[0]] >> packing_info::field_bit_offset[0]) & low_mask(packing_info::field_bit_width[0]), field_types[0]);
+         pixel[1] = decode_field<word_type, packing_info::field_bit_width[1]>((data[packing_info::field_word_offset[1]] >> packing_info::field_bit_offset[1]) & low_mask(packing_info::field_bit_width[1]), field_types[1]);
+         pixel[2] = decode_field<word_type, packing_info::field_bit_width[2]>((data[packing_info::field_word_offset[2]] >> packing_info::field_bit_offset[2]) & low_mask(packing_info::field_bit_width[2]), field_types[2]);
+         pixel[3] = decode_field<word_type, packing_info::field_bit_width[3]>((data[packing_info::field_word_offset[3]] >> packing_info::field_bit_offset[3]) & low_mask(packing_info::field_bit_width[3]), field_types[3]);
       }
       return pixel;
    }
@@ -1049,9 +1043,7 @@ struct PixelRawNormAccessUncompressedPacked<ImageView, Coord, IsSimple, BlockPac
    static void put(ImageView& image, Coord pixel_coord, vec4 pixel) {
       data_type data;
       const auto field_types = image.format().field_types();
-      constexpr U8 ufloat = static_cast<U8>(FieldType::ufloat);
-      constexpr U8 expo = static_cast<U8>(FieldType::expo);
-      if (field_types == ImageFormat::field_types_type(expo, ufloat, ufloat, ufloat)) {
+      if (field_types == ImageFormat::field_types_type(FieldType::expo, FieldType::ufloat, FieldType::ufloat, FieldType::ufloat)) {
          // https://www.khronos.org/registry/OpenGL/extensions/EXT/EXT_texture_shared_exponent.txt
          constexpr F32 limit = (F32)f14_mantissa_mask * (1 << (f14_exponent_max - f14_exponent_basis - f14_mantissa_bits));
          vec3 color = glm::clamp(vec3(pixel.g, pixel.b, pixel.a), 0.f, limit); // nan -> 0, inf -> limit
@@ -1084,10 +1076,10 @@ struct PixelRawNormAccessUncompressedPacked<ImageView, Coord, IsSimple, BlockPac
          data[packing_info::field_word_offset[2]] |= (comp_fields[1] & low_mask(packing_info::field_bit_width[2])) << packing_info::field_bit_offset[2];
          data[packing_info::field_word_offset[3]] |= (comp_fields[2] & low_mask(packing_info::field_bit_width[3])) << packing_info::field_bit_offset[3];
       } else {
-         data[packing_info::field_word_offset[0]] |= (encode_field<word_type, packing_info::field_bit_width[0]>(pixel[0], static_cast<FieldType>(field_types[0])) & low_mask(packing_info::field_bit_width[0])) << packing_info::field_bit_offset[0];
-         data[packing_info::field_word_offset[1]] |= (encode_field<word_type, packing_info::field_bit_width[1]>(pixel[1], static_cast<FieldType>(field_types[1])) & low_mask(packing_info::field_bit_width[1])) << packing_info::field_bit_offset[1];
-         data[packing_info::field_word_offset[2]] |= (encode_field<word_type, packing_info::field_bit_width[2]>(pixel[2], static_cast<FieldType>(field_types[2])) & low_mask(packing_info::field_bit_width[2])) << packing_info::field_bit_offset[2];
-         data[packing_info::field_word_offset[3]] |= (encode_field<word_type, packing_info::field_bit_width[3]>(pixel[3], static_cast<FieldType>(field_types[3])) & low_mask(packing_info::field_bit_width[3])) << packing_info::field_bit_offset[3];
+         data[packing_info::field_word_offset[0]] |= (encode_field<word_type, packing_info::field_bit_width[0]>(pixel[0], field_types[0]) & low_mask(packing_info::field_bit_width[0])) << packing_info::field_bit_offset[0];
+         data[packing_info::field_word_offset[1]] |= (encode_field<word_type, packing_info::field_bit_width[1]>(pixel[1], field_types[1]) & low_mask(packing_info::field_bit_width[1])) << packing_info::field_bit_offset[1];
+         data[packing_info::field_word_offset[2]] |= (encode_field<word_type, packing_info::field_bit_width[2]>(pixel[2], field_types[2]) & low_mask(packing_info::field_bit_width[2])) << packing_info::field_bit_offset[2];
+         data[packing_info::field_word_offset[3]] |= (encode_field<word_type, packing_info::field_bit_width[3]>(pixel[3], field_types[3]) & low_mask(packing_info::field_bit_width[3])) << packing_info::field_bit_offset[3];
       }
       put_pixel_uncompressed<data_type, Coord, ImageView, IsSimple>(image, pixel_coord, data);
    }
@@ -1126,14 +1118,17 @@ struct PixelNormAccessUncompressed {
       const vec4 raw = PixelRawNormAccessUncompressed<ImageView, Coord, IsSimple, Packing, FieldType>::get(image, pixel_coord);
       std::memcpy(data, glm::value_ptr(raw), sizeof(vec4));
       const auto swizzles = image.format().swizzles();
-      return vec4(data[swizzles.r], data[swizzles.g], data[swizzles.b], data[swizzles.a]);
+      return vec4(data[static_cast<U8>(swizzles.r)],
+                  data[static_cast<U8>(swizzles.g)],
+                  data[static_cast<U8>(swizzles.b)],
+                  data[static_cast<U8>(swizzles.a)]);
    }
 
    static void put(ImageView& image, Coord pixel_coord, vec4 pixel) {
       vec4 unswizzled_pixel;
       const auto swizzles = image.format().swizzles();
       for (glm::length_t c = 3; c >= 0; --c) {
-         U8 swizzle = swizzles[c];
+         U8 swizzle = static_cast<U8>(swizzles[c]);
          if (swizzle < 4) {
             unswizzled_pixel[swizzle] = pixel[c];
          }
@@ -3536,7 +3531,10 @@ struct PixelNormAccessCompressed {
       const vec4 raw = PixelRawNormAccessCompressed<ImageView, Coord, Packing>::get(image, pixel_coord);
       std::memcpy(data, glm::value_ptr(raw), sizeof(vec4));
       const auto swizzles = image.format().swizzles();
-      return vec4(data[swizzles.r], data[swizzles.g], data[swizzles.b], data[swizzles.a]);
+      return vec4(data[static_cast<U8>(swizzles.r)],
+                  data[static_cast<U8>(swizzles.g)],
+                  data[static_cast<U8>(swizzles.b)],
+                  data[static_cast<U8>(swizzles.a)]);
    }
 };
 

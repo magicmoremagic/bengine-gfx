@@ -52,14 +52,14 @@ ImageFormat::ImageFormat(std::size_t block_size,
    assert(is_valid(packing));
    assert(components > 0);
    assert(components <= max_components);
-   assert(is_valid(static_cast<FieldType>(field_types.r)));
-   assert(is_valid(static_cast<FieldType>(field_types.g)));
-   assert(is_valid(static_cast<FieldType>(field_types.b)));
-   assert(is_valid(static_cast<FieldType>(field_types.a)));
-   assert(is_valid(static_cast<Swizzle>(swizzles.r)));
-   assert(is_valid(static_cast<Swizzle>(swizzles.g)));
-   assert(is_valid(static_cast<Swizzle>(swizzles.b)));
-   assert(is_valid(static_cast<Swizzle>(swizzles.a)));
+   assert(is_valid(field_types.r));
+   assert(is_valid(field_types.g));
+   assert(is_valid(field_types.b));
+   assert(is_valid(field_types.a));
+   assert(is_valid(swizzles.r));
+   assert(is_valid(swizzles.g));
+   assert(is_valid(swizzles.b));
+   assert(is_valid(swizzles.a));
    assert(is_valid(colorspace));
    assert(block_size >= block_dim.x * block_dim.y * block_dim.z * block_pixel_size(packing));
 }
@@ -133,10 +133,10 @@ BlockPacking ImageFormat::packing() const {
 
 ///////////////////////////////////////////////////////////////////////////////
 ImageFormat& ImageFormat::field_types(field_types_type types) {
-   assert(is_valid(static_cast<FieldType>(types.r)));
-   assert(is_valid(static_cast<FieldType>(types.g)));
-   assert(is_valid(static_cast<FieldType>(types.b)));
-   assert(is_valid(static_cast<FieldType>(types.a)));
+   assert(is_valid(types.r));
+   assert(is_valid(types.g));
+   assert(is_valid(types.b));
+   assert(is_valid(types.a));
    field_types_ = types;
    return *this;
 }
@@ -148,24 +148,24 @@ ImageFormat::field_types_type ImageFormat::field_types() const {
 
 ///////////////////////////////////////////////////////////////////////////////
 ImageFormat& ImageFormat::field_type(glm::length_t field, FieldType type) {
-   assert(is_valid(static_cast<FieldType>(type)));
+   assert(is_valid(type));
    assert(field <= max_fields);
-   field_types_[field] = static_cast<field_types_type::value_type>(type);
+   field_types_[field] = type;
    return *this;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 FieldType ImageFormat::field_type(glm::length_t field) const {
    assert(field <= max_fields);
-   return static_cast<FieldType>(field_types_[field]);
+   return field_types_[field];
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 ImageFormat& ImageFormat::swizzles(swizzles_type swizzle) {
-   assert(is_valid(static_cast<Swizzle>(swizzle.r)));
-   assert(is_valid(static_cast<Swizzle>(swizzle.g)));
-   assert(is_valid(static_cast<Swizzle>(swizzle.b)));
-   assert(is_valid(static_cast<Swizzle>(swizzle.a)));
+   assert(is_valid(swizzle.r));
+   assert(is_valid(swizzle.g));
+   assert(is_valid(swizzle.b));
+   assert(is_valid(swizzle.a));
    swizzles_ = swizzle;
    return *this;
 }
@@ -177,16 +177,16 @@ ImageFormat::swizzles_type ImageFormat::swizzles() const {
 
 ///////////////////////////////////////////////////////////////////////////////
 ImageFormat& ImageFormat::swizzle(glm::length_t component, Swizzle swizzle) {
-   assert(is_valid(static_cast<Swizzle>(swizzle)));
+   assert(is_valid(swizzle));
    assert(component <= max_mapped_components);
-   swizzles_[component] = static_cast<swizzles_type::value_type>(swizzle);
+   swizzles_[component] = swizzle;
    return *this;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 Swizzle ImageFormat::swizzle(glm::length_t component) const {
    assert(component <= max_mapped_components);
-   return static_cast<Swizzle>(swizzles_[component]);
+   return swizzles_[component];
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -243,80 +243,51 @@ ImageFormat simple_format(ImageFormat format) {
 
 ///////////////////////////////////////////////////////////////////////////////
 ImageFormat::field_types_type field_types(FieldType type, glm::length_t n_fields) {
-   using V = ImageFormat::field_types_type;
-   using T = V::value_type;
-   V vec(static_cast<T>(FieldType::none));
+   ImageFormat::field_types_type vec(FieldType::none);
    for (glm::length_t i = 0; i < n_fields; ++i) {
-      vec[i] = static_cast<T>(type);
+      vec[i] = type;
    }
    return vec;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 ImageFormat::field_types_type field_types(FieldType type0, FieldType type1) {
-   using V = ImageFormat::field_types_type;
-   using T = V::value_type;
-   return V(static_cast<T>(type0),
-            static_cast<T>(type1),
-            static_cast<T>(FieldType::none),
-            static_cast<T>(FieldType::none));
+   return ImageFormat::field_types_type(type0, type1, FieldType::none, FieldType::none);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 ImageFormat::field_types_type field_types(FieldType type0, FieldType type1, FieldType type2) {
-   using V = ImageFormat::field_types_type;
-   using T = V::value_type;
-   return V(static_cast<T>(type0),
-            static_cast<T>(type1),
-            static_cast<T>(type2),
-            static_cast<T>(FieldType::none));
+   return ImageFormat::field_types_type(type0, type1, type2, FieldType::none);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 ImageFormat::field_types_type field_types(FieldType type0, FieldType type1, FieldType type2, FieldType type3) {
-   using V = ImageFormat::field_types_type;
-   using T = V::value_type;
-   return V(static_cast<T>(type0),
-            static_cast<T>(type1),
-            static_cast<T>(type2),
-            static_cast<T>(type3));
+   return ImageFormat::field_types_type(type0, type1, type2, type3);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 ImageFormat::field_types_type field_types(std::initializer_list<FieldType> types) {
    assert(types.size() <= 4);
-   using V = ImageFormat::field_types_type;
-   using T = V::value_type;
-   V vec(static_cast<T>(FieldType::none));
+   ImageFormat::field_types_type vec(FieldType::none);
    glm::length_t i = 0;
    for (FieldType type : types) {
-      vec[i++] = static_cast<T>(type);
+      vec[i++] = type;
    }
    return vec;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 ImageFormat::swizzles_type swizzles(Swizzle s0, Swizzle s1, Swizzle s2, Swizzle s3) {
-   using V = ImageFormat::swizzles_type;
-   using T = V::value_type;
-   return V(static_cast<T>(s0),
-            static_cast<T>(s1),
-            static_cast<T>(s2),
-            static_cast<T>(s3));
+   return ImageFormat::swizzles_type(s0, s1, s2, s3);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 ImageFormat::swizzles_type swizzles(std::initializer_list<Swizzle> swizzles) {
    assert(swizzles.size() <= 4);
-   using V = ImageFormat::swizzles_type;
-   using T = V::value_type;
-   V vec(static_cast<T>(Swizzle::literal_zero),
-         static_cast<T>(Swizzle::literal_zero),
-         static_cast<T>(Swizzle::literal_zero),
-         static_cast<T>(Swizzle::literal_one));
+   ImageFormat::swizzles_type vec(Swizzle::literal_zero, Swizzle::literal_zero, Swizzle::literal_zero, Swizzle::literal_one);
    glm::length_t i = 0;
    for (Swizzle s : swizzles) {
-      vec[i++] = static_cast<T>(s);
+      vec[i++] = s;
    }
    return vec;
 }

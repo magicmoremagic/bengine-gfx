@@ -2,8 +2,8 @@
 #include "tex/betx_reader.hpp"
 #include "tex/mipmapping.hpp"
 #include "tex/byte_order.hpp"
+#include "tex/betx_read_error.hpp"
 #include "betx_header_.hpp"
-#include "betx_read_error_.hpp"
 #include <be/util/check_file_signature.hpp>
 #include <be/util/zlib.hpp>
 #include <numeric>
@@ -135,6 +135,8 @@ TextureFileInfo BetxReader::info_impl_(std::error_code& ec) noexcept {
             } else if (!ec) {
                ec = ec2;
             }
+         } else {
+            ec = err::unsupported_file_version;
          }
          break;
    }
@@ -373,7 +375,7 @@ void BetxReader::try_fix_crlf_corruption_(std::error_code& ec) noexcept {
    using sig = detail::BetxSignature;
 
    // replace all LFs (except the one at byte 10) with CR-LFs
-   be_warn() << "Attempting to fix CR-LF corruption in beTx file"
+   be_info() << "Attempting to fix CR-LF corruption in beTx file"
       & attr(ids::log_attr_path) << path().string()
       | log();
 
@@ -390,6 +392,7 @@ void BetxReader::try_fix_crlf_corruption_(std::error_code& ec) noexcept {
          ++count;
       }
       prev = c;
+      ++src;
    }
 
    try {
@@ -416,6 +419,7 @@ void BetxReader::try_fix_crlf_corruption_(std::error_code& ec) noexcept {
             ++dest;
          }
          prev = c;
+         ++src;
       }
 
       buf_ = std::move(new_buf);
@@ -430,7 +434,7 @@ void BetxReader::try_fix_crlf_corruption_(std::error_code& ec) noexcept {
 void BetxReader::try_fix_lf_corruption_(std::error_code& ec) noexcept {
    using sig = detail::BetxSignature;
    // replace all CR-LFs with LFs (except the one at byte 11)
-   be_warn() << "Attempting to fix LF corruption in beTx file"
+   be_info() << "Attempting to fix LF corruption in beTx file"
       & attr(ids::log_attr_path) << path().string()
       | log();
 
@@ -447,6 +451,7 @@ void BetxReader::try_fix_lf_corruption_(std::error_code& ec) noexcept {
          ++count;
       }
       prev = c;
+      ++src;
    }
 
    try {
@@ -471,6 +476,7 @@ void BetxReader::try_fix_lf_corruption_(std::error_code& ec) noexcept {
             ++dest;
          }
          prev = c;
+         ++src;
       }
 
       buf_ = std::move(new_buf);

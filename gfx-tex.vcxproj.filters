@@ -284,9 +284,6 @@
     <ClInclude Include="include\tex\betx_reader.hpp">
       <Filter>Header Files\operations\files\betx</Filter>
     </ClInclude>
-    <ClInclude Include="src-tex\betx_read_error_.hpp">
-      <Filter>Source Files\operations\files\betx</Filter>
-    </ClInclude>
     <ClInclude Include="include\tex\betx_payload_compression_mode.hpp">
       <Filter>Header Files\operations\files\betx</Filter>
     </ClInclude>
@@ -332,9 +329,6 @@
     <ClInclude Include="include\tex\betx_writer.hpp">
       <Filter>Header Files\operations\files\betx</Filter>
     </ClInclude>
-    <ClInclude Include="src-tex\betx_write_error_.hpp">
-      <Filter>Source Files\operations\files\betx</Filter>
-    </ClInclude>
     <ClInclude Include="include\tex\log_texture_info.hpp">
       <Filter>Header Files\operations</Filter>
     </ClInclude>
@@ -352,6 +346,12 @@
     </ClInclude>
     <ClInclude Include="include\tex\swizzle.hpp">
       <Filter>Header Files\enums</Filter>
+    </ClInclude>
+    <ClInclude Include="include\tex\betx_read_error.hpp">
+      <Filter>Header Files\operations\files\betx</Filter>
+    </ClInclude>
+    <ClInclude Include="include\tex\betx_write_error.hpp">
+      <Filter>Header Files\operations\files\betx</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -424,9 +424,6 @@
     <ClCompile Include="src-tex\betx_reader.cpp">
       <Filter>Source Files\operations\files\betx</Filter>
     </ClCompile>
-    <ClCompile Include="src-tex\betx_read_error_.cpp">
-      <Filter>Source Files\operations\files\betx</Filter>
-    </ClCompile>
     <ClCompile Include="src-tex\betx_v1_.cpp">
       <Filter>Source Files\operations\files\betx</Filter>
     </ClCompile>
@@ -475,9 +472,6 @@
     <ClCompile Include="src-tex\betx_writer.cpp">
       <Filter>Source Files\operations\files\betx</Filter>
     </ClCompile>
-    <ClCompile Include="src-tex\betx_write_error_.cpp">
-      <Filter>Source Files\operations\files\betx</Filter>
-    </ClCompile>
     <ClCompile Include="src-tex\log_texture_info.cpp">
       <Filter>Source Files\operations</Filter>
     </ClCompile>
@@ -486,6 +480,12 @@
     </ClCompile>
     <ClCompile Include="src-tex\swizzle.cpp">
       <Filter>Source Files\enums</Filter>
+    </ClCompile>
+    <ClCompile Include="src-tex\betx_read_error.cpp">
+      <Filter>Source Files\operations\files\betx</Filter>
+    </ClCompile>
+    <ClCompile Include="src-tex\betx_write_error.cpp">
+      <Filter>Source Files\operations\files\betx</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

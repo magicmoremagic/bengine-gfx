@@ -1,8 +1,8 @@
 #include "pch.hpp"
 #include "tex/betx_reader.hpp"
 #include "tex/mipmapping.hpp"
+#include "tex/betx_read_error.hpp"
 #include "betx_header_.hpp"
-#include "betx_read_error_.hpp"
 #include <glm/common.hpp>
 #include <glm/vector_relational.hpp>
 

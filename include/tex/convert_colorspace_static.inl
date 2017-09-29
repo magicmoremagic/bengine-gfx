@@ -246,7 +246,7 @@ struct ConvertColorspace<ColorspaceTag<Colorspace::bt709_linear_rgb>, Colorspace
 template <>
 struct ConvertColorspace<ColorspaceTag<Colorspace::bt709_linear_rgb>, ColorspaceTag<Colorspace::srgb>> {
    static vec4 convert(vec4 rgb) {
-      return vec4(linear_to_srgb(vec3(rgb)), rgb.a);
+      return vec4(linear_to_srgb(rgb.r), linear_to_srgb(rgb.g), linear_to_srgb(rgb.b), rgb.a);
    }
 };
 
@@ -254,7 +254,7 @@ struct ConvertColorspace<ColorspaceTag<Colorspace::bt709_linear_rgb>, Colorspace
 template <>
 struct ConvertColorspace<ColorspaceTag<Colorspace::srgb>, ColorspaceTag<Colorspace::bt709_linear_rgb>> {
    static vec4 convert(vec4 rgb) {
-     return vec4(srgb_to_linear(vec3(rgb)), rgb.a);
+     return vec4(srgb_to_linear(rgb.r), srgb_to_linear(rgb.g), srgb_to_linear(rgb.b), rgb.a);
    }
 };
 

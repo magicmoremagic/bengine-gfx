@@ -50,6 +50,12 @@
     <ClCompile Include="test\test_tex_blit_pixels.cpp">
       <Filter>Tests\tex</Filter>
     </ClCompile>
+    <ClCompile Include="test\test_tex_betx.cpp">
+      <Filter>Tests\tex</Filter>
+    </ClCompile>
+    <ClCompile Include="test\test_tex_srgb_linear.cpp">
+      <Filter>Tests\tex</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="test\tostring.hpp" />

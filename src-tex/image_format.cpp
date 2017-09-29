@@ -203,7 +203,6 @@ Colorspace ImageFormat::colorspace() const {
 
 ///////////////////////////////////////////////////////////////////////////////
 ImageFormat& ImageFormat::premultiplied(bool premultiplied) {
-   assert(!premultiplied || components_ == 4);
    premultiplied_ = premultiplied;
    return *this;
 }

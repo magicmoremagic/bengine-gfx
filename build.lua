@@ -12,7 +12,11 @@ module 'gfx' {
          'src-tex/*.c',
       },
       define 'BE_GFX_TEX_IMPL',
-      link_project 'core'
+      link_project {
+         'core',
+         'util-compression',
+         'util-fs'
+      }
    },
 
    lib {

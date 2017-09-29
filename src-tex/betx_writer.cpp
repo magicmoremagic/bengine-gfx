@@ -3,8 +3,8 @@
 #include "tex/texture.hpp"
 #include "tex/duplicate_texture.hpp"
 #include "tex/byte_order.hpp"
+#include "tex/betx_write_error.hpp"
 #include "betx_header_.hpp"
-#include "betx_write_error_.hpp"
 #include <be/util/put_file_contents.hpp>
 #include <be/util/zlib.hpp>
 #include <be/core/exceptions.hpp>

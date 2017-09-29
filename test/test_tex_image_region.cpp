@@ -24,9 +24,9 @@ TEST_CASE("ImageRegion default construction", BE_CATCH_TAGS) {
    ImageRegion region;
 
    REQUIRE(region.extents() == ibox());
-   REQUIRE(region.x_basis() == ImageRegion::pos_x);
-   REQUIRE(region.y_basis() == ImageRegion::pos_y);
-   REQUIRE(region.z_basis() == ImageRegion::pos_z);
+   REQUIRE(region.x_basis() == ImageRegion::basis::pos_x);
+   REQUIRE(region.y_basis() == ImageRegion::basis::pos_y);
+   REQUIRE(region.z_basis() == ImageRegion::basis::pos_z);
    REQUIRE(region == ImageRegion());
 }
 
@@ -36,9 +36,9 @@ TEST_CASE("ImageRegion direct construction", BE_CATCH_TAGS) {
    ImageRegion region(extents, basis::pos_y, basis::neg_x, basis::neg_z);
 
    REQUIRE(region.extents() == extents);
-   REQUIRE(region.x_basis() == ImageRegion::pos_y);
-   REQUIRE(region.y_basis() == ImageRegion::neg_x);
-   REQUIRE(region.z_basis() == ImageRegion::neg_z);
+   REQUIRE(region.x_basis() == ImageRegion::basis::pos_y);
+   REQUIRE(region.y_basis() == ImageRegion::basis::neg_x);
+   REQUIRE(region.z_basis() == ImageRegion::basis::neg_z);
    REQUIRE(region == region);
    REQUIRE(region != ImageRegion());
    REQUIRE(region == ImageRegion(region));
@@ -54,16 +54,16 @@ TEST_CASE("ImageRegion from ImageView", BE_CATCH_TAGS) {
    ImageRegion region = pixel_region(img.view);
 
    REQUIRE(region.extents() == make_extents(ivec3(), img.view.dim()));
-   REQUIRE(region.x_basis() == ImageRegion::pos_x);
-   REQUIRE(region.y_basis() == ImageRegion::pos_y);
-   REQUIRE(region.z_basis() == ImageRegion::pos_z);
+   REQUIRE(region.x_basis() == ImageRegion::basis::pos_x);
+   REQUIRE(region.y_basis() == ImageRegion::basis::pos_y);
+   REQUIRE(region.z_basis() == ImageRegion::basis::pos_z);
 
    region = block_region(img.view);
 
    REQUIRE(region.extents() == make_extents(ivec3(), img.view.dim_blocks()));
-   REQUIRE(region.x_basis() == ImageRegion::pos_x);
-   REQUIRE(region.y_basis() == ImageRegion::pos_y);
-   REQUIRE(region.z_basis() == ImageRegion::pos_z);
+   REQUIRE(region.x_basis() == ImageRegion::basis::pos_x);
+   REQUIRE(region.y_basis() == ImageRegion::basis::pos_y);
+   REQUIRE(region.z_basis() == ImageRegion::basis::pos_z);
 }
 
 TEST_CASE("region_dim(ImageRegion)", BE_CATCH_TAGS) {
@@ -92,9 +92,9 @@ TEST_CASE("subregion(ImageRegion, ibox, basis, basis, basis)", BE_CATCH_TAGS) {
 
    ImageRegion sub = subregion(region, ibox { ivec3(4,3,2), ivec3(3, 2, 1) }, basis::neg_y, basis::pos_x, basis::neg_z);
 
-   REQUIRE(sub.x_basis() == ImageRegion::pos_x);
-   REQUIRE(sub.y_basis() == ImageRegion::pos_y);
-   REQUIRE(sub.z_basis() == ImageRegion::pos_z);
+   REQUIRE(sub.x_basis() == ImageRegion::basis::pos_x);
+   REQUIRE(sub.y_basis() == ImageRegion::basis::pos_y);
+   REQUIRE(sub.z_basis() == ImageRegion::basis::pos_z);
    REQUIRE(sub.extents() == make_extents(ivec3(9, 6, 2), ivec3(2, 3, 1)));
 }
 
@@ -104,16 +104,16 @@ TEST_CASE("rotate(ImageRegion, basis)", BE_CATCH_TAGS) {
    ImageRegion region(extents);
 
    ImageRegion rotated = rotate(region);
-   REQUIRE(rotated.x_basis() == ImageRegion::neg_x);
-   REQUIRE(rotated.y_basis() == ImageRegion::neg_y);
-   REQUIRE(rotated.z_basis() == ImageRegion::pos_z);
+   REQUIRE(rotated.x_basis() == ImageRegion::basis::neg_x);
+   REQUIRE(rotated.y_basis() == ImageRegion::basis::neg_y);
+   REQUIRE(rotated.z_basis() == ImageRegion::basis::pos_z);
    REQUIRE(rotated.extents() == region.extents());
    REQUIRE(region_dim(rotated) == region_dim(region));
 
-   rotated = rotate(region, ImageRegion::pos_x);
-   REQUIRE(rotated.x_basis() == ImageRegion::pos_x);
-   REQUIRE(rotated.y_basis() == ImageRegion::neg_y);
-   REQUIRE(rotated.z_basis() == ImageRegion::neg_z);
+   rotated = rotate(region, ImageRegion::basis::pos_x);
+   REQUIRE(rotated.x_basis() == ImageRegion::basis::pos_x);
+   REQUIRE(rotated.y_basis() == ImageRegion::basis::neg_y);
+   REQUIRE(rotated.z_basis() == ImageRegion::basis::neg_z);
    REQUIRE(rotated.extents() == region.extents());
    REQUIRE(region_dim(rotated) == region_dim(region));
 }
@@ -124,15 +124,15 @@ TEST_CASE("rotate_cw(ImageRegion, basis)", BE_CATCH_TAGS) {
    ImageRegion region(extents);
 
    ImageRegion rotated = rotate_cw(region);
-   REQUIRE(rotated.x_basis() == ImageRegion::pos_y);
-   REQUIRE(rotated.y_basis() == ImageRegion::neg_x);
-   REQUIRE(rotated.z_basis() == ImageRegion::pos_z);
+   REQUIRE(rotated.x_basis() == ImageRegion::basis::pos_y);
+   REQUIRE(rotated.y_basis() == ImageRegion::basis::neg_x);
+   REQUIRE(rotated.z_basis() == ImageRegion::basis::pos_z);
    REQUIRE(rotated.extents() == region.extents());
    REQUIRE(region_dim(rotated) == ivec3(7, 13, 2));
 
    REQUIRE(region == rotate_ccw(rotated));
    REQUIRE(rotate(region) == rotate_cw(rotated));
-   REQUIRE(rotate_cw(region, ImageRegion::pos_x) == rotate_ccw(region, ImageRegion::neg_x));
+   REQUIRE(rotate_cw(region, ImageRegion::basis::pos_x) == rotate_ccw(region, ImageRegion::basis::neg_x));
 }
 
 TEST_CASE("region_to_image(ImageRegion, ivec3)", BE_CATCH_TAGS) {

@@ -7,12 +7,12 @@ namespace {
 ///////////////////////////////////////////////////////////////////////////////
 ImageRegion::basis pos_basis(ImageRegion::basis b) {
    switch (b) {
-      case ImageRegion::pos_x: return ImageRegion::pos_x;
-      case ImageRegion::pos_y: return ImageRegion::pos_y;
-      case ImageRegion::pos_z: return ImageRegion::pos_z;
-      case ImageRegion::neg_x: return ImageRegion::pos_x;
-      case ImageRegion::neg_y: return ImageRegion::pos_y;
-      case ImageRegion::neg_z: return ImageRegion::pos_z;
+      case ImageRegion::basis::pos_x: return ImageRegion::basis::pos_x;
+      case ImageRegion::basis::pos_y: return ImageRegion::basis::pos_y;
+      case ImageRegion::basis::pos_z: return ImageRegion::basis::pos_z;
+      case ImageRegion::basis::neg_x: return ImageRegion::basis::pos_x;
+      case ImageRegion::basis::neg_y: return ImageRegion::basis::pos_y;
+      case ImageRegion::basis::neg_z: return ImageRegion::basis::pos_z;
    }
    return b;
 }
@@ -20,12 +20,12 @@ ImageRegion::basis pos_basis(ImageRegion::basis b) {
 ///////////////////////////////////////////////////////////////////////////////
 ImageRegion::basis negate_basis(ImageRegion::basis b) {
    switch (b) {
-      case ImageRegion::pos_x: return ImageRegion::neg_x;
-      case ImageRegion::pos_y: return ImageRegion::neg_y;
-      case ImageRegion::pos_z: return ImageRegion::neg_z;
-      case ImageRegion::neg_x: return ImageRegion::pos_x;
-      case ImageRegion::neg_y: return ImageRegion::pos_y;
-      case ImageRegion::neg_z: return ImageRegion::pos_z;
+      case ImageRegion::basis::pos_x: return ImageRegion::basis::neg_x;
+      case ImageRegion::basis::pos_y: return ImageRegion::basis::neg_y;
+      case ImageRegion::basis::pos_z: return ImageRegion::basis::neg_z;
+      case ImageRegion::basis::neg_x: return ImageRegion::basis::pos_x;
+      case ImageRegion::basis::neg_y: return ImageRegion::basis::pos_y;
+      case ImageRegion::basis::neg_z: return ImageRegion::basis::pos_z;
    }
    return b;
 }
@@ -33,13 +33,13 @@ ImageRegion::basis negate_basis(ImageRegion::basis b) {
 ///////////////////////////////////////////////////////////////////////////////
 bool is_basis_negative(ImageRegion::basis b) {
    switch (b) {
-      case ImageRegion::pos_x:
-      case ImageRegion::pos_y:
-      case ImageRegion::pos_z:
+      case ImageRegion::basis::pos_x:
+      case ImageRegion::basis::pos_y:
+      case ImageRegion::basis::pos_z:
          return false;
-      case ImageRegion::neg_x:
-      case ImageRegion::neg_y:
-      case ImageRegion::neg_z:
+      case ImageRegion::basis::neg_x:
+      case ImageRegion::basis::neg_y:
+      case ImageRegion::basis::neg_z:
          return true;
    }
    return false;
@@ -49,12 +49,12 @@ bool is_basis_negative(ImageRegion::basis b) {
 
 ///////////////////////////////////////////////////////////////////////////////
 ImageRegion::ImageRegion()
-   : basis_(pos_x, pos_y, pos_z) { }
+   : basis_(basis::pos_x, basis::pos_y, basis::pos_z) { }
 
 ///////////////////////////////////////////////////////////////////////////////
 ImageRegion::ImageRegion(ibox extents)
    : extents_(extents),
-     basis_(pos_x, pos_y, pos_z) { }
+     basis_(basis::pos_x, basis::pos_y, basis::pos_z) { }
 
 ///////////////////////////////////////////////////////////////////////////////
 ImageRegion::ImageRegion(ibox extents, basis x_basis, basis y_basis, basis z_basis)
@@ -99,9 +99,9 @@ bool ImageRegion::operator!=(const ImageRegion& other) const {
 ///////////////////////////////////////////////////////////////////////////////
 ivec3 region_dim(ImageRegion region) {
    ibox extents = region.extents();
-   return ivec3(extents.dim[pos_basis(region.x_basis())],
-                extents.dim[pos_basis(region.y_basis())],
-                extents.dim[pos_basis(region.z_basis())]);
+   return ivec3(extents.dim[static_cast<glm::length_t>(pos_basis(region.x_basis()))],
+                extents.dim[static_cast<glm::length_t>(pos_basis(region.y_basis()))],
+                extents.dim[static_cast<glm::length_t>(pos_basis(region.z_basis()))]);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -118,9 +118,9 @@ ImageRegion subregion(ImageRegion parent, ibox extents, ImageRegion::basis x_bas
 
    basis_vec_type parent_basis = parent.basis_vec();
 
-   basis x = (basis)parent_basis[pos_basis(x_basis)];
-   basis y = (basis)parent_basis[pos_basis(y_basis)];
-   basis z = (basis)parent_basis[pos_basis(z_basis)];
+   basis x = (basis)parent_basis[static_cast<glm::length_t>(pos_basis(x_basis))];
+   basis y = (basis)parent_basis[static_cast<glm::length_t>(pos_basis(y_basis))];
+   basis z = (basis)parent_basis[static_cast<glm::length_t>(pos_basis(z_basis))];
 
    if (is_basis_negative(x_basis)) x = negate_basis(x);
    if (is_basis_negative(y_basis)) y = negate_basis(y);
@@ -233,10 +233,11 @@ ivec3 region_to_image(ImageRegion region, ivec3 region_coord) {
    for (glm::length_t i = 0; i < 3; ++i) {
       basis b = (basis)region_basis[i];
       if (is_basis_negative(b)) {
-         b = pos_basis(b);
-         image_coord[b] = region.extents().dim[b] - 1 - region_coord[i];
+         glm::length_t o = static_cast<glm::length_t>(pos_basis(b));
+         image_coord[o] = region.extents().dim[o] - 1 - region_coord[i];
       } else {
-         image_coord[b] = region_coord[i];
+         glm::length_t o = static_cast<glm::length_t>(b);
+         image_coord[o] = region_coord[i];
       }
    }
 
@@ -255,10 +256,11 @@ ivec3 image_to_region(ivec3 image_coord, ImageRegion region) {
    for (glm::length_t i = 0; i < 3; ++i) {
       basis b = (basis)region_basis[i];
       if (is_basis_negative(b)) {
-         b = pos_basis(b);
-         region_coord[i] = region.extents().dim[b] - 1 - image_coord[b];
+         glm::length_t o = static_cast<glm::length_t>(pos_basis(b));
+         region_coord[i] = region.extents().dim[o] - 1 - image_coord[o];
       } else {
-         region_coord[i] = image_coord[b];
+         glm::length_t o = static_cast<glm::length_t>(b);
+         region_coord[i] = image_coord[o];
       }
    }
 

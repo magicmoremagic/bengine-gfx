@@ -4,15 +4,14 @@
 
 #include <be/core/extents.hpp>
 #include <be/core/glm_helpers.hpp>
+#include <be/core/enum_vec3.hpp>
 #include <glm/vec3.hpp>
 
 namespace be::gfx::tex {
 
 class ImageRegion final {
 public:
-   using basis_vec_type = glm::vec<3, U8>;
-
-   enum basis : U8 {
+   enum class basis : U8 {
       pos_x,
       pos_y,
       pos_z,
@@ -20,6 +19,8 @@ public:
       neg_y,
       neg_z
    };
+
+   using basis_vec_type = evec3<basis>;
 
    ImageRegion();
    ImageRegion(ibox extents);
@@ -62,9 +63,9 @@ ImageRegion subregion(ImageRegion parent, generic_extents<Coord, Coord> extents)
 template <typename Coord>
 ImageRegion subregion(ImageRegion parent, generic_extents<Coord, Coord> extents, ImageRegion::basis x_basis, ImageRegion::basis y_basis, ImageRegion::basis z_basis);
 
-ImageRegion rotate(ImageRegion region, ImageRegion::basis axis = ImageRegion::neg_z);
-ImageRegion rotate_cw(ImageRegion region, ImageRegion::basis axis = ImageRegion::neg_z);
-ImageRegion rotate_ccw(ImageRegion region, ImageRegion::basis axis = ImageRegion::neg_z);
+ImageRegion rotate(ImageRegion region, ImageRegion::basis axis = ImageRegion::basis::neg_z);
+ImageRegion rotate_cw(ImageRegion region, ImageRegion::basis axis = ImageRegion::basis::neg_z);
+ImageRegion rotate_ccw(ImageRegion region, ImageRegion::basis axis = ImageRegion::basis::neg_z);
 
 ivec3 region_to_image(ImageRegion region, ivec3 region_coord);
 template <typename Coord> Coord region_to_image(ImageRegion region, Coord region_coord);

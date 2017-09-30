@@ -4,11 +4,9 @@
 #include "tex/bmp_reader.hpp"
 #include "tex/dds_reader.hpp"
 #include "tex/gif_reader.hpp"
-#include "tex/glraw_reader.hpp"
 #include "tex/hdr_reader.hpp"
 #include "tex/jpeg_reader.hpp"
 #include "tex/ktx_reader.hpp"
-#include "tex/pic_reader.hpp"
 #include "tex/png_reader.hpp"
 #include "tex/pnm_reader.hpp"
 #include "tex/psd_reader.hpp"
@@ -100,11 +98,9 @@ void TextureReader::setup_inner_(const Buf<const UC>& buf, std::error_code& ec) 
       if (is_betx(buf))       { format = TextureFileFormat::betx;  }
       else if (is_ktx(buf))   { format = TextureFileFormat::ktx;   }
       else if (is_png(buf))   { format = TextureFileFormat::png;   }
-      else if (is_glraw(buf)) { format = TextureFileFormat::glraw; }
       else if (is_dds(buf))   { format = TextureFileFormat::dds;   }
       else if (is_hdr(buf))   { format = TextureFileFormat::hdr;   }
       else if (is_gif(buf))   { format = TextureFileFormat::gif;   }
-      else if (is_pic(buf))   { format = TextureFileFormat::pic;   }
       else if (is_psd(buf))   { format = TextureFileFormat::psd;   }
       else if (is_jpeg(buf))  { format = TextureFileFormat::jpeg;  }
       else if (is_bmp(buf))   { format = TextureFileFormat::bmp;   }
@@ -131,11 +127,9 @@ std::unique_ptr<TextureReaderBase> make_texture_reader(TextureFileFormat format,
       case TextureFileFormat::betx:    return std::make_unique<BetxReader>(strict, log);
       case TextureFileFormat::ktx:     return std::make_unique<KtxReader>(strict, log);
       case TextureFileFormat::png:     return std::make_unique<PngReader>(strict, log);
-      case TextureFileFormat::glraw:   return std::make_unique<GlrawReader>(strict, log);
       case TextureFileFormat::dds:     return std::make_unique<DdsReader>(strict, log);
       case TextureFileFormat::hdr:     return std::make_unique<HdrReader>(strict, log);
       case TextureFileFormat::gif:     return std::make_unique<GifReader>(strict, log);
-      case TextureFileFormat::pic:     return std::make_unique<PicReader>(strict, log);
       case TextureFileFormat::psd:     return std::make_unique<PsdReader>(strict, log);
       case TextureFileFormat::jpeg:    return std::make_unique<JpegReader>(strict, log);
       case TextureFileFormat::bmp:     return std::make_unique<BmpReader>(strict, log);

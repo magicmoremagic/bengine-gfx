@@ -66,126 +66,6 @@ ImageFormatGl gl_format_compressed(ImageFormat format) {
    f.swizzle[3] = swizzle_to_gl(format.swizzle(3));
 
    switch (format.packing()) {
-      //#bgl checked (GL_KHR_texture_compression_astc_ldr)
-      case BlockPacking::c_astc:
-         
-         // components() and field_types() are not checked since they can vary per block
-         if (format.block_size() == 16 && format.block_dim().z == 1 && format.block_dim().y < 16) {
-            if (format.colorspace() == Colorspace::srgb) {
-               switch ((format.block_dim().x << 4) | (format.block_dim().y & 0xF)) {
-                  case 0x44: f.internal_format = GL_COMPRESSED_SRGB8_ALPHA8_ASTC_4x4_KHR; break;
-                  case 0x54: f.internal_format = GL_COMPRESSED_SRGB8_ALPHA8_ASTC_5x4_KHR; break;
-                  case 0x55: f.internal_format = GL_COMPRESSED_SRGB8_ALPHA8_ASTC_5x5_KHR; break;
-                  case 0x65: f.internal_format = GL_COMPRESSED_SRGB8_ALPHA8_ASTC_6x5_KHR; break;
-                  case 0x66: f.internal_format = GL_COMPRESSED_SRGB8_ALPHA8_ASTC_6x6_KHR; break;
-                  case 0x85: f.internal_format = GL_COMPRESSED_SRGB8_ALPHA8_ASTC_8x5_KHR; break;
-                  case 0x86: f.internal_format = GL_COMPRESSED_SRGB8_ALPHA8_ASTC_8x6_KHR; break;
-                  case 0x88: f.internal_format = GL_COMPRESSED_SRGB8_ALPHA8_ASTC_8x8_KHR; break;
-                  case 0xA5: f.internal_format = GL_COMPRESSED_SRGB8_ALPHA8_ASTC_10x5_KHR; break;
-                  case 0xA6: f.internal_format = GL_COMPRESSED_SRGB8_ALPHA8_ASTC_10x6_KHR; break;
-                  case 0xA8: f.internal_format = GL_COMPRESSED_SRGB8_ALPHA8_ASTC_10x8_KHR; break;
-                  case 0xAA: f.internal_format = GL_COMPRESSED_SRGB8_ALPHA8_ASTC_10x10_KHR; break;
-                  case 0xCA: f.internal_format = GL_COMPRESSED_SRGB8_ALPHA8_ASTC_12x10_KHR; break;
-                  case 0xCC: f.internal_format = GL_COMPRESSED_SRGB8_ALPHA8_ASTC_12x12_KHR; break;
-               }
-            } else {
-               switch ((format.block_dim().x << 4) | (format.block_dim().y & 0xF)) {
-                  case 0x44: f.internal_format = GL_COMPRESSED_RGBA_ASTC_4x4_KHR; break;
-                  case 0x54: f.internal_format = GL_COMPRESSED_RGBA_ASTC_5x4_KHR; break;
-                  case 0x55: f.internal_format = GL_COMPRESSED_RGBA_ASTC_5x5_KHR; break;
-                  case 0x65: f.internal_format = GL_COMPRESSED_RGBA_ASTC_6x5_KHR; break;
-                  case 0x66: f.internal_format = GL_COMPRESSED_RGBA_ASTC_6x6_KHR; break;
-                  case 0x85: f.internal_format = GL_COMPRESSED_RGBA_ASTC_8x5_KHR; break;
-                  case 0x86: f.internal_format = GL_COMPRESSED_RGBA_ASTC_8x6_KHR; break;
-                  case 0x88: f.internal_format = GL_COMPRESSED_RGBA_ASTC_8x8_KHR; break;
-                  case 0xA5: f.internal_format = GL_COMPRESSED_RGBA_ASTC_10x5_KHR; break;
-                  case 0xA6: f.internal_format = GL_COMPRESSED_RGBA_ASTC_10x6_KHR; break;
-                  case 0xA8: f.internal_format = GL_COMPRESSED_RGBA_ASTC_10x8_KHR; break;
-                  case 0xAA: f.internal_format = GL_COMPRESSED_RGBA_ASTC_10x10_KHR; break;
-                  case 0xCA: f.internal_format = GL_COMPRESSED_RGBA_ASTC_12x10_KHR; break;
-                  case 0xCC: f.internal_format = GL_COMPRESSED_RGBA_ASTC_12x12_KHR; break;
-               }
-            }
-         }
-         break;
-
-      //#bgl checked (4.2)
-      case BlockPacking::c_bptc:
-         if (format.block_dim() == ImageFormat::block_dim_type(U8(4), U8(4), U8(1)) && format.block_size() == 16) {
-            if (format.components() == 4 && format.field_types() == field_types(FieldType::unorm, 4)) {
-               if (format.colorspace() == Colorspace::srgb) {
-                  f.internal_format = GL_COMPRESSED_SRGB_ALPHA_BPTC_UNORM;
-               } else {
-                  f.internal_format = GL_COMPRESSED_RGBA_BPTC_UNORM;
-               }
-            } else if (format.components() == 3) {
-               if (format.field_types() == field_types(FieldType::sfloat, 3)) {
-                  f.internal_format = GL_COMPRESSED_RGB_BPTC_SIGNED_FLOAT;
-               } else if (format.field_types() == field_types(FieldType::ufloat, 3)) {
-                  f.internal_format = GL_COMPRESSED_RGB_BPTC_UNSIGNED_FLOAT;
-               }
-            }
-         }
-         break;
-
-      //#bgl checked (4.3)
-      case BlockPacking::c_etc1: // etc1 is not directly supported by opengl except as a subset of etc2
-      case BlockPacking::c_etc2:
-         if (format.block_dim() == ImageFormat::block_dim_type(U8(4), U8(4), U8(1))) {
-            switch (format.components()) {
-               case 1:
-                  if (format.block_size() == 8) {
-                     if (format.field_types() == field_types(FieldType::unorm, 1)) {
-                        f.internal_format = GL_COMPRESSED_R11_EAC;
-                     } else if (format.field_types() == field_types(FieldType::snorm, 1)) {
-                        f.internal_format = GL_COMPRESSED_SIGNED_R11_EAC;
-                     }
-                  }
-                  break;
-
-               case 2:
-                  if (format.block_size() == 16) {
-                     if (format.field_types() == field_types(FieldType::unorm, 2)) {
-                        f.internal_format = GL_COMPRESSED_RG11_EAC;
-                     } else if (format.field_types() == field_types(FieldType::snorm, 2)) {
-                        f.internal_format = GL_COMPRESSED_SIGNED_RG11_EAC;
-                     }
-                  }
-                  break;
-
-               case 3:
-                  if (format.block_size() == 8 && format.field_types() == field_types(FieldType::unorm, 3)) {
-                     if (format.colorspace() == Colorspace::srgb) {
-                        f.internal_format = GL_COMPRESSED_SRGB8_ETC2;
-                     } else {
-                        f.internal_format = GL_COMPRESSED_RGB8_ETC2;
-                     }
-                  }
-                  break;
-
-               case 4:
-                  if (format.field_types() == field_types(FieldType::unorm, 4)) {
-                     if (format.block_size() == 8) {
-                        if (format.colorspace() == Colorspace::srgb) {
-                           f.internal_format = GL_COMPRESSED_SRGB8_PUNCHTHROUGH_ALPHA1_ETC2;
-                        } else {
-                           f.internal_format = GL_COMPRESSED_RGB8_PUNCHTHROUGH_ALPHA1_ETC2;
-                        }
-                     } else if (format.block_size() == 16) {
-                        if (format.colorspace() == Colorspace::srgb) {
-                           f.internal_format = GL_COMPRESSED_SRGB8_ALPHA8_ETC2_EAC;
-                        } else {
-                           f.internal_format = GL_COMPRESSED_RGBA8_ETC2_EAC;
-                        }
-                     }
-                  }
-                  break;
-            }
-         }
-         break;
-      //#bgl unchecked
-
-      
       case BlockPacking::c_s3tc1:
          if (format.block_dim() == ImageFormat::block_dim_type(U8(4), U8(4), U8(1)) && format.block_size() == 8) {
             if (format.components() == 3 && format.field_types() == field_types(FieldType::unorm, 3)) {
@@ -255,6 +135,26 @@ ImageFormatGl gl_format_compressed(ImageFormat format) {
             }
          }
          break;
+
+      //#bgl checked (4.2)
+      case BlockPacking::c_bptc:
+         if (format.block_dim() == ImageFormat::block_dim_type(U8(4), U8(4), U8(1)) && format.block_size() == 16) {
+            if (format.components() == 4 && format.field_types() == field_types(FieldType::unorm, 4)) {
+               if (format.colorspace() == Colorspace::srgb) {
+                  f.internal_format = GL_COMPRESSED_SRGB_ALPHA_BPTC_UNORM;
+               } else {
+                  f.internal_format = GL_COMPRESSED_RGBA_BPTC_UNORM;
+               }
+            } else if (format.components() == 3) {
+               if (format.field_types() == field_types(FieldType::sfloat, 3)) {
+                  f.internal_format = GL_COMPRESSED_RGB_BPTC_SIGNED_FLOAT;
+               } else if (format.field_types() == field_types(FieldType::ufloat, 3)) {
+                  f.internal_format = GL_COMPRESSED_RGB_BPTC_UNSIGNED_FLOAT;
+               }
+            }
+         }
+         break;
+      //#bgl unchecked
    }
    return f;
 }
@@ -1013,51 +913,6 @@ ImageFormat canonical_format(gl::GLenum internal_format) {
    using Dim = ImageFormat::block_dim_type;
 
    switch (internal_format) {
-      //#bgl checked (GL_KHR_texture_compression_astc_ldr)
-      case GL_COMPRESSED_SRGB8_ALPHA8_ASTC_4x4_KHR:   return ImageFormat(U8(16), Dim(U8(4),  U8(4),  U8(1)), BlockPacking::c_astc, U8(4), field_types(FieldType::unorm, 4), swizzles_rgba(), Colorspace::srgb, true);
-      case GL_COMPRESSED_SRGB8_ALPHA8_ASTC_5x4_KHR:   return ImageFormat(U8(16), Dim(U8(5),  U8(4),  U8(1)), BlockPacking::c_astc, U8(4), field_types(FieldType::unorm, 4), swizzles_rgba(), Colorspace::srgb, true);
-      case GL_COMPRESSED_SRGB8_ALPHA8_ASTC_5x5_KHR:   return ImageFormat(U8(16), Dim(U8(5),  U8(5),  U8(1)), BlockPacking::c_astc, U8(4), field_types(FieldType::unorm, 4), swizzles_rgba(), Colorspace::srgb, true);
-      case GL_COMPRESSED_SRGB8_ALPHA8_ASTC_6x5_KHR:   return ImageFormat(U8(16), Dim(U8(6),  U8(5),  U8(1)), BlockPacking::c_astc, U8(4), field_types(FieldType::unorm, 4), swizzles_rgba(), Colorspace::srgb, true);
-      case GL_COMPRESSED_SRGB8_ALPHA8_ASTC_6x6_KHR:   return ImageFormat(U8(16), Dim(U8(6),  U8(6),  U8(1)), BlockPacking::c_astc, U8(4), field_types(FieldType::unorm, 4), swizzles_rgba(), Colorspace::srgb, true);
-      case GL_COMPRESSED_SRGB8_ALPHA8_ASTC_8x5_KHR:   return ImageFormat(U8(16), Dim(U8(8),  U8(5),  U8(1)), BlockPacking::c_astc, U8(4), field_types(FieldType::unorm, 4), swizzles_rgba(), Colorspace::srgb, true);
-      case GL_COMPRESSED_SRGB8_ALPHA8_ASTC_8x6_KHR:   return ImageFormat(U8(16), Dim(U8(8),  U8(6),  U8(1)), BlockPacking::c_astc, U8(4), field_types(FieldType::unorm, 4), swizzles_rgba(), Colorspace::srgb, true);
-      case GL_COMPRESSED_SRGB8_ALPHA8_ASTC_8x8_KHR:   return ImageFormat(U8(16), Dim(U8(8),  U8(8),  U8(1)), BlockPacking::c_astc, U8(4), field_types(FieldType::unorm, 4), swizzles_rgba(), Colorspace::srgb, true);
-      case GL_COMPRESSED_SRGB8_ALPHA8_ASTC_10x5_KHR:  return ImageFormat(U8(16), Dim(U8(10), U8(5),  U8(1)), BlockPacking::c_astc, U8(4), field_types(FieldType::unorm, 4), swizzles_rgba(), Colorspace::srgb, true);
-      case GL_COMPRESSED_SRGB8_ALPHA8_ASTC_10x6_KHR:  return ImageFormat(U8(16), Dim(U8(10), U8(6),  U8(1)), BlockPacking::c_astc, U8(4), field_types(FieldType::unorm, 4), swizzles_rgba(), Colorspace::srgb, true);
-      case GL_COMPRESSED_SRGB8_ALPHA8_ASTC_10x8_KHR:  return ImageFormat(U8(16), Dim(U8(10), U8(8),  U8(1)), BlockPacking::c_astc, U8(4), field_types(FieldType::unorm, 4), swizzles_rgba(), Colorspace::srgb, true);
-      case GL_COMPRESSED_SRGB8_ALPHA8_ASTC_10x10_KHR: return ImageFormat(U8(16), Dim(U8(10), U8(10), U8(1)), BlockPacking::c_astc, U8(4), field_types(FieldType::unorm, 4), swizzles_rgba(), Colorspace::srgb, true);
-      case GL_COMPRESSED_SRGB8_ALPHA8_ASTC_12x10_KHR: return ImageFormat(U8(16), Dim(U8(12), U8(10), U8(1)), BlockPacking::c_astc, U8(4), field_types(FieldType::unorm, 4), swizzles_rgba(), Colorspace::srgb, true);
-      case GL_COMPRESSED_SRGB8_ALPHA8_ASTC_12x12_KHR: return ImageFormat(U8(16), Dim(U8(12), U8(12), U8(1)), BlockPacking::c_astc, U8(4), field_types(FieldType::unorm, 4), swizzles_rgba(), Colorspace::srgb, true);
-      case GL_COMPRESSED_RGBA_ASTC_4x4_KHR:           return ImageFormat(U8(16), Dim(U8(4),  U8(4),  U8(1)), BlockPacking::c_astc, U8(4), field_types(FieldType::unorm, 4), swizzles_rgba(), Colorspace::bt709_linear_rgb, true);
-      case GL_COMPRESSED_RGBA_ASTC_5x4_KHR:           return ImageFormat(U8(16), Dim(U8(5),  U8(4),  U8(1)), BlockPacking::c_astc, U8(4), field_types(FieldType::unorm, 4), swizzles_rgba(), Colorspace::bt709_linear_rgb, true);
-      case GL_COMPRESSED_RGBA_ASTC_5x5_KHR:           return ImageFormat(U8(16), Dim(U8(5),  U8(5),  U8(1)), BlockPacking::c_astc, U8(4), field_types(FieldType::unorm, 4), swizzles_rgba(), Colorspace::bt709_linear_rgb, true);
-      case GL_COMPRESSED_RGBA_ASTC_6x5_KHR:           return ImageFormat(U8(16), Dim(U8(6),  U8(5),  U8(1)), BlockPacking::c_astc, U8(4), field_types(FieldType::unorm, 4), swizzles_rgba(), Colorspace::bt709_linear_rgb, true);
-      case GL_COMPRESSED_RGBA_ASTC_6x6_KHR:           return ImageFormat(U8(16), Dim(U8(6),  U8(6),  U8(1)), BlockPacking::c_astc, U8(4), field_types(FieldType::unorm, 4), swizzles_rgba(), Colorspace::bt709_linear_rgb, true);
-      case GL_COMPRESSED_RGBA_ASTC_8x5_KHR:           return ImageFormat(U8(16), Dim(U8(8),  U8(5),  U8(1)), BlockPacking::c_astc, U8(4), field_types(FieldType::unorm, 4), swizzles_rgba(), Colorspace::bt709_linear_rgb, true);
-      case GL_COMPRESSED_RGBA_ASTC_8x6_KHR:           return ImageFormat(U8(16), Dim(U8(8),  U8(6),  U8(1)), BlockPacking::c_astc, U8(4), field_types(FieldType::unorm, 4), swizzles_rgba(), Colorspace::bt709_linear_rgb, true);
-      case GL_COMPRESSED_RGBA_ASTC_8x8_KHR:           return ImageFormat(U8(16), Dim(U8(8),  U8(8),  U8(1)), BlockPacking::c_astc, U8(4), field_types(FieldType::unorm, 4), swizzles_rgba(), Colorspace::bt709_linear_rgb, true);
-      case GL_COMPRESSED_RGBA_ASTC_10x5_KHR:          return ImageFormat(U8(16), Dim(U8(10), U8(5),  U8(1)), BlockPacking::c_astc, U8(4), field_types(FieldType::unorm, 4), swizzles_rgba(), Colorspace::bt709_linear_rgb, true);
-      case GL_COMPRESSED_RGBA_ASTC_10x6_KHR:          return ImageFormat(U8(16), Dim(U8(10), U8(6),  U8(1)), BlockPacking::c_astc, U8(4), field_types(FieldType::unorm, 4), swizzles_rgba(), Colorspace::bt709_linear_rgb, true);
-      case GL_COMPRESSED_RGBA_ASTC_10x8_KHR:          return ImageFormat(U8(16), Dim(U8(10), U8(8),  U8(1)), BlockPacking::c_astc, U8(4), field_types(FieldType::unorm, 4), swizzles_rgba(), Colorspace::bt709_linear_rgb, true);
-      case GL_COMPRESSED_RGBA_ASTC_10x10_KHR:         return ImageFormat(U8(16), Dim(U8(10), U8(10), U8(1)), BlockPacking::c_astc, U8(4), field_types(FieldType::unorm, 4), swizzles_rgba(), Colorspace::bt709_linear_rgb, true);
-      case GL_COMPRESSED_RGBA_ASTC_12x10_KHR:         return ImageFormat(U8(16), Dim(U8(12), U8(10), U8(1)), BlockPacking::c_astc, U8(4), field_types(FieldType::unorm, 4), swizzles_rgba(), Colorspace::bt709_linear_rgb, true);
-      case GL_COMPRESSED_RGBA_ASTC_12x12_KHR:         return ImageFormat(U8(16), Dim(U8(12), U8(12), U8(1)), BlockPacking::c_astc, U8(4), field_types(FieldType::unorm, 4), swizzles_rgba(), Colorspace::bt709_linear_rgb, true);
-      //#bgl checked (4.2)
-      case GL_COMPRESSED_SRGB_ALPHA_BPTC_UNORM:       return ImageFormat(U8(16), Dim(U8(4), U8(4), U8(1)), BlockPacking::c_bptc, U8(4), field_types(FieldType::unorm, 4), swizzles_rgba(), Colorspace::srgb, true);
-      case GL_COMPRESSED_RGBA_BPTC_UNORM:             return ImageFormat(U8(16), Dim(U8(4), U8(4), U8(1)), BlockPacking::c_bptc, U8(4), field_types(FieldType::unorm, 4), swizzles_rgba(), Colorspace::bt709_linear_rgb, true);
-      case GL_COMPRESSED_RGB_BPTC_SIGNED_FLOAT:       return ImageFormat(U8(16), Dim(U8(4), U8(4), U8(1)), BlockPacking::c_bptc, U8(3), field_types(FieldType::sfloat, 3), swizzles_rgb(), Colorspace::bt709_linear_rgb, true);
-      case GL_COMPRESSED_RGB_BPTC_UNSIGNED_FLOAT:     return ImageFormat(U8(16), Dim(U8(4), U8(4), U8(1)), BlockPacking::c_bptc, U8(3), field_types(FieldType::ufloat, 3), swizzles_rgb(), Colorspace::bt709_linear_rgb, true);
-      //#bgl checked (4.3)
-      case GL_COMPRESSED_R11_EAC:                        return ImageFormat(U8(8),  Dim(U8(4), U8(4), U8(1)), BlockPacking::c_etc2, U8(1), field_types(FieldType::unorm, 1), swizzles_r(), Colorspace::bt709_linear_rgb, true);
-      case GL_COMPRESSED_SIGNED_R11_EAC:                 return ImageFormat(U8(8),  Dim(U8(4), U8(4), U8(1)), BlockPacking::c_etc2, U8(1), field_types(FieldType::snorm, 1), swizzles_r(), Colorspace::bt709_linear_rgb, true);
-      case GL_COMPRESSED_RG11_EAC:                       return ImageFormat(U8(16), Dim(U8(4), U8(4), U8(1)), BlockPacking::c_etc2, U8(2), field_types(FieldType::unorm, 2), swizzles_rg(), Colorspace::bt709_linear_rgb, true);
-      case GL_COMPRESSED_SIGNED_RG11_EAC:                return ImageFormat(U8(16), Dim(U8(4), U8(4), U8(1)), BlockPacking::c_etc2, U8(2), field_types(FieldType::snorm, 2), swizzles_rg(), Colorspace::bt709_linear_rgb, true);
-      case GL_COMPRESSED_SRGB8_ETC2:                     return ImageFormat(U8(8),  Dim(U8(4), U8(4), U8(1)), BlockPacking::c_etc2, U8(3), field_types(FieldType::unorm, 3), swizzles_rgb(),  Colorspace::srgb, true);
-      case GL_COMPRESSED_RGB8_ETC2:                      return ImageFormat(U8(8),  Dim(U8(4), U8(4), U8(1)), BlockPacking::c_etc2, U8(3), field_types(FieldType::unorm, 3), swizzles_rgb(),  Colorspace::bt709_linear_rgb, true);
-      case GL_COMPRESSED_SRGB8_PUNCHTHROUGH_ALPHA1_ETC2: return ImageFormat(U8(8),  Dim(U8(4), U8(4), U8(1)), BlockPacking::c_etc2, U8(4), field_types(FieldType::unorm, 4), swizzles_rgba(), Colorspace::srgb, true);
-      case GL_COMPRESSED_RGB8_PUNCHTHROUGH_ALPHA1_ETC2:  return ImageFormat(U8(8),  Dim(U8(4), U8(4), U8(1)), BlockPacking::c_etc2, U8(4), field_types(FieldType::unorm, 4), swizzles_rgba(), Colorspace::bt709_linear_rgb, true);
-      case GL_COMPRESSED_SRGB8_ALPHA8_ETC2_EAC:          return ImageFormat(U8(16), Dim(U8(4), U8(4), U8(1)), BlockPacking::c_etc2, U8(4), field_types(FieldType::unorm, 4), swizzles_rgba(), Colorspace::srgb, true);
-      case GL_COMPRESSED_RGBA8_ETC2_EAC:                 return ImageFormat(U8(16), Dim(U8(4), U8(4), U8(1)), BlockPacking::c_etc2, U8(4), field_types(FieldType::unorm, 4), swizzles_rgba(), Colorspace::bt709_linear_rgb, true);
       //#bgl checked (GL_EXT_texture_compression_s3tc)
       case GL_COMPRESSED_RGB_S3TC_DXT1_EXT:        return ImageFormat(U8(8),  Dim(U8(4), U8(4), U8(1)), BlockPacking::c_s3tc1, U8(3), field_types(FieldType::unorm, 3), swizzles_rgb(),  Colorspace::bt709_linear_rgb, true);
       case GL_COMPRESSED_RGBA_S3TC_DXT1_EXT:       return ImageFormat(U8(8),  Dim(U8(4), U8(4), U8(1)), BlockPacking::c_s3tc1, U8(4), field_types(FieldType::unorm, 4), swizzles_rgba(), Colorspace::bt709_linear_rgb, true);
@@ -1073,6 +928,12 @@ ImageFormat canonical_format(gl::GLenum internal_format) {
       case GL_COMPRESSED_SIGNED_RED_RGTC1:         return ImageFormat(U8(8),  Dim(U8(4), U8(4), U8(1)), BlockPacking::c_rgtc1, U8(1), field_types(FieldType::snorm, 1), swizzles_r(),    Colorspace::bt709_linear_rgb, true);
       case GL_COMPRESSED_RG_RGTC2:                 return ImageFormat(U8(16), Dim(U8(4), U8(4), U8(1)), BlockPacking::c_rgtc2, U8(2), field_types(FieldType::unorm, 2), swizzles_rg(),   Colorspace::bt709_linear_rgb, true);
       case GL_COMPRESSED_SIGNED_RG_RGTC2:          return ImageFormat(U8(16), Dim(U8(4), U8(4), U8(1)), BlockPacking::c_rgtc2, U8(2), field_types(FieldType::snorm, 2), swizzles_rg(),   Colorspace::bt709_linear_rgb, true);
+      //#bgl checked (4.2)
+      case GL_COMPRESSED_SRGB_ALPHA_BPTC_UNORM:    return ImageFormat(U8(16), Dim(U8(4), U8(4), U8(1)), BlockPacking::c_bptc, U8(4), field_types(FieldType::unorm, 4), swizzles_rgba(), Colorspace::srgb, true);
+      case GL_COMPRESSED_RGBA_BPTC_UNORM:          return ImageFormat(U8(16), Dim(U8(4), U8(4), U8(1)), BlockPacking::c_bptc, U8(4), field_types(FieldType::unorm, 4), swizzles_rgba(), Colorspace::bt709_linear_rgb, true);
+      case GL_COMPRESSED_RGB_BPTC_SIGNED_FLOAT:    return ImageFormat(U8(16), Dim(U8(4), U8(4), U8(1)), BlockPacking::c_bptc, U8(3), field_types(FieldType::sfloat, 3), swizzles_rgb(), Colorspace::bt709_linear_rgb, true);
+      case GL_COMPRESSED_RGB_BPTC_UNSIGNED_FLOAT:  return ImageFormat(U8(16), Dim(U8(4), U8(4), U8(1)), BlockPacking::c_bptc, U8(3), field_types(FieldType::ufloat, 3), swizzles_rgb(), Colorspace::bt709_linear_rgb, true);
+      //#bgl unchecked
 
       case GL_DEPTH_COMPONENT:
       case GL_DEPTH_COMPONENT32:    return ImageFormat(U8(4), U8(1), BlockPacking::s_32, U8(1), field_types(FieldType::unorm, 1), swizzles_rrr(), Colorspace::linear_depth, true);

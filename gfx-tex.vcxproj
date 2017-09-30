@@ -104,11 +104,9 @@
     <ClInclude Include="include\tex\bmp_reader.hpp" />
     <ClInclude Include="include\tex\dds_reader.hpp" />
     <ClInclude Include="include\tex\gif_reader.hpp" />
-    <ClInclude Include="include\tex\glraw_reader.hpp" />
     <ClInclude Include="include\tex\hdr_reader.hpp" />
     <ClInclude Include="include\tex\jpeg_reader.hpp" />
     <ClInclude Include="include\tex\ktx_reader.hpp" />
-    <ClInclude Include="include\tex\pic_reader.hpp" />
     <ClInclude Include="include\tex\png_reader.hpp" />
     <ClInclude Include="include\tex\pnm_reader.hpp" />
     <ClInclude Include="include\tex\psd_reader.hpp" />
@@ -164,11 +162,9 @@
     <ClCompile Include="src-tex\bmp_reader.cpp" />
     <ClCompile Include="src-tex\dds_reader.cpp" />
     <ClCompile Include="src-tex\gif_reader.cpp" />
-    <ClCompile Include="src-tex\glraw_reader.cpp" />
     <ClCompile Include="src-tex\hdr_reader.cpp" />
     <ClCompile Include="src-tex\jpeg_reader.cpp" />
     <ClCompile Include="src-tex\ktx_reader.cpp" />
-    <ClCompile Include="src-tex\pic_reader.cpp" />
     <ClCompile Include="src-tex\png_reader.cpp" />
     <ClCompile Include="src-tex\pnm_reader.cpp" />
     <ClCompile Include="src-tex\psd_reader.cpp" />

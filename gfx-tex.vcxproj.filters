@@ -57,9 +57,6 @@
     <Filter Include="Header Files\operations\files\dds">
       <UniqueIdentifier>{9ed92937-0304-49f0-95de-4d10ece9af41}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\operations\files\glraw">
-      <UniqueIdentifier>{1706ca7c-efc2-4e89-b79f-4621f37c5a72}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\operations\files\hdr">
       <UniqueIdentifier>{77c82477-1fc6-4635-ae25-af2992e92eef}</UniqueIdentifier>
     </Filter>
@@ -68,9 +65,6 @@
     </Filter>
     <Filter Include="Header Files\operations\files\ktx">
       <UniqueIdentifier>{537281d9-558c-4623-b801-2394a2534b07}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\operations\files\pic">
-      <UniqueIdentifier>{3d1580a4-7cea-4d9b-8861-12c0f1b8f1fb}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\operations\files\png">
       <UniqueIdentifier>{fe721144-1144-4e44-a8af-44c12c54dbab}</UniqueIdentifier>
@@ -93,9 +87,6 @@
     <Filter Include="Source Files\operations\files\gif">
       <UniqueIdentifier>{b4480413-84a7-4d9a-b123-db53dc05948d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\operations\files\glraw">
-      <UniqueIdentifier>{4c2717b6-8c01-405c-a6d9-3fd57cc9e57b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\operations\files\hdr">
       <UniqueIdentifier>{d3dd0b47-9209-44f9-a3b3-3b083215c333}</UniqueIdentifier>
     </Filter>
@@ -104,9 +95,6 @@
     </Filter>
     <Filter Include="Source Files\operations\files\ktx">
       <UniqueIdentifier>{fbe20c2e-f41f-4cea-9108-909e7a96c2e2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\operations\files\pic">
-      <UniqueIdentifier>{7fbf3725-882d-4090-8f89-a7ee34c7fb49}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\operations\files\pnm">
       <UniqueIdentifier>{7b500141-331f-4b71-805c-5149aee3256f}</UniqueIdentifier>
@@ -299,9 +287,6 @@
     <ClInclude Include="include\tex\gif_reader.hpp">
       <Filter>Header Files\operations\files\gif</Filter>
     </ClInclude>
-    <ClInclude Include="include\tex\glraw_reader.hpp">
-      <Filter>Header Files\operations\files\glraw</Filter>
-    </ClInclude>
     <ClInclude Include="include\tex\hdr_reader.hpp">
       <Filter>Header Files\operations\files\hdr</Filter>
     </ClInclude>
@@ -310,9 +295,6 @@
     </ClInclude>
     <ClInclude Include="include\tex\ktx_reader.hpp">
       <Filter>Header Files\operations\files\ktx</Filter>
-    </ClInclude>
-    <ClInclude Include="include\tex\pic_reader.hpp">
-      <Filter>Header Files\operations\files\pic</Filter>
     </ClInclude>
     <ClInclude Include="include\tex\png_reader.hpp">
       <Filter>Header Files\operations\files\png</Filter>
@@ -442,9 +424,6 @@
     <ClCompile Include="src-tex\gif_reader.cpp">
       <Filter>Source Files\operations\files\gif</Filter>
     </ClCompile>
-    <ClCompile Include="src-tex\glraw_reader.cpp">
-      <Filter>Source Files\operations\files\glraw</Filter>
-    </ClCompile>
     <ClCompile Include="src-tex\hdr_reader.cpp">
       <Filter>Source Files\operations\files\hdr</Filter>
     </ClCompile>
@@ -453,9 +432,6 @@
     </ClCompile>
     <ClCompile Include="src-tex\ktx_reader.cpp">
       <Filter>Source Files\operations\files\ktx</Filter>
-    </ClCompile>
-    <ClCompile Include="src-tex\pic_reader.cpp">
-      <Filter>Source Files\operations\files\pic</Filter>
     </ClCompile>
     <ClCompile Include="src-tex\png_reader.cpp">
       <Filter>Source Files\operations\files\png</Filter>

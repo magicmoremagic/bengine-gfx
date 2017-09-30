@@ -1,7 +1,7 @@
 #include "pch.hpp"
 #include "tex/texture_file_format.hpp"
 
-/*!! include 'tex/texture_file_format' !! 69 */
+/*!! include 'tex/texture_file_format' !! 65 */
 /* ################# !! GENERATED CODE -- DO NOT MODIFY !! ################# */
 
 namespace be::gfx::tex {
@@ -13,11 +13,9 @@ bool is_valid(TextureFileFormat constant) noexcept {
       case TextureFileFormat::betx:
       case TextureFileFormat::ktx:
       case TextureFileFormat::png:
-      case TextureFileFormat::glraw:
       case TextureFileFormat::dds:
       case TextureFileFormat::hdr:
       case TextureFileFormat::gif:
-      case TextureFileFormat::pic:
       case TextureFileFormat::psd:
       case TextureFileFormat::jpeg:
       case TextureFileFormat::bmp:
@@ -36,11 +34,9 @@ const char* texture_file_format_name(TextureFileFormat constant) noexcept {
       case TextureFileFormat::betx:    return "betx";
       case TextureFileFormat::ktx:     return "ktx";
       case TextureFileFormat::png:     return "png";
-      case TextureFileFormat::glraw:   return "glraw";
       case TextureFileFormat::dds:     return "dds";
       case TextureFileFormat::hdr:     return "hdr";
       case TextureFileFormat::gif:     return "gif";
-      case TextureFileFormat::pic:     return "pic";
       case TextureFileFormat::psd:     return "psd";
       case TextureFileFormat::jpeg:    return "jpeg";
       case TextureFileFormat::bmp:     return "bmp";
@@ -52,7 +48,7 @@ const char* texture_file_format_name(TextureFileFormat constant) noexcept {
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-std::array<const TextureFileFormat, 14> texture_file_format_values() noexcept {
+std::array<const TextureFileFormat, 12> texture_file_format_values() noexcept {
    return ::be::EnumTraits<TextureFileFormat>::values<>();
 }
 

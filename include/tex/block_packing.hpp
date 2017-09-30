@@ -4,7 +4,7 @@
 
 #include <be/core/enum_traits.hpp>
 
-/*!! include 'tex/block_packing' !! 667 */
+/*!! include 'tex/block_packing' !! 661 */
 /* ################# !! GENERATED CODE -- DO NOT MODIFY !! ################# */
 
 namespace be::gfx::tex {
@@ -52,20 +52,17 @@ enum class BlockPacking : U8 {
    p_10_10_10_2,
    p_2_10_10_10,
    s_32_p_24_8,
-   c_astc,
-   c_bptc,
-   c_etc1,
-   c_etc2,
    c_s3tc1,
    c_s3tc2,
    c_s3tc3,
    c_rgtc1,
-   c_rgtc2
+   c_rgtc2,
+   c_bptc
 };
 
 bool is_valid(BlockPacking constant) noexcept;
 const char* block_packing_name(BlockPacking constant) noexcept;
-std::array<const BlockPacking, 50> block_packing_values() noexcept;
+std::array<const BlockPacking, 47> block_packing_values() noexcept;
 std::ostream& operator<<(std::ostream& os, BlockPacking constant);
 bool is_compressed(BlockPacking constant) noexcept;
 bool is_packed(BlockPacking constant) noexcept;
@@ -601,7 +598,7 @@ struct EnumTraits<::be::gfx::tex::BlockPacking> {
    using type = ::be::gfx::tex::BlockPacking;
    using underlying_type = typename std::underlying_type<type>::type;
 
-   static constexpr std::size_t count = 50;
+   static constexpr std::size_t count = 47;
 
    static bool is_valid(type value) {
       return ::be::gfx::tex::is_valid(value);
@@ -655,15 +652,12 @@ struct EnumTraits<::be::gfx::tex::BlockPacking> {
          ::be::gfx::tex::BlockPacking::p_10_10_10_2,
          ::be::gfx::tex::BlockPacking::p_2_10_10_10,
          ::be::gfx::tex::BlockPacking::s_32_p_24_8,
-         ::be::gfx::tex::BlockPacking::c_astc,
-         ::be::gfx::tex::BlockPacking::c_bptc,
-         ::be::gfx::tex::BlockPacking::c_etc1,
-         ::be::gfx::tex::BlockPacking::c_etc2,
          ::be::gfx::tex::BlockPacking::c_s3tc1,
          ::be::gfx::tex::BlockPacking::c_s3tc2,
          ::be::gfx::tex::BlockPacking::c_s3tc3,
          ::be::gfx::tex::BlockPacking::c_rgtc1,
          ::be::gfx::tex::BlockPacking::c_rgtc2,
+         ::be::gfx::tex::BlockPacking::c_bptc,
       };
    }
 };

@@ -4,8 +4,8 @@ include 'common/enum'
 
 texture_file_format = make_enum_class('be::gfx::tex::TextureFileFormat', 'U8', {
    'unknown',
-   'betx', 'ktx', 'png', 'glraw', 'dds',
-   'hdr', 'gif', 'pic', 'psd', 'jpeg', 'bmp', 'pnm', 'tga'
+   'betx', 'ktx', 'png', 'dds',
+   'hdr', 'gif', 'psd', 'jpeg', 'bmp', 'pnm', 'tga'
 })
 
 if not no_write then

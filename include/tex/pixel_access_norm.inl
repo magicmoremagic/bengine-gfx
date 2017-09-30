@@ -3493,33 +3493,6 @@ struct PixelRawNormAccessCompressed<ImageView, Coord, BlockPacking::c_bptc> {   
    }
 };
 
-///////////////////////////////////////////////////////////////////////////////
-template <typename ImageView, typename Coord>
-struct PixelRawNormAccessCompressed<ImageView, Coord, BlockPacking::c_etc1> {   // ETC1
-   static vec4 get(const ImageView& image, Coord pixel_coord) {
-      // TODO
-      return vec4(0, 0, 0, 1);
-   }
-};
-
-///////////////////////////////////////////////////////////////////////////////
-template <typename ImageView, typename Coord>
-struct PixelRawNormAccessCompressed<ImageView, Coord, BlockPacking::c_etc2> {   // ETC2
-   static vec4 get(const ImageView& image, Coord pixel_coord) {
-      // TODO
-      return vec4(0, 0, 0, 1);
-   }
-};
-
-///////////////////////////////////////////////////////////////////////////////
-template <typename ImageView, typename Coord>
-struct PixelRawNormAccessCompressed<ImageView, Coord, BlockPacking::c_astc> {   // ASTC
-   static vec4 get(const ImageView& image, Coord pixel_coord) {
-      // TODO
-      return vec4(0, 0, 0, 1);
-   }
-};
-
 #pragma endregion
 #pragma region PixelNormAccessCompressed
 
@@ -3567,17 +3540,14 @@ GetPixelNormFunc<Coord, ImageView> get_pixel_norm_func(const ImageView& image) {
          function not_compressed (t) return t.n_fields ~= 0 end
          function is_standard (t)    return t.n_fields ~= 0 and t.n_fields == t.n_words end
 
-         write_template('packing_switch', { pred = is_compressed, struct_name = 'PixelNormAccessCompressed', func_name = 'get' }) !! 13 */
+         write_template('packing_switch', { pred = is_compressed, struct_name = 'PixelNormAccessCompressed', func_name = 'get' }) !! 10 */
          /* ################# !! GENERATED CODE -- DO NOT MODIFY !! ################# */
-         case BlockPacking::c_astc:        return detail::PixelNormAccessCompressed<ImageView, Coord, BlockPacking::c_astc>::get;
-         case BlockPacking::c_bptc:        return detail::PixelNormAccessCompressed<ImageView, Coord, BlockPacking::c_bptc>::get;
-         case BlockPacking::c_etc1:        return detail::PixelNormAccessCompressed<ImageView, Coord, BlockPacking::c_etc1>::get;
-         case BlockPacking::c_etc2:        return detail::PixelNormAccessCompressed<ImageView, Coord, BlockPacking::c_etc2>::get;
          case BlockPacking::c_s3tc1:       return detail::PixelNormAccessCompressed<ImageView, Coord, BlockPacking::c_s3tc1>::get;
          case BlockPacking::c_s3tc2:       return detail::PixelNormAccessCompressed<ImageView, Coord, BlockPacking::c_s3tc2>::get;
          case BlockPacking::c_s3tc3:       return detail::PixelNormAccessCompressed<ImageView, Coord, BlockPacking::c_s3tc3>::get;
          case BlockPacking::c_rgtc1:       return detail::PixelNormAccessCompressed<ImageView, Coord, BlockPacking::c_rgtc1>::get;
          case BlockPacking::c_rgtc2:       return detail::PixelNormAccessCompressed<ImageView, Coord, BlockPacking::c_rgtc2>::get;
+         case BlockPacking::c_bptc:        return detail::PixelNormAccessCompressed<ImageView, Coord, BlockPacking::c_bptc>::get;
 
          /* ######################### END OF GENERATED CODE ######################### */
          default:

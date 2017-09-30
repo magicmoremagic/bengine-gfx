@@ -1,7 +1,7 @@
 #include "pch.hpp"
 #include "tex/block_packing.hpp"
 
-/*!! include 'tex/block_packing' !! 648 */
+/*!! include 'tex/block_packing' !! 627 */
 /* ################# !! GENERATED CODE -- DO NOT MODIFY !! ################# */
 
 namespace be::gfx::tex {
@@ -50,15 +50,12 @@ bool is_valid(BlockPacking constant) noexcept {
       case BlockPacking::p_10_10_10_2:
       case BlockPacking::p_2_10_10_10:
       case BlockPacking::s_32_p_24_8:
-      case BlockPacking::c_astc:
-      case BlockPacking::c_bptc:
-      case BlockPacking::c_etc1:
-      case BlockPacking::c_etc2:
       case BlockPacking::c_s3tc1:
       case BlockPacking::c_s3tc2:
       case BlockPacking::c_s3tc3:
       case BlockPacking::c_rgtc1:
       case BlockPacking::c_rgtc2:
+      case BlockPacking::c_bptc:
          return true;
       default:
          return false;
@@ -109,22 +106,19 @@ const char* block_packing_name(BlockPacking constant) noexcept {
       case BlockPacking::p_10_10_10_2:  return "p_10_10_10_2";
       case BlockPacking::p_2_10_10_10:  return "p_2_10_10_10";
       case BlockPacking::s_32_p_24_8:   return "s_32_p_24_8";
-      case BlockPacking::c_astc:        return "c_astc";
-      case BlockPacking::c_bptc:        return "c_bptc";
-      case BlockPacking::c_etc1:        return "c_etc1";
-      case BlockPacking::c_etc2:        return "c_etc2";
       case BlockPacking::c_s3tc1:       return "c_s3tc1";
       case BlockPacking::c_s3tc2:       return "c_s3tc2";
       case BlockPacking::c_s3tc3:       return "c_s3tc3";
       case BlockPacking::c_rgtc1:       return "c_rgtc1";
       case BlockPacking::c_rgtc2:       return "c_rgtc2";
+      case BlockPacking::c_bptc:        return "c_bptc";
       default:
          return "?";
    }
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-std::array<const BlockPacking, 50> block_packing_values() noexcept {
+std::array<const BlockPacking, 47> block_packing_values() noexcept {
    return ::be::EnumTraits<BlockPacking>::values<>();
 }
 
@@ -141,15 +135,12 @@ std::ostream& operator<<(std::ostream& os, BlockPacking constant) {
 ///////////////////////////////////////////////////////////////////////////////
 bool is_compressed(BlockPacking constant) noexcept {
    switch (constant) {
-      case BlockPacking::c_astc:        return true;
-      case BlockPacking::c_bptc:        return true;
-      case BlockPacking::c_etc1:        return true;
-      case BlockPacking::c_etc2:        return true;
       case BlockPacking::c_s3tc1:       return true;
       case BlockPacking::c_s3tc2:       return true;
       case BlockPacking::c_s3tc3:       return true;
       case BlockPacking::c_rgtc1:       return true;
       case BlockPacking::c_rgtc2:       return true;
+      case BlockPacking::c_bptc:        return true;
       default:
          return false;
    }
@@ -215,15 +206,12 @@ U8 field_count(BlockPacking constant) noexcept {
       case BlockPacking::p_5_9_9_9:     return U8(4);
       case BlockPacking::p_10_10_10_2:  return U8(4);
       case BlockPacking::p_2_10_10_10:  return U8(4);
-      case BlockPacking::c_astc:        return U8(0);
-      case BlockPacking::c_bptc:        return U8(0);
-      case BlockPacking::c_etc1:        return U8(0);
-      case BlockPacking::c_etc2:        return U8(0);
       case BlockPacking::c_s3tc1:       return U8(0);
       case BlockPacking::c_s3tc2:       return U8(0);
       case BlockPacking::c_s3tc3:       return U8(0);
       case BlockPacking::c_rgtc1:       return U8(0);
       case BlockPacking::c_rgtc2:       return U8(0);
+      case BlockPacking::c_bptc:        return U8(0);
       default:
          return U8(3);
    }
@@ -260,15 +248,12 @@ U8 block_pixel_size(BlockPacking constant) noexcept {
       case BlockPacking::p_5_5_6:       return U8(2);
       case BlockPacking::p_5_6_5:       return U8(2);
       case BlockPacking::s_32_p_24_8:   return U8(8);
-      case BlockPacking::c_astc:        return U8(0);
-      case BlockPacking::c_bptc:        return U8(0);
-      case BlockPacking::c_etc1:        return U8(0);
-      case BlockPacking::c_etc2:        return U8(0);
       case BlockPacking::c_s3tc1:       return U8(0);
       case BlockPacking::c_s3tc2:       return U8(0);
       case BlockPacking::c_s3tc3:       return U8(0);
       case BlockPacking::c_rgtc1:       return U8(0);
       case BlockPacking::c_rgtc2:       return U8(0);
+      case BlockPacking::c_bptc:        return U8(0);
       default:
          return U8(4);
    }
@@ -303,15 +288,12 @@ U8 block_word_size(BlockPacking constant) noexcept {
       case BlockPacking::p_6_5_5:       return U8(2);
       case BlockPacking::p_5_5_6:       return U8(2);
       case BlockPacking::p_5_6_5:       return U8(2);
-      case BlockPacking::c_astc:        return U8(0);
-      case BlockPacking::c_bptc:        return U8(0);
-      case BlockPacking::c_etc1:        return U8(0);
-      case BlockPacking::c_etc2:        return U8(0);
       case BlockPacking::c_s3tc1:       return U8(0);
       case BlockPacking::c_s3tc2:       return U8(0);
       case BlockPacking::c_s3tc3:       return U8(0);
       case BlockPacking::c_rgtc1:       return U8(0);
       case BlockPacking::c_rgtc2:       return U8(0);
+      case BlockPacking::c_bptc:        return U8(0);
       default:
          return U8(4);
    }
@@ -333,15 +315,12 @@ U8 block_word_count(BlockPacking constant) noexcept {
       case BlockPacking::s_64_64_64:    return U8(3);
       case BlockPacking::s_64_64_64_64: return U8(4);
       case BlockPacking::s_32_p_24_8:   return U8(2);
-      case BlockPacking::c_astc:        return U8(0);
-      case BlockPacking::c_bptc:        return U8(0);
-      case BlockPacking::c_etc1:        return U8(0);
-      case BlockPacking::c_etc2:        return U8(0);
       case BlockPacking::c_s3tc1:       return U8(0);
       case BlockPacking::c_s3tc2:       return U8(0);
       case BlockPacking::c_s3tc3:       return U8(0);
       case BlockPacking::c_rgtc1:       return U8(0);
       case BlockPacking::c_rgtc2:       return U8(0);
+      case BlockPacking::c_bptc:        return U8(0);
       default:
          return U8(1);
    }

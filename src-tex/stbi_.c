@@ -7,7 +7,7 @@
 STBIDEF int be_stbi_jpeg_info_from_memory(const stbi_uc* buffer, int len, int* x, int* y, int* comp, int* bpc) {
    stbi__context s;
    stbi__start_mem(&s,buffer,len);
-   *bpc = 8;
+   if (bpc) *bpc = 8;
    return stbi__jpeg_info(&s,x,y,comp);
 }
 
@@ -18,56 +18,49 @@ STBIDEF int be_stbi_png_info_from_memory(const stbi_uc* buffer, int len, int* x,
    stbi__start_mem(&s,buffer,len);
    p.s = &s;
    result = stbi__png_info_raw(&p, x, y, comp);
-   *bpc = p.depth;
+   if (bpc) *bpc = p.depth;
    return result;
 }
 
 STBIDEF int be_stbi_bmp_info_from_memory(const stbi_uc* buffer, int len, int* x, int* y, int* comp, int* bpc) {
    stbi__context s;
    stbi__start_mem(&s,buffer,len);
-   *bpc = 8;
-   return stbi__bmp_info(&s,x,y,comp);
+   if (bpc) *bpc = 8;
+   return stbi__bmp_info(&s, x, y, comp);
 }
 
 STBIDEF int be_stbi_gif_info_from_memory(const stbi_uc* buffer, int len, int* x, int* y, int* comp, int* bpc) {
    stbi__context s;
    stbi__start_mem(&s,buffer,len);
-   *bpc = 8;
+   if (bpc) *bpc = 8;
    return stbi__gif_info(&s,x,y,comp);
 }
 
 STBIDEF int be_stbi_psd_info_from_memory(const stbi_uc* buffer, int len, int* x, int* y, int* comp, int* bpc) {
    stbi__context s;
    stbi__start_mem(&s,buffer,len);
-   *bpc = 8;
+   if (bpc) *bpc = 8;
    return stbi__psd_info(&s,x,y,comp);
-}
-
-STBIDEF int be_stbi_pic_info_from_memory(const stbi_uc* buffer, int len, int* x, int* y, int* comp, int* bpc) {
-   stbi__context s;
-   stbi__start_mem(&s,buffer,len);
-   *bpc = 8;
-   return stbi__pic_info(&s,x,y,comp);
 }
 
 STBIDEF int be_stbi_pnm_info_from_memory(const stbi_uc* buffer, int len, int* x, int* y, int* comp, int* bpc) {
    stbi__context s;
    stbi__start_mem(&s,buffer,len);
-   *bpc = 8;
+   if (bpc) *bpc = 8;
    return stbi__pnm_info(&s,x,y,comp);
 }
 
 STBIDEF int be_stbi_hdr_info_from_memory(const stbi_uc* buffer, int len, int* x, int* y, int* comp, int* bpc) {
    stbi__context s;
    stbi__start_mem(&s,buffer,len);
-   *bpc = 32;
+   if (bpc) *bpc = 32;
    return stbi__hdr_info(&s,x,y,comp);
 }
 
 STBIDEF int be_stbi_tga_info_from_memory(const stbi_uc* buffer, int len, int* x, int* y, int* comp, int* bpc) {
    stbi__context s;
    stbi__start_mem(&s,buffer,len);
-   *bpc = 8;
+   if (bpc) *bpc = 8;
    return stbi__tga_info(&s,x,y,comp);
 }
 
@@ -108,14 +101,6 @@ static void* be_stbi__load_gif(stbi__context* s, int* x, int* y, int* comp, stbi
 static void* be_stbi__load_psd(stbi__context* s, int* x, int* y, int* comp, stbi__result_info* ri) {
    if (stbi__psd_test(s)) {
       return stbi__psd_load(s,x,y,comp,0, ri, 8);
-   } else {
-      return NULL;
-   }
-}
-
-static void* be_stbi__load_pic(stbi__context* s, int* x, int* y, int* comp, stbi__result_info* ri) {
-   if (stbi__pic_test(s)) {
-      return stbi__pic_load(s,x,y,comp,0, ri);
    } else {
       return NULL;
    }
@@ -194,12 +179,6 @@ STBIDEF void* be_stbi_load_psd_from_memory(const stbi_uc* buffer, int len, int* 
    stbi__context s;
    stbi__start_mem(&s,buffer,len);
    return be_stbi__load(be_stbi__load_psd, &s, x, y, comp, bpc);
-}
-
-STBIDEF void* be_stbi_load_pic_from_memory(const stbi_uc* buffer, int len, int* x, int* y, int* comp, int* bpc) {
-   stbi__context s;
-   stbi__start_mem(&s,buffer,len);
-   return be_stbi__load(be_stbi__load_pic, &s, x, y, comp, bpc);
 }
 
 STBIDEF void* be_stbi_load_pnm_from_memory(const stbi_uc* buffer, int len, int* x, int* y, int* comp, int* bpc) {

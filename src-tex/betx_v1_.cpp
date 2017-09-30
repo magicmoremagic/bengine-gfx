@@ -171,15 +171,12 @@ TextureFileInfo BetxReader::info_v1_(const detail::BetxHeader& header, std::erro
       case 0x26: format.packing(BlockPacking::p_10_10_10_2); break;
       case 0x27: format.packing(BlockPacking::p_2_10_10_10); break;
       case 0x28: format.packing(BlockPacking::s_32_p_24_8); break;
-      case 0x29: format.packing(BlockPacking::c_astc); break;
-      case 0x2A: format.packing(BlockPacking::c_bptc); break;
-      case 0x2B: format.packing(BlockPacking::c_etc1); break;
-      case 0x2C: format.packing(BlockPacking::c_etc2); break;
-      case 0x2D: format.packing(BlockPacking::c_s3tc1); break;
-      case 0x2E: format.packing(BlockPacking::c_s3tc2); break;
-      case 0x2F: format.packing(BlockPacking::c_s3tc3); break;
-      case 0x30: format.packing(BlockPacking::c_rgtc1); break;
-      case 0x31: format.packing(BlockPacking::c_rgtc2); break;
+      case 0x29: format.packing(BlockPacking::c_s3tc1); break;
+      case 0x2A: format.packing(BlockPacking::c_s3tc2); break;
+      case 0x2B: format.packing(BlockPacking::c_s3tc3); break;
+      case 0x2C: format.packing(BlockPacking::c_rgtc1); break;
+      case 0x2D: format.packing(BlockPacking::c_rgtc2); break;
+      case 0x2E: format.packing(BlockPacking::c_bptc); break;
 
       default:
          format.packing(BlockPacking::s_8_8_8_8);

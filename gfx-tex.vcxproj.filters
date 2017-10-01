@@ -254,9 +254,6 @@
     <ClInclude Include="src-tex\ktx_header_.hpp">
       <Filter>Source Files\operations\files\ktx</Filter>
     </ClInclude>
-    <ClInclude Include="src-tex\ktx_11_.hpp">
-      <Filter>Source Files\operations\files\ktx</Filter>
-    </ClInclude>
     <ClInclude Include="include\tex\texture_file_error.hpp">
       <Filter>Header Files\enums</Filter>
     </ClInclude>
@@ -334,6 +331,9 @@
     </ClInclude>
     <ClInclude Include="include\tex\betx_write_error.hpp">
       <Filter>Header Files\operations\files\betx</Filter>
+    </ClInclude>
+    <ClInclude Include="include\tex\ktx_read_error.hpp">
+      <Filter>Header Files\operations\files\ktx</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -462,6 +462,12 @@
     </ClCompile>
     <ClCompile Include="src-tex\betx_write_error.cpp">
       <Filter>Source Files\operations\files\betx</Filter>
+    </ClCompile>
+    <ClCompile Include="src-tex\ktx_read_error.cpp">
+      <Filter>Source Files\operations\files\ktx</Filter>
+    </ClCompile>
+    <ClCompile Include="src-tex\ktx_v11_.cpp">
+      <Filter>Source Files\operations\files\ktx</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

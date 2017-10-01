@@ -1,0 +1,24 @@
+name	fatal	texture_file_error	errc	msg	value
+not_a_ktx_file	true	corrupted	illegal_byte_sequence	Not a Khronos texture file
+unsupported_file_version		unsupported	not_supported	KTX file version is invalid or unsupported
+file_corruption		corrupted	illegal_byte_sequence	File appears to be corrupted
+header_missing	true	corrupted	illegal_byte_sequence	KTX header not present; file may have been truncated
+unsupported_endianness	true	unsupported	illegal_byte_sequence	Nonstandard byte orders are not supported
+unsupported_image_format	true	unsupported	not_supported	Unsupported image format
+invalid_gl_type_size		corrupted	illegal_byte_sequence	glTypeSize does not match expected word size
+invalid_texture_class		corrupted	illegal_byte_sequence	Could not determine texture class
+invalid_dimensions		corrupted	illegal_byte_sequence	All texture dimensions must be >= 1
+unsupported_dimensions	true	unsupported	not_supported	Texture dimensions too large to load
+unsupported_layer_count		unsupported	not_supported	Layer count too large to load
+invalid_face_count		corrupted	illegal_byte_sequence	Only planar textures may have multiple faces
+unsupported_face_count		unsupported	not_supported	Face count too large to load
+unsupported_level_count		unsupported	not_supported	Mipmap level count too large to load
+unnecessary_levels				More mipmap levels specified than necessary
+empty_texture	true	unsupported	not_supported	Texture format and dimensions have zero size
+metadata_missing		corrupted	illegal_byte_sequence	Metadata not present; file may have been truncated
+not_enough_texture_data		corrupted	illegal_byte_sequence	Calculated texture size is greater than the payload data size
+image_unavailable		image_unavailable		The requested layer, face, or mipmap level is not present in the texture
+layered_non_array				Multiple layers specified, but not using an array texture class
+not_enough_faces				Fewer faces specified than expected for this texture class
+too_many_faces				More faces specified than expected for this texture class
+not_enough_memory	true		not_enough_memory	Could not allocate enough memory for texture storage

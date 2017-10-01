@@ -1441,45 +1441,7 @@ enum AllEnums {
    GL_DEBUG_SEVERITY_HIGH                           = 0x9146, // GL 4.3, KHR_debug
    GL_DEBUG_SEVERITY_MEDIUM                         = 0x9147, // GL 4.3, KHR_debug
    GL_DEBUG_SEVERITY_LOW                            = 0x9148, // GL 4.3, KHR_debug
-   GL_COMPRESSED_R11_EAC                            = 0x9270, // GL 4.3, ARB_ES3_compatibility
-   GL_COMPRESSED_SIGNED_R11_EAC                     = 0x9271, // GL 4.3, ARB_ES3_compatibility
-   GL_COMPRESSED_RG11_EAC                           = 0x9272, // GL 4.3, ARB_ES3_compatibility
-   GL_COMPRESSED_SIGNED_RG11_EAC                    = 0x9273, // GL 4.3, ARB_ES3_compatibility
-   GL_COMPRESSED_RGB8_ETC2                          = 0x9274, // GL 4.3, ARB_ES3_compatibility
-   GL_COMPRESSED_SRGB8_ETC2                         = 0x9275, // GL 4.3, ARB_ES3_compatibility
-   GL_COMPRESSED_RGB8_PUNCHTHROUGH_ALPHA1_ETC2      = 0x9276, // GL 4.3, ARB_ES3_compatibility
-   GL_COMPRESSED_SRGB8_PUNCHTHROUGH_ALPHA1_ETC2     = 0x9277, // GL 4.3, ARB_ES3_compatibility
-   GL_COMPRESSED_RGBA8_ETC2_EAC                     = 0x9278, // GL 4.3, ARB_ES3_compatibility
-   GL_COMPRESSED_SRGB8_ALPHA8_ETC2_EAC              = 0x9279, // GL 4.3, ARB_ES3_compatibility
    GL_DEBUG_OUTPUT                                  = 0x92E0, // GL 4.3, KHR_debug
-   GL_COMPRESSED_RGBA_ASTC_4x4_KHR                  = 0x93B0, // KHR_texture_compression_astc_hdr, KHR_texture_compression_astc_ldr, OES_texture_compression_astc
-   GL_COMPRESSED_RGBA_ASTC_5x4_KHR                  = 0x93B1, // KHR_texture_compression_astc_hdr, KHR_texture_compression_astc_ldr, OES_texture_compression_astc
-   GL_COMPRESSED_RGBA_ASTC_5x5_KHR                  = 0x93B2, // KHR_texture_compression_astc_hdr, KHR_texture_compression_astc_ldr, OES_texture_compression_astc
-   GL_COMPRESSED_RGBA_ASTC_6x5_KHR                  = 0x93B3, // KHR_texture_compression_astc_hdr, KHR_texture_compression_astc_ldr, OES_texture_compression_astc
-   GL_COMPRESSED_RGBA_ASTC_6x6_KHR                  = 0x93B4, // KHR_texture_compression_astc_hdr, KHR_texture_compression_astc_ldr, OES_texture_compression_astc
-   GL_COMPRESSED_RGBA_ASTC_8x5_KHR                  = 0x93B5, // KHR_texture_compression_astc_hdr, KHR_texture_compression_astc_ldr, OES_texture_compression_astc
-   GL_COMPRESSED_RGBA_ASTC_8x6_KHR                  = 0x93B6, // KHR_texture_compression_astc_hdr, KHR_texture_compression_astc_ldr, OES_texture_compression_astc
-   GL_COMPRESSED_RGBA_ASTC_8x8_KHR                  = 0x93B7, // KHR_texture_compression_astc_hdr, KHR_texture_compression_astc_ldr, OES_texture_compression_astc
-   GL_COMPRESSED_RGBA_ASTC_10x5_KHR                 = 0x93B8, // KHR_texture_compression_astc_hdr, KHR_texture_compression_astc_ldr, OES_texture_compression_astc
-   GL_COMPRESSED_RGBA_ASTC_10x6_KHR                 = 0x93B9, // KHR_texture_compression_astc_hdr, KHR_texture_compression_astc_ldr, OES_texture_compression_astc
-   GL_COMPRESSED_RGBA_ASTC_10x8_KHR                 = 0x93BA, // KHR_texture_compression_astc_hdr, KHR_texture_compression_astc_ldr, OES_texture_compression_astc
-   GL_COMPRESSED_RGBA_ASTC_10x10_KHR                = 0x93BB, // KHR_texture_compression_astc_hdr, KHR_texture_compression_astc_ldr, OES_texture_compression_astc
-   GL_COMPRESSED_RGBA_ASTC_12x10_KHR                = 0x93BC, // KHR_texture_compression_astc_hdr, KHR_texture_compression_astc_ldr, OES_texture_compression_astc
-   GL_COMPRESSED_RGBA_ASTC_12x12_KHR                = 0x93BD, // KHR_texture_compression_astc_hdr, KHR_texture_compression_astc_ldr, OES_texture_compression_astc
-   GL_COMPRESSED_SRGB8_ALPHA8_ASTC_4x4_KHR          = 0x93D0, // KHR_texture_compression_astc_hdr, KHR_texture_compression_astc_ldr, OES_texture_compression_astc
-   GL_COMPRESSED_SRGB8_ALPHA8_ASTC_5x4_KHR          = 0x93D1, // KHR_texture_compression_astc_hdr, KHR_texture_compression_astc_ldr, OES_texture_compression_astc
-   GL_COMPRESSED_SRGB8_ALPHA8_ASTC_5x5_KHR          = 0x93D2, // KHR_texture_compression_astc_hdr, KHR_texture_compression_astc_ldr, OES_texture_compression_astc
-   GL_COMPRESSED_SRGB8_ALPHA8_ASTC_6x5_KHR          = 0x93D3, // KHR_texture_compression_astc_hdr, KHR_texture_compression_astc_ldr, OES_texture_compression_astc
-   GL_COMPRESSED_SRGB8_ALPHA8_ASTC_6x6_KHR          = 0x93D4, // KHR_texture_compression_astc_hdr, KHR_texture_compression_astc_ldr, OES_texture_compression_astc
-   GL_COMPRESSED_SRGB8_ALPHA8_ASTC_8x5_KHR          = 0x93D5, // KHR_texture_compression_astc_hdr, KHR_texture_compression_astc_ldr, OES_texture_compression_astc
-   GL_COMPRESSED_SRGB8_ALPHA8_ASTC_8x6_KHR          = 0x93D6, // KHR_texture_compression_astc_hdr, KHR_texture_compression_astc_ldr, OES_texture_compression_astc
-   GL_COMPRESSED_SRGB8_ALPHA8_ASTC_8x8_KHR          = 0x93D7, // KHR_texture_compression_astc_hdr, KHR_texture_compression_astc_ldr, OES_texture_compression_astc
-   GL_COMPRESSED_SRGB8_ALPHA8_ASTC_10x5_KHR         = 0x93D8, // KHR_texture_compression_astc_hdr, KHR_texture_compression_astc_ldr, OES_texture_compression_astc
-   GL_COMPRESSED_SRGB8_ALPHA8_ASTC_10x6_KHR         = 0x93D9, // KHR_texture_compression_astc_hdr, KHR_texture_compression_astc_ldr, OES_texture_compression_astc
-   GL_COMPRESSED_SRGB8_ALPHA8_ASTC_10x8_KHR         = 0x93DA, // KHR_texture_compression_astc_hdr, KHR_texture_compression_astc_ldr, OES_texture_compression_astc
-   GL_COMPRESSED_SRGB8_ALPHA8_ASTC_10x10_KHR        = 0x93DB, // KHR_texture_compression_astc_hdr, KHR_texture_compression_astc_ldr, OES_texture_compression_astc
-   GL_COMPRESSED_SRGB8_ALPHA8_ASTC_12x10_KHR        = 0x93DC, // KHR_texture_compression_astc_hdr, KHR_texture_compression_astc_ldr, OES_texture_compression_astc
-   GL_COMPRESSED_SRGB8_ALPHA8_ASTC_12x12_KHR        = 0x93DD, // KHR_texture_compression_astc_hdr, KHR_texture_compression_astc_ldr, OES_texture_compression_astc
 };
 
 ////////// COMMANDS //////////////////////////////////////////////////////////
@@ -3103,45 +3065,7 @@ const char* enum_name (GLenum e) noexcept {
       case 0x9146: return "GL_DEBUG_SEVERITY_HIGH";
       case 0x9147: return "GL_DEBUG_SEVERITY_MEDIUM";
       case 0x9148: return "GL_DEBUG_SEVERITY_LOW";
-      case 0x9270: return "GL_COMPRESSED_R11_EAC";
-      case 0x9271: return "GL_COMPRESSED_SIGNED_R11_EAC";
-      case 0x9272: return "GL_COMPRESSED_RG11_EAC";
-      case 0x9273: return "GL_COMPRESSED_SIGNED_RG11_EAC";
-      case 0x9274: return "GL_COMPRESSED_RGB8_ETC2";
-      case 0x9275: return "GL_COMPRESSED_SRGB8_ETC2";
-      case 0x9276: return "GL_COMPRESSED_RGB8_PUNCHTHROUGH_ALPHA1_ETC2";
-      case 0x9277: return "GL_COMPRESSED_SRGB8_PUNCHTHROUGH_ALPHA1_ETC2";
-      case 0x9278: return "GL_COMPRESSED_RGBA8_ETC2_EAC";
-      case 0x9279: return "GL_COMPRESSED_SRGB8_ALPHA8_ETC2_EAC";
       case 0x92E0: return "GL_DEBUG_OUTPUT";
-      case 0x93B0: return "GL_COMPRESSED_RGBA_ASTC_4x4_KHR";
-      case 0x93B1: return "GL_COMPRESSED_RGBA_ASTC_5x4_KHR";
-      case 0x93B2: return "GL_COMPRESSED_RGBA_ASTC_5x5_KHR";
-      case 0x93B3: return "GL_COMPRESSED_RGBA_ASTC_6x5_KHR";
-      case 0x93B4: return "GL_COMPRESSED_RGBA_ASTC_6x6_KHR";
-      case 0x93B5: return "GL_COMPRESSED_RGBA_ASTC_8x5_KHR";
-      case 0x93B6: return "GL_COMPRESSED_RGBA_ASTC_8x6_KHR";
-      case 0x93B7: return "GL_COMPRESSED_RGBA_ASTC_8x8_KHR";
-      case 0x93B8: return "GL_COMPRESSED_RGBA_ASTC_10x5_KHR";
-      case 0x93B9: return "GL_COMPRESSED_RGBA_ASTC_10x6_KHR";
-      case 0x93BA: return "GL_COMPRESSED_RGBA_ASTC_10x8_KHR";
-      case 0x93BB: return "GL_COMPRESSED_RGBA_ASTC_10x10_KHR";
-      case 0x93BC: return "GL_COMPRESSED_RGBA_ASTC_12x10_KHR";
-      case 0x93BD: return "GL_COMPRESSED_RGBA_ASTC_12x12_KHR";
-      case 0x93D0: return "GL_COMPRESSED_SRGB8_ALPHA8_ASTC_4x4_KHR";
-      case 0x93D1: return "GL_COMPRESSED_SRGB8_ALPHA8_ASTC_5x4_KHR";
-      case 0x93D2: return "GL_COMPRESSED_SRGB8_ALPHA8_ASTC_5x5_KHR";
-      case 0x93D3: return "GL_COMPRESSED_SRGB8_ALPHA8_ASTC_6x5_KHR";
-      case 0x93D4: return "GL_COMPRESSED_SRGB8_ALPHA8_ASTC_6x6_KHR";
-      case 0x93D5: return "GL_COMPRESSED_SRGB8_ALPHA8_ASTC_8x5_KHR";
-      case 0x93D6: return "GL_COMPRESSED_SRGB8_ALPHA8_ASTC_8x6_KHR";
-      case 0x93D7: return "GL_COMPRESSED_SRGB8_ALPHA8_ASTC_8x8_KHR";
-      case 0x93D8: return "GL_COMPRESSED_SRGB8_ALPHA8_ASTC_10x5_KHR";
-      case 0x93D9: return "GL_COMPRESSED_SRGB8_ALPHA8_ASTC_10x6_KHR";
-      case 0x93DA: return "GL_COMPRESSED_SRGB8_ALPHA8_ASTC_10x8_KHR";
-      case 0x93DB: return "GL_COMPRESSED_SRGB8_ALPHA8_ASTC_10x10_KHR";
-      case 0x93DC: return "GL_COMPRESSED_SRGB8_ALPHA8_ASTC_12x10_KHR";
-      case 0x93DD: return "GL_COMPRESSED_SRGB8_ALPHA8_ASTC_12x12_KHR";
       case 0x00010000: return "GL_EVAL_BIT";
       case 0x00020000: return "GL_LIST_BIT";
       case 0x00040000: return "GL_TEXTURE_BIT";

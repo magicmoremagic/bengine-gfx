@@ -4,7 +4,7 @@
 
 #include <be/core/byte_order.hpp>
 
-namespace be::gfx::tex::ktx::detail {
+namespace be::gfx::tex::detail {
 
 struct KtxHeader {
    U8 signature[12];
@@ -23,12 +23,12 @@ struct KtxHeader {
    U32 bytes_of_key_value_data;
 };
 
-} // be::gfx::tex::ktx::detail
+} // be::gfx::tex::detail
 namespace be::bo {
 
 template <>
-struct Converter<be::gfx::tex::ktx::detail::KtxHeader> : ConvertBase<be::gfx::tex::ktx::detail::KtxHeader> {
-   using ConvertBase<be::gfx::tex::ktx::detail::KtxHeader>::in_place;
+struct Converter<be::gfx::tex::detail::KtxHeader> : ConvertBase<be::gfx::tex::detail::KtxHeader> {
+   using ConvertBase<be::gfx::tex::detail::KtxHeader>::in_place;
 
    static void in_place(type& v, Little, Big) {
       if (v.endianness == 0x04030201) {

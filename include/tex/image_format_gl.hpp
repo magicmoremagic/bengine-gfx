@@ -9,6 +9,7 @@ namespace be::gfx::tex {
 
 ///////////////////////////////////////////////////////////////////////////////
 struct ImageFormatGl {
+   gl::GLenum base_internal_format;
    gl::GLenum internal_format;
    gl::GLenum data_format;
    gl::GLenum data_type;
@@ -16,16 +17,20 @@ struct ImageFormatGl {
 };
 
 ///////////////////////////////////////////////////////////////////////////////
-ImageFormatGl gl_format(ImageFormat format);
+ImageFormatGl to_gl_format(ImageFormat format);
+ImageFormatGl to_gl_format(ImageFormat format, std::error_code& ec) noexcept;
 
 ///////////////////////////////////////////////////////////////////////////////
-ImageFormat gl_format(ImageFormatGl format);
+ImageFormat from_gl_format(ImageFormatGl format);
+ImageFormat from_gl_format(ImageFormatGl format, std::error_code& ec) noexcept;
 
 ///////////////////////////////////////////////////////////////////////////////
 ImageFormat canonical_format(gl::GLenum internal_format);
+ImageFormat canonical_format(gl::GLenum internal_format, std::error_code& ec) noexcept;
 
 ///////////////////////////////////////////////////////////////////////////////
 ImageFormat preferred_format(gl::GLenum target, gl::GLenum internal_format);
+ImageFormat preferred_format(gl::GLenum target, gl::GLenum internal_format, std::error_code& ec) noexcept;
 
 } // be::gfx::tex
 

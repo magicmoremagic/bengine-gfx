@@ -20,6 +20,10 @@ TextureFileInfo BetxReader::info_v1_(const detail::BetxHeader& header, std::erro
 
    TextureFileInfo info;
    info.file_format = TextureFileFormat::betx;
+   info.layers = header.layers;
+   info.faces = header.faces;
+   info.levels = header.levels;
+   info.dim = ivec3(header.dim[0], header.dim[1], header.dim[2]);
 
    // info.tex_class
    switch (header.texture_class) {
@@ -41,7 +45,6 @@ TextureFileInfo BetxReader::info_v1_(const detail::BetxHeader& header, std::erro
    }
 
    // info.dim
-   info.dim = ivec3(header.dim[0], header.dim[1], header.dim[2]);
    if (glm::any(glm::lessThanEqual(info.dim, ivec3()))) {
       if (should_continue_(err::invalid_dimensions, ec)) {
          info.dim = glm::max(info.dim, ivec3(1));
@@ -57,7 +60,6 @@ TextureFileInfo BetxReader::info_v1_(const detail::BetxHeader& header, std::erro
    }
 
    // info.layers
-   info.layers = header.layers;
    if (info.layers == 0) {
       if (should_continue_(err::invalid_layer_count, ec)) {
          info.layers = 1;
@@ -73,7 +75,6 @@ TextureFileInfo BetxReader::info_v1_(const detail::BetxHeader& header, std::erro
    }
 
    // info.faces
-   info.faces = header.faces;
    if (info.faces == 0) {
       if (should_continue_(err::invalid_face_count, ec)) {
          info.faces = faces(info.tex_class);
@@ -89,7 +90,6 @@ TextureFileInfo BetxReader::info_v1_(const detail::BetxHeader& header, std::erro
    }
 
    // info.levels
-   info.levels = header.levels;
    if (info.levels == 0) {
       if (should_continue_(err::invalid_level_count, ec)) {
          info.levels = 1;

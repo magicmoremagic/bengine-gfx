@@ -18,7 +18,7 @@ TEST_CASE("std::hash<ImageFormat>", BE_CATCH_TAGS) {
 
 void gl_roundtrip(GLenum internal_format) {
    ImageFormat format = canonical_format(internal_format);
-   ImageFormatGl gl = gl_format(format);
+   ImageFormatGl gl = to_gl_format(format);
    REQUIRE(gl.internal_format == internal_format);
 }
 

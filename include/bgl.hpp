@@ -1463,6 +1463,9 @@ void glVertex2f(GLfloat x, GLfloat y) noexcept;
 void glEnable(GLenum cap) noexcept;
 
 // Defined by: GL 1.0
+void glPixelStorei(GLenum pname, GLint param) noexcept;
+
+// Defined by: GL 1.0
 void glBegin(GLenum mode) noexcept;
 
 // Aliases: glBindTextureEXT
@@ -1477,6 +1480,10 @@ void glClearColor(GLfloat red, GLfloat green, GLfloat blue, GLfloat alpha) noexc
 
 // Defined by: GL 1.0
 void glColor3fv(const GLfloat * v) noexcept;
+
+// Aliases: glCompressedTexImage2DARB
+// Defined by: GL 1.3
+void glCompressedTexImage2D(GLenum target, GLint level, GLenum internalformat, GLsizei width, GLsizei height, GLint border, GLsizei imageSize, const void * data) noexcept;
 
 // Aliases: glDebugMessageCallbackARB, glDebugMessageCallbackKHR
 // Defined by: GL 4.3, KHR_debug
@@ -1496,9 +1503,6 @@ void glGetIntegerv(GLenum pname, GLint * data) noexcept;
 
 // Defined by: GL 3.0
 const GLubyte *glGetStringi(GLenum name, GLuint index) noexcept;
-
-// Defined by: GL 1.0
-void glPixelStorei(GLenum pname, GLint param) noexcept;
 
 // Defined by: GL 1.0
 void glTexEnvi(GLenum target, GLenum pname, GLint param) noexcept;
@@ -1549,12 +1553,14 @@ using GLTEXCOORD2FV_PROC = void (GLAPIENTRY*)(const GLfloat *);
 using GLTEXPARAMETERI_PROC = void (GLAPIENTRY*)(GLenum, GLenum, GLint);
 using GLVERTEX2F_PROC = void (GLAPIENTRY*)(GLfloat, GLfloat);
 using GLENABLE_PROC = void (GLAPIENTRY*)(GLenum);
+using GLPIXELSTOREI_PROC = void (GLAPIENTRY*)(GLenum, GLint);
 using GLBEGIN_PROC = void (GLAPIENTRY*)(GLenum);
 using GLBINDTEXTURE_PROC = void (GLAPIENTRY*)(GLenum, GLuint);
 using GLCLEAR_PROC = void (GLAPIENTRY*)(GLbitfield);
 using GLCLEARCOLOR_PROC = void (GLAPIENTRY*)(GLfloat, GLfloat, GLfloat, GLfloat);
 using GLCOLOR3FV_PROC = void (GLAPIENTRY*)(const GLfloat *);
 #endif
+using GLCOMPRESSEDTEXIMAGE2D_PROC = void (GLAPIENTRY*)(GLenum, GLint, GLenum, GLsizei, GLsizei, GLint, GLsizei, const void *);
 using GLDEBUGMESSAGECALLBACK_PROC = void (GLAPIENTRY*)(GLDEBUGPROC, const void *);
 #ifndef _WIN32
 using GLDELETETEXTURES_PROC = void (GLAPIENTRY*)(GLsizei, const GLuint *);
@@ -1564,7 +1570,6 @@ using GLGETINTEGERV_PROC = void (GLAPIENTRY*)(GLenum, GLint *);
 #endif
 using GLGETSTRINGI_PROC = const GLubyte *(GLAPIENTRY*)(GLenum, GLuint);
 #ifndef _WIN32
-using GLPIXELSTOREI_PROC = void (GLAPIENTRY*)(GLenum, GLint);
 using GLTEXENVI_PROC = void (GLAPIENTRY*)(GLenum, GLenum, GLint);
 using GLTEXIMAGE2D_PROC = void (GLAPIENTRY*)(GLenum, GLint, GLint, GLsizei, GLsizei, GLint, GLenum, GLenum, const void *);
 using GLVIEWPORT_PROC = void (GLAPIENTRY*)(GLint, GLint, GLsizei, GLsizei);
@@ -1592,12 +1597,14 @@ struct BglContext final {
    GLTEXPARAMETERI_PROC bglTexParameteri = nullptr;
    GLVERTEX2F_PROC bglVertex2f = nullptr;
    GLENABLE_PROC bglEnable = nullptr;
+   GLPIXELSTOREI_PROC bglPixelStorei = nullptr;
    GLBEGIN_PROC bglBegin = nullptr;
    GLBINDTEXTURE_PROC bglBindTexture = nullptr;
    GLCLEAR_PROC bglClear = nullptr;
    GLCLEARCOLOR_PROC bglClearColor = nullptr;
    GLCOLOR3FV_PROC bglColor3fv = nullptr;
 #endif
+   GLCOMPRESSEDTEXIMAGE2D_PROC bglCompressedTexImage2D = nullptr;
    GLDEBUGMESSAGECALLBACK_PROC bglDebugMessageCallback = nullptr;
 #ifndef _WIN32
    GLDELETETEXTURES_PROC bglDeleteTextures = nullptr;
@@ -1607,7 +1614,6 @@ struct BglContext final {
 #endif
    GLGETSTRINGI_PROC bglGetStringi = nullptr;
 #ifndef _WIN32
-   GLPIXELSTOREI_PROC bglPixelStorei = nullptr;
    GLTEXENVI_PROC bglTexEnvi = nullptr;
    GLTEXIMAGE2D_PROC bglTexImage2D = nullptr;
    GLVIEWPORT_PROC bglViewport = nullptr;
@@ -1743,12 +1749,14 @@ BglContextHandle init_context() {
    ctx.bglTexParameteri = GLTEXPARAMETERI_PROC(glfwGetProcAddress("glTexParameteri"));
    ctx.bglVertex2f = GLVERTEX2F_PROC(glfwGetProcAddress("glVertex2f"));
    ctx.bglEnable = GLENABLE_PROC(glfwGetProcAddress("glEnable"));
+   ctx.bglPixelStorei = GLPIXELSTOREI_PROC(glfwGetProcAddress("glPixelStorei"));
    ctx.bglBegin = GLBEGIN_PROC(glfwGetProcAddress("glBegin"));
    ctx.bglBindTexture = GLBINDTEXTURE_PROC(glfwGetProcAddress("glBindTexture"));
    ctx.bglClear = GLCLEAR_PROC(glfwGetProcAddress("glClear"));
    ctx.bglClearColor = GLCLEARCOLOR_PROC(glfwGetProcAddress("glClearColor"));
    ctx.bglColor3fv = GLCOLOR3FV_PROC(glfwGetProcAddress("glColor3fv"));
 #endif
+   ctx.bglCompressedTexImage2D = GLCOMPRESSEDTEXIMAGE2D_PROC(glfwGetProcAddress("glCompressedTexImage2D"));
    ctx.bglDebugMessageCallback = GLDEBUGMESSAGECALLBACK_PROC(glfwGetProcAddress("glDebugMessageCallback"));
 #ifndef _WIN32
    ctx.bglDeleteTextures = GLDELETETEXTURES_PROC(glfwGetProcAddress("glDeleteTextures"));
@@ -1758,7 +1766,6 @@ BglContextHandle init_context() {
 #endif
    ctx.bglGetStringi = GLGETSTRINGI_PROC(glfwGetProcAddress("glGetStringi"));
 #ifndef _WIN32
-   ctx.bglPixelStorei = GLPIXELSTOREI_PROC(glfwGetProcAddress("glPixelStorei"));
    ctx.bglTexEnvi = GLTEXENVI_PROC(glfwGetProcAddress("glTexEnvi"));
    ctx.bglTexImage2D = GLTEXIMAGE2D_PROC(glfwGetProcAddress("glTexImage2D"));
    ctx.bglViewport = GLVIEWPORT_PROC(glfwGetProcAddress("glViewport"));
@@ -1777,7 +1784,8 @@ BglContextHandle init_context() {
 #endif
       ;
    ctx.bgl_version_1_2 = ctx.bgl_version_1_1 && (major > 1 || major == 1 && minor >= 2);
-   ctx.bgl_version_1_3 = ctx.bgl_version_1_2 && (major > 1 || major == 1 && minor >= 3);
+   ctx.bgl_version_1_3 = ctx.bgl_version_1_2 && (major > 1 || major == 1 && minor >= 3)
+      && ctx.bglCompressedTexImage2D;
    ctx.bgl_version_1_4 = ctx.bgl_version_1_3 && (major > 1 || major == 1 && minor >= 4);
    ctx.bgl_version_1_5 = ctx.bgl_version_1_4 && (major > 1 || major == 1 && minor >= 5);
    ctx.bgl_version_2_0 = ctx.bgl_version_1_5 && (major > 2 || major == 2 && minor >= 0);
@@ -3158,6 +3166,13 @@ void glEnable(GLenum cap) noexcept {
    BE_GFX_BGL_CONTEXT.bglEnable(cap);
 #endif
 }
+void glPixelStorei(GLenum pname, GLint param) noexcept {
+#ifdef _WIN32
+   ::glPixelStorei(pname, param);
+#else
+   BE_GFX_BGL_CONTEXT.bglPixelStorei(pname, param);
+#endif
+}
 void glBegin(GLenum mode) noexcept {
 #ifdef _WIN32
    ::glBegin(mode);
@@ -3193,6 +3208,9 @@ void glColor3fv(const GLfloat * v) noexcept {
    BE_GFX_BGL_CONTEXT.bglColor3fv(v);
 #endif
 }
+void glCompressedTexImage2D(GLenum target, GLint level, GLenum internalformat, GLsizei width, GLsizei height, GLint border, GLsizei imageSize, const void * data) noexcept {
+   BE_GFX_BGL_CONTEXT.bglCompressedTexImage2D(target, level, internalformat, width, height, border, imageSize, data);
+}
 void glDebugMessageCallback(GLDEBUGPROC callback, const void * userParam) noexcept {
    BE_GFX_BGL_CONTEXT.bglDebugMessageCallback(callback, userParam);
 }
@@ -3226,13 +3244,6 @@ void glGetIntegerv(GLenum pname, GLint * data) noexcept {
 }
 const GLubyte *glGetStringi(GLenum name, GLuint index) noexcept {
    return BE_GFX_BGL_CONTEXT.bglGetStringi(name, index);
-}
-void glPixelStorei(GLenum pname, GLint param) noexcept {
-#ifdef _WIN32
-   ::glPixelStorei(pname, param);
-#else
-   BE_GFX_BGL_CONTEXT.bglPixelStorei(pname, param);
-#endif
 }
 void glTexEnvi(GLenum target, GLenum pname, GLint param) noexcept {
 #ifdef _WIN32

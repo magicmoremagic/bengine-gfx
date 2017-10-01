@@ -995,6 +995,11 @@ ImageFormat from_gl_format(ImageFormatGl format, std::error_code& ec) noexcept {
       case GL_LUMINANCE_ALPHA:
          f.colorspace(Colorspace::linear_other);
          break;
+      case GL_BGR:
+      case GL_BGRA:
+         // using BGR/BGRA isn't valid here, but some files do it anyway...
+         f.colorspace(Colorspace::linear_other);
+         break;
       case GL_STENCIL_INDEX:
          f.colorspace(Colorspace::linear_stencil);
          break;

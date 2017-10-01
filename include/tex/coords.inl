@@ -107,8 +107,9 @@ struct BlockCoordConverter<ImageView, Coord, 1> {
    static std::pair<Coord, Coord> to_block_coords(const ImageView& image, Coord pixel_coord) {
       assert(image);
       assert(pixel_coord >= 0);
-      Coord block = pixel_coord / Coord(image.block_dim().x);
-      return std::make_pair(block, pixel_coord - block);
+      Coord block_dim = Coord(image.block_dim().x);
+      Coord block = pixel_coord / block_dim;
+      return std::make_pair(block, pixel_coord - block * block_dim);
    }
 };
 
@@ -128,10 +129,10 @@ struct BlockCoordConverter<ImageView, Coord, 2> {
       assert(image);
       assert(pixel_coord.x >= 0);
       assert(pixel_coord.y >= 0);
-      auto block_dim = image.block_dim();
-      Coord block = Coord { pixel_coord.x / V(block_dim.x),
-                            pixel_coord.y / V(block_dim.y) };
-      return std::make_pair(block, pixel_coord - block);
+      auto rawdim = image.block_dim();
+      Coord block_dim = Coord(V(rawdim.x), V(rawdim.y));
+      Coord block = pixel_coord / block_dim;
+      return std::make_pair(block, pixel_coord - block * block_dim);
    }
 };
 
@@ -153,11 +154,10 @@ struct BlockCoordConverter<ImageView, Coord, 3> {
       assert(pixel_coord.x >= 0);
       assert(pixel_coord.y >= 0);
       assert(pixel_coord.z >= 0);
-      auto block_dim = image.block_dim();
-      Coord block = Coord { pixel_coord.x / V(block_dim.x),
-                            pixel_coord.y / V(block_dim.y),
-                            pixel_coord.z / V(block_dim.z) };
-      return std::make_pair(block, pixel_coord - block);
+      auto rawdim = image.block_dim();
+      Coord block_dim = Coord(V(rawdim.x), V(rawdim.y), V(rawdim.z));
+      Coord block = pixel_coord / block_dim;
+      return std::make_pair(block, pixel_coord - block * block_dim);
    }
 };
 

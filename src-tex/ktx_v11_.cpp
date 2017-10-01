@@ -115,15 +115,28 @@ TextureFileInfo KtxReader::info_v11_(const detail::KtxHeader& header, std::error
    gl_fmt.swizzle[2] = GL_BLUE;
    gl_fmt.swizzle[3] = GL_ALPHA;
 
+   be_debug() << "KTX format enums"
+      & attr("Base Internal Format") << enum_name(gl_fmt.base_internal_format) << " (" << gl_fmt.base_internal_format << ")"
+      & attr("Internal Format") << enum_name(gl_fmt.internal_format) << " (" << gl_fmt.internal_format << ")"
+      & attr("Data Format") << enum_name(gl_fmt.data_format) << " (" << gl_fmt.data_format << ")"
+      & attr("Data Type") << enum_name(gl_fmt.data_type) << " (" << gl_fmt.data_type << ")"
+      | log();
+
    std::error_code ec2;
    info.format = from_gl_format(gl_fmt, ec2);
    if (ec2 && !should_continue_(err::unsupported_image_format, ec)) {
       return info;
    }
 
-   if (!is_compressed(info.format.packing()) && header.gl_type_size != block_word_size(info.format.packing()) &&
-       !should_continue_(err::invalid_gl_type_size, ec)) {
-      return info;
+   if (!is_compressed(info.format.packing()) && header.gl_type_size != block_word_size(info.format.packing())) { 
+      be_notice() << "Block word size mismatch"
+         & attr("Expected") << U32(block_word_size(info.format.packing()))
+         & attr("Found") << header.gl_type_size
+         | log();
+
+      if (!should_continue_(err::invalid_gl_type_size, ec)) {
+         return info;
+      }
    }
 
    if (buf_.size() < sizeof(header) + header.bytes_of_key_value_data && !should_continue_(err::metadata_missing, ec)) {

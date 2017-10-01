@@ -6,7 +6,7 @@
 
 #define BE_GFX_VERSION_MAJOR 0
 #define BE_GFX_VERSION_MINOR 1
-#define BE_GFX_VERSION_REV 36
+#define BE_GFX_VERSION_REV 37
 
 /*!! include('common/version', 'be::gfx') !! 6 */
 /* ################# !! GENERATED CODE -- DO NOT MODIFY !! ################# */

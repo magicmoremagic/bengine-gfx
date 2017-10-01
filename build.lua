@@ -15,7 +15,8 @@ module 'gfx' {
       link_project {
          'core',
          'util-compression',
-         'util-fs'
+         'util-fs',
+         'gfx'
       }
    },
 
@@ -28,7 +29,7 @@ module 'gfx' {
       link_project {
          'core',
          'util',
-         'gfx-tex',
+         'glfw'
       },
       toolchain 'vc_win' {
          link 'opengl32'
@@ -37,6 +38,6 @@ module 'gfx' {
 
    app '-test' {
       icon 'icon/bengine-test-perf.ico',
-      link_project { 'testing', 'gfx' }
+      link_project { 'testing', 'gfx', 'gfx-tex' }
    }
 }

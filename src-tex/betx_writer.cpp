@@ -248,7 +248,7 @@ void BetxWriter::write(const Path& path) {
 ///////////////////////////////////////////////////////////////////////////////
 void BetxWriter::write(const Path& path, std::error_code& ec) noexcept {
    Buf<UC> data = write(ec);
-   if (!ec) {
+   if (data) {
       util::put_file_contents(path, std::move(data), ec);
    }
 }

@@ -6,6 +6,14 @@
 
 namespace be::gfx::tex::detail {
 
+//////////////////////////////////////////////////////////////////////////////
+struct KtxSignature {
+   static constexpr UC initial[] = { 0xAB, 'K', 'T', 'X', ' ' };
+   static constexpr UC version[] = { 0xAB, 'K', 'T', 'X', ' ', '1', '1' };
+   static constexpr UC full[] =    { 0xAB, 'K', 'T', 'X', ' ', '1', '1', 0xBB, '\r', '\n', 0x1A, '\n' };
+};
+
+//////////////////////////////////////////////////////////////////////////////
 struct KtxHeader {
    U8 signature[12];
    U32 endianness;
@@ -26,6 +34,7 @@ struct KtxHeader {
 } // be::gfx::tex::detail
 namespace be::bo {
 
+//////////////////////////////////////////////////////////////////////////////
 template <>
 struct Converter<be::gfx::tex::detail::KtxHeader> : ConvertBase<be::gfx::tex::detail::KtxHeader> {
    using ConvertBase<be::gfx::tex::detail::KtxHeader>::in_place;

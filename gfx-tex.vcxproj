@@ -83,6 +83,7 @@
     <ClInclude Include="include\tex\image_view.hpp" />
     <ClInclude Include="include\tex\image_view_hash.hpp" />
     <ClInclude Include="include\tex\ktx_read_error.hpp" />
+    <ClInclude Include="include\tex\ktx_writer.hpp" />
     <ClInclude Include="include\tex\log_texture_info.hpp" />
     <ClInclude Include="include\tex\make_image.hpp" />
     <ClInclude Include="include\tex\make_texture.hpp" />
@@ -142,6 +143,7 @@
     <ClCompile Include="src-tex\image_view.cpp" />
     <ClCompile Include="src-tex\ktx_read_error.cpp" />
     <ClCompile Include="src-tex\ktx_v11_.cpp" />
+    <ClCompile Include="src-tex\ktx_writer.cpp" />
     <ClCompile Include="src-tex\log_texture_info.cpp" />
     <ClCompile Include="src-tex\make_texture.cpp" />
     <ClCompile Include="src-tex\mipmapping.cpp" />

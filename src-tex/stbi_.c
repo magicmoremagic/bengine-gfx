@@ -2,6 +2,7 @@
 #ifdef _MSC_VER
 #define _CRT_SECURE_NO_WARNINGS
 #endif
+
 #include "stbi_.h"
 
 STBIDEF int be_stbi_jpeg_info_from_memory(const stbi_uc* buffer, int len, int* x, int* y, int* comp, int* bpc) {

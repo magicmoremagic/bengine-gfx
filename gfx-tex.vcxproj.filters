@@ -335,6 +335,9 @@
     <ClInclude Include="include\tex\ktx_read_error.hpp">
       <Filter>Header Files\operations\files\ktx</Filter>
     </ClInclude>
+    <ClInclude Include="include\tex\ktx_writer.hpp">
+      <Filter>Header Files\operations\files\ktx</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src-tex\pch.cpp">
@@ -467,6 +470,9 @@
       <Filter>Source Files\operations\files\ktx</Filter>
     </ClCompile>
     <ClCompile Include="src-tex\ktx_v11_.cpp">
+      <Filter>Source Files\operations\files\ktx</Filter>
+    </ClCompile>
+    <ClCompile Include="src-tex\ktx_writer.cpp">
       <Filter>Source Files\operations\files\ktx</Filter>
     </ClCompile>
   </ItemGroup>

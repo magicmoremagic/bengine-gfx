@@ -7,17 +7,10 @@
 #include <be/util/check_file_signature.hpp>
 
 namespace be::gfx::tex {
-namespace {
-
-constexpr UC short_sig[] = { 0xAB, 'K', 'T', 'X', ' ' };
-constexpr UC version_sig[] = { 0xAB, 'K', 'T', 'X', ' ', '1', '1' };
-constexpr UC full_sig[] = { 0xAB, 'K', 'T', 'X', ' ', '1', '1', 0xBB, '\r', '\n', 0x1A, '\n' };
-
-} // be::gfx::tex::()
 
 ///////////////////////////////////////////////////////////////////////////////
 bool is_ktx(const Buf<const UC>& buf) noexcept {
-   return util::file_signature_matches(buf, short_sig);
+   return util::file_signature_matches(buf, detail::KtxSignature::initial);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -66,17 +59,17 @@ TextureFileInfo KtxReader::info_impl_(std::error_code& ec) noexcept {
       & attr(ids::log_attr_path) << path().string()
       | log();
 
-   if (!util::file_signature_matches(buf_, short_sig) &&
+   if (!util::file_signature_matches(buf_, detail::KtxSignature::initial) &&
        !should_continue_(err::not_a_ktx_file, ec)) {
       return info;
    }
 
-   if (!util::file_signature_matches(buf_, version_sig) &&
+   if (!util::file_signature_matches(buf_, detail::KtxSignature::version) &&
        !should_continue_(err::unsupported_file_version, ec)) {
       return info;
    }
 
-   if (!util::file_signature_matches(buf_, full_sig) &&
+   if (!util::file_signature_matches(buf_, detail::KtxSignature::full) &&
        !should_continue_(err::file_corruption, ec)) {
       return info;
    }

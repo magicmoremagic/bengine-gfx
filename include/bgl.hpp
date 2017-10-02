@@ -1481,10 +1481,6 @@ void glClearColor(GLfloat red, GLfloat green, GLfloat blue, GLfloat alpha) noexc
 // Defined by: GL 1.0
 void glColor3fv(const GLfloat * v) noexcept;
 
-// Aliases: glCompressedTexImage2DARB
-// Defined by: GL 1.3
-void glCompressedTexImage2D(GLenum target, GLint level, GLenum internalformat, GLsizei width, GLsizei height, GLint border, GLsizei imageSize, const void * data) noexcept;
-
 // Aliases: glDebugMessageCallbackARB, glDebugMessageCallbackKHR
 // Defined by: GL 4.3, KHR_debug
 void glDebugMessageCallback(GLDEBUGPROC callback, const void * userParam) noexcept;
@@ -1560,7 +1556,6 @@ using GLCLEAR_PROC = void (GLAPIENTRY*)(GLbitfield);
 using GLCLEARCOLOR_PROC = void (GLAPIENTRY*)(GLfloat, GLfloat, GLfloat, GLfloat);
 using GLCOLOR3FV_PROC = void (GLAPIENTRY*)(const GLfloat *);
 #endif
-using GLCOMPRESSEDTEXIMAGE2D_PROC = void (GLAPIENTRY*)(GLenum, GLint, GLenum, GLsizei, GLsizei, GLint, GLsizei, const void *);
 using GLDEBUGMESSAGECALLBACK_PROC = void (GLAPIENTRY*)(GLDEBUGPROC, const void *);
 #ifndef _WIN32
 using GLDELETETEXTURES_PROC = void (GLAPIENTRY*)(GLsizei, const GLuint *);
@@ -1604,7 +1599,6 @@ struct BglContext final {
    GLCLEARCOLOR_PROC bglClearColor = nullptr;
    GLCOLOR3FV_PROC bglColor3fv = nullptr;
 #endif
-   GLCOMPRESSEDTEXIMAGE2D_PROC bglCompressedTexImage2D = nullptr;
    GLDEBUGMESSAGECALLBACK_PROC bglDebugMessageCallback = nullptr;
 #ifndef _WIN32
    GLDELETETEXTURES_PROC bglDeleteTextures = nullptr;
@@ -1756,7 +1750,6 @@ BglContextHandle init_context() {
    ctx.bglClearColor = GLCLEARCOLOR_PROC(glfwGetProcAddress("glClearColor"));
    ctx.bglColor3fv = GLCOLOR3FV_PROC(glfwGetProcAddress("glColor3fv"));
 #endif
-   ctx.bglCompressedTexImage2D = GLCOMPRESSEDTEXIMAGE2D_PROC(glfwGetProcAddress("glCompressedTexImage2D"));
    ctx.bglDebugMessageCallback = GLDEBUGMESSAGECALLBACK_PROC(glfwGetProcAddress("glDebugMessageCallback"));
 #ifndef _WIN32
    ctx.bglDeleteTextures = GLDELETETEXTURES_PROC(glfwGetProcAddress("glDeleteTextures"));
@@ -1784,8 +1777,7 @@ BglContextHandle init_context() {
 #endif
       ;
    ctx.bgl_version_1_2 = ctx.bgl_version_1_1 && (major > 1 || major == 1 && minor >= 2);
-   ctx.bgl_version_1_3 = ctx.bgl_version_1_2 && (major > 1 || major == 1 && minor >= 3)
-      && ctx.bglCompressedTexImage2D;
+   ctx.bgl_version_1_3 = ctx.bgl_version_1_2 && (major > 1 || major == 1 && minor >= 3);
    ctx.bgl_version_1_4 = ctx.bgl_version_1_3 && (major > 1 || major == 1 && minor >= 4);
    ctx.bgl_version_1_5 = ctx.bgl_version_1_4 && (major > 1 || major == 1 && minor >= 5);
    ctx.bgl_version_2_0 = ctx.bgl_version_1_5 && (major > 2 || major == 2 && minor >= 0);
@@ -3207,9 +3199,6 @@ void glColor3fv(const GLfloat * v) noexcept {
 #else
    BE_GFX_BGL_CONTEXT.bglColor3fv(v);
 #endif
-}
-void glCompressedTexImage2D(GLenum target, GLint level, GLenum internalformat, GLsizei width, GLsizei height, GLint border, GLsizei imageSize, const void * data) noexcept {
-   BE_GFX_BGL_CONTEXT.bglCompressedTexImage2D(target, level, internalformat, width, height, border, imageSize, data);
 }
 void glDebugMessageCallback(GLDEBUGPROC callback, const void * userParam) noexcept {
    BE_GFX_BGL_CONTEXT.bglDebugMessageCallback(callback, userParam);

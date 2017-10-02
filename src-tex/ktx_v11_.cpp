@@ -162,8 +162,7 @@ TextureFileInfo KtxReader::info_v11_(const detail::KtxHeader& header, std::error
             metadata_.push_back(std::make_pair(key, value));
          }
 
-         U32 used_words = (kv_size + sizeof(U32) + sizeof(U32) - 1) / sizeof(U32);
-         metadata.remove_prefix(used_words * sizeof(U32));
+         metadata.remove_prefix(aligned_size<sizeof(U32)>(sizeof(U32) + kv_size));
       }
    }
 

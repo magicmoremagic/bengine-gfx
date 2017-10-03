@@ -24,7 +24,7 @@ Image duplicate_image(const ImageView& source, U8 block_span, TextureAlignment a
    Image img;
    img.storage = std::make_unique<TextureStorage>(1, 1, 1, source.dim(), source.block_dim(), block_span, alignment);
    img.view = tex::ImageView(source.format(), *img.storage, 0, 0, 0);
-   assert(source.size() == img.view.size());
+   assert(source.dim() == img.view.dim());
    blit_blocks(source, img.view);
    return img;
 }

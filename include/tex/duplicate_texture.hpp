@@ -51,7 +51,7 @@ Texture duplicate_texture(const TextureView& source, U8 block_span, TextureAlign
             for (std::size_t level = 0; level < n_levels; ++level) {
                auto src_view = source.image(layer, face, level);
                auto dest_view = texture.view.image(layer, face, level);
-               assert(src_view.size() == dest_view.size());
+               assert(src_view.dim() == dest_view.dim());
                blit_blocks(src_view, dest_view);
             }
          }

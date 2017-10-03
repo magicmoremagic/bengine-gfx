@@ -124,7 +124,7 @@ Buf<UC> JpegWriter::write(std::error_code& ec) noexcept {
 
    if (!stbi_write_jpg_to_func(
       [](void* ctx, void* data, int size) {
-         out_data& out = *static_cast<out_data*>(data);
+         out_data& out = *static_cast<out_data*>(ctx);
          if (out.out_of_memory) {
             return;
          }

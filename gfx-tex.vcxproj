@@ -161,7 +161,10 @@
     </ClCompile>
     <ClCompile Include="src-tex\png_writer.cpp" />
     <ClCompile Include="src-tex\premultiply_alpha.cpp" />
-    <ClCompile Include="src-tex\stbiw_.c" />
+    <ClCompile Include="src-tex\stbiw_.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='release|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
     <ClCompile Include="src-tex\texture_reader.cpp" />
     <ClCompile Include="src-tex\texture_reader_base.cpp" />
     <ClCompile Include="src-tex\stbi_.c">

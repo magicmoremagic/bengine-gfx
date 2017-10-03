@@ -12,7 +12,7 @@ template <typename ImageView>
 Image duplicate_image(const ImageView& source) {
    Image img;
    img.storage = std::make_unique<TextureStorage>(1, 1, 1, source.dim(), source.block_dim(), source.block_span(), source.storage().alignment());
-   img.view = ImageView(source.format(), *img.data, 0, 0, 0);
+   img.view = tex::ImageView(source.format(), *img.storage, 0, 0, 0);
    assert(source.size() == img.view.size());
    std::memcpy(img.view.data(), source.data(), img.view.size());
    return img;
@@ -23,7 +23,7 @@ template <typename ImageView>
 Image duplicate_image(const ImageView& source, U8 block_span, TextureAlignment alignment) {
    Image img;
    img.storage = std::make_unique<TextureStorage>(1, 1, 1, source.dim(), source.block_dim(), block_span, alignment);
-   img.view = ImageView(source.format(), *img.data, 0, 0, 0);
+   img.view = tex::ImageView(source.format(), *img.storage, 0, 0, 0);
    assert(source.size() == img.view.size());
    blit_blocks(source, img.view);
    return img;

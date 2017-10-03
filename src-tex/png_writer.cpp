@@ -137,7 +137,7 @@ Buf<UC> PngWriter::write(std::error_code& ec) noexcept {
          std::memcpy(out.data.get() + out.written, data, size);
          out.written += size;
 
-      }, &out, iv.dim().x, iv.dim().y, components, data, img_.line_span())) {
+      }, &out, iv.dim().x, iv.dim().y, components, data, (int)img_.line_span())) {
       ec = make_error_code(TextureFileError::fatal_error);
       return Buf<UC>();
    }

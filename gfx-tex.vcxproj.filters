@@ -108,9 +108,6 @@
     <Filter Include="Source Files\operations\files\psd">
       <UniqueIdentifier>{62a8ef09-be98-4e7f-a4f0-7d6cb0049aaa}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\operations\files\stbi_">
-      <UniqueIdentifier>{566dcbcd-c9d8-4ac3-9962-9b3deae0fed6}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\operations\files\gif">
       <UniqueIdentifier>{7f1bafb5-0cff-44e1-aa88-f986d96c56b8}</UniqueIdentifier>
     </Filter>
@@ -125,6 +122,9 @@
     </Filter>
     <Filter Include="Source Files\enums">
       <UniqueIdentifier>{cd4a8149-2bee-491f-a544-8216cf6ce192}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\operations\files\stb_">
+      <UniqueIdentifier>{566dcbcd-c9d8-4ac3-9962-9b3deae0fed6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -246,10 +246,10 @@
       <Filter>Source Files\operations\files\betx</Filter>
     </ClInclude>
     <ClInclude Include="src-tex\stbi_.h">
-      <Filter>Source Files\operations\files\stbi_</Filter>
+      <Filter>Source Files\operations\files\stb_</Filter>
     </ClInclude>
     <ClInclude Include="src-tex\stbi_util_.hpp">
-      <Filter>Source Files\operations\files\stbi_</Filter>
+      <Filter>Source Files\operations\files\stb_</Filter>
     </ClInclude>
     <ClInclude Include="src-tex\ktx_header_.hpp">
       <Filter>Source Files\operations\files\ktx</Filter>
@@ -338,6 +338,24 @@
     <ClInclude Include="include\tex\ktx_writer.hpp">
       <Filter>Header Files\operations\files\ktx</Filter>
     </ClInclude>
+    <ClInclude Include="src-tex\stbiw_.h">
+      <Filter>Source Files\operations\files\stb_</Filter>
+    </ClInclude>
+    <ClInclude Include="include\tex\png_writer.hpp">
+      <Filter>Header Files\operations\files\png</Filter>
+    </ClInclude>
+    <ClInclude Include="include\tex\bmp_writer.hpp">
+      <Filter>Header Files\operations\files\bmp</Filter>
+    </ClInclude>
+    <ClInclude Include="include\tex\hdr_writer.hpp">
+      <Filter>Header Files\operations\files\hdr</Filter>
+    </ClInclude>
+    <ClInclude Include="include\tex\jpeg_writer.hpp">
+      <Filter>Header Files\operations\files\jpeg</Filter>
+    </ClInclude>
+    <ClInclude Include="include\tex\tga_writer.hpp">
+      <Filter>Header Files\operations\files\tga</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src-tex\pch.cpp">
@@ -389,10 +407,10 @@
       <Filter>Source Files\data structures</Filter>
     </ClCompile>
     <ClCompile Include="src-tex\stbi_.c">
-      <Filter>Source Files\operations\files\stbi_</Filter>
+      <Filter>Source Files\operations\files\stb_</Filter>
     </ClCompile>
     <ClCompile Include="src-tex\stbi_util_.cpp">
-      <Filter>Source Files\operations\files\stbi_</Filter>
+      <Filter>Source Files\operations\files\stb_</Filter>
     </ClCompile>
     <ClCompile Include="src-tex\texture_file_error.cpp">
       <Filter>Source Files\enums</Filter>
@@ -474,6 +492,24 @@
     </ClCompile>
     <ClCompile Include="src-tex\ktx_writer.cpp">
       <Filter>Source Files\operations\files\ktx</Filter>
+    </ClCompile>
+    <ClCompile Include="src-tex\stbiw_.c">
+      <Filter>Source Files\operations\files\stb_</Filter>
+    </ClCompile>
+    <ClCompile Include="src-tex\png_writer.cpp">
+      <Filter>Source Files\operations\files\png</Filter>
+    </ClCompile>
+    <ClCompile Include="src-tex\bmp_writer.cpp">
+      <Filter>Source Files\operations\files\bmp</Filter>
+    </ClCompile>
+    <ClCompile Include="src-tex\hdr_writer.cpp">
+      <Filter>Source Files\operations\files\hdr</Filter>
+    </ClCompile>
+    <ClCompile Include="src-tex\jpeg_writer.cpp">
+      <Filter>Source Files\operations\files\jpeg</Filter>
+    </ClCompile>
+    <ClCompile Include="src-tex\tga_writer.cpp">
+      <Filter>Source Files\operations\files\tga</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

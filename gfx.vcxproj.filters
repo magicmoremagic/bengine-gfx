@@ -62,18 +62,6 @@
     <ClInclude Include="include\fixed_size_median_kernel.hpp">
       <Filter>Header Files\old</Filter>
     </ClInclude>
-    <ClInclude Include="include\write_image.hpp">
-      <Filter>Header Files\old</Filter>
-    </ClInclude>
-    <ClInclude Include="include\read_image.hpp">
-      <Filter>Header Files\old</Filter>
-    </ClInclude>
-    <ClInclude Include="include\resize_image.hpp">
-      <Filter>Header Files\old</Filter>
-    </ClInclude>
-    <ClInclude Include="include\stbiw_detail.h">
-      <Filter>Header Files\old</Filter>
-    </ClInclude>
     <ClInclude Include="include\uniform_resample.hpp">
       <Filter>Header Files\old</Filter>
     </ClInclude>
@@ -90,18 +78,6 @@
   <ItemGroup>
     <ClCompile Include="src\pch.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\write_image.cpp">
-      <Filter>Source Files\old</Filter>
-    </ClCompile>
-    <ClCompile Include="src\read_image.cpp">
-      <Filter>Source Files\old</Filter>
-    </ClCompile>
-    <ClCompile Include="src\resize_image.cpp">
-      <Filter>Source Files\old</Filter>
-    </ClCompile>
-    <ClCompile Include="src\stbiw_detail.c">
-      <Filter>Source Files\old</Filter>
     </ClCompile>
     <ClCompile Include="src\bgl.cpp">
       <Filter>Source Files</Filter>

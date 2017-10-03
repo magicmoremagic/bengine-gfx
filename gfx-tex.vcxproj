@@ -61,6 +61,7 @@
     <ClInclude Include="include\tex\blit_blocks.hpp" />
     <ClInclude Include="include\tex\blit_pixels.hpp" />
     <ClInclude Include="include\tex\block_access.hpp" />
+    <ClInclude Include="include\tex\bmp_writer.hpp" />
     <ClInclude Include="include\tex\convert_colorspace_srgb.hpp" />
     <ClInclude Include="include\tex\coords.hpp" />
     <ClInclude Include="include\tex\block_packing.hpp" />
@@ -74,6 +75,7 @@
     <ClInclude Include="include\tex\dimension_tag.hpp" />
     <ClInclude Include="include\tex\duplicate_image.hpp" />
     <ClInclude Include="include\tex\duplicate_texture.hpp" />
+    <ClInclude Include="include\tex\hdr_writer.hpp" />
     <ClInclude Include="include\tex\image.hpp" />
     <ClInclude Include="include\tex\image_format.hpp" />
     <ClInclude Include="include\tex\image_format_gl.hpp" />
@@ -82,14 +84,17 @@
     <ClInclude Include="include\tex\image_region_hash.hpp" />
     <ClInclude Include="include\tex\image_view.hpp" />
     <ClInclude Include="include\tex\image_view_hash.hpp" />
+    <ClInclude Include="include\tex\jpeg_writer.hpp" />
     <ClInclude Include="include\tex\ktx_read_error.hpp" />
     <ClInclude Include="include\tex\ktx_writer.hpp" />
     <ClInclude Include="include\tex\log_texture_info.hpp" />
     <ClInclude Include="include\tex\make_image.hpp" />
     <ClInclude Include="include\tex\make_texture.hpp" />
     <ClInclude Include="include\tex\mipmapping.hpp" />
+    <ClInclude Include="include\tex\png_writer.hpp" />
     <ClInclude Include="include\tex\texture_file_error.hpp" />
     <ClInclude Include="include\tex\texture_reader_base.hpp" />
+    <ClInclude Include="include\tex\tga_writer.hpp" />
     <ClInclude Include="src-tex\pch.hpp" />
     <ClInclude Include="include\tex\pixel_access.hpp" />
     <ClInclude Include="include\tex\pixel_access_norm.hpp" />
@@ -122,6 +127,7 @@
     <ClInclude Include="include\tex\visit_texture.hpp" />
     <ClInclude Include="src-tex\betx_header_.hpp" />
     <ClInclude Include="src-tex\ktx_header_.hpp" />
+    <ClInclude Include="src-tex\stbiw_.h" />
     <ClInclude Include="src-tex\stbi_.h" />
     <ClInclude Include="src-tex\stbi_util_.hpp" />
   </ItemGroup>
@@ -132,15 +138,18 @@
     <ClCompile Include="src-tex\betx_writer.cpp" />
     <ClCompile Include="src-tex\betx_write_error.cpp" />
     <ClCompile Include="src-tex\block_packing.cpp" />
+    <ClCompile Include="src-tex\bmp_writer.cpp" />
     <ClCompile Include="src-tex\byte_order.cpp" />
     <ClCompile Include="src-tex\colorspace.cpp" />
     <ClCompile Include="src-tex\field_type.cpp" />
     <ClCompile Include="src-tex\convert_colorspace.cpp" />
     <ClCompile Include="src-tex\default_texture_reader.cpp" />
+    <ClCompile Include="src-tex\hdr_writer.cpp" />
     <ClCompile Include="src-tex\image_format.cpp" />
     <ClCompile Include="src-tex\image_format_gl.cpp" />
     <ClCompile Include="src-tex\image_region.cpp" />
     <ClCompile Include="src-tex\image_view.cpp" />
+    <ClCompile Include="src-tex\jpeg_writer.cpp" />
     <ClCompile Include="src-tex\ktx_read_error.cpp" />
     <ClCompile Include="src-tex\ktx_v11_.cpp" />
     <ClCompile Include="src-tex\ktx_writer.cpp" />
@@ -150,7 +159,9 @@
     <ClCompile Include="src-tex\pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="src-tex\png_writer.cpp" />
     <ClCompile Include="src-tex\premultiply_alpha.cpp" />
+    <ClCompile Include="src-tex\stbiw_.c" />
     <ClCompile Include="src-tex\texture_reader.cpp" />
     <ClCompile Include="src-tex\texture_reader_base.cpp" />
     <ClCompile Include="src-tex\stbi_.c">
@@ -175,6 +186,7 @@
     <ClCompile Include="src-tex\tga_reader.cpp" />
     <ClCompile Include="src-tex\texture_storage.cpp" />
     <ClCompile Include="src-tex\texture_view.cpp" />
+    <ClCompile Include="src-tex\tga_writer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="include\tex\blit_blocks.inl" />

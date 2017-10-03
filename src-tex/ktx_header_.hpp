@@ -40,10 +40,6 @@ struct Converter<be::gfx::tex::detail::KtxHeader> : ConvertBase<be::gfx::tex::de
    using ConvertBase<be::gfx::tex::detail::KtxHeader>::in_place;
 
    static void in_place(type& v, Little, Big) {
-      if (v.endianness == 0x04030201) {
-         return;
-      }
-
       static_to_big<Little::value>(v.endianness);
       static_to_big<Little::value>(v.gl_type);
       static_to_big<Little::value>(v.gl_type_size);
@@ -60,10 +56,6 @@ struct Converter<be::gfx::tex::detail::KtxHeader> : ConvertBase<be::gfx::tex::de
    }
 
    static void in_place(type& v, Big, Little) {
-      if (v.endianness == 0x04030201) {
-         return;
-      }
-
       static_to_little<Big::value>(v.endianness);
       static_to_little<Big::value>(v.gl_type);
       static_to_little<Big::value>(v.gl_type_size);

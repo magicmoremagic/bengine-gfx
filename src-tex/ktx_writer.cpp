@@ -9,7 +9,6 @@
 #include <be/util/put_file_contents.hpp>
 #include <be/util/zlib.hpp>
 #include <be/core/exceptions.hpp>
-#include <numeric>
 
 namespace be::gfx::tex {
 
